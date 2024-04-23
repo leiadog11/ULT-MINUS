@@ -10,6 +10,8 @@ use {
     smashline::*
 };
 
+pub const FIGHTER_PACMAN_GENERATE_ARTICLE_GSHOT: i32 = 0x7;
+
 /*
 static mut pacPosX: [f32; 8] = [0.0; 8];
 static mut pacPosY: [f32; 8] = [0.0; 8];
@@ -142,7 +144,8 @@ unsafe extern "C" fn pacman_attacks4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("ghost1"), 9.0, 361, 102, 0, 40, 4.3, 0.0, 5.4, 0.0, Some(0.0), Some(4.2), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_NONE);
-        AttackModule::clear(agent.module_accessor, 1, false);
+        ArticleModule::generate_article(agent.module_accessor, FIGHTER_PACMAN_GENERATE_ARTICLE_GSHOT, false, -1);
+        //AttackModule::clear(agent.module_accessor, 1, false);
     }
     wait(agent.lua_state_agent, 11.0);
     if macros::is_excute(agent) {
@@ -303,16 +306,6 @@ unsafe extern "C" fn hydrant_fall(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 11.0, 270, 100, 0, 10, 5, 0.0, 6.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, -2.3, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
             AttackModule::set_attack_height_all(agent.module_accessor, smash::app::AttackHeight(*ATTACK_HEIGHT_HIGH), false);
         }
-}
-
-// DOWN B HYDRANT WAIT
-unsafe extern "C" fn hydrant_wait(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-	    macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.0, 361, 0, 0, 0, 5.0, 0.0, 6.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 10, true, false, false, true, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_search"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_OBJECT);
-        for _ in 0..300 {
-            StatusModule::change_status_request_from_script(agent.module_accessor, *WEAPON_PACMAN_FIREHYDRANT_STATUS_KIND_WAIT, true);
-        }
-    }
 }
 
 
@@ -737,6 +730,5 @@ pub fn install() {
         .install();
     Agent::new("pacman_firehydrant")
         .game_acmd("game_fall", hydrant_fall)
-        .game_acmd("game_wait", hydrant_wait)
         .install();
 }
