@@ -10,7 +10,7 @@ use {
     smashline::*
 };
 
-//ROB Fighter Frame
+//ROB Fighter Frame :)
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
         
