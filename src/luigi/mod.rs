@@ -37,6 +37,21 @@ unsafe extern "C" fn luigi_attacks3lw(agent: &mut L2CAgentBase) {
     }
 }
 
+
+//UP TILT
+unsafe extern "C" fn luigi_attackhi3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    macros::FT_MOTION_RATE(agent, 0.4);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 6.0, 100, 150, 0, 8, 3.3, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("arml"), 6.0, 100, 150, 0, 8, 4.3, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 2, 0, Hash40::new("handl"), 6.0, 100, 150, 0, 8, 4.8, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+    }
+    wait(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
 // DOWN TILT 
 unsafe extern "C" fn luigi_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
@@ -196,8 +211,8 @@ unsafe extern "C" fn luigi_attackairb(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 8.0, 120, 0, 0, 30, 4.0, 4.0, 0.0, 0.0, None, None, None, 5.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 8.0, 120, 0, 0, 30, 5.0, 1.6, 0.0, 0.0, None, None, None, 5.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 8.0, 120, 0, 0, 30, 4.0, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 8.0, 120, 0, 0, 30, 5.0, 1.6, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
@@ -240,6 +255,33 @@ unsafe extern "C" fn luigi_attackairf(agent: &mut L2CAgentBase) {
     }
 }
 
+
+//---------TAUNT------------
+//DOWN TAUNT LEFT
+unsafe extern "C" fn luigi_appeallwl(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 45.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 270, 100, 180, 0, 3.0, 0.0, -1.0, 5.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 8, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BAT, *ATTACK_REGION_KICK);
+        AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+    }
+    frame(agent.lua_state_agent, 46.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+//DOWN TAUNT RIGHT
+unsafe extern "C" fn luigi_appeallwr(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 45.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 270, 100, 180, 0, 3.0, 0.0, -1.0, 5.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 8, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BAT, *ATTACK_REGION_KICK);
+        AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+    }
+    frame(agent.lua_state_agent, 46.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
 unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
         if MotionModule::motion_kind(fighter.module_accessor) != hash40("attacklw3") {
@@ -281,6 +323,9 @@ pub fn install() {
         .game_acmd("game_attackairb", luigi_attackairb)
         .game_acmd("game_attackairf", luigi_attackairf)
         .game_acmd("game_attacklw3", luigi_attacklw3)
+        .game_acmd("game_attackhi3", luigi_attackhi3)
+        .game_acmd("game_appeallwl", luigi_appeallwl)
+        .game_acmd("game_appeallwr", luigi_appeallwr)
         .effect_acmd("effect_attacklw3", luigi_effect_attacklw3)
         .on_line(Main, luigi_frame)
         .install();
