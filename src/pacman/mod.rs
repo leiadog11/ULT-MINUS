@@ -10,23 +10,25 @@ use {
     smashline::*
 };
 
+use smashline::Main;
+use std::convert::TryInto;
+
 pub const FIGHTER_PACMAN_GENERATE_ARTICLE_GSHOT: i32 = 0x7;
-
-/*
-static mut pacPosX: [f32; 8] = [0.0; 8];
-static mut pacPosY: [f32; 8] = [0.0; 8];
-static mut pacPosZ: [f32; 8] = [0.0; 8];
-*/
-
+pub const FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_THROW_UP : i32 = 0x200000eb;
 
 //OPFF
-/**
 unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
-        
+        if WorkModule::is_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_THROW_UP) {
+            if MotionModule::motion_kind(fighter.module_accessor) == hash40("fall_special") {
+                fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+                WorkModule::set_int(fighter.module_accessor, 1, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
+                WorkModule::off_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_THROW_UP);
+            }
+        }
     }
 }
-**/
+
 
 
 // -------GROUND-------
@@ -442,8 +444,6 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pacman_specialhistart(agent: &mut L2CAgentBase) {
     WorkModule::is_flag(agent.module_accessor, *FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_SPECIAL_HI_TRAMPOLINE_JUMP);
         if macros::is_excute(agent) {
-        ArticleModule::set_flag(agent.module_accessor, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_ON_JUMP, true, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_ON_JUMP);
-        ArticleModule::set_flag(agent.module_accessor, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_ON_JUMP, true, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_ON_JUMP);
 	    ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_TRAMPOLINE, false, *FIGHTER_PACMAN_GENERATE_ARTICLE_TRAMPOLINE);
     }
 }
@@ -461,25 +461,20 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 4.0);
     damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_ALWAYS, 0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 1, Hash40::new("throw"), 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 2, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 3, Hash40::new("throw"), 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, None, None, None, *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     frame(agent.lua_state_agent, 19.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 2, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(-16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 3, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 1, Hash40::new("throw"), 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 2, Hash40::new("throw"), 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
-    frame(agent.lua_state_agent, 60.0);
+    frame(agent.lua_state_agent, 54.0);
     if macros::is_excute(agent) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
@@ -487,15 +482,6 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     }
 }
 
-// GRAB EFFECT
-unsafe extern "C" fn pacman_effect_catch(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
-        macros::LAST_EFFECT_SET_COLOR(agent, *FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE, 0.0, 0.0);
-        EffectModule::set_custom_uv_offset(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE.into(), std::ptr::null(), 0);
-    }
-}
 
 //GRAB SOUND
 unsafe extern "C" fn pacman_sound_catch(agent: &mut L2CAgentBase) {
@@ -531,6 +517,7 @@ unsafe extern "C" fn pacman_throwhi(agent: &mut L2CAgentBase) {
         let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
         macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_TRAMPOLINE, false, -1);
+        WorkModule::on_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_THROW_UP);
     }
     frame(agent.lua_state_agent, 22.0);
     macros::FT_MOTION_RATE(agent, 0.842);
@@ -557,7 +544,7 @@ unsafe extern "C" fn pacman_throwlw(agent: &mut L2CAgentBase) {
 }
 wait(agent.lua_state_agent, 6.0);
 if macros::is_excute(agent) {
-    macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.5, 361, 100, 40, 0, 5.0, 0.0, 5.0, 0.0, None, None, None, 0.3, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, true, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+    macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.5, 270, 100, 40, 0, 5.0, 0.0, 5.0, 0.0, None, None, None, 0.3, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, true, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_lay"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
     AttackModule::set_catch_only_all(agent.module_accessor, true, false);
 }
 wait(agent.lua_state_agent, 1.0);
@@ -716,7 +703,6 @@ pub fn install() {
         .game_acmd("game_specialsdash", pacman_specialsdash)
         .game_acmd("game_specialhistart", pacman_specialhistart)
         .game_acmd("game_catch", pacman_catch)
-        .effect_acmd("effect_catch", pacman_effect_catch)
         .sound_acmd("sound_catch", pacman_sound_catch)
         .game_acmd("game_throwhi", pacman_throwhi)
         .game_acmd("game_throwlw", pacman_throwlw)
@@ -727,6 +713,7 @@ pub fn install() {
         .game_acmd("game_appeallwr", pacman_appeallwr)
         .game_acmd("game_appeallwl", pacman_appeallwl)
         .game_acmd("game_attackdash", pacman_attackdash)
+        .on_line(Main, pacman_frame)
         .install();
     Agent::new("pacman_firehydrant")
         .game_acmd("game_fall", hydrant_fall)

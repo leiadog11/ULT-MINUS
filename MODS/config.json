@@ -1,28 +1,28 @@
 {
     "new-dir-files": {
         "fighter/pacman/c00": [
-            "figher/pacman/motion/gshot/c00/motion_list.bin"
+            "fighter/pacman/motion/gshot/c00/motion_list.bin"
         ],
         "fighter/pacman/c01": [
-            "figher/pacman/motion/gshot/c01/motion_list.bin"
+            "fighter/pacman/motion/gshot/c01/motion_list.bin"
         ],
         "fighter/pacman/c02": [
-            "figher/pacman/motion/gshot/c02/motion_list.bin"
+            "fighter/pacman/motion/gshot/c02/motion_list.bin"
         ],
         "fighter/pacman/c03": [
-            "figher/pacman/motion/gshot/c03/motion_list.bin"
+            "fighter/pacman/motion/gshot/c03/motion_list.bin"
         ],
         "fighter/pacman/c04": [
-            "figher/pacman/motion/gshot/c04/motion_list.bin"
+            "fighter/pacman/motion/gshot/c04/motion_list.bin"
         ],
         "fighter/pacman/c05": [
-            "figher/pacman/motion/gshot/c05/motion_list.bin"
+            "fighter/pacman/motion/gshot/c05/motion_list.bin"
         ],
         "fighter/pacman/c06": [
-            "figher/pacman/motion/gshot/c06/motion_list.bin"
+            "fighter/pacman/motion/gshot/c06/motion_list.bin"
         ],
         "fighter/pacman/c07": [
-            "figher/pacman/motion/gshot/c07/motion_list.bin"
+            "fighter/pacman/motion/gshot/c07/motion_list.bin"
         ],
         "fighter/pacman/cmn": [
             "effect/fighter/pacman/transplant/samus/ef_samus.eff"
