@@ -28,11 +28,21 @@ param_hash: u64) -> i32 {
     let color = WorkModule::get_int(module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR);
     if param_hash == 0 {
 		
+        //ALL
 		if fighter_kind == FIGHTER_KIND_ALL {
 				if param_type == hash40("jump_squat_frame") {
 					return 2;
 				} 
 		}
+
+        //LUIGI
+        if fighter_kind == FIGHTER_KIND_LUIGI {
+            if param_type == hash40("wall_jump_type") {
+                return 1;
+            } 
+         
+         
+    }
 	
 	}
 ret

@@ -441,26 +441,6 @@ unsafe extern "C" fn luigi_appeallwr(agent: &mut L2CAgentBase) {
     }
 }
 
-//OTHER CHANGES
-#[skyline::hook(offset=INT_OFFSET)]
-pub unsafe fn int_param_accessor_hook(boma: u64, param_type: u64, param_hash: u64) -> i32 {
-    let ret = original!()(boma, param_type, param_hash);
-    let module_accessor = &mut *(*((boma as *mut u64).offset(1)) as *mut BattleObjectModuleAccessor);
-    let fighter_kind = smash::app::utility::get_kind(module_accessor);
-    let color = WorkModule::get_int(module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR);
-    if param_hash == 0 {
-        if fighter_kind == FIGHTER_KIND_LUIGI {
-                if param_type == hash40("wall_jump_type") {
-                    return 1;
-                } 
-             
-             
-        }
-    
-    }
-    ret
-}
-
 unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
         if MotionModule::motion_kind(fighter.module_accessor) != hash40("attacklw3") {
