@@ -1,4 +1,4 @@
-/**
+
 use {
     smash::{
         lua2cpp::*,
@@ -145,4 +145,3 @@ pub fn install() {
         float_param_accessor_hook
     );
 }
-**/
