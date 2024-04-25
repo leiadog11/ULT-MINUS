@@ -111,6 +111,7 @@ unsafe extern "C" fn rob_attackhi4(agent: &mut L2CAgentBase) {
     }
 }
 
+
 // DASH ATTACK
 
 unsafe extern "C" fn rob_attackdash(agent: &mut L2CAgentBase) {
@@ -255,6 +256,9 @@ pub fn install() {
     .game_acmd("game_attacks3", rob_attacks3)
     .game_acmd("game_attacks3lw", rob_attacks3lw)
     .game_acmd("game_attackhi4", rob_attackhi4)
+    .game_acmd("game_attacks4", rob_attacks4)
+    .effect_acmd("effect_attacks4", rob_effect_s4)
+    .sound_acmd("sound_attacks4", rob_sound_s4)
     .game_acmd("game_attackdash", rob_attackdash)
     .game_acmd("game_attackairf", rob_attackairf)
     .game_acmd("game_throwhi", rob_throwhi)
