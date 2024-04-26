@@ -1,1 +1,0 @@
-for<'a> unsafe extern "C" fn(*mut smash::app::FighterManager, u32, u32, f32, i32, bool, &'a mut smashline::L2CAgentBase) -> u64 {notify_log_event_collision_hit_replace}
