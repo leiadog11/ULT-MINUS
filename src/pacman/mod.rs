@@ -87,6 +87,21 @@ unsafe extern "C" fn pacman_attacks3(agent: &mut L2CAgentBase) {
     }
 }
 
+//DAFT
+unsafe extern "C" fn pacman_attacks3lw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 6.0, 361, 1, 1, 1, 4.8, 6.5, -0.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("kneel"), 6.0, 361, 1, 1, 1, 3.6, 0.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 2, 0, Hash40::new("hip"), 6.0, 361, 1, 1, 1, 3.0, 1.1, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+    }
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
 // DOWN TILT
 unsafe extern "C" fn pacman_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
@@ -444,6 +459,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
+            else if PostureModule::pos_y(agent.module_accessor) <= -60.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 130.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 130.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -60.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
         }
         else if smash::app::stage::get_stage_id() == 0x101 {
             //Town and City
@@ -454,6 +479,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
             }
             else if PostureModule::pos_x(agent.module_accessor) <= -160.0 {
                 PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: 160.0 , y: PostureModule::pos_y(agent.module_accessor), z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) <= -80.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 105.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 105.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -80.0, z: PostureModule::pos_z(agent.module_accessor)});
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
@@ -470,9 +505,19 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
-            else{
-                macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.0, 361, 66, 0, 40, 6.0, 0.0, 2.8, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+            else if PostureModule::pos_y(agent.module_accessor) <= -60.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 130.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
             }
+            else if PostureModule::pos_y(agent.module_accessor) >= 130.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -60.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+        }
+        else{
+            macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.0, 361, 66, 0, 40, 6.0, 0.0, 2.8, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         }
         }
         wait(agent.lua_state_agent, 6.0);
@@ -518,6 +563,37 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
         macros::CATCH(agent, 1, Hash40::new("throw"), 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     frame(agent.lua_state_agent, 54.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+}
+
+//DASH GRAB
+unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 14.0);
+    macros::FT_MOTION_RATE(agent, 4.0);
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_ALWAYS, 0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, None, None, None, *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.0, 0.0, 0.5, 0.5, Some(0.0), Some(-2.5), Some(0.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 1.5, Some(0.0), Some(-2.5), Some(1.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    frame(agent.lua_state_agent, 30.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 1, Hash40::new("throw"), 4.0, 0.0, 0.5, 2.0, Some(0.0), Some(-2.5), Some(2.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    frame(agent.lua_state_agent, 36.0);
     if macros::is_excute(agent) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
@@ -735,6 +811,7 @@ unsafe extern "C" fn pacman_appeallwl(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("pacman")
         .game_acmd("game_attacks3", pacman_attacks3)
+        .game_acmd("game_attacks3lw", pacman_attacks3lw)
         .game_acmd("game_attacklw3", pacman_attacklw3)
         .game_acmd("game_attackhi3", pacman_attackhi3)
         .game_acmd("game_attacks4", pacman_attacks4)
@@ -746,6 +823,7 @@ pub fn install() {
         .game_acmd("game_specialsdash", pacman_specialsdash)
         .game_acmd("game_specialhistart", pacman_specialhistart)
         .game_acmd("game_catch", pacman_catch)
+        .game_acmd("game_catchdash", pacman_catchdash)
         .sound_acmd("sound_catch", pacman_sound_catch)
         .game_acmd("game_throwhi", pacman_throwhi)
         .game_acmd("game_throwlw", pacman_throwlw)
