@@ -15,14 +15,14 @@
 
 mod pacman;
 mod luigi;
-mod robot;
+//mod robot;
 mod common;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
     pacman::install();
     luigi::install();
-    robot::install();
+    //robot::install();
     common::install();
     smashline::clone_weapon("samus", "cshot", "pacman", "gshot", true);
 }

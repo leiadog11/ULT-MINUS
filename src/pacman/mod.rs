@@ -92,7 +92,7 @@ unsafe extern "C" fn pacman_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     macros::FT_MOTION_RATE(agent, 0.4);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 25, 15, 0, 45, 6.0, 0.0, 3.6, 5.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.5, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 330, 55, 0, 25, 6.0, 0.0, 3.6, 5.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.75, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
     }
     wait(agent.lua_state_agent, 3.0);
@@ -229,14 +229,14 @@ unsafe extern "C" fn pacman_attackairn(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         for _ in 0..10 {
             WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-            macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 0.6, 94, 35, 0, 40, 6.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 2.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+            macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 0.6, 94, 25, 0, 10, 8.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 2.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
             wait(agent.lua_state_agent, 3.0);
             AttackModule::clear_all(agent.module_accessor);
         }
     }
     frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 5.2, 60, 0, 64, 85, 8.5, 0.0, 0.7, 0.0, None, None, None, 2.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 5.2, 60, 40, 0, 60, 10.5, 0.0, 0.7, 0.0, None, None, None, 2.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
 
     }
     frame(agent.lua_state_agent, 45.0);
@@ -352,6 +352,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
+            else if PostureModule::pos_y(agent.module_accessor) <= -60.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 130.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 130.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -60.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
         }
         else if smash::app::stage::get_stage_id() == 0x15B {
             //Small Battlefield
@@ -362,6 +372,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
             }
             else if PostureModule::pos_x(agent.module_accessor) <= -170.0 {
                 PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: 170.0 , y: PostureModule::pos_y(agent.module_accessor), z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) <= -80.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 130.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 130.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -80.0, z: PostureModule::pos_z(agent.module_accessor)});
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
@@ -378,6 +398,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
+            else if PostureModule::pos_y(agent.module_accessor) <= -50.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 140.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 140.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -50.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
         }
         else if smash::app::stage::get_stage_id() == 0x6B {
             //PS2
@@ -388,6 +418,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
             }
             else if PostureModule::pos_x(agent.module_accessor) <= -180.0 {
                 PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: 180.0 , y: PostureModule::pos_y(agent.module_accessor), z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) <= -50.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: 130.0, z: PostureModule::pos_z(agent.module_accessor)});
+                AttackModule::clear_all(agent.module_accessor);
+                GroundModule::set_collidable(agent.module_accessor, false);
+            }
+            else if PostureModule::pos_y(agent.module_accessor) >= 130.0 {
+                PostureModule::set_pos(agent.module_accessor, &Vector3f{ x: PostureModule::pos_x(agent.module_accessor) , y: -50.0, z: PostureModule::pos_z(agent.module_accessor)});
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
@@ -430,13 +470,16 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
                 GroundModule::set_collidable(agent.module_accessor, false);
             }
+            else{
+                macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.0, 361, 66, 0, 40, 6.0, 0.0, 2.8, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+            }
         }
         }
-        else{
+        wait(agent.lua_state_agent, 6.0);
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.0, 361, 66, 0, 40, 6.0, 0.0, 2.8, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+            GroundModule::set_collidable(agent.module_accessor, true);
         }
-    }
+        
 }
 }
 
