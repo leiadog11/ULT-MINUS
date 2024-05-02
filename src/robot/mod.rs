@@ -233,10 +233,6 @@ unsafe extern "C" fn rob_attackairlw(agent: &mut L2CAgentBase) {
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 
 // ------SPECIALS----
@@ -325,7 +321,6 @@ unsafe extern "C" fn rob_throwb(agent: &mut L2CAgentBase) {
 
 unsafe extern "C" fn rob_appealhir(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
-<<<<<<< Updated upstream
     if macros::is_excute(agent){
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, true);
     }
@@ -335,26 +330,12 @@ unsafe extern "C" fn rob_appealhir(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn rob_appealhil(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent){
-=======
-    if macros::is_excute(agent) {
-        // macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, true);
-        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, true);
-    }  
-}
-
-// UP TAUNT LEFT
-unsafe extern "C" fn rob_appealhil(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) {
-        // macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, true);
->>>>>>> Stashed changes
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, true);
     }
 }
 
 // SIDE TAUNT RIGHT
 
-<<<<<<< Updated upstream
 unsafe extern "C" fn rob_appealsr(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent){
@@ -369,42 +350,6 @@ unsafe extern "C" fn rob_appealsl(agent: &mut L2CAgentBase) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
     }
 }
-=======
-// unsafe extern "C" fn rob_appealsr(agent: &mut L2CAgentBase) {
-//     frame(agent.lua_state_agent, 1.0);
-//     if macros::is_excute(agent){
-//         WorkModule::off_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BEAM_FLAG_NECK_CONTROL);
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-//     frame(agent.lua_state_agent, 3.0);
-//     if macros::is_excute(agent){
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-//     frame(agent.lua_state_agent, 6.0);
-//     if macros::is_excute(agent){
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-// }
-
-// SIDE TAUNT LEFT
-
-// unsafe extern "C" fn rob_appealsl(agent: &mut L2CAgentBase) {
-//     frame(agent.lua_state_agent, 1.0);
-//     if macros::is_excute(agent){
-//         WorkModule::off_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BEAM_FLAG_NECK_CONTROL);
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-//     frame(agent.lua_state_agent, 3.0);
-//     if macros::is_excute(agent){
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-//     frame(agent.lua_state_agent, 6.0);
-//     if macros::is_excute(agent){
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-//     }
-// }
-
->>>>>>> Stashed changes
 
 //ROB Fighter Frame :)
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
@@ -427,25 +372,16 @@ pub fn install() {
     .sound_acmd("sound_attacks4", rob_sound_s4)
     .game_acmd("game_attackdash", rob_attackdash)
     .game_acmd("game_attackairf", rob_attackairf)
-<<<<<<< Updated upstream
     .game_acmd("game_attackairlw",rob_attackairlw)
-=======
-    .game_acmd("game_attackairlw", rob_attackairlw)
->>>>>>> Stashed changes
     .game_acmd("game_throwhi", rob_throwhi)
     .game_acmd("game_throwf", rob_throwf)
     .game_acmd("game_throwb", rob_throwb)
     .game_acmd("game_appealhir", rob_appealhir)
     .game_acmd("game_appealhil", rob_appealhil)
-<<<<<<< Updated upstream
     .game_acmd("game_appealsr", rob_appealsr)
     .game_acmd("game_appealsl", rob_appealsl)
     .sound_acmd("game_sound_s4", rob_sound_s4)
     .effect_acmd("game_effect_s4", rob_effect_s4)
-=======
-    // .game_acmd("game_appealsr", rob_appealsr)
-    // .game_acmd("game_appealsl", rob_appealsl)
->>>>>>> Stashed changes
         .on_line(Main, rob_frame)
         .install();
 }
