@@ -24,5 +24,5 @@ pub fn main() {
     luigi::install();
     robot::install();
     common::install();
-    smashline::clone_weapon("miiswordsman", "wave", "pacman", "ghost", true);
+    smashline::clone_weapon("mario", "fireball", "pacman", "ghost", true);
 }

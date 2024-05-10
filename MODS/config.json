@@ -1,31 +1,128 @@
 {
     "new-dir-files": {
         "fighter/pacman/c00": [
-            "fighter/pacman/motion/ghost/c00/motion_list.bin"
+            "fighter/pacman/motion/ghost/c00/motion_list.bin",
+            "fighter/pacman/motion/ghost/c00/main.nuanmb",
+            "fighter/pacman/motion/ghost/c00/update.prc",
+            "fighter/pacman/model/ghost/c00/dark_model.numatb",
+            "fighter/pacman/model/ghost/c00/light_model.numatb",
+            "fighter/pacman/model/ghost/c00/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c00/model.nuanmb",
+            "fighter/pacman/model/ghost/c00/model.nuhlpb",
+            "fighter/pacman/model/ghost/c00/model.numatb",
+            "fighter/pacman/model/ghost/c00/model.numdlb",
+            "fighter/pacman/model/ghost/c00/model.nusktb",
+            "fighter/pacman/model/ghost/c00/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c00/model.xmb"
         ],
         "fighter/pacman/c01": [
-            "fighter/pacman/motion/ghost/c01/motion_list.bin"
+            "fighter/pacman/motion/ghost/c01/motion_list.bin",
+            "fighter/pacman/motion/ghost/c01/main.nuanmb",
+            "fighter/pacman/motion/ghost/c01/update.prc",
+            "fighter/pacman/model/ghost/c01/dark_model.numatb",
+            "fighter/pacman/model/ghost/c01/light_model.numatb",
+            "fighter/pacman/model/ghost/c01/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c01/model.nuanmb",
+            "fighter/pacman/model/ghost/c01/model.nuhlpb",
+            "fighter/pacman/model/ghost/c01/model.numatb",
+            "fighter/pacman/model/ghost/c01/model.numdlb",
+            "fighter/pacman/model/ghost/c01/model.nusktb",
+            "fighter/pacman/model/ghost/c01/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c01/model.xmb"
         ],
         "fighter/pacman/c02": [
-            "fighter/pacman/motion/ghost/c02/motion_list.bin"
+            "fighter/pacman/motion/ghost/c02/motion_list.bin",
+            "fighter/pacman/motion/ghost/c02/main.nuanmb",
+            "fighter/pacman/motion/ghost/c02/update.prc",
+            "fighter/pacman/model/ghost/c02/dark_model.numatb",
+            "fighter/pacman/model/ghost/c02/light_model.numatb",
+            "fighter/pacman/model/ghost/c02/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c02/model.nuanmb",
+            "fighter/pacman/model/ghost/c02/model.nuhlpb",
+            "fighter/pacman/model/ghost/c02/model.numatb",
+            "fighter/pacman/model/ghost/c02/model.numdlb",
+            "fighter/pacman/model/ghost/c02/model.nusktb",
+            "fighter/pacman/model/ghost/c02/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c02/model.xmb"
         ],
         "fighter/pacman/c03": [
-            "fighter/pacman/motion/ghost/c03/motion_list.bin"
+            "fighter/pacman/motion/ghost/c03/motion_list.bin",
+            "fighter/pacman/motion/ghost/c03/main.nuanmb",
+            "fighter/pacman/motion/ghost/c03/update.prc",
+            "fighter/pacman/model/ghost/c03/dark_model.numatb",
+            "fighter/pacman/model/ghost/c03/light_model.numatb",
+            "fighter/pacman/model/ghost/c03/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c03/model.nuanmb",
+            "fighter/pacman/model/ghost/c03/model.nuhlpb",
+            "fighter/pacman/model/ghost/c03/model.numatb",
+            "fighter/pacman/model/ghost/c03/model.numdlb",
+            "fighter/pacman/model/ghost/c03/model.nusktb",
+            "fighter/pacman/model/ghost/c03/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c03/model.xmb"
         ],
         "fighter/pacman/c04": [
-            "fighter/pacman/motion/ghost/c04/motion_list.bin"
+            "fighter/pacman/motion/ghost/c04/motion_list.bin",
+            "fighter/pacman/motion/ghost/c04/main.nuanmb",
+            "fighter/pacman/motion/ghost/c04/update.prc",
+            "fighter/pacman/model/ghost/c04/dark_model.numatb",
+            "fighter/pacman/model/ghost/c04/light_model.numatb",
+            "fighter/pacman/model/ghost/c04/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c04/model.nuanmb",
+            "fighter/pacman/model/ghost/c04/model.nuhlpb",
+            "fighter/pacman/model/ghost/c04/model.numatb",
+            "fighter/pacman/model/ghost/c04/model.numdlb",
+            "fighter/pacman/model/ghost/c04/model.nusktb",
+            "fighter/pacman/model/ghost/c04/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c04/model.xmb"
         ],
         "fighter/pacman/c05": [
-            "fighter/pacman/motion/ghost/c05/motion_list.bin"
+            "fighter/pacman/motion/ghost/c05/motion_list.bin",
+            "fighter/pacman/motion/ghost/c05/main.nuanmb",
+            "fighter/pacman/motion/ghost/c05/update.prc",
+            "fighter/pacman/model/ghost/c05/dark_model.numatb",
+            "fighter/pacman/model/ghost/c05/light_model.numatb",
+            "fighter/pacman/model/ghost/c05/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c05/model.nuanmb",
+            "fighter/pacman/model/ghost/c05/model.nuhlpb",
+            "fighter/pacman/model/ghost/c05/model.numatb",
+            "fighter/pacman/model/ghost/c05/model.numdlb",
+            "fighter/pacman/model/ghost/c05/model.nusktb",
+            "fighter/pacman/model/ghost/c05/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c05/model.xmb"
         ],
         "fighter/pacman/c06": [
-            "fighter/pacman/motion/ghost/c06/motion_list.bin"
+            "fighter/pacman/motion/ghost/c06/motion_list.bin",
+            "fighter/pacman/motion/ghost/c06/main.nuanmb",
+            "fighter/pacman/motion/ghost/c66/update.prc",
+            "fighter/pacman/model/ghost/c06/dark_model.numatb",
+            "fighter/pacman/model/ghost/c06/light_model.numatb",
+            "fighter/pacman/model/ghost/c06/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c06/model.nuanmb",
+            "fighter/pacman/model/ghost/c06/model.nuhlpb",
+            "fighter/pacman/model/ghost/c06/model.numatb",
+            "fighter/pacman/model/ghost/c06/model.numdlb",
+            "fighter/pacman/model/ghost/c06/model.nusktb",
+            "fighter/pacman/model/ghost/c06/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c06/model.xmb"
         ],
         "fighter/pacman/c07": [
-            "fighter/pacman/motion/ghost/c07/motion_list.bin"
+            "fighter/pacman/motion/ghost/c07/motion_list.bin",
+            "fighter/pacman/motion/ghost/c07/main.nuanmb",
+            "fighter/pacman/motion/ghost/c07/update.prc",
+            "fighter/pacman/model/ghost/c07/dark_model.numatb",
+            "fighter/pacman/model/ghost/c07/light_model.numatb",
+            "fighter/pacman/model/ghost/c07/metamon_model.numatb",
+            "fighter/pacman/model/ghost/c07/model.nuanmb",
+            "fighter/pacman/model/ghost/c07/model.nuhlpb",
+            "fighter/pacman/model/ghost/c07/model.numatb",
+            "fighter/pacman/model/ghost/c07/model.numdlb",
+            "fighter/pacman/model/ghost/c07/model.nusktb",
+            "fighter/pacman/model/ghost/c07/model.nusrcmdlb",
+            "fighter/pacman/model/ghost/c07/model.xmb"
         ],
         "fighter/pacman/cmn": [
-            "effect/fighter/pacman/transplant/shulk/ef_shulk.eff"
+            "effect/fighter/pacman/transplant/shulk/ef_shulk.eff",
+            "effect/fighter/pacman/transplant/mario/ef_mario.eff"
         ]
     }
 }
