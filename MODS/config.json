@@ -1,5 +1,9 @@
 {
     "new-dir-files": {
+        "fighter/pacman/cmn": [
+            "effect/fighter/pacman/transplant/shulk/ef_shulk.eff",
+            "effect/fighter/pacman/transplant/mario/ef_mario.eff"
+        ],
         "fighter/pacman/c00": [
             "fighter/pacman/motion/ghost/c00/motion_list.bin",
             "fighter/pacman/motion/ghost/c00/main.nuanmb",
@@ -119,10 +123,7 @@
             "fighter/pacman/model/ghost/c07/model.nusktb",
             "fighter/pacman/model/ghost/c07/model.nusrcmdlb",
             "fighter/pacman/model/ghost/c07/model.xmb"
-        ],
-        "fighter/pacman/cmn": [
-            "effect/fighter/pacman/transplant/shulk/ef_shulk.eff",
-            "effect/fighter/pacman/transplant/mario/ef_mario.eff"
         ]
+
     }
 }
