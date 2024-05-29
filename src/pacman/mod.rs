@@ -16,7 +16,9 @@ use std::convert::TryInto;
 
 pub const SITUATION_KIND:                  i32 = 0x16;
 pub const PREV_SITUATION_KIND:             i32 = 0x17;
+pub const STATUS_KIND:                     i32 = 0xB;
 const FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH : i32 = 0x200000EC;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE : i32 = 0x100000C9;
 
 //OPFF
 unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
@@ -25,9 +27,78 @@ unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
     }
 }
 
+//ON START
+unsafe extern "C" fn pacman_start_frame(fighter: &mut L2CFighterCommon) {
+    unsafe {
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);
+    }
+}
+
 
 
 // -------GROUND-------
+
+//JAB
+unsafe extern "C" fn pacman_attack11(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 361, 25, 0, 25, 1.5, 0.0, 7.5, 5.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 361, 25, 0, 20, 1.7, 0.0, 7.5, 8.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 2.0, 180, 15, 0, 20, 2.0, 0.0, 7.5, 11.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 2.0, 361, 15, 0, 20, 2.0, 0.0, 7.5, 11.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 2, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 3, 4.0, false);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_RESTART);
+    }
+}
+unsafe extern "C" fn pacman_attack12(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 361, 35, 0, 35, 2.5, 0.0, 7.5, 1.0, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 361, 35, 0, 30, 2.8, 0.0, 7.5, 4.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 2.0, 361, 30, 0, 30, 3.0, 0.0, 7.5, 8.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+    }
+}
+unsafe extern "C" fn pacman_attack13(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 361, 106, 0, 45, 4.0, 0.0, 8.0, 7.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.0, 361, 106, 0, 45, 5.0, 0.0, 8.0, 13.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
 
 // DASH ATTACK
 unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
@@ -346,74 +417,217 @@ unsafe extern "C" fn pacman_attackairhi(agent: &mut L2CAgentBase) {
 // ------SPECIALS------
 
 //NEUTRAL B
-unsafe extern "C" fn pacman_effect_specialnstart(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 4.0);
-    if macros::is_excute(agent) {
-        macros::FOOT_EFFECT(agent, Hash40::new("null"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-    }
+
+//N - PRE
+unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+        0
+    );
+    return 0.into();
 }
-unsafe extern "C" fn pacman_effect_specialnbuster(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("swordr"), 0, 0, 0, 0, 0, 0, 0.7, true);
+
+//N - MAIN
+unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N04"));
+    if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { 
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     }
+    else { 
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_start"), 0.0, 1.0, false, 0.0, false, false);
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND_CLIFF_STOP));
+    }
+      
+      fighter.fastshift(L2CValue::Ptr(pacman_specialn_main_loop as *const () as _ ));
+      return 0.into()
 }
-unsafe extern "C" fn pacman_effect_specialnjump(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("footr"), 0, 0, 0, 0, 0, 0, 0.4, true);
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("footl"), 0, 0, 0, 0, 0, 0, 0.4, true);
+
+//N - MAIN LOOP
+unsafe extern "C" fn pacman_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if MotionModule::is_end(fighter.module_accessor) {
+        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+        }
+        else {
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+        }  
+
+        StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, true); 
+        fighter.fastshift(L2CValue::Ptr(pacman_specialn_end as *const () as _ ));
+        return 0.into()
     }
+
+    return 0.into();
 }
-unsafe extern "C" fn pacman_effect_specialnsmash(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("handr"), 0, 0, 0, 0, 0, 0, 0.4, true);
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("handl"), 0, 0, 0, 0, 0, 0, 0.4, true);
-    }
+
+//N - END
+unsafe extern "C" fn pacman_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
 }
-unsafe extern "C" fn pacman_sound_specialnsmash(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_shulk_special_n05"));
-    }
+
+//HOLD - PRE
+unsafe extern "C" fn pacman_specialn_hold_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+        0
+    );
+    return 0.into();
 }
-unsafe extern "C" fn pacman_sound_specialnjump(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_shulk_special_n01"));
-    }
+
+//HOLD - MAIN
+unsafe extern "C" fn pacman_specialn_hold_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), true);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), true);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), true);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), true);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), true);
+    let item_choice = 0;
+    WorkModule::set_int(fighter.module_accessor, item_choice, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+
+    fighter.fastshift(L2CValue::Ptr(pacman_specialn_hold_main_loop as *const () as _ ));
+    return 0.into()
 }
-unsafe extern "C" fn pacman_sound_specialnbuster(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_shulk_special_n04"));
+
+//HOLD - MAIN LOOP
+unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+    let ypos = ControlModule::get_stick_y(fighter.module_accessor);
+    let selected_scale = Vector3f{x: 1.5, y: 1.5, z: 1.0};
+
+    if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
+        if MotionModule::is_end(fighter.module_accessor) {
+            if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+            }
+            else {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+            }   
+        }
+
+        //key
+        if xpos == 0.0 && ypos > 0.0 {
+            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("key"), &selected_scale);
+            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N08"));
+            WorkModule::set_int(fighter.module_accessor, 1, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
+
+        //apple
+        else if xpos > 0.0 && ypos > 0.0 {
+            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("apple"), &selected_scale);
+            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N04"));
+            WorkModule::set_int(fighter.module_accessor, 2, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
+
+        //melon
+        else if xpos > 0.0 && ypos < 0.0 {
+            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("melon"), &selected_scale);
+            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N05"));
+            WorkModule::set_int(fighter.module_accessor, 3, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
+
+        //galaxian
+        else if xpos < 0.0 && ypos < 0.0 {
+            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("galaxian"), &selected_scale);
+            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N06"));
+            WorkModule::set_int(fighter.module_accessor, 4, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
+
+        //bell
+        else if xpos < 0.0 && ypos > 0.0 {
+            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("bell"), &selected_scale);
+            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N07"));
+            WorkModule::set_int(fighter.module_accessor, 5, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
+        else {
+            WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        }
     }
+    else {
+        //key
+        if  WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 1 {
+            ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANKEY), 0, 0, false, false);
+        }
+
+        //apple
+        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 2 {
+            ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANAPPLE), 0, 0, false, false);
+        }
+
+        //melon
+        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 3 {
+            ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANMELON), 0, 0, false, false);
+        }
+
+        //galaxian
+        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 4 {
+            let rand = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
+            if rand != 6 {
+                ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBOSS), 0, 0, false, false);
+            }
+            else {
+                ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_BOSSGALAGA), 0, 0, false, false);
+            }
+        }
+
+        //bell
+        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 5 {
+            ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBELL), 0, 0, false, false);
+        }
+
+        else {
+            if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_cancel"), 0.0, 1.0, false, 0.0, false, false);
+                fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
+                return 1.into()
+            }
+            else {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_cancel"), 0.0, 1.0, false, 0.0, false, false);
+                fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
+                return 1.into()
+            }   
+        }
+
+        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
+            return 1.into();
+        }
+        else {
+            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
+            return 1.into();
+        }   
+    }
+
+    return 0.into()
 }
-unsafe extern "C" fn pacman_effect_specialnspeed(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("footr"), 0, 0, 0, 0, 0, 0, 0.4, true);
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("footl"), 0, 0, 0, 0, 0, 0, 0.4, true);
-    }
-}
-unsafe extern "C" fn pacman_sound_specialnspeed(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_shulk_special_n02"));
-    }
-}
-unsafe extern "C" fn pacman_effect_specialnshield(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_equip_end"), Hash40::new("waist"), 0, 0, 0, 0, 0, 0, 1, true);
-    }
-}
-unsafe extern "C" fn pacman_sound_specialnshield(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_shulk_special_n03"));
-    }
+
+//HOLD - END
+unsafe extern "C" fn pacman_specialn_hold_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);
+    ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);
+
+    return 0.into();
 }
 
 
@@ -628,14 +842,6 @@ unsafe extern "C" fn pacman_specialsdash(agent: &mut L2CAgentBase) {
 }
 }
 
-// UP B
-unsafe extern "C" fn pacman_specialhistart(agent: &mut L2CAgentBase) {
-    WorkModule::is_flag(agent.module_accessor, *FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_SPECIAL_HI_TRAMPOLINE_JUMP);
-        if macros::is_excute(agent) {
-	    ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_TRAMPOLINE, false, *FIGHTER_PACMAN_GENERATE_ARTICLE_TRAMPOLINE);
-    }
-}
-
 
 // ------THROWS------
 
@@ -670,6 +876,19 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     }
 }
 
+//GRAB EFFECT
+unsafe extern "C" fn pacman_effect_catch(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) {
+        for _ in 0..600 {
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
+            macros::LAST_EFFECT_SET_COLOR(agent, *FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE, 0, 0);
+            EffectModule::set_custom_uv_offset(agent.module_accessor, (*FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE).try_into().unwrap(), std::ptr::null(), 0);
+            wait(agent.lua_state_agent, 60.0);
+        }
+    }
+}
+
 //DASH GRAB
 unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 13.0);
@@ -698,17 +917,6 @@ unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
         GrabModule::set_rebound(agent.module_accessor, false);
-    }
-}
-
-//GRAB EFFECT
-unsafe extern "C" fn pacman_effect_catch(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 4.0);
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
-        macros::LAST_EFFECT_SET_COLOR(agent, *FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE, 0, 0);
-        EffectModule::set_custom_uv_offset(agent.module_accessor, (*FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE).try_into().unwrap(), std::ptr::null(), 0);
     }
 }
 
@@ -838,38 +1046,7 @@ unsafe extern "C" fn pacman_throwf(agent: &mut L2CAgentBase) {
 // -----------TAUNTS---------------
 
 // SIDE TAUNT
-unsafe extern "C" fn pacman_appealsr(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 26.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, *BATTLE_OBJECT_ID_INVALID as u32);
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 8.0, 361, 60, 0, 75, 9.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-    }
-    frame(agent.lua_state_agent, 44.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, *BATTLE_OBJECT_ID_INVALID as u32);
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 8.0, 361, 60, 0, 75, 9.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-    }
-    frame(agent.lua_state_agent, 62.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, *BATTLE_OBJECT_ID_INVALID as u32);
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 8.0, 361, 60, 0, 75, 9.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-    }
-    frame(agent.lua_state_agent, 80.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, *BATTLE_OBJECT_ID_INVALID as u32);
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 8.0, 361, 60, 0, 75, 9.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-    }
-    frame(agent.lua_state_agent, 86.0);
-    if macros::is_excute(agent) {
-        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 2);
-        macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 8.0, 361, 60, 0, 75, 9.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-    }
-    frame(agent.lua_state_agent, 87.0);
-    if macros::is_excute(agent) {
-        AttackModule::clear_all(agent.module_accessor);
-    }
-}
-unsafe extern "C" fn pacman_appealsl(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn pacman_appeal_side(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 26.0);
     if macros::is_excute(agent) {
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, *BATTLE_OBJECT_ID_INVALID as u32);
@@ -923,7 +1100,7 @@ unsafe extern "C" fn pacman_appeallwl(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn bigpacman_start(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 92, 110, 0, 55, 8.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 92, 175, 0, 25, 8.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_appeal_up"), Hash40::new("ghost1"), 0, 5, 0, 0, 0, 0, 1, true);
         for _ in 0..100 {
             macros::PLAY_SE(agent, Hash40::new("se_pacman_appeal_monster_ijike"));
@@ -1038,106 +1215,56 @@ pub unsafe extern "C" fn bigpacman_remove(weapon: &mut smashline::L2CWeaponCommo
 }
 
 
-
-
-
-//-------STATUS--------
-
-
-//PRE
-unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
-    println!("PRE STATUS");
-    StatusModule::init_settings(fighter.module_accessor, smash::app::SituationKind(*SITUATION_KIND_NONE), *FIGHTER_KINETIC_TYPE_UNIQ, (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(), smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), true, *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG, *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT, *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT, 0);
-
-    FighterStatusModuleImpl::set_fighter_status_data(fighter.module_accessor, false, *FIGHTER_TREADED_KIND_NO_REAC, false, false, false, (*FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON | *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N) as u64, 0, (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N).try_into().unwrap(), 0);
-    
+//TRAMPOLINE - PRE
+unsafe extern "C" fn pacman_trampoline_start_pre(weapon: &mut smashline::L2CWeaponCommon) -> L2CValue {
+    StatusModule::init_settings(
+        weapon.module_accessor, 
+        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
+        GROUND_CORRECT_KIND_NONE.into(), 
+        smash::app::GroundCliffCheckKind(0), 
+        false, 
+        0, 
+        0, 
+        0, 
+        0
+    );
     return 0.into();
 }
 
-//MAIN
-unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { //slowing shulk in air when using neutral special
-        println!("MAIN STATUS - AIR");
-        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-      }
-      else { //stopping shulk motion on the ground
-        println!("MAIN STATUS - GROUNDED");
-        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_start"), 0.0, 1.0, false, 0.0, false, false);
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND_CLIFF_STOP));
-      }
-      
-      fighter.sub_shift_status_main(L2CValue::Ptr(pacman_specialn_main_loop as *const () as _ ))
-}
+//TRAMPOLINE - MAIN
+unsafe extern "C" fn pacman_trampoline_start_main(weapon: &mut smashline::L2CWeaponCommon) -> L2CValue {
+    weapon.clear_lua_stack();
+    weapon.push_lua_stack(&mut L2CValue::new_int(0x327ed09d4f));
+    sv_battle_object::notify_event_msc_cmd(weapon.lua_state_agent);
+    weapon.pop_lua_stack(1);
 
-//MAIN LOOP
-unsafe extern "C" fn pacman_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
-    println!("MAIN LOOP STATUS");
-    if CancelModule::is_enable_cancel(fighter.module_accessor) == true {
-
+    if WorkModule::is_flag(weapon.module_accessor, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_DEAD_AREA) {
+        let trampoline_life = WorkModule::get_param_int(weapon.module_accessor, hash40("param_trampoline"), hash40("life"));
+        WorkModule::set_int(weapon.module_accessor, 1, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_INT_RIDER_NUM); 
     }
     else {
-        if fighter.sub_wait_ground_check_common(false.into()).get_bool() {
-            return 1.into();
-        }
-        if fighter.sub_air_check_fall_common().get_bool() {
-            return 1.into();
-        }
+        WorkModule::set_int(weapon.module_accessor, 1, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_INT_RIDER_NUM); 
     }
-    
-    if MotionModule::is_end(fighter.module_accessor) != true {
-    
-        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            println!("CHANGE MOTION TO LOOP - AIR");
-            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_loop"), 0.0, 1.0, false, 0.0, false, false);
-        }
-        else {
-            println!("CHANGE MOTION TO LOOP - GROUNDED");
-            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_loop"), 0.0, 1.0, false, 0.0, false, false);
-        }   
-        //fighter.sub_shift_status_main(L2CValue::Ptr(pacman_specialn_end as *const () as _ ));
-    }
-    
-    if fighter.global_table[PREV_SITUATION_KIND] == *SITUATION_KIND_GROUND {
-    
-        if fighter.global_table[SITUATION_KIND] ==  *SITUATION_KIND_GROUND {
-            if fighter.global_table[PREV_SITUATION_KIND] == *SITUATION_KIND_GROUND {
-                return 0.into();
-            } 
-        }
-        println!("START? - GROUNDED");
-        MotionModule::change_motion_inherit_frame(fighter.module_accessor, Hash40::new("special_n_start"), -1.0, 1.0, 0.0, false, false);
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*FIGHTER_KINETIC_TYPE_GROUND_STOP));
-    }
-    else {
-    
-        if fighter.global_table[PREV_SITUATION_KIND] == *SITUATION_KIND_GROUND {
-            return 0.into();
-        } 
-    
-        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            return 0.into();
-        } 
-        println!("START? - AIR");
-        MotionModule::change_motion_inherit_frame(fighter.module_accessor, Hash40::new("special_air_n_start"), -1.0, 1.0, 0.0, false, false);
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-    }
-    
-    return 0.into();
+    WorkModule::set_int(weapon.module_accessor, 1, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+    WorkModule::off_flag(weapon.module_accessor, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_FLAG_AREA_BODY);
+    let area_frame = WorkModule::get_param_int(weapon.module_accessor, hash40("param_trampoline"), hash40("area_frame"));
+    WorkModule::set_int(weapon.module_accessor, 1, *WEAPON_PACMAN_TRAMPOLINE_INSTANCE_WORK_INT_AREA_BODY_FRAME);
+    weapon.fastshift(L2CValue::Ptr(pacman_trampoline_start_main_loop as *const () as _ ))
 }
 
-//END
-unsafe extern "C" fn pacman_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
-    println!("END STATUS");
-    return 0.into();
+//TRAMPOLINE - MAIN LOOP
+unsafe extern "C" fn pacman_trampoline_start_main_loop(weapon: &mut smashline::L2CWeaponCommon) -> L2CValue {
+    weapon.change_status((*WEAPON_PACMAN_TRAMPOLINE_STATUS_KIND_SHAKE).into(), false.into());
+    return 1.into();
 }
+
 
 pub fn install() {
     Agent::new("pacman")
+        .game_acmd("game_attack11", pacman_attack11)
+        .game_acmd("game_attack12", pacman_attack12)
+        .game_acmd("game_attack13", pacman_attack13)
         .game_acmd("game_attacks3", pacman_attacks3)
         .game_acmd("game_attacks3lw", pacman_attacks3lw)
         .game_acmd("game_attacklw3", pacman_attacklw3)
@@ -1150,18 +1277,6 @@ pub fn install() {
         .game_acmd("game_attackairf", pacman_attackairf)
         .game_acmd("game_attackairhi", pacman_attackairhi)
         .game_acmd("game_specialsdash", pacman_specialsdash)
-        .game_acmd("game_specialhistart", pacman_specialhistart)
-        .effect_acmd("effect_specialnstart", pacman_effect_specialnstart)
-        .effect_acmd("effect_specialnjump", pacman_effect_specialnjump)
-        .effect_acmd("effect_specialnbuster", pacman_effect_specialnbuster)
-        .effect_acmd("effect_specialnshield", pacman_effect_specialnshield)
-        .effect_acmd("effect_specialnsmash", pacman_effect_specialnsmash)
-        .effect_acmd("effect_specialnspeed", pacman_effect_specialnspeed)
-        .sound_acmd("sound_specialnjump", pacman_sound_specialnjump)
-        .sound_acmd("sound_specialnbuster", pacman_sound_specialnbuster)
-        .sound_acmd("sound_specialnshield", pacman_sound_specialnshield)
-        .sound_acmd("sound_specialnsmash", pacman_sound_specialnsmash)
-        .sound_acmd("sound_specialnspeed", pacman_sound_specialnspeed)
         .game_acmd("game_catch", pacman_catch)
         .game_acmd("game_catchdash", pacman_catchdash)
         .effect_acmd("effect_catch", pacman_effect_catch)
@@ -1170,15 +1285,19 @@ pub fn install() {
         .game_acmd("game_throwlw", pacman_throwlw)
         .game_acmd("game_throwb", pacman_throwb)
         .game_acmd("game_throwf", pacman_throwf)
-        .game_acmd("game_appealsr", pacman_appealsr)
-        .game_acmd("game_appealsl", pacman_appealsl)
+        .game_acmd("game_appealsr", pacman_appeal_side)
+        .game_acmd("game_appealsl", pacman_appeal_side)
         .game_acmd("game_appeallwr", pacman_appeallwr)
         .game_acmd("game_appeallwl", pacman_appeallwl)
         .game_acmd("game_attackdash", pacman_attackdash)
         .on_line(Main, pacman_frame)
+        .on_start(pacman_start_frame)
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_end)
+        .status(Pre, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_pre)
+        .status(Main, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_main)
+        .status(End, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_end)
         .install();
     Agent::new("pacman_firehydrant")
         .game_acmd("game_fall", hydrant_fall)
@@ -1188,5 +1307,9 @@ pub fn install() {
         .status(Init, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_init)
         .status(Pre, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_pre)
         .status(Main, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_main)
+        .install();
+    Agent::new("pacman_trampoline")
+        .status(Pre, *WEAPON_PACMAN_TRAMPOLINE_STATUS_KIND_START, pacman_trampoline_start_pre)
+        .status(Main, *WEAPON_PACMAN_TRAMPOLINE_STATUS_KIND_START, pacman_trampoline_start_main)
         .install();
 }

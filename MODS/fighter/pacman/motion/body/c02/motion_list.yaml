@@ -1473,6 +1473,22 @@ list:
       xlu_end: 0
       cancel_frame: 20
       no_stop_intp: false
+    special_n:
+    game_script: game_specialn
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialnstart.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialnstart
+      - sound_specialnstart
+      - effect_specialnstart
+    extra:
+      xlu_start: 0
+      xlu_end: 0
+      cancel_frame: 0
+      no_stop_intp: false
   special_n_start:
     game_script: game_specialnstart
     flags: "0x80"
@@ -1616,6 +1632,134 @@ list:
       xlu_start: 0
       xlu_end: 0
       cancel_frame: 0
+      no_stop_intp: false
+    special_air_n_start:
+    game_script: game_specialairnstart
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialairnstart.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnstart
+      - sound_specialairnstart
+      - effect_specialairnstart
+    extra:
+      xlu_start: 0
+      xlu_end: 0
+      cancel_frame: 0
+      no_stop_intp: false
+  special_air_n_loop:
+    game_script: game_specialairnloop
+    flags: "0x2"
+    transition: 0
+    animations:
+      - name: d00specialairnhold.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnloop
+      - sound_specialairnloop
+      - effect_specialairnloop
+    extra:
+      xlu_start: 0
+      xlu_end: 0
+      cancel_frame: 0
+      no_stop_intp: false
+  special_air_n_end:
+    game_script: game_specialairnend
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnend
+      - sound_specialairnend
+      - effect_specialairnend
+    extra:
+      xlu_start: 0
+      xlu_end: 0
+      cancel_frame: 1
+      no_stop_intp: false
+  special_air_n_jump:
+    game_script: game_specialairnjump
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnjump
+      - sound_specialairnjump
+      - effect_specialairnjump
+    extra:
+      xlu_start: 1
+      xlu_end: 15
+      cancel_frame: 10
+      no_stop_intp: false
+  special_air_n_speed:
+    game_script: game_specialairnspeed
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnspeed
+      - sound_specialairnspeed
+      - effect_specialairnspeed
+    extra:
+      xlu_start: 1
+      xlu_end: 15
+      cancel_frame: 10
+      no_stop_intp: false
+  special_air_n_shield:
+    game_script: game_specialairnshield
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnshield
+      - sound_specialairnshield
+      - effect_specialairnshield
+    extra:
+      xlu_start: 1
+      xlu_end: 15
+      cancel_frame: 10
+      no_stop_intp: false
+  special_air_n_buster:
+    game_script: game_specialairnbuster
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnbuster
+      - sound_specialairnbuster
+      - effect_specialairnbuster
+    extra:
+      xlu_start: 1
+      xlu_end: 15
+      cancel_frame: 10
+      no_stop_intp: false
+  special_air_n_smash:
+    game_script: game_specialairnsmash
+    flags: "0x80"
+    transition: 0
+    animations:
+      - name: d00specialncancel.nuanmb
+        unk: 0
+    scripts:
+      - expression_specialairnsmash
+      - sound_specialairnsmash
+      - effect_specialairnsmash
+    extra:
+      xlu_start: 1
+      xlu_end: 15
+      cancel_frame: 10
       no_stop_intp: false
   special_air_n_hold:
     game_script: game_specialairnhold
