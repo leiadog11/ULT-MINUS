@@ -16,6 +16,7 @@
 mod pacman;
 mod luigi;
 mod robot;
+mod ganon;
 mod common;
 
 #[skyline::main(name = "ult_minus")]
@@ -23,5 +24,6 @@ pub fn main() {
     pacman::install();
     luigi::install();
     robot::install();
+    ganon::install();
     common::install();
 }

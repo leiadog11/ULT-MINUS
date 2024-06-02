@@ -28,7 +28,7 @@ unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
 }
 
 //ON START
-unsafe extern "C" fn pacman_start_frame(fighter: &mut L2CFighterCommon) {
+unsafe extern "C" fn pacman_start(fighter: &mut L2CFighterCommon) {
     unsafe {
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
@@ -1307,7 +1307,7 @@ pub fn install() {
         .game_acmd("game_appeallwl", pacman_appeallwl)
         .game_acmd("game_attackdash", pacman_attackdash)
         .on_line(Main, pacman_frame)
-        .on_start(pacman_start_frame)
+        .on_start(pacman_start)
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_end)
