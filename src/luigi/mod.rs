@@ -1015,6 +1015,31 @@ unsafe extern "C" fn luigi_guardon(agent: &mut L2CAgentBase) {
     }
 }
 
+
+//STATUS
+
+//FIREBALL PRE
+unsafe extern "C" fn luigi_fireball_start_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    StatusModule::init_settings(
+        weapon.module_accessor, 
+        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
+        GROUND_CORRECT_KIND_NONE.into(), 
+        smash::app::GroundCliffCheckKind(0), 
+        false, 
+        0, 
+        0, 
+        0, 
+        0
+    );
+    return 0.into();
+}
+
+
+
+
+
+
 unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
         let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
