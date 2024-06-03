@@ -13,9 +13,14 @@ use {
 
 
 use smashline::Main;
+use std::convert::TryInto;
 use skyline::nn::ro::LookupSymbol;
 use skyline::hooks::{Region,getRegionAddress};
 use skyline::libc::*;
+
+pub const SUB_STATUS2:                     i32 = 0x14;
+pub const SITUATION_KIND:                  i32 = 0x16;
+pub const PREV_SITUATION_KIND:             i32 = 0x17;
 
 static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x675A20;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT : i32 = 0x200000E4;
@@ -1138,6 +1143,177 @@ unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     }
 }
 
+//SIDE B
+
+//CHARGE - PRE
+unsafe extern "C" fn luigi_specials_charge_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_FLOAT,
+        0
+      );
+      
+      FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        0,
+        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_S).try_into().unwrap(),
+        0
+      );
+      
+      return 0.into();
+}
+
+//CHARGE - MAIN
+unsafe extern "C" fn luigi_specials_charge_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    WorkModule::off_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_DISCHARGE);
+    WorkModule::off_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FLASHING);
+    WorkModule::set_float(fighter.module_accessor, 0.0, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+    if !StopModule::is_stop(fighter.module_accessor) {
+        luigi_specials_charge_substatus(fighter);
+    }
+    fighter.global_table[SUB_STATUS2].assign(&L2CValue::Ptr(luigi_specials_charge_substatus as *const () as _));
+    luigi_specials_charge_mot_helper(fighter);
+    fighter.sub_shift_status_main(L2CValue::Ptr(luigi_specials_charge_main_loop as *const () as _))
+}
+
+unsafe extern "C" fn luigi_specials_charge_substatus(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let charge_speed = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("charge_speed_mul"));
+    WorkModule::add_float(fighter.module_accessor, charge_speed, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+    0.into()
+}
+
+unsafe extern "C" fn luigi_specials_charge_mot_helper(fighter: &mut L2CFighterCommon) {
+    if fighter.global_table[SITUATION_KIND].get_i32() != *SITUATION_KIND_GROUND {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+        if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST) {
+            MotionModule::change_motion(
+                fighter.module_accessor,
+                Hash40::new("special_air_s_hold"),
+                1.0,
+                1.0,
+                false,
+                0.0,
+                false,
+                false
+            );
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST);
+        }
+        else {
+            MotionModule::change_motion_inherit_frame(
+                fighter.module_accessor,
+                Hash40::new("special_air_s_hold"),
+                -1.0,
+                1.0,
+                0.0,
+                false,
+                false
+            );
+        }
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_GROUND, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_INT_MTRANS);
+    }
+    else {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND_CLIFF_STOP_ATTACK));
+        if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST) {
+            MotionModule::change_motion(
+                fighter.module_accessor,
+                Hash40::new("special_s_hold"),
+                1.0,
+                1.0,
+                false,
+                0.0,
+                false,
+                false
+            );
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST);
+        }
+        else {
+            MotionModule::change_motion_inherit_frame(
+                fighter.module_accessor,
+                Hash40::new("special_s_hold"),
+                -1.0,
+                1.0,
+                0.0,
+                false,
+                false
+            );
+        }
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_AIR, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_INT_MTRANS);
+    }
+}
+
+//CHARGE - MAIN LOOP
+unsafe extern "C" fn luigi_specials_charge_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if !ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
+        let charge = WorkModule::get_float(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+        let charge_frame = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("charge_frame"));
+
+        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+        let ypos = ControlModule::get_stick_y(fighter.module_accessor);
+
+        //UP ANGLE
+        if xpos == 0.0 && ypos > 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -20.0, y: 0.0, z: 0.0}, 0);
+        }
+        //FORWARD ANGLE
+        else if xpos > 0.0 && ypos == 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
+        }
+        //DOWN ANGLE
+        else if xpos == 0.0 && ypos < 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 20.0, y: 0.0, z: 0.0}, 0);
+        }
+
+
+
+        if charge_frame <= charge {
+            if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+                fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_BREATH).into(), false.into());
+            }
+        }
+        if StatusModule::is_situation_changed(fighter.module_accessor) {
+            luigi_specials_charge_mot_helper(fighter);
+        }
+    }
+    else {
+        fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM).into(), false.into());
+    }
+    0.into()
+}
+
+//CHARGE - END
+unsafe extern "C" fn luigi_specials_charge_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SPECIAL_S_CHARGE_MELEE_NO_RANDOM) != true {
+        let misfire_chance = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("discharge_prob"));
+        let rand = smash::app::sv_math::rand(hash40("fighter"), 10) as u64;
+        if rand != 9 {
+
+        }
+        else {
+          WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_DISCHARGE)
+        }
+    }
+    
+    EffectModule::remove_common(fighter.module_accessor, Hash40::new("charge_max"));
+      
+    return 0.into();
+}
+
+
 unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
     unsafe {
         WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
@@ -1199,6 +1375,9 @@ pub fn install() {
         .game_acmd("game_guardon", luigi_guardon)
         .game_acmd("game_specialn", luigi_specialn)
         .effect_acmd("effect_attackairlw", luigi_effect_attackairlw)
+        .status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)
+        .status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_main)
+        .status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_end)
         .on_line(Main, luigi_frame)
         .on_start(luigi_start)
         .install();
