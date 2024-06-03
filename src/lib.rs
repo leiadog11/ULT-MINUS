@@ -24,10 +24,5 @@ pub fn main() {
     luigi::install();
     robot::install();
     common::install();
-<<<<<<< Updated upstream
-    smashline::clone_weapon("samus", "cshot", "pacman", "gshot", true);
-=======
-    smashline::clone_weapon("mario", "fireball", "pacman", "ghost", true);
     smashline::clone_weapon("miiswordsman", "tornadoshot", "luigi", "tornados", true);
->>>>>>> Stashed changes
 }
