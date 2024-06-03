@@ -167,6 +167,38 @@
             "fighter/pacman/model/body/c07/oldgames2_col.nutexb",
             "fighter/pacman/model/body/c07/pacman_gost_col.nutexb",
             "fighter/pacman/motion/body/c07/update.prc"
+        ],
+        "fighter/luigi/c00": [
+            "fighter/luigi/motion/body/c00/motion_list.yaml",
+            "fighter/luigi/motion/body/c00/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c01": [
+            "fighter/luigi/motion/body/c01/motion_list.yaml",
+            "fighter/luigi/motion/body/c01/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c02": [
+            "fighter/luigi/motion/body/c02/motion_list.yaml",
+            "fighter/luigi/motion/body/c02/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c03": [
+            "fighter/luigi/motion/body/c03/motion_list.yaml",
+            "fighter/luigi/motion/body/c03/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c04": [
+            "fighter/luigi/motion/body/c04/motion_list.yaml",
+            "fighter/luigi/motion/body/c04/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c05": [
+            "fighter/luigi/motion/body/c05/motion_list.yaml",
+            "fighter/luigi/motion/body/c05/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c06": [
+            "fighter/luigi/motion/body/c06/motion_list.yaml",
+            "fighter/luigi/motion/body/c06/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c07": [
+            "fighter/luigi/motion/body/c07/motion_list.yaml",
+            "fighter/luigi/motion/body/c07/e00catchsuck.nuanmb"
         ]
     }
 }

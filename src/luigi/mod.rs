@@ -146,7 +146,6 @@ pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash
             GroundModule::set_collidable(defender_boma, false);
         }
         GroundModule::set_collidable(defender_boma, true);*/
-
     }
 
     original!()(fighter_manager, attacker_id, defender_id, move_type, arg5, move_type_again, fighter)
