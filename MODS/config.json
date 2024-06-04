@@ -1,28 +1,172 @@
 {
     "new-dir-files": {
         "fighter/pacman/c00": [
-            "fighter/pacman/motion/gshot/c00/motion_list.bin"
+            "fighter/pacman/motion/body/c00/motion_list.yaml",
+            "fighter/pacman/model/body/c00/apple.nutexb",
+            "fighter/pacman/model/body/c00/bell2.nutexb",
+            "fighter/pacman/model/body/c00/melon.nutexb",
+            "fighter/pacman/model/body/c00/galaxian.nutexb",
+            "fighter/pacman/model/body/c00/key.nutexb",
+            "fighter/pacman/model/body/c00/model.nusktb",
+            "fighter/pacman/model/body/c00/model.nuanmb",
+            "fighter/pacman/model/body/c00/model.numshb",
+            "fighter/pacman/model/body/c00/model.numatb",
+            "fighter/pacman/model/body/c00/model.numdlb",
+            "fighter/pacman/model/body/c00/model.numshexb",
+            "fighter/pacman/model/body/c00/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c00/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c00/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c00/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c00/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c00/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c00/update.prc"
         ],
         "fighter/pacman/c01": [
-            "fighter/pacman/motion/gshot/c01/motion_list.bin"
+            "fighter/pacman/motion/body/c01/motion_list.yaml",
+            "fighter/pacman/model/body/c01/apple.nutexb",
+            "fighter/pacman/model/body/c01/bell2.nutexb",
+            "fighter/pacman/model/body/c01/melon.nutexb",
+            "fighter/pacman/model/body/c01/galaxian.nutexb",
+            "fighter/pacman/model/body/c01/key.nutexb",
+            "fighter/pacman/model/body/c01/model.nusktb",
+            "fighter/pacman/model/body/c01/model.nuanmb",
+            "fighter/pacman/model/body/c01/model.numshb",
+            "fighter/pacman/model/body/c01/model.numatb",
+            "fighter/pacman/model/body/c01/model.numdlb",
+            "fighter/pacman/model/body/c01/model.numshexb",
+            "fighter/pacman/model/body/c01/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c01/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c01/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c01/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c01/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c01/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c01/update.prc"
         ],
         "fighter/pacman/c02": [
-            "fighter/pacman/motion/gshot/c02/motion_list.bin"
+            "fighter/pacman/motion/body/c02/motion_list.yaml",
+            "fighter/pacman/model/body/c02/apple.nutexb",
+            "fighter/pacman/model/body/c02/bell2.nutexb",
+            "fighter/pacman/model/body/c02/melon.nutexb",
+            "fighter/pacman/model/body/c02/galaxian.nutexb",
+            "fighter/pacman/model/body/c02/key.nutexb",
+            "fighter/pacman/model/body/c02/model.nusktb",
+            "fighter/pacman/model/body/c02/model.nuanmb",
+            "fighter/pacman/model/body/c02/model.numshb",
+            "fighter/pacman/model/body/c02/model.numatb",
+            "fighter/pacman/model/body/c02/model.numdlb",
+            "fighter/pacman/model/body/c02/model.numshexb",
+            "fighter/pacman/model/body/c02/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c02/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c02/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c02/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c02/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c02/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c02/update.prc"
         ],
         "fighter/pacman/c03": [
-            "fighter/pacman/motion/gshot/c03/motion_list.bin"
+            "fighter/pacman/motion/body/c03/motion_list.yaml",
+            "fighter/pacman/model/body/c03/apple.nutexb",
+            "fighter/pacman/model/body/c03/bell2.nutexb",
+            "fighter/pacman/model/body/c03/melon.nutexb",
+            "fighter/pacman/model/body/c03/galaxian.nutexb",
+            "fighter/pacman/model/body/c03/key.nutexb",
+            "fighter/pacman/model/body/c03/model.nusktb",
+            "fighter/pacman/model/body/c03/model.nuanmb",
+            "fighter/pacman/model/body/c03/model.numshb",
+            "fighter/pacman/model/body/c03/model.numatb",
+            "fighter/pacman/model/body/c03/model.numdlb",
+            "fighter/pacman/model/body/c03/model.numshexb",
+            "fighter/pacman/model/body/c03/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c03/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c03/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c03/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c03/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c03/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c03/update.prc"
         ],
         "fighter/pacman/c04": [
-            "fighter/pacman/motion/gshot/c04/motion_list.bin"
+            "fighter/pacman/motion/body/c04/motion_list.yaml",
+            "fighter/pacman/model/body/c04/apple.nutexb",
+            "fighter/pacman/model/body/c04/bell2.nutexb",
+            "fighter/pacman/model/body/c04/melon.nutexb",
+            "fighter/pacman/model/body/c04/galaxian.nutexb",
+            "fighter/pacman/model/body/c04/key.nutexb",
+            "fighter/pacman/model/body/c04/model.nusktb",
+            "fighter/pacman/model/body/c04/model.nuanmb",
+            "fighter/pacman/model/body/c04/model.numshb",
+            "fighter/pacman/model/body/c04/model.numatb",
+            "fighter/pacman/model/body/c04/model.numdlb",
+            "fighter/pacman/model/body/c04/model.numshexb",
+            "fighter/pacman/model/body/c04/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c04/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c04/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c04/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c04/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c04/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c04/update.prc"
         ],
         "fighter/pacman/c05": [
-            "fighter/pacman/motion/gshot/c05/motion_list.bin"
+            "fighter/pacman/motion/body/c05/motion_list.yaml",
+            "fighter/pacman/model/body/c05/apple.nutexb",
+            "fighter/pacman/model/body/c05/bell2.nutexb",
+            "fighter/pacman/model/body/c05/melon.nutexb",
+            "fighter/pacman/model/body/c05/galaxian.nutexb",
+            "fighter/pacman/model/body/c05/key.nutexb",
+            "fighter/pacman/model/body/c05/model.nusktb",
+            "fighter/pacman/model/body/c05/model.nuanmb",
+            "fighter/pacman/model/body/c05/model.numshb",
+            "fighter/pacman/model/body/c05/model.numatb",
+            "fighter/pacman/model/body/c05/model.numdlb",
+            "fighter/pacman/model/body/c05/model.numshexb",
+            "fighter/pacman/model/body/c05/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c05/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c05/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c05/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c05/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c05/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c05/update.prc"
         ],
         "fighter/pacman/c06": [
-            "fighter/pacman/motion/gshot/c06/motion_list.bin"
+            "fighter/pacman/motion/body/c06/motion_list.yaml",
+            "fighter/pacman/model/body/c06/apple.nutexb",
+            "fighter/pacman/model/body/c06/bell2.nutexb",
+            "fighter/pacman/model/body/c06/melon.nutexb",
+            "fighter/pacman/model/body/c06/galaxian.nutexb",
+            "fighter/pacman/model/body/c06/key.nutexb",
+            "fighter/pacman/model/body/c06/model.nusktb",
+            "fighter/pacman/model/body/c06/model.nuanmb",
+            "fighter/pacman/model/body/c06/model.numshb",
+            "fighter/pacman/model/body/c06/model.numatb",
+            "fighter/pacman/model/body/c06/model.numdlb",
+            "fighter/pacman/model/body/c06/model.numshexb",
+            "fighter/pacman/model/body/c06/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c06/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c06/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c06/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c06/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c06/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c06/update.prc"
         ],
         "fighter/pacman/c07": [
-            "fighter/pacman/motion/gshot/c07/motion_list.bin"
+            "fighter/pacman/motion/body/c07/motion_list.yaml",
+            "fighter/pacman/model/body/c07/apple.nutexb",
+            "fighter/pacman/model/body/c07/bell2.nutexb",
+            "fighter/pacman/model/body/c07/melon.nutexb",
+            "fighter/pacman/model/body/c07/galaxian.nutexb",
+            "fighter/pacman/model/body/c07/key.nutexb",
+            "fighter/pacman/model/body/c07/model.nusktb",
+            "fighter/pacman/model/body/c07/model.nuanmb",
+            "fighter/pacman/model/body/c07/model.numshb",
+            "fighter/pacman/model/body/c07/model.numatb",
+            "fighter/pacman/model/body/c07/model.numdlb",
+            "fighter/pacman/model/body/c07/model.numshexb",
+            "fighter/pacman/model/body/c07/borad_pacman_001_nor.nutexb",
+            "fighter/pacman/model/body/c07/borad_pacman_001_prm.nutexb",
+            "fighter/pacman/model/body/c07/pacman_fairy_001_col.nutexb",
+            "fighter/pacman/model/body/c07/oldgames_col.nutexb",
+            "fighter/pacman/model/body/c07/oldgames2_col.nutexb",
+            "fighter/pacman/model/body/c07/pacman_gost_col.nutexb",
+            "fighter/pacman/motion/body/c07/update.prc"
         ],
         "fighter/pacman/cmn": [
             "effect/fighter/pacman/transplant/samus/ef_samus.eff"
@@ -59,5 +203,37 @@
             "fighter/robot/motion/body/c07/motion_list.yaml", 
             "fighter/robot/motion/body/c07/c00attack13.nuanmb"
         ],
+        "fighter/luigi/c00": [
+            "fighter/luigi/motion/body/c00/motion_list.yaml",
+            "fighter/luigi/motion/body/c00/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c01": [
+            "fighter/luigi/motion/body/c01/motion_list.yaml",
+            "fighter/luigi/motion/body/c01/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c02": [
+            "fighter/luigi/motion/body/c02/motion_list.yaml",
+            "fighter/luigi/motion/body/c02/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c03": [
+            "fighter/luigi/motion/body/c03/motion_list.yaml",
+            "fighter/luigi/motion/body/c03/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c04": [
+            "fighter/luigi/motion/body/c04/motion_list.yaml",
+            "fighter/luigi/motion/body/c04/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c05": [
+            "fighter/luigi/motion/body/c05/motion_list.yaml",
+            "fighter/luigi/motion/body/c05/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c06": [
+            "fighter/luigi/motion/body/c06/motion_list.yaml",
+            "fighter/luigi/motion/body/c06/e00catchsuck.nuanmb"
+        ],
+        "fighter/luigi/c07": [
+            "fighter/luigi/motion/body/c07/motion_list.yaml",
+            "fighter/luigi/motion/body/c07/e00catchsuck.nuanmb"
+        ]
     }
 }
