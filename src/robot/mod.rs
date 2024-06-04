@@ -14,10 +14,9 @@ use skyline::nn::ro::LookupSymbol;
 use skyline::hooks::{Region,getRegionAddress};
 use skyline::libc::*;
 
-// every pummel increase count, whenever grab is called reset count back to 0
-static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x675A20;
-const FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT : i32 = 0x100000C4;
-static mut FIGHTER_ROBOT_CATCHATTACK_INT : i32 = 0;
+
+
+static mut FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK: i32 = 0x100000C4;
 
 
 
@@ -28,9 +27,10 @@ static mut FIGHTER_ROBOT_CATCHATTACK_INT : i32 = 0;
 unsafe extern "C" fn rob_attack12(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 361, 120, 0, 40, 3.4, 0.0, 9.5, 6.5, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.0, 361, 120, 0, 40, 3.4, 0.0, 8.6, 10.5, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
-        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 3.0, 361, 120, 0, 40, 3.6, 0.0, 8.0, 14.0, Some(0.0), Some(8.0), Some(15.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 361, 15, 0, 18, 2.5, 0.0, 10.0, 6.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.0, 361, 15, 0, 18, 2.5, 0.0, 9.0, 10.2, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 3.0, 180, 15, 0, 23, 2.8, 0.0, 8.4, 14.2, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 3.0, 361, 15, 0, 18, 2.8, 0.0, 8.4, 14.2, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
@@ -179,6 +179,7 @@ unsafe extern "C" fn rob_attacklw3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
+    macros::FT_MOTION_RATE(agent, 1.4);
 }
 
 //FORWARD SMASH
@@ -193,8 +194,8 @@ unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
         shield!(agent, *MA_MSC_CMD_SHIELD_ON, *COLLISION_KIND_REFLECTOR, *FIGHTER_ROBOT_REFLECTOR_KIND_ARMSPIN, *FIGHTER_REFLECTOR_GROUP_EXTEND);
         for _ in 0..30 {
             macros::SET_SPEED_EX(agent, 3.5, 0.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.1, 367, 65, 40, 0, 3.3, 0.0, 13.0, 12.0, Some(0.0), Some(6.0), Some(12.0), 0.2, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 0, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.1, 367, 70, 50, 0, 3.3, 0.0, 13.0, -8.0, Some(0.0), Some(6.0), Some(-8.0), 0.2, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 0, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);            wait(agent.lua_state_agent, 4.0);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.3, 367, 65, 40, 0, 3.3, 0.0, 13.0, 12.0, Some(0.0), Some(6.0), Some(12.0), 0.2, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 0, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.3, 367, 70, 50, 0, 3.3, 0.0, 13.0, -8.0, Some(0.0), Some(6.0), Some(-8.0), 0.2, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 0, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);            wait(agent.lua_state_agent, 4.0);
             if macros::is_excute(agent) {
                 AttackModule::clear_all(agent.module_accessor);
             }
@@ -474,10 +475,15 @@ unsafe extern "C" fn rob_attackairb(agent: &mut L2CAgentBase) {
 
 // ------SPECIALS----
 
+
+
 // ------GRABS-------
 
+// ------GRAB--------
+
 unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
-    // pummelCount = 0;
+    println!("got grabbed: {}", WorkModule::get_int(agent.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK));
+    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -497,30 +503,55 @@ unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.3);
 }
 
-// ------PUMMEL------
-unsafe extern "C" fn rob_catchattack(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
+
+// ------DASH GRAB---
+
+unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
+    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        if WorkModule::get_int(agent.module_accessor, FIGHTER_ROBOT_CATCHATTACK_INT) == 3{
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 100.3, 361, 100, 30, 0, 5.0, 0.0, 8.0, 11.0, None, None, None, 2.1, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_HEAD);
-            AttackModule::set_catch_only_all(agent.module_accessor, true, false);
-            WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_CATCHATTACK_INT);
-        }
-        else {
-            WorkModule::on_flag(agent.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.3, 361, 100, 30, 0, 5.0, 0.0, 8.0, 11.0, None, None, None, 2.1, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_HEAD);
-            AttackModule::set_catch_only_all(agent.module_accessor, true, false);
-        }
-        
+        GrabModule::set_rebound(agent.module_accessor, true);
     }
-    wait(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
-        AttackModule::clear_all(agent.module_accessor);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT);
+        macros::CATCH(agent, 0, Hash40::new("top"), 2.2, 0.0, 8.0, 4.0, Some(0.0), Some(8.0), Some(12.2), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.1, 0.0, 8.0, 2.9, Some(0.0), Some(8.0), Some(13.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_A);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+    macros::FT_MOTION_RATE(agent, 1.19);
+}
+
+
+
+// ------PIVOT GRAB--
+
+unsafe extern "C" fn rob_catchturn(agent: &mut L2CAgentBase) {
+    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 2.8, 0.0, 8.0, -2.0, Some(0.0), Some(8.0), Some(-17.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.4, 0.0, 8.0, -0.6, Some(0.0), Some(8.0), Some(-18.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_A);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
 
-// ------PUMMEL COUTNER-----
+
 
 
 
@@ -604,103 +635,68 @@ unsafe extern "C" fn rob_throwb(agent: &mut L2CAgentBase) {
 
 // TAUNTS
 
-// UP TAUNT RIGHT
+// UP TAUNT
 
-unsafe extern "C" fn rob_appealhir(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent){
-        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, true);
-    }
-}
-// UP TAUNT LEFT
-
-unsafe extern "C" fn rob_appealhil(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn rob_appealhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent){
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, true);
     }
 }
 
-// SIDE TAUNT RIGHT
 
-unsafe extern "C" fn rob_appealsr(agent: &mut L2CAgentBase) {
+// SIDE TAUNT
+
+unsafe extern "C" fn rob_appeals(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent){
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
     }
 }
-// SIDE TAUNT LEFT
 
-unsafe extern "C" fn rob_appealsl(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent){
-        // ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_BEAM, false, -1);
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BEAM_FLAG_NECK_CONTROL);
-        
-    }
-    frame(agent.lua_state_agent, 10.0);
-    if macros::is_excute(agent){
-        WorkModule::off_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BEAM_FLAG_NECK_CONTROL);
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BEAM_FLAG_SHOOT);
-    }
-}
 
 //ROB Fighter Frame :)
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
         unsafe {
-            if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT) > 4 { 
-            WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT)
-            }
+           
             }     
     
 }
 
 
-// DETECT HITS
-#[skyline::hook(offset = NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET)]
-pub unsafe fn notify_log_event_collision_hit_replace_robot(fighter_manager: *mut smash::app::FighterManager, attacker_id: u32, defender_id: u32, move_type: f32, arg5: i32, move_type_again: bool, fighter: &mut L2CAgentBase) -> u64 {
-    let attacker_boma = sv_battle_object::module_accessor(attacker_id);
-    let defender_boma = sv_battle_object::module_accessor(defender_id);
-    let attacker_kind = sv_battle_object::kind(attacker_id);
-    let defender_kind = sv_battle_object::kind(defender_id);
-    // if search_hit flag is on
-    if WorkModule::is_flag(attacker_boma, FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_SEARCH_CATCHATTACK_HIT) {
-        println!("pummel hit");
-        WorkModule::add_int(attacker_boma, 1, FIGHTER_ROBOT_CATCHATTACK_INT);
+
+
+unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1)); 
+    let collision_kind = sv_battle_object::kind(Fighter::get_id_from_entry_id(1)); 
+    let category = utility::get_category(&mut *defender_boma);
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            println!("pummel hit!!");
+            if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK ) == 3 {
+                StatusModule::change_status_request_from_script(defender_boma, *FIGHTER_STATUS_KIND_BURY, false);
+                WorkModule::set_int(fighter.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+                println!("Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
+            }
+            else{
+                WorkModule::add_int(fighter.module_accessor,1,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+                println!("reset Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
+            }
+
+           
+        }
     }
-
-    original!()(fighter_manager, attacker_id, defender_id, move_type, arg5, move_type_again, fighter)
-
+    0.into()
 }
     
 
 
-fn find_subsequence(haystack: &[u8], needle: &[u8]) -> Option<usize> {
-    haystack.windows(needle.len()).position(|window| window == needle)
-}
 
-static OFFSET_SEARCH_CODE: &[u8] = &[
-    0xff, 0x03, 0x03, 0xd1, //.text:0000007100675A20                 SUB             SP, SP, #0xC0
-    0xe8, 0x2b, 0x00, 0xfd, //.text:0000007100675A24                 STR             D8, [SP,#0xB0+var_60]
-    0xfc, 0x6f, 0x06, 0xa9, //.text:0000007100675A28                 STP             X28, X27, [SP,#0xB0+var_50]
-    0xfa, 0x67, 0x07, 0xa9, //.text:0000007100675A2C                 STP             X26, X25, [SP,#0xB0+var_40]
-    0xf8, 0x5f, 0x08, 0xa9, //.text:0000007100675A30                 STP             X24, X23, [SP,#0xB0+var_30]
-    0xf6, 0x57, 0x09, 0xa9, //.text:0000007100675A34                 STP             X22, X21, [SP,#0xB0+var_20]
-    0xf4, 0x4f, 0x0a, 0xa9, //.text:0000007100675A38                 STP             X20, X19, [SP,#0xB0+var_10]
-    0xfd, 0x7b, 0x0b, 0xa9, //.text:0000007100675A3C                 STP             X29, X30, [SP,#0xB0+var_s0]
-    0xfd, 0xc3, 0x02, 0x91, //.text:0000007100675A40                 ADD             X29, SP, #0xB0
-    0xfb, 0x03, 0x00, 0xaa  //.text:0000007100675A44                 MOV             X27, X0
-];
 
 
 pub fn install() {
     unsafe {
-        let text_ptr = getRegionAddress(Region::Text) as *const u8;
-        let text_size = (getRegionAddress(Region::Rodata) as usize) - (text_ptr as usize);
-        let text = std::slice::from_raw_parts(text_ptr, text_size);
-        if let Some(offset) = find_subsequence(text, OFFSET_SEARCH_CODE) {
-            NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET = offset;
-        }
+        
     }
     Agent::new("robot")
     .game_acmd("game_attack13", rob_attack13)
@@ -722,24 +718,24 @@ pub fn install() {
     .game_acmd("game_attackairn", rob_attackairn)
     .game_acmd("game_attackairb", rob_attackairb)
     .game_acmd("game_catch", rob_catch)
-    .game_acmd("game_catchattack", rob_catchattack)
+    .game_acmd("game_catchdash", rob_catchdash)
+    .game_acmd("game_catchturn", rob_catchturn)
     .game_acmd("game_throwhi", rob_throwhi)
     .game_acmd("game_throwf", rob_throwf)
     .game_acmd("game_throwb", rob_throwb)
-    .game_acmd("game_appealhir", rob_appealhir)
-    .game_acmd("game_appealhil", rob_appealhil)
-    .game_acmd("game_appealsr", rob_appealsr)
-    .game_acmd("game_appealsl", rob_appealsl)
+    .game_acmd("game_appealhir", rob_appealhi)
+    .game_acmd("game_appealhil", rob_appealhi)
+    .game_acmd("game_appealsr", rob_appeals)
+    .game_acmd("game_appealsl", rob_appeals)
     .sound_acmd("sound_attack13", rob_sound_attack13)
     .sound_acmd("sound_attacks4", rob_sound_attacks4)
     .effect_acmd("effect_attack13", rob_effect_attack13)
     .effect_acmd("effect_attacks4", rob_effect_attacks4)
     .effect_acmd("effect_attackairhi", rob_effect_attackairhi)
     .expression_acmd("expression_attack13", rob_expression_attack13)
+    .status(CheckAttack, *FIGHTER_STATUS_KIND_CATCH_ATTACK, robot_catch_attack_check_attack_status)
         .on_line(Main, rob_frame)
         .install();
         
-        skyline::install_hook!(
-            notify_log_event_collision_hit_replace_robot
-        );
+        
 }
