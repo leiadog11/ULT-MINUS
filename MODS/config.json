@@ -168,6 +168,41 @@
             "fighter/pacman/model/body/c07/pacman_gost_col.nutexb",
             "fighter/pacman/motion/body/c07/update.prc"
         ],
+        "fighter/pacman/cmn": [
+            "effect/fighter/pacman/transplant/samus/ef_samus.eff"
+        ],
+        "fighter/robot/c00": [
+            "fighter/robot/motion/body/c00/motion_list.yaml", 
+            "fighter/robot/motion/body/c00/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c01": [
+            "fighter/robot/motion/body/c01/motion_list.yaml", 
+            "fighter/robot/motion/body/c01/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c02": [
+            "fighter/robot/motion/body/c02/motion_list.yaml", 
+            "fighter/robot/motion/body/c02/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c03": [
+            "fighter/robot/motion/body/c03/motion_list.yaml", 
+            "fighter/robot/motion/body/c03/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c04": [
+            "fighter/robot/motion/body/c04/motion_list.yaml", 
+            "fighter/robot/motion/body/c04/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c05": [
+            "fighter/robot/motion/body/c05/motion_list.yaml", 
+            "fighter/robot/motion/body/c05/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c06": [
+            "fighter/robot/motion/body/c06/motion_list.yaml", 
+            "fighter/robot/motion/body/c06/c00attack13.nuanmb"
+        ],
+        "fighter/robot/c07": [
+            "fighter/robot/motion/body/c07/motion_list.yaml", 
+            "fighter/robot/motion/body/c07/c00attack13.nuanmb"
+        ],
         "fighter/luigi/c00": [
             "fighter/luigi/motion/body/c00/motion_list.yaml",
             "fighter/luigi/motion/body/c00/e00catchsuck.nuanmb"

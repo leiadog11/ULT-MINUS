@@ -6,26 +6,26 @@ use {
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
+    smash2::*,
     smash_script::*,
-    smashline::*
+    smashline::*,
+    smashline::Priority::*
 };
 
 
 
 use smashline::Main;
+use std::convert::TryInto;
 use skyline::nn::ro::LookupSymbol;
 use skyline::hooks::{Region,getRegionAddress};
 use skyline::libc::*;
 
-static mut NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET : usize = 0x675A20;
-const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT : i32 = 0x200000E4;
-const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_UP_SMASH_HIT: i32 = 0x200000E5;
-const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_ATTACK_AIR_N_HIT: i32 = 0x200000E7;
-//const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_SPECIAL_HI_SOUR_HIT: i32 = 0x200000E8;
-const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_SPECIAL_N : i32 = 0x200000E8;
+pub const SUB_STATUS2:                     i32 = 0x14;
+pub const SITUATION_KIND:                  i32 = 0x16;
+
+const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_SPECIAL_N : i32 = 0x200000E4;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW : i32 = 0x100000C2;
 
-//changed
 
 //-------GROUND----------
 
@@ -57,11 +57,11 @@ unsafe extern "C" fn luigi_attack12(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 361, 20, 0, 25, 2.8, 0.0, 5.8, 9.5, None, None, None, 1.23, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 2, 0, Hash40::new("top"), 2.0, 361, 20, 0, 25, 4.0, 0.0, 6.2, 14.0, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
         AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
-        CancelModule::enable_cancel(agent.module_accessor);
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        CancelModule::enable_cancel(agent.module_accessor);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
     }
 }
@@ -84,7 +84,7 @@ unsafe extern "C" fn luigi_attacks3lw(agent: &mut L2CAgentBase) {
 //UP TILT
 unsafe extern "C" fn luigi_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
-    macros::FT_MOTION_RATE(agent, 0.4);
+    macros::FT_MOTION_RATE(agent, 0.45);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 6.0, 100, 150, 0, 8, 3.3, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 1, 0, Hash40::new("arml"), 6.0, 100, 150, 0, 8, 4.3, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
@@ -97,8 +97,6 @@ unsafe extern "C" fn luigi_attackhi3(agent: &mut L2CAgentBase) {
 }
 // DOWN TILT 
 unsafe extern "C" fn luigi_attacklw3(agent: &mut L2CAgentBase) {
-    /*println!("Count: {}", WorkModule::get_int(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW));
-    println!("Flag: {}", WorkModule::is_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT));*/
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         if  WorkModule::get_int(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW) == 2 {
@@ -112,43 +110,12 @@ unsafe extern "C" fn luigi_attacklw3(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 5.0, 361, 72, 0, 32, 4.8, 3.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
             macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 5.0, 361, 72, 0, 32, 3.8, 2.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
             AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
-            WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT);
         }
     }
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-}
-
-
-//DETECT HITS
-#[skyline::hook(offset = NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET)]
-pub unsafe fn notify_log_event_collision_hit_replace(fighter_manager: *mut smash::app::FighterManager, attacker_id: u32, defender_id: u32, move_type: f32, arg5: i32, move_type_again: bool, fighter: &mut L2CAgentBase) -> u64 {
-    let attacker_boma = sv_battle_object::module_accessor(attacker_id);
-    let defender_boma = sv_battle_object::module_accessor(defender_id);
-    let attacker_kind = sv_battle_object::kind(attacker_id);
-    let defender_kind = sv_battle_object::kind(defender_id);
-    if WorkModule::is_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT) {
-        WorkModule::add_int(attacker_boma, 1, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
-        WorkModule::off_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_DOWN_TILT_HIT);
-    }
-    else if WorkModule::is_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_ATTACK_AIR_N_HIT) {
-        WorkModule::set_int(attacker_boma, 1, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
-    }
-    /*else if WorkModule::is_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_SPECIAL_HI_SOUR_HIT) {
-        if MotionModule::motion_kind(attacker_boma) == hash40("fall_special") {
-            StatusModule::change_status_request_from_script(attacker_boma, FIGHTER_STATUS_KIND_FALL.into(), false.into());
-        }
-    }*/
-    else if WorkModule::is_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_UP_SMASH_HIT) {
-        /*while WorkModule::is_flag(attacker_boma, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_UP_SMASH_HIT) {
-            GroundModule::set_collidable(defender_boma, false);
-        }
-        GroundModule::set_collidable(defender_boma, true);*/
-    }
-
-    original!()(fighter_manager, attacker_id, defender_id, move_type, arg5, move_type_again, fighter)
 }
 
 // DASH ATTACK
@@ -315,7 +282,6 @@ unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 0, 0, Hash40::new("head"), 14.0, 110, 102, 0, 35, 4.8, 2.8, -1.2, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
             macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 14.0, 110, 102, 0, 35, 4.0, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
         }else {
-            WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_UP_SMASH_HIT);
             macros::ATTACK(agent, 0, 0, Hash40::new("head"), 14.0, 270, 102, 0, 35, 4.8, 2.8, -1.2, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
             macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 14.0, 270, 102, 0, 35, 4.0, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
             macros::LANDING_EFFECT(agent, Hash40::new("luigi_rocket_bomb"), Hash40::new("head"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
@@ -407,7 +373,6 @@ unsafe extern "C" fn luigi_attackairn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_ATTACK_AIR_N_HIT);
         macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 12.0, 90, 90, 0, 20, 4.5, 1.1, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("kneer"), 12.0, 90, 90, 0, 20, 4.0, 1.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
@@ -423,7 +388,6 @@ unsafe extern "C" fn luigi_attackairn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 36.0);
     if macros::is_excute(agent) {
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_ATTACK_AIR_N_HIT);
     }
 }
 
@@ -660,7 +624,6 @@ unsafe extern "C" fn luigi_specialhi(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 0, 0, Hash40::new("head"), 1.0, 80, 1, 0, 1, 5.8, 2.0, 2.2, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 1.0, 80, 1, 0, 1, 4.7, 0.0, 4.8, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_PUNCH);
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_HI_FLAG_CRITICAL_HIT);
-        /*WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_SPECIAL_HI_SOUR_HIT);*/
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -677,7 +640,6 @@ unsafe extern "C" fn luigi_specialhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 24.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        /*WorkModule::off_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SEARCH_SPECIAL_HI_SOUR_HIT);*/
     }
 }
    
@@ -1110,9 +1072,178 @@ pub unsafe extern "C" fn fireball_remove(weapon: &mut smashline::L2CWeaponCommon
     smash_script::notify_event_msc_cmd!(weapon, Hash40::new_raw(0x199c462b5d));
 }
 
+//SIDE B
+
+//CHARGE - PRE
+unsafe extern "C" fn luigi_specials_charge_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_SPECIAL_S_CHARGE_FLOAT,
+        0
+      );
+      
+      FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        0,
+        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_S).try_into().unwrap(),
+        0
+      );
+      
+      return 0.into();
+}
+
+//CHARGE - MAIN
+unsafe extern "C" fn luigi_specials_charge_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    WorkModule::off_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_DISCHARGE);
+    WorkModule::off_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FLASHING);
+    WorkModule::set_float(fighter.module_accessor, 0.0, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+    if !StopModule::is_stop(fighter.module_accessor) {
+        luigi_specials_charge_substatus(fighter);
+    }
+    fighter.global_table[SUB_STATUS2].assign(&L2CValue::Ptr(luigi_specials_charge_substatus as *const () as _));
+    luigi_specials_charge_mot_helper(fighter);
+    fighter.sub_shift_status_main(L2CValue::Ptr(luigi_specials_charge_main_loop as *const () as _))
+}
+
+unsafe extern "C" fn luigi_specials_charge_substatus(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let charge_speed = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("charge_speed_mul"));
+    WorkModule::add_float(fighter.module_accessor, charge_speed, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+    0.into()
+}
+
+unsafe extern "C" fn luigi_specials_charge_mot_helper(fighter: &mut L2CFighterCommon) {
+    if fighter.global_table[SITUATION_KIND].get_i32() != *SITUATION_KIND_GROUND {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+        if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST) {
+            MotionModule::change_motion(
+                fighter.module_accessor,
+                Hash40::new("special_air_s_hold"),
+                1.0,
+                1.0,
+                false,
+                0.0,
+                false,
+                false
+            );
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST);
+        }
+        else {
+            MotionModule::change_motion_inherit_frame(
+                fighter.module_accessor,
+                Hash40::new("special_air_s_hold"),
+                -1.0,
+                1.0,
+                0.0,
+                false,
+                false
+            );
+        }
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_GROUND, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_INT_MTRANS);
+    }
+    else {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND_CLIFF_STOP_ATTACK));
+        if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST) {
+            MotionModule::change_motion(
+                fighter.module_accessor,
+                Hash40::new("special_s_hold"),
+                1.0,
+                1.0,
+                false,
+                0.0,
+                false,
+                false
+            );
+            WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_FIRST);
+        }
+        else {
+            MotionModule::change_motion_inherit_frame(
+                fighter.module_accessor,
+                Hash40::new("special_s_hold"),
+                -1.0,
+                1.0,
+                0.0,
+                false,
+                false
+            );
+        }
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_AIR, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_INT_MTRANS);
+    }
+}
+
+//CHARGE - MAIN LOOP
+unsafe extern "C" fn luigi_specials_charge_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if !ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
+        let charge = WorkModule::get_float(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_WORK_FLOAT_CHARGE);
+        let charge_frame = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("charge_frame"));
+
+        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+        let ypos = ControlModule::get_stick_y(fighter.module_accessor);
+
+        //UP ANGLE
+        if xpos == 0.0 && ypos > 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -20.0, y: 0.0, z: 0.0}, 0);
+        }
+        //FORWARD ANGLE
+        else if xpos > 0.0 && ypos == 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
+        }
+        //DOWN ANGLE
+        else if xpos == 0.0 && ypos < 0.0 {
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 20.0, y: 0.0, z: 0.0}, 0);
+        }
 
 
 
+        if charge_frame <= charge {
+            if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+                fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_BREATH).into(), false.into());
+            }
+        }
+        if StatusModule::is_situation_changed(fighter.module_accessor) {
+            luigi_specials_charge_mot_helper(fighter);
+        }
+    }
+    else {
+        fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM).into(), false.into());
+    }
+    0.into()
+}
+
+//CHARGE - END
+unsafe extern "C" fn luigi_specials_charge_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_SPECIAL_S_CHARGE_MELEE_NO_RANDOM) != true {
+        let misfire_chance = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_s"), hash40("discharge_prob"));
+        let rand = smash::app::sv_math::rand(hash40("fighter"), 10) as u64;
+        if rand != 9 {
+
+        }
+        else {
+          WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_CHARGE_FLAG_DISCHARGE)
+        }
+    }
+    
+    EffectModule::remove_common(fighter.module_accessor, Hash40::new("charge_max"));
+      
+    return 0.into();
+}
+
+
+//OPFF
 unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
         let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
@@ -1138,81 +1269,145 @@ unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     }
 }
 
+//START
 unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
     unsafe {
         WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
+        println!("On start? {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW));
     }
 }
 
-fn find_subsequence(haystack: &[u8], needle: &[u8]) -> Option<usize> {
-    haystack.windows(needle.len()).position(|window| window == needle)
+
+//-------CHECK ATTACK--------
+
+unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash2::lib::L2CValue {
+    let hash = if key.starts_with("0x") {
+        smash2::phx::Hash40::from_hex_str(key).unwrap()
+    } else {
+        smash2::phx::hash40(key)
+    };
+    (*table).get_map(hash).unwrap().clone()
 }
 
-static OFFSET_SEARCH_CODE: &[u8] = &[
-    0xff, 0x03, 0x03, 0xd1, //.text:0000007100675A20                 SUB             SP, SP, #0xC0
-    0xe8, 0x2b, 0x00, 0xfd, //.text:0000007100675A24                 STR             D8, [SP,#0xB0+var_60]
-    0xfc, 0x6f, 0x06, 0xa9, //.text:0000007100675A28                 STP             X28, X27, [SP,#0xB0+var_50]
-    0xfa, 0x67, 0x07, 0xa9, //.text:0000007100675A2C                 STP             X26, X25, [SP,#0xB0+var_40]
-    0xf8, 0x5f, 0x08, 0xa9, //.text:0000007100675A30                 STP             X24, X23, [SP,#0xB0+var_30]
-    0xf6, 0x57, 0x09, 0xa9, //.text:0000007100675A34                 STP             X22, X21, [SP,#0xB0+var_20]
-    0xf4, 0x4f, 0x0a, 0xa9, //.text:0000007100675A38                 STP             X20, X19, [SP,#0xB0+var_10]
-    0xfd, 0x7b, 0x0b, 0xa9, //.text:0000007100675A3C                 STP             X29, X30, [SP,#0xB0+var_s0]
-    0xfd, 0xc3, 0x02, 0x91, //.text:0000007100675A40                 ADD             X29, SP, #0xB0
-    0xfb, 0x03, 0x00, 0xaa  //.text:0000007100675A44                 MOV             X27, X0
-];
 
-
-pub fn install() {
-    unsafe {
-        let text_ptr = getRegionAddress(Region::Text) as *const u8;
-        let text_size = (getRegionAddress(Region::Rodata) as usize) - (text_ptr as usize);
-        let text = std::slice::from_raw_parts(text_ptr, text_size);
-        if let Some(offset) = find_subsequence(text, OFFSET_SEARCH_CODE) {
-            NOTIFY_LOG_EVENT_COLLISION_HIT_OFFSET = offset;
+//DOWN TILT
+unsafe extern "C" fn luigi_attack_lw3_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
+            println!("Down Tilt: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW));
+            WorkModule::add_int(fighter.module_accessor, 1, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
         }
     }
+    0.into()
+}
+
+/*
+//UP SMASH
+unsafe extern "C" fn luigi_attack_hi4_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
+	    if rand {
+            	GroundModule::set_collidable(opponent_boma, false);
+		CancelModule::enable_cancel(fighter.module_accessor);
+		//effects
+		//sounds
+		//set collision back to true in acmd
+	    }
+        }
+    }
+    0.into()
+}
+*/
+
+//NAIR
+unsafe extern "C" fn luigi_attack_airn_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
+	    if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_n") {
+		WorkModule::set_int(fighter.module_accessor, 1, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
+	    }
+	}
+    }
+    0.into()
+}
+
+//UP B
+unsafe extern "C" fn luigi_special_hi_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
+	    if !WorkModule::is_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_HI_FLAG_CRITICAL_HIT) {
+		StatusModule::change_status_request_from_script(fighter.module_accessor, FIGHTER_STATUS_KIND_FALL.into(), false.into());
+     	    }
+	}
+    }
+    0.into()
+}
+
+pub fn install() {
     Agent::new("luigi")
-        .game_acmd("game_attacks3lw", luigi_attacks3lw)
-        .game_acmd("game_attackdash", luigi_attackdash)
-        .game_acmd("game_attackairb", luigi_attackairb)
-        .game_acmd("game_attackairf", luigi_attackairf)
-        .game_acmd("game_attacklw3", luigi_attacklw3)
-        .game_acmd("game_attackhi3", luigi_attackhi3)
-        .game_acmd("game_attackhi4", luigi_attackhi4)
-        .game_acmd("game_appeallwl", luigi_appeallw)
-        .game_acmd("game_appeallwr", luigi_appeallw)
-        .game_acmd("game_attackairlw", luigi_attackairlw)
-        .game_acmd("game_attackairn",luigi_attackairn)
-        .game_acmd("game_attack11", luigi_attack11)
-        .game_acmd("game_attacks4", luigi_attacks4)
-        .game_acmd("game_attacks4lw", luigi_attacks4lw)
-        .game_acmd("game_attacklw4", luigi_attacklw4)
-        .game_acmd("game_specialswall", luigi_specialswall)
-        .game_acmd("game_throwhi", luigi_throwhi)
-        .game_acmd("game_attackairhi", luigi_attackairhi)
-        .game_acmd("game_specialhi", luigi_specialhi)
-        .game_acmd("game_catch", luigi_catch)
-        .game_acmd("game_speciallw", luigi_speciallw)
-        .game_acmd("game_specialairlw", luigi_specialairlw)
-        .game_acmd("game_attack12", luigi_attack12)
-        .game_acmd("game_firebarswing1", luigi_catchsuck)
-        .game_acmd("game_guardon", luigi_guardon)
-        .game_acmd("game_specialn", luigi_specialn)
-        .effect_acmd("effect_attackairlw", luigi_effect_attackairlw)
+        .game_acmd("game_attacks3lw", luigi_attacks3lw, Low)
+        .game_acmd("game_attackdash", luigi_attackdash, Low)
+        .game_acmd("game_attackairb", luigi_attackairb, Low)
+        .game_acmd("game_attackairf", luigi_attackairf, Low)
+        .game_acmd("game_attacklw3", luigi_attacklw3, Low)
+        .game_acmd("game_attackhi3", luigi_attackhi3, Low)
+        .game_acmd("game_attackhi4", luigi_attackhi4, Low)
+        .game_acmd("game_appeallwl", luigi_appeallw, Low)
+        .game_acmd("game_appeallwr", luigi_appeallw, Low)
+        .game_acmd("game_attackairlw", luigi_attackairlw, Low)
+        .game_acmd("game_attackairn",luigi_attackairn, Low)
+        .game_acmd("game_attack11", luigi_attack11, Low)
+        .game_acmd("game_attacks4", luigi_attacks4, Low)
+        .game_acmd("game_attacks4lw", luigi_attacks4lw, Low)
+        .game_acmd("game_attacklw4", luigi_attacklw4, Low)
+        .game_acmd("game_specialswall", luigi_specialswall, Low)
+        .game_acmd("game_throwhi", luigi_throwhi, Low)
+        .game_acmd("game_attackairhi", luigi_attackairhi, Low)
+        .game_acmd("game_specialhi", luigi_specialhi, Low)
+        .game_acmd("game_catch", luigi_catch, Low)
+        .game_acmd("game_speciallw", luigi_speciallw, Low)
+        .game_acmd("game_specialairlw", luigi_specialairlw, Low)
+        .game_acmd("game_attack12", luigi_attack12, Low)
+        .game_acmd("game_firebarswing1", luigi_catchsuck, Low)
+        .game_acmd("game_guardon", luigi_guardon, Low)
+        .game_acmd("game_specialn", luigi_specialn, Low)
+        .effect_acmd("effect_attackairlw", luigi_effect_attackairlw, Low)
+        .status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)
+        .status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_main)
+        .status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_end)
+        .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_LW3, luigi_attack_lw3_check_attack_status)
+        //.status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_HI4, luigi_attack_hi4_check_attack_status)
+        .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_AIR, luigi_attack_airn_check_attack_status)
+        .status(CheckAttack, *FIGHTER_STATUS_KIND_SPECIAL_HI, luigi_special_hi_check_attack_status)
         .on_line(Main, luigi_frame)
         .on_start(luigi_start)
         .install();
     Agent::new("luigi_fireball")
-        .game_acmd("game_start", fireball_start)
+        .game_acmd("game_start", fireball_start, Low)
         .status(Init, *WEAPON_LUIGI_FIREBALL_STATUS_KIND_START, luigi_fireball_start_init)
         .status(Pre, *WEAPON_LUIGI_FIREBALL_STATUS_KIND_START, luigi_fireball_start_pre)
         .status(Main, *WEAPON_LUIGI_FIREBALL_STATUS_KIND_START, luigi_fireball_start_main)
         .install();
-
-    
-    skyline::install_hook!(
-        notify_log_event_collision_hit_replace
-    );
 }
 
 

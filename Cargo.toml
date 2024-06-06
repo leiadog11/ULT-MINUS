@@ -1,8 +1,8 @@
 [package]
-name = "smashline_test"
+name = "_ULT_MINUS"
 version = "0.1.0"
-authors = ["LilyLambda"]
-edition = "2018"
+authors = ["leiadog, OpZ, Jmuze"]
+edition = "2021"
 
 [package.metadata.skyline]
 titleid = "01006A800016E000"
@@ -16,6 +16,8 @@ skyline_smash = { git = "https://github.com/blu-dev/skyline-smash.git", features
 smash_script = { git = "https://github.com/blu-dev/smash-script.git", branch = "development" }
 smashline = { git = "https://github.com/hdr-development/smashline.git" }
 smash_singletons = { git = "https://github.com/WuBoytH/smash_singletons.git" }
+smash2 = { package = "smash", git = "https://github.com/blu-dev/smash-rs" }
+
 
 [profile.dev]
 panic = "abort"
