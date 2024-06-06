@@ -6,9 +6,9 @@ use {
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
-    smash2::*
+    smash2::*,
     smash_script::*,
-    smashline::*
+    smashline::*,
     smashline::Priority::*
 };
 
@@ -22,7 +22,6 @@ use skyline::libc::*;
 
 pub const SUB_STATUS2:                     i32 = 0x14;
 pub const SITUATION_KIND:                  i32 = 0x16;
-pub const PREV_SITUATION_KIND:             i32 = 0x17;
 
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_SPECIAL_N : i32 = 0x200000E4;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW : i32 = 0x100000C2;
@@ -1073,34 +1072,6 @@ pub unsafe extern "C" fn fireball_remove(weapon: &mut smashline::L2CWeaponCommon
     smash_script::notify_event_msc_cmd!(weapon, Hash40::new_raw(0x199c462b5d));
 }
 
-
-
-
-unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
-    unsafe {
-        let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-    
-        let b1x = PostureModule::pos_x(fighter.module_accessor);
-        let b1y = PostureModule::pos_y(fighter.module_accessor);
-        let b2x = PostureModule::pos_x(defender_boma);
-        let b2y = PostureModule::pos_y(defender_boma);
-        
-        // distance formula
-        let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
-        let d = dSquared.sqrt();
-        
-        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD {
-            if d < 30.0 {
-                macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
-                DamageModule::add_damage(defender_boma, 0.1, 0);
-            }   
-        }
-        else {
-            macros::EFFECT_OFF_KIND(fighter, Hash40::new("sys_timer"), false, false);
-        }
-    }
-}
-
 //SIDE B
 
 //CHARGE - PRE
@@ -1271,6 +1242,33 @@ unsafe extern "C" fn luigi_specials_charge_end(fighter: &mut L2CFighterCommon) -
     return 0.into();
 }
 
+
+//OPFF
+unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
+    unsafe {
+        let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
+    
+        let b1x = PostureModule::pos_x(fighter.module_accessor);
+        let b1y = PostureModule::pos_y(fighter.module_accessor);
+        let b2x = PostureModule::pos_x(defender_boma);
+        let b2y = PostureModule::pos_y(defender_boma);
+        
+        // distance formula
+        let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
+        let d = dSquared.sqrt();
+        
+        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD {
+            if d < 30.0 {
+                macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
+                DamageModule::add_damage(defender_boma, 0.1, 0);
+            }   
+        }
+        else {
+            macros::EFFECT_OFF_KIND(fighter, Hash40::new("sys_timer"), false, false);
+        }
+    }
+}
+
 //START
 unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
     unsafe {
@@ -1282,11 +1280,11 @@ unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
 
 //-------CHECK ATTACK--------
 
-unsafe fn get_table_value(table: *mut smash_rs::lib::L2CTable, key: &str) -> smash_rs::lib::L2CValue {
+unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash2::lib::L2CValue {
     let hash = if key.starts_with("0x") {
-        smash_rs::phx::Hash40::from_hex_str(key).unwrap()
+        smash2::phx::Hash40::from_hex_str(key).unwrap()
     } else {
-        smash_rs::phx::hash40(key)
+        smash2::phx::hash40(key)
     };
     (*table).get_map(hash).unwrap().clone()
 }
@@ -1301,6 +1299,7 @@ unsafe extern "C" fn luigi_attack_lw3_check_attack_status(fighter: &mut L2CFight
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
+            println!("Down Tilt: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW));
             WorkModule::add_int(fighter.module_accessor, 1, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
         }
     }
@@ -1397,7 +1396,7 @@ pub fn install() {
         .status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_main)
         .status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_end)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_LW3, luigi_attack_lw3_check_attack_status)
-        .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_HI4, luigi_attack_hi4_check_attack_status)
+        //.status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_HI4, luigi_attack_hi4_check_attack_status)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_AIR, luigi_attack_airn_check_attack_status)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_SPECIAL_HI, luigi_special_hi_check_attack_status)
         .on_line(Main, luigi_frame)

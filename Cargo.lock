@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "ULT_MINUS"
+name = "_ULT_MINUS"
 version = "0.1.0"
 dependencies = [
  "skyline",

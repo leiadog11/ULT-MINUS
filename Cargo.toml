@@ -1,5 +1,5 @@
 [package]
-name = "ULT_MINUS"
+name = "_ULT_MINUS"
 version = "0.1.0"
 authors = ["leiadog, OpZ, Jmuze"]
 edition = "2021"
@@ -16,7 +16,7 @@ skyline_smash = { git = "https://github.com/blu-dev/skyline-smash.git", features
 smash_script = { git = "https://github.com/blu-dev/smash-script.git", branch = "development" }
 smashline = { git = "https://github.com/hdr-development/smashline.git" }
 smash_singletons = { git = "https://github.com/WuBoytH/smash_singletons.git" }
-smash_rs = { package = "smash", git = "https://github.com/blu-dev/smash-rs" }
+smash2 = { package = "smash", git = "https://github.com/blu-dev/smash-rs" }
 
 
 [profile.dev]

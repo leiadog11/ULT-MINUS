@@ -6,8 +6,9 @@ use {
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
+    smash2::*,
     smash_script::*,
-    smashline::*
+    smashline::*,
     smashline::Priority::*
 };
 
@@ -665,26 +666,36 @@ unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
 }
 
 
+//---------CHECK ATTACK-------
+unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash2::lib::L2CValue {
+    let hash = if key.starts_with("0x") {
+        smash2::phx::Hash40::from_hex_str(key).unwrap()
+    } else {
+        smash2::phx::hash40(key)
+    };
+    (*table).get_map(hash).unwrap().clone()
+}
 
 
+//PUMMEL
 unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
-    let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-    let collision_kind = sv_battle_object::kind(Fighter::get_id_from_entry_id(1));
-    let category = utility::get_category(&mut *defender_boma);
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
         if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
             println!("pummel hit!!");
             if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK ) == 3 {
-                StatusModule::change_status_request_from_script(defender_boma, *FIGHTER_STATUS_KIND_BURY, false);
+                StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BURY, false);
                 WorkModule::set_int(fighter.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
                 println!("Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
             }
             else{
                 WorkModule::add_int(fighter.module_accessor,1,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
-                println!("reset Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
+                println!("Reset Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
             }
-
-
         }
     }
     0.into()
@@ -700,6 +711,15 @@ pub fn install() {
 
     }
     Agent::new("robot")
+    .game_acmd("game_attack12", rob_attack12, Low)
+    .game_acmd("game_attack13", rob_attack13, Low)
+    .effect_acmd("effect_attack13", rob_effect_attack13, Low)
+    .sound_acmd("sound_attack13", rob_sound_attack13, Low)
+    .expression_acmd("expression_attack13", rob_expression_attack13, Low)
+    .game_acmd("game_attacklw3", rob_attacklw3, Low)
+    .game_acmd("game_catch", rob_catch, Low)
+    .game_acmd("game_catchdash", rob_catchdash, Low)
+    .game_acmd("game_catchturn", rob_catchturn, Low)
     .game_acmd("game_attackhi3", rob_attackhi3, Low)
     .game_acmd("game_attacks3hi", rob_attacks3hi, Low)
     .game_acmd("game_attacks3", rob_attacks3, Low)
@@ -724,6 +744,7 @@ pub fn install() {
     .sound_acmd("sound_attacks4", rob_sound_attacks4, Low)
     .effect_acmd("effect_attacks4", rob_effect_attacks4, Low)
     .effect_acmd("effect_attackairhi", rob_effect_attackairhi, Low)
+    .status(CheckAttack, *FIGHTER_STATUS_KIND_CATCH_ATTACK, robot_catch_attack_check_attack_status)
         .on_line(Main, rob_frame)
         .install();
 
