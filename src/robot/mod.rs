@@ -8,6 +8,7 @@ use {
     },
     smash_script::*,
     smashline::*
+    smashline::Priority::*
 };
 
 use skyline::nn::ro::LookupSymbol;
@@ -37,11 +38,11 @@ unsafe extern "C" fn rob_attack12(agent: &mut L2CAgentBase) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
         AttackModule::clear_all(agent.module_accessor);
     }
-} 
+}
 
 // JAB 3
 unsafe extern "C" fn rob_attack13(agent: &mut L2CAgentBase){
-   
+
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 41, 105, 0, 32, 5.3, 0.0, 10.3, 14.0, Some(0.0), Some(10.3), Some(8.0), 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_ENERGY);
@@ -79,7 +80,7 @@ unsafe extern "C" fn rob_sound_attack13(agent: &mut L2CAgentBase) {
 }
 
 unsafe extern "C" fn rob_expression_attack13(agent: &mut L2CAgentBase) {
-   
+
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
@@ -93,7 +94,7 @@ unsafe extern "C" fn rob_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     macros::FT_MOTION_RATE(agent, 0.5);
     if macros::is_excute(agent) {
-        
+
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 90, 100, 60, 0, 7.0, 0.0, 13.0, 6.0, Some(0.0), Some(13.0), Some(-6.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 1, 0, Hash40::new("fingerl1"), 3.0, 105, 100, 50, 0, 5.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 2, 0, Hash40::new("fingerr1"), 3.0, 105, 100, 50, 0, 5.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_PUNCH);
@@ -200,7 +201,7 @@ unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
                 AttackModule::clear_all(agent.module_accessor);
             }
         }
-    } 
+    }
 frame(agent.lua_state_agent, 160.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.5, 41, 105, 0, 32, 10.3, 0.0, 10.3, 14.0, Some(0.0), Some(10.3), Some(8.0), 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
@@ -210,7 +211,7 @@ frame(agent.lua_state_agent, 160.0);
         AttackModule::clear_all(agent.module_accessor);
         shield!(agent, *MA_MSC_CMD_SHIELD_OFF, *COLLISION_KIND_REFLECTOR, *FIGHTER_ROBOT_REFLECTOR_KIND_ARMSPIN, *FIGHTER_REFLECTOR_GROUP_EXTEND);
     }
-} 
+}
 //FORWARD SMASH EFFECT
 unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -387,7 +388,7 @@ unsafe extern "C" fn rob_attackairhi(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.2, 75, 185, 0, 10, 7.5, 0.0, 14.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 7.2, 75, 185, 0, 10, 11.0, 0.0, 24.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
     }
-    
+
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
@@ -395,7 +396,7 @@ unsafe extern "C" fn rob_attackairhi(agent: &mut L2CAgentBase) {
     }
 }
 
-// UP AIR EFFECT 
+// UP AIR EFFECT
 
 unsafe extern "C" fn rob_effect_attackairhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -411,7 +412,7 @@ unsafe extern "C" fn rob_effect_attackairhi(agent: &mut L2CAgentBase) {
 
 
 
-// NEUTRAL AIR 
+// NEUTRAL AIR
 
 unsafe extern "C" fn rob_attackairn(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -658,17 +659,17 @@ unsafe extern "C" fn rob_appeals(agent: &mut L2CAgentBase) {
 //ROB Fighter Frame :)
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
         unsafe {
-           
-            }     
-    
+
+            }
+
 }
 
 
 
 
 unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
-    let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1)); 
-    let collision_kind = sv_battle_object::kind(Fighter::get_id_from_entry_id(1)); 
+    let defender_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
+    let collision_kind = sv_battle_object::kind(Fighter::get_id_from_entry_id(1));
     let category = utility::get_category(&mut *defender_boma);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
         if collision_kind == *COLLISION_KIND_HIT {
@@ -683,12 +684,12 @@ unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFig
                 println!("reset Count: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK))
             }
 
-           
+
         }
     }
     0.into()
 }
-    
+
 
 
 
@@ -696,46 +697,35 @@ unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFig
 
 pub fn install() {
     unsafe {
-        
+
     }
     Agent::new("robot")
-    .game_acmd("game_attack13", rob_attack13)
-    .game_acmd("game_attackhi3", rob_attackhi3)
-    .game_acmd("game_attacks3hi", rob_attacks3hi)
-    .game_acmd("game_attacks3", rob_attacks3)
-    .game_acmd("game_attacks3lw", rob_attacks3lw)
-    .game_acmd("game_attacklw3", rob_attacklw3)
-    .game_acmd("game_attacks4", rob_attacks4)
-    .game_acmd("game_attacks4lw", rob_attacks4)
-    .game_acmd("game_attacks4hi", rob_attacks4)
-    .game_acmd("game_attackhi4", rob_attackhi4)
-    .game_acmd("game_attacklw4", rob_attacklw4)
-    .game_acmd("game_attacks4", rob_attacks4)
-    .game_acmd("game_attackdash", rob_attackdash)
-    .game_acmd("game_attackairf", rob_attackairf)
-    .game_acmd("game_attackairlw",rob_attackairlw)
-    .game_acmd("game_attackairhi", rob_attackairhi)
-    .game_acmd("game_attackairn", rob_attackairn)
-    .game_acmd("game_attackairb", rob_attackairb)
-    .game_acmd("game_catch", rob_catch)
-    .game_acmd("game_catchdash", rob_catchdash)
-    .game_acmd("game_catchturn", rob_catchturn)
-    .game_acmd("game_throwhi", rob_throwhi)
-    .game_acmd("game_throwf", rob_throwf)
-    .game_acmd("game_throwb", rob_throwb)
-    .game_acmd("game_appealhir", rob_appealhi)
-    .game_acmd("game_appealhil", rob_appealhi)
-    .game_acmd("game_appealsr", rob_appeals)
-    .game_acmd("game_appealsl", rob_appeals)
-    .sound_acmd("sound_attack13", rob_sound_attack13)
-    .sound_acmd("sound_attacks4", rob_sound_attacks4)
-    .effect_acmd("effect_attack13", rob_effect_attack13)
-    .effect_acmd("effect_attacks4", rob_effect_attacks4)
-    .effect_acmd("effect_attackairhi", rob_effect_attackairhi)
-    .expression_acmd("expression_attack13", rob_expression_attack13)
-    .status(CheckAttack, *FIGHTER_STATUS_KIND_CATCH_ATTACK, robot_catch_attack_check_attack_status)
+    .game_acmd("game_attackhi3", rob_attackhi3, Low)
+    .game_acmd("game_attacks3hi", rob_attacks3hi, Low)
+    .game_acmd("game_attacks3", rob_attacks3, Low)
+    .game_acmd("game_attacks3lw", rob_attacks3lw, Low)
+    .game_acmd("game_attacks4", rob_attacks4, Low)
+    .game_acmd("game_attackhi4", rob_attackhi4, Low)
+    .game_acmd("game_attacklw4", rob_attacklw4, Low)
+    .game_acmd("game_attacks4", rob_attacks4, Low)
+    .game_acmd("game_attackdash", rob_attackdash, Low)
+    .game_acmd("game_attackairf", rob_attackairf, Low)
+    .game_acmd("game_attackairlw",rob_attackairlw, Low)
+    .game_acmd("game_attackairhi", rob_attackairhi, Low)
+    .game_acmd("game_attackairn", rob_attackairn, Low)
+    .game_acmd("game_attackairb", rob_attackairb, Low)
+    .game_acmd("game_throwhi", rob_throwhi, Low)
+    .game_acmd("game_throwf", rob_throwf, Low)
+    .game_acmd("game_throwb", rob_throwb, Low)
+    .game_acmd("game_appealhir", rob_appealhi, Low)
+    .game_acmd("game_appealhil", rob_appealhi, Low)
+    .game_acmd("game_appealsr", rob_appeals, Low)
+    .game_acmd("game_appealsl", rob_appeals, Low)
+    .sound_acmd("sound_attacks4", rob_sound_attacks4, Low)
+    .effect_acmd("effect_attacks4", rob_effect_attacks4, Low)
+    .effect_acmd("effect_attackairhi", rob_effect_attackairhi, Low)
         .on_line(Main, rob_frame)
         .install();
-        
-        
+
+
 }

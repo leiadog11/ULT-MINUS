@@ -8,6 +8,7 @@ use {
     },
     smash_script::*,
     smashline::*
+    smashline::Priority::*
 };
 
 
@@ -166,14 +167,14 @@ unsafe extern "C" fn ganon_catch(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("ganon")
-        .game_acmd("game_attack11", ganon_attack11)
-        .game_acmd("game_attacklw3", ganon_attacklw3)
-        .game_acmd("game_attackhi3", ganon_attackhi3)
-        .game_acmd("game_attackdash", ganon_attackdash)
-        .game_acmd("game_catch", ganon_catch)
-        .effect_acmd("effect_attackhi3", ganon_effect_attackhi3)
-        .sound_acmd("sound_attackhi3", ganon_sound_attackhi3)
-        .expression_acmd("expression_attackhi3", ganon_expression_attackhi3)
+        .game_acmd("game_attack11", ganon_attack11, Low)
+        .game_acmd("game_attacklw3", ganon_attacklw3, Low)
+        .game_acmd("game_attackhi3", ganon_attackhi3, Low)
+        .game_acmd("game_attackdash", ganon_attackdash, Low)
+        .game_acmd("game_catch", ganon_catch, Low)
+        .effect_acmd("effect_attackhi3", ganon_effect_attackhi3, Low)
+        .sound_acmd("sound_attackhi3", ganon_sound_attackhi3, Low)
+        .expression_acmd("expression_attackhi3", ganon_expression_attackhi3, Low)
         .on_line(Main, ganon_frame)
         .install();
 }

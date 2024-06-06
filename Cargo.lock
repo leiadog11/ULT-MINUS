@@ -3,11 +3,23 @@
 version = 3
 
 [[package]]
+name = "ULT_MINUS"
+version = "0.1.0"
+dependencies = [
+ "skyline",
+ "skyline_smash",
+ "smash",
+ "smash_script",
+ "smash_singletons",
+ "smashline",
+]
+
+[[package]]
 name = "acmd-engine"
 version = "0.1.0"
-source = "git+https://github.com/hdr-development/smashline.git#452990a4b1fa4870c31715d85230be64103879c0"
+source = "git+https://github.com/hdr-development/smashline.git#3c6ab6d3786284b59596142a000eda193afb2fdc"
 dependencies = [
- "hash40",
+ "hash40 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "locks",
  "serde",
  "serde_json",
@@ -20,6 +32,12 @@ name = "array-init"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d62b7694a562cdf5a74227903507c56ab2cc8bdd1f781ed5cb4cf9c9f810bfc"
+
+[[package]]
+name = "autocfg"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c4b4d0bd25bd0b74681c0ad21497610ce1b7c91b1022cd21c80c6fbdd9476b0"
 
 [[package]]
 name = "bimap"
@@ -50,6 +68,12 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
+
+[[package]]
+name = "bitflags"
+version = "1.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bytemuck"
@@ -139,10 +163,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "hash40"
+version = "1.3.1"
+source = "git+https://github.com/BenHall-7/hash40-rs#1846040d0eb176fd041f32d9919fba09cf36b311"
+dependencies = [
+ "bimap",
+ "binrw",
+ "byteorder",
+ "diff-struct",
+ "lazy_static",
+ "serde",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "290f1a1d9242c78d09ce40a5e87e7554ee637af1351968159f4952f028f75604"
+
+[[package]]
+name = "heck"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d621efb26863f0e9924c6ac577e8275e5e6b77455db64ffa6c65c904e9e132c"
+dependencies = [
+ "unicode-segmentation",
+]
 
 [[package]]
 name = "indexmap"
@@ -180,8 +226,8 @@ checksum = "6823e4bff6dee10a75dfee95afe1c5a7f93a1b99a20013663e0cb04b3a64f867"
 
 [[package]]
 name = "locks"
-version = "1.2.7"
-source = "git+https://github.com/hdr-development/smashline.git#452990a4b1fa4870c31715d85230be64103879c0"
+version = "1.3.0"
+source = "git+https://github.com/hdr-development/smashline.git#3c6ab6d3786284b59596142a000eda193afb2fdc"
 dependencies = [
  "skyline",
 ]
@@ -199,12 +245,42 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
 
 [[package]]
+name = "memoffset"
+version = "0.6.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5aa361d4faea93603064a027415f07bd8e1d5c88c9fbf68bf56a285428fd79ce"
+dependencies = [
+ "autocfg",
+]
+
+[[package]]
 name = "nnsdk"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e0f4537c7470ba25f406d42c8cbfe26f64099af4b613e715c6bcb3d25856896c"
 dependencies = [
  "libc-nnsdk",
+]
+
+[[package]]
+name = "num_enum"
+version = "0.5.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1f646caf906c20226733ed5b1374287eb97e3c2a5c227ce668c1f2ce20ae57c9"
+dependencies = [
+ "num_enum_derive",
+]
+
+[[package]]
+name = "num_enum_derive"
+version = "0.5.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dcbff9bc912032c62bf65ef1d5aea88983b420f4f839db1e9b0c281a25c9c799"
+dependencies = [
+ "proc-macro-crate",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
 ]
 
 [[package]]
@@ -284,6 +360,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e86697c916019a8588c99b5fac3cead74ec0b4b819707a682fd4d23fa0ce1ba1"
 
 [[package]]
+name = "sealed"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6b5e421024b5e5edfbaa8e60ecf90bda9dbffc602dbb230e6028763f85f0c68c"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
 name = "serde"
 version = "1.0.198"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -340,7 +428,7 @@ dependencies = [
 [[package]]
 name = "skyline_smash"
 version = "0.1.0"
-source = "git+https://github.com/blu-dev/skyline-smash.git#742efe1059c7d28a8f0e00f1f0f8faf29a8b2171"
+source = "git+https://github.com/blu-dev/skyline-smash.git#4d3830073e1de69f574e992f0e8a48124ea3f7a0"
 dependencies = [
  "compile-time-lua-bind-hash",
  "lazy_static",
@@ -348,6 +436,31 @@ dependencies = [
  "nnsdk",
  "paste",
  "skyline",
+]
+
+[[package]]
+name = "smash"
+version = "0.1.0"
+source = "git+https://github.com/blu-dev/smash-rs#d065af1e1d10daa7d3cd355011ee7d3921e387fa"
+dependencies = [
+ "bitflags",
+ "hash40 1.3.1 (git+https://github.com/BenHall-7/hash40-rs)",
+ "memoffset",
+ "num_enum",
+ "sealed",
+ "skyline",
+ "smash_macro",
+ "thiserror",
+]
+
+[[package]]
+name = "smash_macro"
+version = "0.1.0"
+source = "git+https://github.com/blu-dev/smash-rs#d065af1e1d10daa7d3cd355011ee7d3921e387fa"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
 ]
 
 [[package]]
@@ -371,7 +484,7 @@ dependencies = [
 [[package]]
 name = "smashline"
 version = "0.1.0"
-source = "git+https://github.com/hdr-development/smashline.git#452990a4b1fa4870c31715d85230be64103879c0"
+source = "git+https://github.com/hdr-development/smashline.git#3c6ab6d3786284b59596142a000eda193afb2fdc"
 dependencies = [
  "acmd-engine",
  "locks",
@@ -383,7 +496,7 @@ dependencies = [
 [[package]]
 name = "smashline-macro"
 version = "0.1.0"
-source = "git+https://github.com/hdr-development/smashline.git#452990a4b1fa4870c31715d85230be64103879c0"
+source = "git+https://github.com/hdr-development/smashline.git#3c6ab6d3786284b59596142a000eda193afb2fdc"
 dependencies = [
  "proc-macro-crate",
  "proc-macro-error",
@@ -391,17 +504,6 @@ dependencies = [
  "quote",
  "syn 1.0.109",
  "uuid",
-]
-
-[[package]]
-name = "smashline_test"
-version = "0.1.0"
-dependencies = [
- "skyline",
- "skyline_smash",
- "smash_script",
- "smash_singletons",
- "smashline",
 ]
 
 [[package]]
@@ -468,6 +570,12 @@ name = "unicode-ident"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
+
+[[package]]
+name = "unicode-segmentation"
+version = "1.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d4c87d22b6e3f4a18d4d40ef354e97c90fcb14dd91d7dc0aa9d8a1172ebf7202"
 
 [[package]]
 name = "uuid"
