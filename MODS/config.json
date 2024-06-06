@@ -199,6 +199,54 @@
         "fighter/luigi/c07": [
             "fighter/luigi/motion/body/c07/motion_list.yaml",
             "fighter/luigi/motion/body/c07/e00catchsuck.nuanmb"
-        ]
+        ],
+        "fighter/wario/c00": [
+            "fighter/wario/motion/body/c00/motion_list.yaml",
+            "fighter/wario/motion/body/c00/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c00/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c00/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c01": [
+            "fighter/wario/motion/body/c01/motion_list.yaml",
+            "fighter/wario/motion/body/c01/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c01/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c01/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c02": [
+            "fighter/wario/motion/body/c02/motion_list.yaml",
+            "fighter/wario/motion/body/c02/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c02/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c02/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c03": [
+            "fighter/wario/motion/body/c03/motion_list.yaml",
+            "fighter/wario/motion/body/c03/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c03/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c03/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c04": [
+            "fighter/wario/motion/body/c04/motion_list.yaml",
+            "fighter/wario/motion/body/c04/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c04/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c04/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c05": [
+            "fighter/wario/motion/body/c05/motion_list.yaml",
+            "fighter/wario/motion/body/c05/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c05/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c05/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c06": [
+            "fighter/wario/motion/body/c06/motion_list.yaml",
+            "fighter/wario/motion/body/c06/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c06/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c06/c00attack100end.nuanmb"
+        ],
+        "fighter/wario/c07": [
+            "fighter/wario/motion/body/c07/motion_list.yaml",
+            "fighter/wario/motion/body/c07/c00attack100.nuanmb",
+            "fighter/wario/motion/body/c07/c00attack100start.nuanmb",
+            "fighter/wario/motion/body/c07/c00attack100end.nuanmb"
+        ],
     }
 }
