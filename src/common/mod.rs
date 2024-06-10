@@ -39,10 +39,8 @@ param_hash: u64) -> i32 {
         if fighter_kind == FIGHTER_KIND_LUIGI {
             if param_type == hash40("wall_jump_type") {
                 return 1;
-            } 
-         
-         
-    }
+            }  
+        }
 	
 	}
 ret
