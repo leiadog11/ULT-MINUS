@@ -38,6 +38,7 @@ unsafe extern "C" fn rob_attack12(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
         AttackModule::clear_all(agent.module_accessor);
+        MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_13"), 0.0, 1.0, false, 0.0, false, false);
     }
 }
 
@@ -724,9 +725,8 @@ pub fn install() {
     .game_acmd("game_attacks3hi", rob_attacks3hi, Low)
     .game_acmd("game_attacks3", rob_attacks3, Low)
     .game_acmd("game_attacks3lw", rob_attacks3lw, Low)
-    .game_acmd("game_attacks4", rob_attacks4, Low)
-    .game_acmd("game_attackhi4", rob_attackhi4, Low)
-    .game_acmd("game_attacklw4", rob_attacklw4, Low)
+    .game_acmd("game_attack4hi", rob_attacks4, Low)
+    .game_acmd("game_attack4lw", rob_attacks4, Low)
     .game_acmd("game_attacks4", rob_attacks4, Low)
     .game_acmd("game_attackdash", rob_attackdash, Low)
     .game_acmd("game_attackairf", rob_attackairf, Low)

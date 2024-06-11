@@ -19,6 +19,7 @@ mod robot;
 mod common;
 mod wario;
 mod ganon;
+mod purin;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
@@ -28,5 +29,6 @@ pub fn main() {
     wario::install();
     ganon::install();
     common::install();
+    purin::install();
 
 }
