@@ -25,6 +25,7 @@ pub const SITUATION_KIND:                  i32 = 0x16;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_SPECIAL_N : i32 = 0x200000E4;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4 : i32 = 0x200000E5;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW : i32 = 0x100000C2;
+const WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X : i32 = 0x11000004;
 
 
 //-------GROUND----------
@@ -63,6 +64,19 @@ unsafe extern "C" fn luigi_attack12(agent: &mut L2CAgentBase) {
         AttackModule::clear_all(agent.module_accessor);
         CancelModule::enable_cancel(agent.module_accessor);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+    }
+}
+
+// FORWARD TILT
+unsafe extern "C" fn luigi_attacks3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 9.0, 0, 0, 60, 0, 4.8, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("legl"), 9.0, 0, 0, 60, 0, 3.8, 1.2, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+    }
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
     }
 }
 
@@ -988,6 +1002,7 @@ unsafe extern "C" fn luigi_fireball_start_pre(weapon: &mut L2CWeaponCommon) -> L
 unsafe extern "C" fn luigi_fireball_start_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let facing = PostureModule::lr(weapon.module_accessor);
     let mut life = 0;
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
@@ -995,30 +1010,31 @@ unsafe extern "C" fn luigi_fireball_start_main(weapon: &mut L2CWeaponCommon) -> 
         life = 50;
         WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
         WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
-        speed_x = 1.25;
+        speed_x = if facing == 1.0 { 1.25 } else { -1.25 };
     }
     else {
         life = 200;
         PostureModule::set_scale(weapon.module_accessor, 2.5, false);
         WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
         WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
-        speed_x = 0.5;
+        speed_x = if facing == 1.0 { 0.5 } else { -0.5 };
     }
 
-    // Set speed
-    weapon.agent.clear_lua_stack();
-    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
-    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
-    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
-
+    WorkModule::set_float(weapon.module_accessor, speed_x, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X);
     weapon.fastshift(L2CValue::Ptr(luigi_fireball_start_main_loop as *const () as _))
 }
 
 //MAIN LOOP
 unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let facing = PostureModule::lr(weapon.module_accessor);
+    let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
+        if opponent_boma == owner_boma {
+            opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
+        }
     let rot_x = PostureModule::rot(weapon.module_accessor, 0);
+    let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
+    let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
+    speed_x = WorkModule::get_float(weapon.module_accessor, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X);
 
     // Declare status_frame
     let status_frame = weapon.global_table[0xe].get_f32();
@@ -1031,6 +1047,27 @@ unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon
         fireball_remove(weapon);
         return 0.into();
     }
+
+    //Check hit
+    if AttackModule::is_infliction(opponent_boma, *COLLISION_KIND_MASK_HIT) {
+        SlowModule::set_whole(weapon.module_accessor, 8, 80);
+        macros::CAM_ZOOM_IN_arg5(weapon, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        EffectModule::req_follow(weapon.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
+        macros::PLAY_SE(weapon, Hash40::new("se_common_criticalhit"));
+    }
+
+    /*
+    SlowModule::clear_whole(weapon.module_accessor);
+    CameraModule::reset_all(weapon.module_accessor);
+    EffectModule::kill_kind(weapon.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
+    macros::CAM_ZOOM_OUT(weapon);
+    */
+
+    // Set speed
+    weapon.agent.clear_lua_stack();
+    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
+    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
+    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     return 0.into();
 }
@@ -1545,6 +1582,7 @@ pub fn install() {
         .game_acmd("game_attackairlw", luigi_attackairlw, Low)
         .game_acmd("game_attackairn",luigi_attackairn, Low)
         .game_acmd("game_attack11", luigi_attack11, Low)
+        .game_acmd("game_attacks3", luigi_attacks3, Low)
         .game_acmd("game_attacks4", luigi_attacks4, Low)
         .game_acmd("game_attacks4lw", luigi_attacks4lw, Low)
         .game_acmd("game_attacklw4", luigi_attacklw4, Low)

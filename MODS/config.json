@@ -168,120 +168,125 @@
             "fighter/pacman/model/body/c07/pacman_gost_col.nutexb",
             "fighter/pacman/motion/body/c07/update.prc"
         ],
-        "fighter/pacman/cmn": [
-            "effect/fighter/pacman/transplant/samus/ef_samus.eff"
-        ],
         "fighter/robot/c00": [
-            "fighter/robot/motion/body/c00/motion_list.yaml", 
+            "fighter/robot/motion/body/c00/motion_list.yml", 
             "fighter/robot/motion/body/c00/c00attack13.nuanmb"
         ],
         "fighter/robot/c01": [
-            "fighter/robot/motion/body/c01/motion_list.yaml", 
+            "fighter/robot/motion/body/c01/motion_list.yml", 
             "fighter/robot/motion/body/c01/c00attack13.nuanmb"
         ],
         "fighter/robot/c02": [
-            "fighter/robot/motion/body/c02/motion_list.yaml", 
+            "fighter/robot/motion/body/c02/motion_list.yml", 
             "fighter/robot/motion/body/c02/c00attack13.nuanmb"
         ],
         "fighter/robot/c03": [
-            "fighter/robot/motion/body/c03/motion_list.yaml", 
+            "fighter/robot/motion/body/c03/motion_list.yml", 
             "fighter/robot/motion/body/c03/c00attack13.nuanmb"
         ],
         "fighter/robot/c04": [
-            "fighter/robot/motion/body/c04/motion_list.yaml", 
+            "fighter/robot/motion/body/c04/motion_list.yml", 
             "fighter/robot/motion/body/c04/c00attack13.nuanmb"
         ],
         "fighter/robot/c05": [
-            "fighter/robot/motion/body/c05/motion_list.yaml", 
+            "fighter/robot/motion/body/c05/motion_list.yml", 
             "fighter/robot/motion/body/c05/c00attack13.nuanmb"
         ],
         "fighter/robot/c06": [
-            "fighter/robot/motion/body/c06/motion_list.yaml", 
+            "fighter/robot/motion/body/c06/motion_list.yml", 
             "fighter/robot/motion/body/c06/c00attack13.nuanmb"
         ],
         "fighter/robot/c07": [
-            "fighter/robot/motion/body/c07/motion_list.yaml", 
+            "fighter/robot/motion/body/c07/motion_list.yml", 
             "fighter/robot/motion/body/c07/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c00": [
-            "fighter/luigi/motion/body/c00/motion_list.yaml",
-            "fighter/luigi/motion/body/c00/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c01": [
-            "fighter/luigi/motion/body/c01/motion_list.yaml",
-            "fighter/luigi/motion/body/c01/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c02": [
-            "fighter/luigi/motion/body/c02/motion_list.yaml",
-            "fighter/luigi/motion/body/c02/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c03": [
-            "fighter/luigi/motion/body/c03/motion_list.yaml",
-            "fighter/luigi/motion/body/c03/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c04": [
-            "fighter/luigi/motion/body/c04/motion_list.yaml",
-            "fighter/luigi/motion/body/c04/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c05": [
-            "fighter/luigi/motion/body/c05/motion_list.yaml",
-            "fighter/luigi/motion/body/c05/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c06": [
-            "fighter/luigi/motion/body/c06/motion_list.yaml",
-            "fighter/luigi/motion/body/c06/e00catchsuck.nuanmb"
-        ],
-        "fighter/luigi/c07": [
-            "fighter/luigi/motion/body/c07/motion_list.yaml",
-            "fighter/luigi/motion/body/c07/e00catchsuck.nuanmb"
-        ],
         "fighter/wario/c00": [
-            "fighter/wario/motion/body/c00/motion_list.yaml",
+            "fighter/wario/motion/body/c00/motion_list.yml",
             "fighter/wario/motion/body/c00/c00attack100.nuanmb",
             "fighter/wario/motion/body/c00/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c00/c00attack100end.nuanmb"
         ],
         "fighter/wario/c01": [
-            "fighter/wario/motion/body/c01/motion_list.yaml",
+            "fighter/wario/motion/body/c01/motion_list.yml",
             "fighter/wario/motion/body/c01/c00attack100.nuanmb",
             "fighter/wario/motion/body/c01/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c01/c00attack100end.nuanmb"
         ],
         "fighter/wario/c02": [
-            "fighter/wario/motion/body/c02/motion_list.yaml",
+            "fighter/wario/motion/body/c02/motion_list.yml",
             "fighter/wario/motion/body/c02/c00attack100.nuanmb",
             "fighter/wario/motion/body/c02/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c02/c00attack100end.nuanmb"
         ],
         "fighter/wario/c03": [
-            "fighter/wario/motion/body/c03/motion_list.yaml",
+            "fighter/wario/motion/body/c03/motion_list.yml",
             "fighter/wario/motion/body/c03/c00attack100.nuanmb",
             "fighter/wario/motion/body/c03/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c03/c00attack100end.nuanmb"
         ],
         "fighter/wario/c04": [
-            "fighter/wario/motion/body/c04/motion_list.yaml",
+            "fighter/wario/motion/body/c04/motion_list.yml",
             "fighter/wario/motion/body/c04/c00attack100.nuanmb",
             "fighter/wario/motion/body/c04/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c04/c00attack100end.nuanmb"
         ],
         "fighter/wario/c05": [
-            "fighter/wario/motion/body/c05/motion_list.yaml",
+            "fighter/wario/motion/body/c05/motion_list.yml",
             "fighter/wario/motion/body/c05/c00attack100.nuanmb",
             "fighter/wario/motion/body/c05/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c05/c00attack100end.nuanmb"
         ],
         "fighter/wario/c06": [
-            "fighter/wario/motion/body/c06/motion_list.yaml",
+            "fighter/wario/motion/body/c06/motion_list.yml",
             "fighter/wario/motion/body/c06/c00attack100.nuanmb",
             "fighter/wario/motion/body/c06/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c06/c00attack100end.nuanmb"
         ],
         "fighter/wario/c07": [
-            "fighter/wario/motion/body/c07/motion_list.yaml",
+            "fighter/wario/motion/body/c07/motion_list.yml",
             "fighter/wario/motion/body/c07/c00attack100.nuanmb",
             "fighter/wario/motion/body/c07/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c07/c00attack100end.nuanmb"
         ],
+        "fighter/ganon/c00": [
+            "fighter/ganon/motion/body/c00/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c00/motion_list.yml"
+        ],
+        "fighter/ganon/c01": [
+            "fighter/ganon/motion/body/c01/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c01/motion_list.yml"
+        ],
+        "fighter/ganon/c02": [
+            "fighter/ganon/motion/body/c02/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c02/motion_list.yml"
+        ],
+        "fighter/ganon/c03": [
+            "fighter/ganon/motion/body/c03/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c03/motion_list.yml"
+        ],
+        "fighter/ganon/c04": [
+            "fighter/ganon/motion/body/c04/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c04/motion_list.yml"
+        ],
+        "fighter/ganon/c05": [
+            "fighter/ganon/motion/body/c05/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c05/motion_list.yml"
+        ],
+        "fighter/ganon/c06": [
+            "fighter/ganon/motion/body/c06/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c06/motion_list.yml"
+        ],
+        "fighter/ganon/c07": [
+            "fighter/ganon/motion/body/c07/c05attackairn2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c07/motion_list.yml"
+        ]
     }
 }

@@ -559,10 +559,10 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
     else {
         ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: -28.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("ghost1"), &left_position, false, false);
-        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("bell"), &Vector3f{ x:-8.0, y: 22.0, z: 15.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("bell"), &Vector3f{ x:-7.5, y: 22.0, z: 15.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("apple"), &Vector3f{ x:11.0, y: -20.0, z: 0.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("melon"), &Vector3f{ x:12.0, y: -18.0, z: 0.0 }, false, false);
-        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-11.5, y: 15.5, z: 5.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-11.0, y: 16.0, z: 5.0 }, false, false);
     }
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
