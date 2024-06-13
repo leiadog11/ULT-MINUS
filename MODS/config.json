@@ -251,41 +251,97 @@
         "fighter/ganon/c00": [
             "fighter/ganon/motion/body/c00/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c00/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c00/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c00/motion_list.yml"
         ],
         "fighter/ganon/c01": [
             "fighter/ganon/motion/body/c01/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c01/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c01/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c01/motion_list.yml"
         ],
         "fighter/ganon/c02": [
             "fighter/ganon/motion/body/c02/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c02/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c02/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c02/motion_list.yml"
         ],
         "fighter/ganon/c03": [
             "fighter/ganon/motion/body/c03/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c03/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c03/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c03/motion_list.yml"
         ],
         "fighter/ganon/c04": [
             "fighter/ganon/motion/body/c04/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c04/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c04/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c04/motion_list.yml"
         ],
         "fighter/ganon/c05": [
             "fighter/ganon/motion/body/c05/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c05/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c05/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c05/motion_list.yml"
         ],
         "fighter/ganon/c06": [
             "fighter/ganon/motion/body/c06/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c06/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c06/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c06/motion_list.yml"
         ],
         "fighter/ganon/c07": [
             "fighter/ganon/motion/body/c07/c05attackairn2.nuanmb",
             "fighter/ganon/motion/body/c07/c05attackairf2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05attackairb2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05attackairhi2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05attackairlw2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05landingairf2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05landingairb2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05landingairhi2.nuanmb",
+            "fighter/ganon/motion/body/c07/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c07/motion_list.yml"
         ]
     }

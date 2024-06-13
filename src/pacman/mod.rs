@@ -562,7 +562,7 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("bell"), &Vector3f{ x:-7.5, y: 22.0, z: 15.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("apple"), &Vector3f{ x:11.0, y: -20.0, z: 0.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("melon"), &Vector3f{ x:12.0, y: -18.0, z: 0.0 }, false, false);
-        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-11.0, y: 16.0, z: 5.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-2.0, y: 15.0, z: 5.0 }, false, false);
     }
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
@@ -973,18 +973,6 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     }
 }
 
-//GRAB EFFECT
-unsafe extern "C" fn pacman_effect_catch(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
-        for _ in 0..600 {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
-            macros::LAST_EFFECT_SET_COLOR(agent, *FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE, 0, 0);
-            EffectModule::set_custom_uv_offset(agent.module_accessor, (*FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE).try_into().unwrap(), std::ptr::null(), 0);
-            wait(agent.lua_state_agent, 60.0);
-        }
-    }
-}
 
 //DASH GRAB
 unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
@@ -1375,7 +1363,6 @@ pub fn install() {
         .game_acmd("game_specialsdash", pacman_specialsdash, Low)
         .game_acmd("game_catch", pacman_catch, Low)
         .game_acmd("game_catchdash", pacman_catchdash, Low)
-        .effect_acmd("effect_catch", pacman_effect_catch, Low)
         .sound_acmd("sound_catch", pacman_sound_catch, Low)
         .game_acmd("game_throwhi", pacman_throwhi, Low)
         .game_acmd("game_throwlw", pacman_throwlw, Low)
