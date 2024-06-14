@@ -19,6 +19,7 @@ use skyline::libc::*;
 
 
 static mut FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK: i32 = 0x100000C4;
+static mut GYRO_LIFE: i32 = 0x100000C4;
 
 
 
@@ -657,10 +658,29 @@ unsafe extern "C" fn rob_appeals(agent: &mut L2CAgentBase) {
     }
 }
 
+// ------BEAM---------------
+// unsafe extern "C" fn rob_flymax(agent: &mut L2CAgentBase) {
+//     if macros::is_excute(agent) {
+//         PostureModule::set_rot(agent.module_accessor, &Vector3f{x: 90.0, y: 0.0, z: 0.0}, 0);
+//         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
+//     }
+//     frame(agent.lua_state_agent, 4.0);
+//     if macros::is_excute(agent) {
+//         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, Some(0.0), Some(0.0), Some(-16.0), 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
+//     }
+    
+// }
+
 
 //ROB Fighter Frame :)
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
         unsafe {
+            // if ItemModule::is_have_item(fighter.module_accessor, 0){
+            //     set_int(fighter.module_accessor,0,GYRO_LIFE)
+            // }
+            // else{
+                
+            // }
 
             }
 
@@ -741,6 +761,7 @@ pub fn install() {
     .game_acmd("game_appealhil", rob_appealhi, Low)
     .game_acmd("game_appealsr", rob_appeals, Low)
     .game_acmd("game_appealsl", rob_appeals, Low)
+    // .game_acmd("game_fly", rob_flymax, Low)
     .sound_acmd("sound_attacks4", rob_sound_attacks4, Low)
     .effect_acmd("effect_attacks4", rob_effect_attacks4, Low)
     .effect_acmd("effect_attackairhi", rob_effect_attackairhi, Low)
