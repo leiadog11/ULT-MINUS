@@ -563,6 +563,14 @@ unsafe extern "C" fn wario_attackairn(agent: &mut L2CAgentBase) {
     }
 }
 
+//NEUTRAL AIR LANDING
+unsafe extern "C" fn wario_landingairn(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        WorkModule::set_int(agent.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_N);
+    }
+}
+
+
 //BACK AIR
 unsafe extern "C" fn wario_attackairb(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
@@ -631,6 +639,7 @@ unsafe extern "C" fn wario_attackairlw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         if WorkModule::get_int(agent.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_LW) <= 2 {
             MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_lw"), 0.0, 1.0, false, 0.0, false, false);
+            println!("down air count {}", WorkModule::get_int(agent.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_LW));
         }
     }
     if macros::is_excute(agent) {
@@ -657,6 +666,15 @@ unsafe extern "C" fn wario_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
+//DOWN AIR LANDING
+unsafe extern "C" fn wario_landingairlw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        WorkModule::set_int(agent.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_LW);
+        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_BURY, false);
+    }
+}
+
+
 //SPECIALS
 
 //UP SPECIAL
@@ -676,10 +694,10 @@ unsafe extern "C" fn wario_specialhijump(agent: &mut L2CAgentBase) {
     }
     for _ in 0..4 {
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.6, 115, 50, 0, 40, 4.0, 0.0, 7.0, 4.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.7, 115, 50, 0, 40, 4.0, 0.0, 7.0, -3.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 2.8, 145, 50, 0, 40, 4.0, 0.0, 13.0, 4.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 2.9, 145, 50, 0, 40, 4.0, 0.0, 13.0, -3.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.6, 115, 60, 0, 40, 4.0, 0.0, 7.0, 4.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.7, 115, 60, 0, 40, 4.0, 0.0, 7.0, -3.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 2.8, 145, 60, 0, 40, 4.0, 0.0, 13.0, 4.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 2.9, 145, 60, 0, 40, 4.0, 0.0, 13.0, -3.0, None, None, None, 1.2, 0.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
     }
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
@@ -690,10 +708,6 @@ unsafe extern "C" fn wario_specialhijump(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 10.0, 45, 120, 0, 70, 8.5, 0.0, 13.0, 7.5, Some(0.0), Some(13.0), Some(-7.5), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 10.0, 85, 110, 0, 60, 11.0, 0.0, 7.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        SlowModule::set_whole(agent.module_accessor, 8, 20);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        EffectModule::req_follow(agent.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
-        macros::PLAY_SE(agent, Hash40::new("se_common_criticalhit"));
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
@@ -706,6 +720,89 @@ unsafe extern "C" fn wario_specialhijump(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 33.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_WARIO_STATUS_SPECIAL_HI_FLAG_DISABLE_MOTION_ANGLE);
+    }
+}
+
+
+//BIKE HITBOX
+unsafe extern "C" fn wario_specialsdrive(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("hip"), 11.0, 361, 110, 0, 80, 5.0, 0.0, 2.0, 4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 11.0, 361, 110, 0, 80, 3.0, 0.0, 2.0, 4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        JostleModule::set_status(agent.module_accessor, false);
+    }
+}
+
+//GRAB & THROWS
+
+//DOWN THROW
+unsafe extern "C" fn wario_throwlw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 7.0, 130, 18, 0, 80, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 361, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+    }
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 361, 100, 0, 30, 6.0, 0.0, 3.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_HIP);
+        AttackModule::set_catch_only_all(agent.module_accessor, true, false);
+        macros::CHECK_FINISH_CAMERA(agent, -2, 0);
+        lua_bind::FighterCutInManager::set_throw_finish_zoom_rate(singletons::FighterCutInManager(), 1.5);
+    }
+    frame(agent.lua_state_agent, 30.0);
+    if macros::is_excute(agent) {
+        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
+        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
+        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
+        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+//UP THROW
+unsafe extern "C" fn wario_throwhi(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.85);
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 4.0, 89, 30, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 361, 30, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+    }
+    frame(agent.lua_state_agent, 24.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 4.0, 361, 100, 0, 30, 5.0, 10.0, 4.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_HEAD);
+        AttackModule::set_catch_only_all(agent.module_accessor, true, false);
+        macros::CHECK_FINISH_CAMERA(agent, 1, 28);
+        lua_bind::FighterCutInManager::set_throw_finish_zoom_rate(singletons::FighterCutInManager(), 1.5);
+    }
+    frame(agent.lua_state_agent, 26.0);
+    if macros::is_excute(agent) {
+        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
+        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
+        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
+        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+//FORWARD THROW
+unsafe extern "C" fn wario_throwf(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.85);
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 8.0, 20, 35, 0, 50, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 361, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("hip"), 4.0, 45, 65, 0, 60, 7.0, 0.0, -3.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_HEAD);
+        AttackModule::set_catch_only_all(agent.module_accessor, true, false);
+        macros::CHECK_FINISH_CAMERA(agent, 16, 9);
+        lua_bind::FighterCutInManager::set_throw_finish_zoom_rate(singletons::FighterCutInManager(), 1.5);
+    }
+    frame(agent.lua_state_agent, 21.0);
+    if macros::is_excute(agent) {
+        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
+        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
+        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
+        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+        AttackModule::clear_all(agent.module_accessor);
     }
 }
 
@@ -733,6 +830,16 @@ unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
                 PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
             }
         }
+        if MotionModule::motion_kind(fighter.module_accessor) == hash40("throw_b") {
+            //RIGHT
+            if xpos > 0.0  {
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+            }
+            //LEFT
+            if xpos < 0.0  {
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+            }
+        }
     }
 }
 //START
@@ -740,6 +847,8 @@ unsafe extern "C" fn wario_start(fighter: &mut L2CFighterCommon) {
     unsafe {
         WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4);
         println!("On start? {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4));
+        WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_LW);
+        println!("On start? {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_AIR_LW));
     }
 }
 
@@ -801,6 +910,27 @@ unsafe extern "C" fn wario_special_n_check_attack_status(fighter: &mut L2CFighte
     0.into()
 }
 
+//WARIO UP SPECIAL CHECK ATTACK STATUS
+
+unsafe extern "C" fn wario_special_hi_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let table = param_3.get_table() as *mut smash2::lib::L2CTable;
+    let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
+    let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
+    let rand = smash::app::sv_math::rand(hash40("fighter"), 20) as u64;
+    if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
+        if collision_kind == *COLLISION_KIND_HIT {
+            let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
+            let opponent_boma = sv_battle_object::module_accessor(object_id);
+            SlowModule::set_whole(fighter.module_accessor, 8, 20);
+            macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+            EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
+            macros::PLAY_SE(fighter, Hash40::new("se_common_criticalhit"));
+        
+        }
+    }
+    0.into()
+}
+
 
 
 
@@ -824,6 +954,12 @@ pub fn install() {
         .game_acmd("game_attacks4", wario_attacks4, Low)
         .game_acmd("game_attacklw4", wario_attacklw4, Low)
         .game_acmd("game_attackairlw", wario_attackairlw, Low)
+        .game_acmd("game_throwlw", wario_throwlw, Low)
+        .game_acmd("game_throwhi", wario_throwhi, Low)
+        .game_acmd("game_throwf", wario_throwf, Low)
+        .game_acmd("game_landingairlw", wario_landingairlw, Low)
+        .game_acmd("game_landingairn", wario_landingairn, Low)
+        .game_acmd("game_specialsdrive", wario_specialsdrive, Low)
         .effect_acmd("effect_attack100", wario_effect_attack100, Low)
         .effect_acmd("effect_attack100end", wario_effect_attack100end, Low)
         .effect_acmd("effect_attackhi4", wario_effect_attackhi4, Low)
@@ -834,6 +970,7 @@ pub fn install() {
         .expression_acmd("expression_attack100", wario_expression_attack100, Low)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_S3, wario_attack_s3_check_attack_status)
         .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_N_BITE, wario_special_n_check_attack_status)
+        .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_HI_JUMP, wario_special_n_check_attack_status)
         .on_line(Main, wario_frame)
         .on_start(wario_start)
         .install();

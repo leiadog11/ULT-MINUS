@@ -1,5 +1,5 @@
 ---
-motion_path: fighter/wario/motion/body/c00
+motion_path: fighter/wario/motion/body/c06
 list:
   wait:
     game_script: game_wait1
