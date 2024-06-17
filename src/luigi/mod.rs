@@ -952,8 +952,6 @@ unsafe extern "C" fn luigi_sound_appealhi(agent: &mut L2CAgentBase) {
     }
 }
 
-
-
 //SIDE TAUNT
 unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
     println!("in this motion");
@@ -962,6 +960,11 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
         if true {
             macros::FT_MOTION_RATE(agent, 100.0);
         }
+        
+        if StatusModule::situation_kind(agent.module_accessor) == *SITUATION_KIND_AIR { 
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 270, 50, 0, 100, 7.2, 4.2, 3.0, -1.0, None, None, None, 1.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        }
+            
     }
 }
 
@@ -1049,7 +1052,7 @@ unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon
     }
 
     //Check hit
-    if AttackModule::is_infliction(opponent_boma, *COLLISION_KIND_MASK_HIT) {
+    if AttackModule::is_infliction_status(weapon.module_accessor, *COLLISION_KIND_MASK_HIT) {
         SlowModule::set_whole(weapon.module_accessor, 8, 80);
         macros::CAM_ZOOM_IN_arg5(weapon, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
         EffectModule::req_follow(weapon.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
@@ -1324,7 +1327,7 @@ unsafe extern "C" fn luigi_specials_ram_main_loop(fighter: &mut L2CFighterCommon
     if MotionModule::is_end(fighter.module_accessor) {
         fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_END).into(), false.into());
         
-        return 0.into();
+        return 1.into();
       }
     
       if WorkModule::is_enable_transition_term(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_RAM_TRANSITION_TERM_ID_HIT) {
@@ -1332,7 +1335,7 @@ unsafe extern "C" fn luigi_specials_ram_main_loop(fighter: &mut L2CFighterCommon
           WorkModule::on_flag(fighter.module_accessor, *FIGHTER_LUIGI_STATUS_SPECIAL_S_RAM_FLAG_LAST_STRANS);
           fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_END).into(), false.into());
     
-          return 0.into();
+          return 1.into();
         }
       }
     
@@ -1340,7 +1343,7 @@ unsafe extern "C" fn luigi_specials_ram_main_loop(fighter: &mut L2CFighterCommon
         if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
           fighter.change_status((*FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_END).into(), false.into());
     
-          return 0.into();
+          return 1.into();
         }
       }
     
@@ -1470,6 +1473,15 @@ unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_APPEAL_S_R) {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("appeal_s_r"), 0.0, 1.0, false, 0.0, false, false);
+            }
+    
+            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_APPEAL_S_L) {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("appeal_s_l"), 0.0, 1.0, false, 0.0, false, false);
+            }
+        }
     }
 }
 

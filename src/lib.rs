@@ -30,5 +30,5 @@ pub fn main() {
     ganon::install();
     common::install();
     purin::install();
-
+    smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
 }
