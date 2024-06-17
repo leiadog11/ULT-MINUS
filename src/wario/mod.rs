@@ -970,7 +970,7 @@ pub fn install() {
         .expression_acmd("expression_attack100", wario_expression_attack100, Low)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_S3, wario_attack_s3_check_attack_status)
         .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_N_BITE, wario_special_n_check_attack_status)
-        .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_HI_JUMP, wario_special_n_check_attack_status)
+        .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_HI_JUMP, wario_special_hi_check_attack_status)
         .on_line(Main, wario_frame)
         .on_start(wario_start)
         .install();
