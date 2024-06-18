@@ -12,11 +12,15 @@ use {
 };
 
 const FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD : i32 = 0x200000E2;
+const FIGHTER_GANON_GENERATE_ARTICLE_GSWORD : i32 = 0x2;
+const WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR: i32 = 0;
+pub const SITUATION_KIND:                  i32 = 0x16;
+
 
 // OPFF
 unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
-        
+
     }
 }
 
@@ -54,7 +58,7 @@ unsafe extern "C" fn ganon_attacklw3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("legr"), 14.0, 90, 70, 0, 30, 3.0, 0.0, 0.0, 3.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.35, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 14.0, 90, 70, 0, 30, 4.8, 5.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.35, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 2, 0, Hash40::new("kneer"), 14.0, 120, 50, 0, 30, 4.8, 8.5, -0.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.35, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 2, 0, Hash40::new("kneer"), 14.0, 120, 60, 0, 50, 4.8, 8.5, -0.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.35, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -159,6 +163,7 @@ unsafe extern "C" fn ganon_attackairn(agent: &mut L2CAgentBase) {
     if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_n2"), 0.0, 1.0, false, 0.0, false, false);
     }
+    macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
@@ -183,7 +188,7 @@ unsafe extern "C" fn ganon_attackairn(agent: &mut L2CAgentBase) {
     }
     macros::FT_MOTION_RATE(agent, 0.5);
     frame(agent.lua_state_agent, 20.0);
-    macros::FT_MOTION_RATE(agent, 1.0);
+    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 12.0, 361, 106, 0, 25, 7.8, 6.5, 0.0, -3.0, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("kneel"), 12.0, 361, 106, 0, 25, 7.0, 0.0, 0.0, -1.0, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
@@ -392,6 +397,7 @@ unsafe extern "C" fn ganon_landingairf(agent: &mut L2CAgentBase) {
 }
 
 unsafe extern "C" fn ganon_landingairf2(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.7);
     if macros::is_excute(agent) {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
@@ -541,9 +547,6 @@ unsafe extern "C" fn ganon_attackairhi2(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-    }
-    frame(agent.lua_state_agent, 7.0);
-    if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("haver"), 12.0, 75, 105, 0, 32, 5.5, 0.0, 0.0, -1.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         macros::ATTACK(agent, 1, 0, Hash40::new("haver"), 12.0, 75, 105, 0, 32, 5.5, 0.0, 4.0, -1.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
         macros::ATTACK(agent, 2, 0, Hash40::new("haver"), 12.0, 75, 105, 0, 32, 5.5, 0.0, 8.0, -1.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
@@ -553,8 +556,9 @@ unsafe extern "C" fn ganon_attackairhi2(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 38.0);
+    frame(agent.lua_state_agent, 35.0);
     if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
 }
@@ -734,6 +738,152 @@ unsafe extern "C" fn ganon_landingairlw2(agent: &mut L2CAgentBase) {
     }
 }
 
+//-----------------SPECIALS-------------------
+
+//NEUTRAL B
+unsafe extern "C" fn ganon_specialn(agent: &mut L2CAgentBase) {
+    let facing = PostureModule::lr(agent.module_accessor);
+    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+        if facing == 1.0 {
+            MotionModule::change_motion(agent.module_accessor, Hash40::new("appeal_lw_r"), 0.0, 1.0, false, 0.0, false, false);
+        }
+        else {
+            MotionModule::change_motion(agent.module_accessor, Hash40::new("appeal_lw_l"), 0.0, 1.0, false, 0.0, false, false);
+        }
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, false, -1);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        ArticleModule::generate_article(agent.module_accessor, FIGHTER_GANON_GENERATE_ARTICLE_GSWORD, false, -1);
+    }
+    frame(agent.lua_state_agent, 40.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+        WorkModule::off_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
+    }
+}
+
+unsafe extern "C" fn ganon_effect_specialn(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        
+    }
+}
+
+unsafe extern "C" fn ganon_sound_specialn(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        
+    }
+}
+
+unsafe extern "C" fn ganon_expression_specialn(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+
+    }
+}
+
+//SIDE B START
+unsafe extern "C" fn ganon_specialsstart(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 10.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+    }
+    frame(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        FighterAreaModuleImpl::enable_fix_jostle_area_xy(agent.module_accessor, 6.8, 6.7, 7.5, 3.8);
+    }
+    frame(agent.lua_state_agent, 16.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 5.0, 0.0, 8.0, 7.5, None, None, None, *FIGHTER_STATUS_KIND_CATCHED_GANON, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.0, 0.0, 8.0, 7.2, None, None, None, *FIGHTER_STATUS_KIND_CATCHED_GANON, *COLLISION_SITUATION_MASK_GA);
+    }
+    frame(agent.lua_state_agent, 31.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 42.0);
+    if macros::is_excute(agent) {
+        FighterAreaModuleImpl::enable_fix_jostle_area_xy(agent.module_accessor, 7.0, 7.0, 7.5, 7.5);
+    }
+}
+
+//SIDE B
+unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 12.0, 361, 90, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+    }
+    frame(agent.lua_state_agent, 17.0);
+    if macros::is_excute(agent) {
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_ALWAYS, 0);
+    }
+    frame(agent.lua_state_agent, 31.0);
+    if macros::is_excute(agent) {
+        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
+        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
+        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
+        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+        DamageModule::add_damage(agent.module_accessor, -15.0, 0);
+    }
+    frame(agent.lua_state_agent, 32.0);
+    if macros::is_excute(agent) {
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 39.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_GANON_STATUS_WORK_ID_FLAG_EXPLOSION_SET_FALL);
+    }
+    frame(agent.lua_state_agent, 41.0);
+    if macros::is_excute(agent) {
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
+    }
+}
+
+//AERIAL SIDE B
+unsafe extern "C" fn ganon_specialairs(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 15.0, 361, 82, 0, 40, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
+        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
+        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
+        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+    }
+}
+
+//DOWN B
+unsafe extern "C" fn ganon_speciallw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        FighterAreaModuleImpl::enable_fix_jostle_area_xy(agent.module_accessor, 3.0, 6.0, 8.5, 9.5);
+    }
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) {
+        FighterAreaModuleImpl::enable_fix_jostle_area_xy(agent.module_accessor, 2.0, 6.0, 8.5, 10.0);
+    }
+    frame(agent.lua_state_agent, 16.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 14.0, 45, 65, 0, 65, 3.0, 2.7, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("kneer"), 16.0, 45, 65, 0, 65, 4.0, 7.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        JostleModule::set_status(agent.module_accessor, false);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_GANON_STATUS_WORK_ID_FLAG_GANON_KICK_WALL_CHECK);
+    }
+    frame(agent.lua_state_agent, 35.0);
+    if macros::is_excute(agent) {
+        MotionModule::change_motion(weapon.module_accessor, Hash40::new("special_lw"), 0.0, 1.0, false, 0.0, false, false);
+    }
+
+}
+
+
 //---------------GRABS--------------------
 
 //GRAB
@@ -756,14 +906,243 @@ unsafe extern "C" fn ganon_catch(agent: &mut L2CAgentBase) {
     }
 }
 
+//DASH GRAB
+unsafe extern "C" fn ganon_catchdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.2, 0.0, 9.0, 4.0, Some(0.0), Some(9.0), Some(11.8), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("handl"), 1.6, 0.0, 9.0, 2.4, Some(9.0), Some(9.0), Some(13.4), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+}
+
+//PIVOT GRAB
+unsafe extern "C" fn ganon_catchturn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 4.0, 0.0, 9.0, -4.0, Some(0.0), Some(9.0), Some(-15.6), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("handl"), 2.0, 0.0, 9.0, -2.0, Some(10.0), Some(9.0), Some(-17.6), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+}
+
+
 //--------------TAUNTS-----------------
 
+//DOWN TAUNT
 unsafe extern "C" fn ganon_appeallw(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 37.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
     }
 
+}
+
+//----------------PROJECTILES----------------------
+
+//GSWORD - Regular
+unsafe extern "C" fn ganon_gsword_regular(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.2, 68, 20, 0, 35, 2.4, 0.0, 14.0, 0.0, Some(0.0), Some(0.0), Some(0.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, -2.5, 0.0, 5, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+    }
+}
+
+unsafe extern "C" fn ganon_gsword_effect_regular(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("ganon_sword_trace"), Hash40::new("haver"), 0, 1.5, 0, 0, 0, 0, 1, true);
+    }
+}
+
+
+//-------------------STATUS--------------------
+
+/////GSWORD - REGULAR
+
+//PRE
+unsafe extern "C" fn ganon_gsword_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    StatusModule::init_settings(
+        weapon.module_accessor, 
+        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
+        GROUND_CORRECT_KIND_AIR.into(), 
+        smash::app::GroundCliffCheckKind(0), 
+        false, 
+        0, 
+        0, 
+        0, 
+        0
+    );
+    return 0.into();
+}
+
+//MAIN
+unsafe extern "C" fn ganon_gsword_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+    MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let life = 300;
+    WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
+    WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+
+    weapon.fastshift(L2CValue::Ptr(ganon_gsword_regular_main_loop as *const () as _))
+}
+
+//MAIN LOOP
+unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let facing = PostureModule::lr(weapon.module_accessor);
+    let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
+
+    let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
+    let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
+
+    // Declare acceleration and max speed
+    speed_x = if facing == 1.0 {0.5} else {-0.5};
+    let accel_y: f32 = -0.0054; // Adjusted for controlled y movement
+    let speed_max_y: f32 = 1.0; // Adjusted max speed for y movement
+
+     // Declare status_frame
+    let status_frame = weapon.global_table[0xe].get_f32();
+
+    if status_frame == 1.0 {
+        speed_y = 0.5;
+    }
+
+    speed_y += accel_y;
+    PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 10.0, y: 0.0, z: 0.0}, 0);
+
+
+    // Set speed
+    weapon.agent.clear_lua_stack();
+    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
+    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
+    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_y));
+    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
+
+
+    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+    WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+    if life < 0 {
+        gsword_remove(weapon);
+        return 0.into();
+    }
+
+    if weapon.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+        gsword_remove(weapon);
+        return 0.into();
+    }
+
+    return 0.into();
+}
+
+pub unsafe extern "C" fn gsword_remove(weapon: &mut smashline::L2CWeaponCommon) {
+    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+
+    let pos = PostureModule::pos(weapon.module_accessor);
+    let eff = EffectModule::req(
+        weapon.module_accessor,
+        Hash40::new("sys_misfire"),
+        pos,
+        &Vector3f{x: 0.0,y:0.0,z:0.0},
+        1.0,
+        0,
+        -1,
+        false,
+        0
+    ) as u32;
+    EffectModule::set_rgb(weapon.module_accessor, eff, 0.5, 0.5, 0.5);
+
+    smash_script::notify_event_msc_cmd!(weapon, Hash40::new_raw(0x199c462b5d));
+}
+
+
+/////NEUTRAL B
+
+//INIT
+unsafe extern "C" fn ganon_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
+}
+
+//PRE
+unsafe extern "C" fn ganon_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+        StatusModule::init_settings(
+            fighter.module_accessor,
+            smash::app::SituationKind(*SITUATION_KIND_NONE),
+            *FIGHTER_KINETIC_TYPE_NONE,
+            *GROUND_CORRECT_KIND_KEEP as u32,
+            smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+            true,
+            *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+            *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+            *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+            0
+        );
+        FighterStatusModuleImpl::set_fighter_status_data(
+            fighter.module_accessor,
+            false,
+            *FIGHTER_TREADED_KIND_NO_REAC,
+            false,
+            false,
+            false,
+            (
+                *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N |
+                *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+                *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+            ) as u64,
+            *FIGHTER_STATUS_ATTR_START_TURN as u32,
+            *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
+            0
+        );
+
+    return 0.into();
+}
+
+//MAIN
+unsafe extern "C" fn ganon_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
+
+    fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialn_main_loop as *const () as _))
+}
+
+//MAIN LOOP
+unsafe extern "C" fn ganon_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if MotionModule::is_end(fighter.module_accessor) {
+        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
+            return 1.into();
+        }
+        else {
+            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
+            return 1.into();
+        }   
+    }
+
+    return 0.into();
+}
+
+//END
+unsafe extern "C" fn ganon_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
 }
 
 
@@ -792,7 +1171,12 @@ pub fn install() {
         .game_acmd("game_landingairf2", ganon_landingairf2, Low)
         .game_acmd("game_landingairhi2", ganon_landingairhi2, Low)
         .game_acmd("game_landingairlw2", ganon_landingairlw2, Low)
+        .game_acmd("game_specialn", ganon_specialn, Low)
+        .game_acmd("game_specialsstart", ganon_specialsstart, Low)
+        .game_acmd("game_specials", ganon_specials, Low)
         .game_acmd("game_catch", ganon_catch, Low)
+        .game_acmd("game_catchdash", ganon_catchdash, Low)
+        .game_acmd("game_catchturn", ganon_catchturn, Low)
         .game_acmd("game_appeallwl", ganon_appeallw, Low)
         .game_acmd("game_appeallwr", ganon_appeallw, Low)
         .effect_acmd("effect_attackairn2", ganon_effect_attackairn2, Low)
@@ -801,19 +1185,32 @@ pub fn install() {
         .effect_acmd("effect_attackairb2", ganon_effect_attackairb2, Low)
         .effect_acmd("effect_attackairhi2", ganon_effect_attackairhi2, Low)
         .effect_acmd("effect_attackairlw2", ganon_effect_attackairlw2, Low)
+        .effect_acmd("effect_specialn", ganon_effect_specialn, Low)
         .sound_acmd("sound_attackairn2", ganon_sound_attackairn2, Low)
         .sound_acmd("sound_attackhi3", ganon_sound_attackhi3, Low)
         .sound_acmd("sound_attackairf2", ganon_sound_attackairf2, Low)
         .sound_acmd("sound_attackairb2", ganon_sound_attackairb2, Low)
         .sound_acmd("sound_attackairhi2", ganon_sound_attackairhi2, Low)
         .sound_acmd("sound_attackairlw2", ganon_sound_attackairlw2, Low)
+        .sound_acmd("sound_specialn", ganon_sound_specialn, Low)
         .expression_acmd("expression_attackhi3", ganon_expression_attackhi3, Low)
         .expression_acmd("expression_attackairn2", ganon_expression_attackairn2, Low)
         .expression_acmd("expression_attackairf2", ganon_expression_attackairf2, Low)
         .expression_acmd("expression_attackairb2", ganon_expression_attackairb2, Low)
         .expression_acmd("expression_attackairhi2", ganon_expression_attackairhi2, Low)
         .expression_acmd("expression_attackairlw2", ganon_expression_attackairlw2, Low)
+        .expression_acmd("expression_specialn", ganon_expression_specialn, Low)
+        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_N, ganon_specialn_init)
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, ganon_specialn_pre)
+        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, ganon_specialn_main)
+        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, ganon_specialn_end)
         .on_line(Main, ganon_frame)
         .on_start(ganon_start)
+        .install();
+    Agent::new("ganon_gsword")
+        .game_acmd("game_regular", ganon_gsword_regular, Low)
+        .effect_acmd("effect_regular", ganon_gsword_effect_regular, Low)
+        .status(Pre, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_pre)
+        .status(Main, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_main)
         .install();
 }

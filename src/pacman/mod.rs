@@ -142,16 +142,7 @@ unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
     }
     if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_ATTACK_DASH, true);
-        for _ in 0..3 {
-            if macros::is_excute(agent) {
-                macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.8, 361, 15, 0, 45, 7.0, 0.0, 5.0, 0.0, None, None, None, 0.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-            }
-            wait(agent.lua_state_agent, 2.0);
-            if macros::is_excute(agent) {
-                AttackModule::clear_all(agent.module_accessor);
-            }
-            wait(agent.lua_state_agent, 5.0);
-        }
+        MotionModule::set_frame(agent.module_accessor, 7.0, true);
     }
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 4.0, 60, 65, 0, 100, 7.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
