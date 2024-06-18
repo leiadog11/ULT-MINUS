@@ -1,5 +1,5 @@
 ---
-motion_path: fighter/wario/motion/body/c01
+motion_path: fighter/wario/motion/body/c00
 list:
   wait:
     game_script: game_wait1
@@ -2667,7 +2667,7 @@ list:
     extra:
       xlu_start: 0
       xlu_end: 0
-      cancel_frame: 48
+      cancel_frame: 95
       no_stop_intp: true
   landing_air_n:
     game_script: game_landingairn

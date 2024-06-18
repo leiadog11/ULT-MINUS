@@ -204,49 +204,65 @@
             "fighter/wario/motion/body/c00/motion_list.yml",
             "fighter/wario/motion/body/c00/c00attack100.nuanmb",
             "fighter/wario/motion/body/c00/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c00/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c00/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c00/main.nuanmb",
+            "fighter/wario/motion/waft/c00/motion_list.bin"
         ],
         "fighter/wario/c01": [
             "fighter/wario/motion/body/c01/motion_list.yml",
             "fighter/wario/motion/body/c01/c00attack100.nuanmb",
             "fighter/wario/motion/body/c01/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c01/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c01/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c01/main.nuanmb",
+            "fighter/wario/motion/waft/c01/motion_list.bin"
         ],
         "fighter/wario/c02": [
             "fighter/wario/motion/body/c02/motion_list.yml",
             "fighter/wario/motion/body/c02/c00attack100.nuanmb",
             "fighter/wario/motion/body/c02/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c02/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c02/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c02/main.nuanmb",
+            "fighter/wario/motion/waft/c02/motion_list.bin"
         ],
         "fighter/wario/c03": [
             "fighter/wario/motion/body/c03/motion_list.yml",
             "fighter/wario/motion/body/c03/c00attack100.nuanmb",
             "fighter/wario/motion/body/c03/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c03/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c03/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c03/main.nuanmb",
+            "fighter/wario/motion/waft/c03/motion_list.bin"
         ],
         "fighter/wario/c04": [
             "fighter/wario/motion/body/c04/motion_list.yml",
             "fighter/wario/motion/body/c04/c00attack100.nuanmb",
             "fighter/wario/motion/body/c04/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c04/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c04/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c04/main.nuanmb",
+            "fighter/wario/motion/waft/c04/motion_list.bin"
         ],
         "fighter/wario/c05": [
             "fighter/wario/motion/body/c05/motion_list.yml",
             "fighter/wario/motion/body/c05/c00attack100.nuanmb",
             "fighter/wario/motion/body/c05/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c05/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c05/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c05/main.nuanmb",
+            "fighter/wario/motion/waft/c05/motion_list.bin"
         ],
         "fighter/wario/c06": [
             "fighter/wario/motion/body/c06/motion_list.yml",
             "fighter/wario/motion/body/c06/c00attack100.nuanmb",
             "fighter/wario/motion/body/c06/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c06/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c06/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c06/main.nuanmb",
+            "fighter/wario/motion/waft/c06/motion_list.bin"
         ],
         "fighter/wario/c07": [
             "fighter/wario/motion/body/c07/motion_list.yml",
             "fighter/wario/motion/body/c07/c00attack100.nuanmb",
             "fighter/wario/motion/body/c07/c00attack100start.nuanmb",
-            "fighter/wario/motion/body/c07/c00attack100end.nuanmb"
+            "fighter/wario/motion/body/c07/c00attack100end.nuanmb",
+            "fighter/wario/motion/waft/c07/main.nuanmb",
+            "fighter/wario/motion/waft/c07/motion_list.bin"
         ],
         "fighter/ganon/c00": [
             "fighter/ganon/motion/body/c00/c05attackairn2.nuanmb",

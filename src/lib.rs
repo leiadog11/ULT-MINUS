@@ -20,6 +20,7 @@ mod common;
 mod wario;
 mod ganon;
 mod purin;
+mod falco;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
@@ -30,5 +31,6 @@ pub fn main() {
     ganon::install();
     common::install();
     purin::install();
+    falco::install();
 
 }
