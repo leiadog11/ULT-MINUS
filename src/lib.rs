@@ -32,6 +32,6 @@ pub fn main() {
     common::install();
     purin::install();
     falco::install();
-    smashline::clone_weapon("mario", "fireball", "wario", "waft", false);
+    smashline::clone_weapon("mario", "fireball", "wario", "cloud", false);
     smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
 }
