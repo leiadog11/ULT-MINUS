@@ -122,7 +122,6 @@ unsafe extern "C" fn wario_attack100(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
 }
 
-
 //RAPID JAB EXPRESSION
 unsafe extern "C" fn wario_expression_attack100(agent: &mut L2CAgentBase) {
     wait_loop_sync_mot(0);
@@ -838,7 +837,7 @@ unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         else {
             WorkModule::set_float(fighter.module_accessor, 0.0, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
         }
-
+      
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_lw") {
             if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
                 CancelModule::enable_cancel(fighter.module_accessor);
@@ -879,7 +878,6 @@ unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
             }
         }
         
-        
     }
 }
 
@@ -904,7 +902,6 @@ unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash
     };
     (*table).get_map(hash).unwrap().clone()
 }
-
 
 // WARIO NEUTRAL SPECIAL CHECK ATTACK STATUS
 
@@ -945,7 +942,6 @@ unsafe extern "C" fn wario_special_hi_check_attack_status(fighter: &mut L2CFight
     }
     0.into()
 }
-
 //SPECIAL S DRIVE
 unsafe extern "C" fn wario_specialsdrive_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     fighter.sub_shift_status_main(L2CValue::Ptr(wario_specialsdrive_main_loop as *const () as _))
