@@ -440,8 +440,6 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         }
     }
 }
-
-
 // Status script
 
 

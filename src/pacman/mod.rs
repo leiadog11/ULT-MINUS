@@ -8,22 +8,45 @@ use {
         hash40
     },
     smash_script::*,
-    smashline::*
+    smashline::*,
+    smashline::Priority::*
 };
 
 use smashline::Main;
 use std::convert::TryInto;
 
 pub const SITUATION_KIND:                  i32 = 0x16;
-pub const PREV_SITUATION_KIND:             i32 = 0x17;
-pub const STATUS_KIND:                     i32 = 0xB;
 const FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH : i32 = 0x200000EC;
 const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE : i32 = 0x100000C9;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN : i32 = 0x100000CA;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN : i32 = 0x100000BD;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN : i32 = 0x100000BC;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN : i32 = 0x100000BB;
+const FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN : i32 = 0x100000BA;
 
 //OPFF
 unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN) > 0 {
+                WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN);
+        }
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN) > 0 {
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN);
+        }
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN) > 0 {
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN);
+        }
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN) > 0 {
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
+        }
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN) > 0 {
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN);
+        }
 
+        if StatusModule::status_kind(fighter.module_accessor) != *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD {
+            ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+            ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost2"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+        }
     }
 }
 
@@ -119,16 +142,7 @@ unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
     }
     if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_ATTACK_DASH, true);
-        for _ in 0..3 {
-            if macros::is_excute(agent) {
-                macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 1.8, 361, 15, 0, 45, 7.0, 0.0, 5.0, 0.0, None, None, None, 0.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-            }
-            wait(agent.lua_state_agent, 2.0);
-            if macros::is_excute(agent) {
-                AttackModule::clear_all(agent.module_accessor);
-            }
-            wait(agent.lua_state_agent, 5.0);
-        }
+        MotionModule::set_frame(agent.module_accessor, 7.0, true);
     }
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("pizzapacman"), 4.0, 60, 65, 0, 100, 7.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
@@ -453,7 +467,6 @@ unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CV
 
 //N - MAIN
 unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N04"));
     if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { 
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
@@ -528,6 +541,20 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
     let xpos = ControlModule::get_stick_x(fighter.module_accessor);
     let ypos = ControlModule::get_stick_y(fighter.module_accessor);
     let selected_scale = Vector3f{x: 1.5, y: 1.5, z: 1.0};
+    let cooldown_scale = Vector3f{x: 0.3, y: 0.3, z: 1.0};
+    let left_position = Vector3f{ x:-30.0, y: 10.0, z: 0.0 };
+    let facing = PostureModule::lr(fighter.module_accessor);
+    if facing == 1.0 {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: 0.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+    }
+    else {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: -28.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("ghost1"), &left_position, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("bell"), &Vector3f{ x:-7.5, y: 22.0, z: 15.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("apple"), &Vector3f{ x:11.0, y: -20.0, z: 0.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("melon"), &Vector3f{ x:12.0, y: -18.0, z: 0.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-2.0, y: 15.0, z: 5.0 }, false, false);
+    }
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
         if MotionModule::is_end(fighter.module_accessor) {
@@ -540,40 +567,81 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         }
 
         //key
-        if xpos == 0.0 && ypos > 0.0 {
-            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("key"), &selected_scale);
-            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N08"));
-            WorkModule::set_int(fighter.module_accessor, 1, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN) != 0 {
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
+        }
+        else {
+            if xpos == 0.0 && ypos > 0.0 {
+                ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("key"), &selected_scale);
+                if !SoundModule::is_playing(fighter.module_accessor, Hash40::new("se_pacman_special_n08")) {
+                    SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n08"), true, false, false, false, enSEType(0));
+                }
+                ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
+                WorkModule::set_int(fighter.module_accessor, 1, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            }
         }
 
         //apple
-        else if xpos > 0.0 && ypos > 0.0 {
-            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("apple"), &selected_scale);
-            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N04"));
-            WorkModule::set_int(fighter.module_accessor, 2, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN) != 0 {
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
+        }
+        else {
+            if xpos > 0.0 && ypos > 0.0 {
+                ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("apple"), &selected_scale);
+                if !SoundModule::is_playing(fighter.module_accessor, Hash40::new("se_pacman_special_n04")) {
+                    SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n04"), true, false, false, false, enSEType(0));
+                }
+                ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
+                WorkModule::set_int(fighter.module_accessor, 2, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            }
         }
 
         //melon
-        else if xpos > 0.0 && ypos < 0.0 {
-            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("melon"), &selected_scale);
-            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N05"));
-            WorkModule::set_int(fighter.module_accessor, 3, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN) != 0 {
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);       
+        }
+        else {
+            if xpos > 0.0 && ypos < 0.0 {
+                ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("melon"), &selected_scale);
+                if !SoundModule::is_playing(fighter.module_accessor, Hash40::new("se_pacman_special_n05")) {
+                    SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n05"), true, false, false, false, enSEType(0));
+                }
+                ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
+                WorkModule::set_int(fighter.module_accessor, 3, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            }
         }
 
         //galaxian
-        else if xpos < 0.0 && ypos < 0.0 {
-            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("galaxian"), &selected_scale);
-            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N06"));
-            WorkModule::set_int(fighter.module_accessor, 4, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN) != 0 {
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);       
+        }
+        else {
+            if xpos < 0.0 && ypos < 0.0 {
+                ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("galaxian"), &selected_scale);
+                if !SoundModule::is_playing(fighter.module_accessor, Hash40::new("se_pacman_special_n06")) {
+                    SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n06"), true, false, false, false, enSEType(0));
+                }
+                ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
+                WorkModule::set_int(fighter.module_accessor, 4, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            }
         }
 
         //bell
-        else if xpos < 0.0 && ypos > 0.0 {
-            ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("bell"), &selected_scale);
-            macros::PLAY_SE(fighter, Hash40::new("se_pacman_special_N07"));
-            WorkModule::set_int(fighter.module_accessor, 5, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN) != 0 {
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);        
         }
         else {
+            if xpos < 0.0 && ypos > 0.0 {
+                ModelModule::set_joint_scale(fighter.module_accessor, Hash40::new("bell"), &selected_scale);
+                if !SoundModule::is_playing(fighter.module_accessor, Hash40::new("se_pacman_special_n07")) {
+                    SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n07"), true, false, false, false, enSEType(0));
+                }
+                ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
+                WorkModule::set_int(fighter.module_accessor, 5, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            }
+        }
+
+        if xpos == 0.0 && ypos == 0.0 {
             WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
         }
     }
@@ -581,42 +649,46 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         //key
         if  WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 1 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANKEY), 0, 0, false, false);
+            WorkModule::set_int(fighter.module_accessor, 180, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN);
         }
 
         //apple
         else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 2 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANAPPLE), 0, 0, false, false);
+            WorkModule::set_int(fighter.module_accessor, 60, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN);
         }
 
         //melon
         else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 3 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANMELON), 0, 0, false, false);
+            WorkModule::set_int(fighter.module_accessor, 60, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN);
         }
 
         //galaxian
         else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 4 {
-            let rand = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
-            if rand != 6 {
+            let rand = smash::app::sv_math::rand(hash40("fighter"), 9) as u64;
+            if rand != 8 {
                 ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBOSS), 0, 0, false, false);
+                WorkModule::set_int(fighter.module_accessor, 90, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
             }
             else {
                 ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_BOSSGALAGA), 0, 0, false, false);
+                WorkModule::set_int(fighter.module_accessor, 90, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
             }
         }
 
         //bell
         else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 5 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBELL), 0, 0, false, false);
+            WorkModule::set_int(fighter.module_accessor, 180, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN);
         }
 
         else {
             if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_cancel"), 0.0, 1.0, false, 0.0, false, false);
                 fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
                 return 1.into()
             }
             else {
-                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_cancel"), 0.0, 1.0, false, 0.0, false, false);
                 fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
                 return 1.into()
             }   
@@ -879,6 +951,8 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
         macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.1);
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
@@ -892,18 +966,6 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     }
 }
 
-//GRAB EFFECT
-unsafe extern "C" fn pacman_effect_catch(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
-        for _ in 0..600 {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
-            macros::LAST_EFFECT_SET_COLOR(agent, *FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE, 0, 0);
-            EffectModule::set_custom_uv_offset(agent.module_accessor, (*FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_CATCH_EFFECT_HANDLE).try_into().unwrap(), std::ptr::null(), 0);
-            wait(agent.lua_state_agent, 60.0);
-        }
-    }
-}
 
 //DASH GRAB
 unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
@@ -1117,7 +1179,6 @@ unsafe extern "C" fn bigpacman_start(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 92, 175, 0, 25, 8.0, 0.0, 5.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_appeal_up"), Hash40::new("ghost1"), 0, 5, 0, 0, 0, 0, 1, true);
         for _ in 0..100 {
             macros::PLAY_SE(agent, Hash40::new("se_pacman_appeal_monster_ijike"));
             wait(agent.lua_state_agent, 30.0);
@@ -1189,10 +1250,10 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
     let status_frame = weapon.global_table[0xe].get_f32();
     
     // Set speed
-    weapon.agent.clear_lua_stack();
-    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
-    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
-    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_y));
+    weapon.clear_lua_stack();
+    weapon.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
+    weapon.push_lua_stack(&mut L2CValue::new_num(speed_x));
+    weapon.push_lua_stack(&mut L2CValue::new_num(speed_y));
     sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     weapon.fastshift(L2CValue::Ptr(pacman_bigpacman_start_main_loop as *const () as _))
@@ -1278,34 +1339,33 @@ unsafe extern "C" fn pacman_trampoline_start_main_loop(weapon: &mut smashline::L
 
 pub fn install() {
     Agent::new("pacman")
-        .game_acmd("game_attack11", pacman_attack11)
-        .game_acmd("game_attack12", pacman_attack12)
-        .game_acmd("game_attack13", pacman_attack13)
-        .game_acmd("game_attacks3", pacman_attacks3)
-        .game_acmd("game_attacks3lw", pacman_attacks3lw)
-        .game_acmd("game_attacklw3", pacman_attacklw3)
-        .game_acmd("game_attackhi3", pacman_attackhi3)
-        .game_acmd("game_attacks4", pacman_attacks4)
-        .game_acmd("game_attacklw4", pacman_attacklw4)
-        .game_acmd("game_attackhi4", pacman_attackhi4)
-        .game_acmd("game_attackairlw", pacman_attackairlw)
-        .game_acmd("game_attackairn", pacman_attackairn)
-        .game_acmd("game_attackairf", pacman_attackairf)
-        .game_acmd("game_attackairhi", pacman_attackairhi)
-        .game_acmd("game_specialsdash", pacman_specialsdash)
-        .game_acmd("game_catch", pacman_catch)
-        .game_acmd("game_catchdash", pacman_catchdash)
-        .effect_acmd("effect_catch", pacman_effect_catch)
-        .sound_acmd("sound_catch", pacman_sound_catch)
-        .game_acmd("game_throwhi", pacman_throwhi)
-        .game_acmd("game_throwlw", pacman_throwlw)
-        .game_acmd("game_throwb", pacman_throwb)
-        .game_acmd("game_throwf", pacman_throwf)
-        .game_acmd("game_appealsr", pacman_appeal_side)
-        .game_acmd("game_appealsl", pacman_appeal_side)
-        .game_acmd("game_appeallwr", pacman_appeallwr)
-        .game_acmd("game_appeallwl", pacman_appeallwl)
-        .game_acmd("game_attackdash", pacman_attackdash)
+        .game_acmd("game_attack11", pacman_attack11, Low)
+        .game_acmd("game_attack12", pacman_attack12, Low)
+        .game_acmd("game_attack13", pacman_attack13, Low)
+        .game_acmd("game_attacks3", pacman_attacks3, Low)
+        .game_acmd("game_attacks3lw", pacman_attacks3lw, Low)
+        .game_acmd("game_attacklw3", pacman_attacklw3, Low)
+        .game_acmd("game_attackhi3", pacman_attackhi3, Low)
+        .game_acmd("game_attacks4", pacman_attacks4, Low)
+        .game_acmd("game_attacklw4", pacman_attacklw4, Low)
+        .game_acmd("game_attackhi4", pacman_attackhi4, Low)
+        .game_acmd("game_attackairlw", pacman_attackairlw, Low)
+        .game_acmd("game_attackairn", pacman_attackairn, Low)
+        .game_acmd("game_attackairf", pacman_attackairf, Low)
+        .game_acmd("game_attackairhi", pacman_attackairhi, Low)
+        .game_acmd("game_specialsdash", pacman_specialsdash, Low)
+        .game_acmd("game_catch", pacman_catch, Low)
+        .game_acmd("game_catchdash", pacman_catchdash, Low)
+        .sound_acmd("sound_catch", pacman_sound_catch, Low)
+        .game_acmd("game_throwhi", pacman_throwhi, Low)
+        .game_acmd("game_throwlw", pacman_throwlw, Low)
+        .game_acmd("game_throwb", pacman_throwb, Low)
+        .game_acmd("game_throwf", pacman_throwf, Low)
+        .game_acmd("game_appealsr", pacman_appeal_side, Low)
+        .game_acmd("game_appealsl", pacman_appeal_side, Low)
+        .game_acmd("game_appeallwr", pacman_appeallwr, Low)
+        .game_acmd("game_appeallwl", pacman_appeallwl, Low)
+        .game_acmd("game_attackdash", pacman_attackdash, Low)
         .on_line(Main, pacman_frame)
         .on_start(pacman_start)
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, pacman_specialn_pre)
@@ -1316,10 +1376,10 @@ pub fn install() {
         .status(End, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_end)
         .install();
     Agent::new("pacman_firehydrant")
-        .game_acmd("game_fall", hydrant_fall)
+        .game_acmd("game_fall", hydrant_fall, Low)
         .install();
     Agent::new("pacman_bigpacman")
-        .game_acmd("game_start", bigpacman_start)
+        .game_acmd("game_start", bigpacman_start, Low)
         .status(Init, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_init)
         .status(Pre, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_pre)
         .status(Main, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_main)

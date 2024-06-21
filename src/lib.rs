@@ -16,21 +16,22 @@
 mod pacman;
 mod luigi;
 mod robot;
-mod ganon;
 mod common;
+mod wario;
+mod ganon;
+mod purin;
+mod falco;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
     pacman::install();
     luigi::install();
     robot::install();
+    wario::install();
     ganon::install();
     common::install();
-<<<<<<< Updated upstream
-=======
     purin::install();
     falco::install();
-    smashline::clone_weapon("mario", "fireball", "wario", "waft", true);
+    smashline::clone_weapon("mario", "fireball", "wario", "cloud", true);
     smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
->>>>>>> Stashed changes
 }

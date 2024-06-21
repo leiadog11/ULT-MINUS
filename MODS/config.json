@@ -168,39 +168,34 @@
             "fighter/pacman/model/body/c07/pacman_gost_col.nutexb",
             "fighter/pacman/motion/body/c07/update.prc"
         ],
-        "fighter/luigi/c00": [
-            "fighter/luigi/motion/body/c00/motion_list.yaml",
-            "fighter/luigi/motion/body/c00/e00catchsuck.nuanmb"
+        "fighter/robot/c00": [
+            "fighter/robot/motion/body/c00/motion_list.bin", 
+            "fighter/robot/motion/body/c00/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c01": [
-            "fighter/luigi/motion/body/c01/motion_list.yaml",
-            "fighter/luigi/motion/body/c01/e00catchsuck.nuanmb"
+        "fighter/robot/c01": [
+            "fighter/robot/motion/body/c01/motion_list.bin", 
+            "fighter/robot/motion/body/c01/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c02": [
-            "fighter/luigi/motion/body/c02/motion_list.yaml",
-            "fighter/luigi/motion/body/c02/e00catchsuck.nuanmb"
+        "fighter/robot/c02": [
+            "fighter/robot/motion/body/c02/motion_list.bin", 
+            "fighter/robot/motion/body/c02/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c03": [
-            "fighter/luigi/motion/body/c03/motion_list.yaml",
-            "fighter/luigi/motion/body/c03/e00catchsuck.nuanmb"
+        "fighter/robot/c03": [
+            "fighter/robot/motion/body/c03/motion_list.bin", 
+            "fighter/robot/motion/body/c03/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c04": [
-            "fighter/luigi/motion/body/c04/motion_list.yaml",
-            "fighter/luigi/motion/body/c04/e00catchsuck.nuanmb"
+        "fighter/robot/c04": [
+            "fighter/robot/motion/body/c04/motion_list.bin", 
+            "fighter/robot/motion/body/c04/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c05": [
-            "fighter/luigi/motion/body/c05/motion_list.yaml",
-            "fighter/luigi/motion/body/c05/e00catchsuck.nuanmb"
+        "fighter/robot/c05": [
+            "fighter/robot/motion/body/c05/motion_list.bin", 
+            "fighter/robot/motion/body/c05/c00attack13.nuanmb"
         ],
-        "fighter/luigi/c06": [
-            "fighter/luigi/motion/body/c06/motion_list.yaml",
-            "fighter/luigi/motion/body/c06/e00catchsuck.nuanmb"
+        "fighter/robot/c06": [
+            "fighter/robot/motion/body/c06/motion_list.bin", 
+            "fighter/robot/motion/body/c06/c00attack13.nuanmb"
         ],
-<<<<<<< Updated upstream
-        "fighter/luigi/c07": [
-            "fighter/luigi/motion/body/c07/motion_list.yaml",
-            "fighter/luigi/motion/body/c07/e00catchsuck.nuanmb"
-=======
         "fighter/robot/c07": [
             "fighter/robot/motion/body/c07/motion_list.bin", 
             "fighter/robot/motion/body/c07/c00attack13.nuanmb"
@@ -210,64 +205,72 @@
             "fighter/wario/motion/body/c00/c00attack100.nuanmb",
             "fighter/wario/motion/body/c00/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c00/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c00/main.nuanmb",
-            "fighter/wario/motion/waft/c00/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c00/main.nuanmb",
+            "fighter/wario/motion/cloud/c00/motion_list.yml"
         ],
         "fighter/wario/c01": [
             "fighter/wario/motion/body/c01/motion_list.bin",
             "fighter/wario/motion/body/c01/c00attack100.nuanmb",
             "fighter/wario/motion/body/c01/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c01/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c01/main.nuanmb",
-            "fighter/wario/motion/waft/c01/motion_list.bin"
+          
+            "fighter/wario/motion/cloud/c01/main.nuanmb",
+            "fighter/wario/motion/cloud/c01/motion_list.bin"
         ],
         "fighter/wario/c02": [
             "fighter/wario/motion/body/c02/motion_list.bin",
             "fighter/wario/motion/body/c02/c00attack100.nuanmb",
             "fighter/wario/motion/body/c02/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c02/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c02/main.nuanmb",
-            "fighter/wario/motion/waft/c02/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c02/main.nuanmb",
+            "fighter/wario/motion/cloud/c02/motion_list.bin"
         ],
         "fighter/wario/c03": [
             "fighter/wario/motion/body/c03/motion_list.bin",
             "fighter/wario/motion/body/c03/c00attack100.nuanmb",
             "fighter/wario/motion/body/c03/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c03/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c03/main.nuanmb",
-            "fighter/wario/motion/waft/c03/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c03/main.nuanmb",
+            "fighter/wario/motion/cloud/c03/motion_list.bin"
         ],
         "fighter/wario/c04": [
             "fighter/wario/motion/body/c04/motion_list.bin",
             "fighter/wario/motion/body/c04/c00attack100.nuanmb",
             "fighter/wario/motion/body/c04/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c04/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c04/main.nuanmb",
-            "fighter/wario/motion/waft/c04/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c04/main.nuanmb",
+            "fighter/wario/motion/cloud/c04/motion_list.bin"
         ],
         "fighter/wario/c05": [
             "fighter/wario/motion/body/c05/motion_list.bin",
             "fighter/wario/motion/body/c05/c00attack100.nuanmb",
             "fighter/wario/motion/body/c05/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c05/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c05/main.nuanmb",
-            "fighter/wario/motion/waft/c05/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c05/main.nuanmb",
+            "fighter/wario/motion/cloud/c05/motion_list.bin"
         ],
         "fighter/wario/c06": [
             "fighter/wario/motion/body/c06/motion_list.bin",
             "fighter/wario/motion/body/c06/c00attack100.nuanmb",
             "fighter/wario/motion/body/c06/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c06/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c06/main.nuanmb",
-            "fighter/wario/motion/waft/c06/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c06/main.nuanmb",
+            "fighter/wario/motion/cloud/c06/motion_list.bin"
         ],
         "fighter/wario/c07": [
             "fighter/wario/motion/body/c07/motion_list.bin",
             "fighter/wario/motion/body/c07/c00attack100.nuanmb",
             "fighter/wario/motion/body/c07/c00attack100start.nuanmb",
             "fighter/wario/motion/body/c07/c00attack100end.nuanmb",
-            "fighter/wario/motion/waft/c07/main.nuanmb",
-            "fighter/wario/motion/waft/c07/motion_list.bin"
+
+            "fighter/wario/motion/cloud/c07/main.nuanmb",
+            "fighter/wario/motion/cloud/c07/motion_list.bin"
         ],
         "fighter/ganon/c00": [
             "fighter/ganon/model/gsword/c00/dark_model.numatb",
@@ -295,6 +298,9 @@
             "fighter/ganon/motion/body/c00/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c00/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c00/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c00/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c00/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c00/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c00/motion_list.bin",
             "fighter/ganon/motion/gsword/c00/motion_list.bin",
             "fighter/ganon/motion/gsword/c00/main.nuanmb"
@@ -325,6 +331,9 @@
             "fighter/ganon/motion/body/c01/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c01/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c01/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c01/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c01/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c01/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c01/motion_list.bin",
             "fighter/ganon/motion/gsword/c01/motion_list.bin",
             "fighter/ganon/motion/gsword/c01/main.nuanmb"
@@ -355,6 +364,9 @@
             "fighter/ganon/motion/body/c02/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c02/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c02/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c02/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c02/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c02/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c02/motion_list.bin",
             "fighter/ganon/motion/gsword/c02/motion_list.bin",
             "fighter/ganon/motion/gsword/c02/main.nuanmb"
@@ -385,6 +397,9 @@
             "fighter/ganon/motion/body/c03/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c03/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c03/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c03/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c03/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c03/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c03/motion_list.bin",
             "fighter/ganon/motion/gsword/c03/motion_list.bin",
             "fighter/ganon/motion/gsword/c03/main.nuanmb"
@@ -416,6 +431,9 @@
             "fighter/ganon/motion/body/c04/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c04/c05landingairlw2.nuanmb",
             "fighter/ganon/motion/body/c04/motion_list.bin",
+            "fighter/ganon/motion/body/c04/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c04/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c04/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/gsword/c04/motion_list.bin",
             "fighter/ganon/motion/gsword/c04/main.nuanmb"
         ],
@@ -445,6 +463,9 @@
             "fighter/ganon/motion/body/c05/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c05/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c05/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c05/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c05/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c05/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c05/motion_list.bin",
             "fighter/ganon/motion/gsword/c05/motion_list.bin",
             "fighter/ganon/motion/gsword/c05/main.nuanmb"
@@ -475,6 +496,9 @@
             "fighter/ganon/motion/body/c06/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c06/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c06/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c06/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c06/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c06/d03speciallwhold.nuanmb",
             "fighter/ganon/motion/body/c06/motion_list.bin",
             "fighter/ganon/motion/gsword/c06/motion_list.bin",
             "fighter/ganon/motion/gsword/c06/main.nuanmb"
@@ -505,6 +529,12 @@
             "fighter/ganon/motion/body/c07/c05landingairb2.nuanmb",
             "fighter/ganon/motion/body/c07/c05landingairhi2.nuanmb",
             "fighter/ganon/motion/body/c07/c05landingairlw2.nuanmb",
+            "fighter/ganon/motion/body/c07/c03attacks4charge2.nuanmb",
+            "fighter/ganon/motion/body/c07/c03attacks42.nuanmb",
+            "fighter/ganon/motion/body/c07/d03speciallwhold.nuanmb",
+            "fighter/ganon/motion/body/c07/motion_list.bin",
+            "fighter/ganon/motion/gsword/c07/motion_list.bin",
+            "fighter/ganon/motion/gsword/c07/main.nuanmb"
             "fighter/ganon/motion/body/c07/motion_list.bin",
             "fighter/ganon/motion/gsword/c07/motion_list.bin",
             "fighter/ganon/motion/gsword/c07/main.nuanmb"
@@ -548,7 +578,6 @@
             "fighter/falco/motion/body/c07/motion_list.bin",
             "fighter/falco/motion/body/c07/c05attackairfbeakbonk",
             "fighter/falco/motion/body/c07/c05attackairfbeakbonkend"
->>>>>>> Stashed changes
         ]
     }
 }
