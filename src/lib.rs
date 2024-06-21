@@ -26,4 +26,11 @@ pub fn main() {
     robot::install();
     ganon::install();
     common::install();
+<<<<<<< Updated upstream
+=======
+    purin::install();
+    falco::install();
+    smashline::clone_weapon("mario", "fireball", "wario", "waft", true);
+    smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
+>>>>>>> Stashed changes
 }
