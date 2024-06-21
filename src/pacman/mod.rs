@@ -951,6 +951,8 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, 10.7, Some(0.0), Some(6.2), Some(16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
         macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_tractorbeam"), Hash40::new("top"), 0, 7, 11, -90, 0, 90, 1, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.1);
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
