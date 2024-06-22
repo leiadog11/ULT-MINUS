@@ -407,8 +407,29 @@ unsafe extern "C" fn falco_specialhi(agent: &mut L2CAgentBase) {
 //TAUNTS
 
 //SIDE TAUNT FACING RIGHT
+unsafe extern "C" fn falco_appealsr(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::FT_MOTION_RATE(agent, 1.2);
+    }
+    frame(agent.lua_state_agent, 42.0);
+    if macros::is_excute(agent) {
+        macros::FT_MOTION_RATE(agent, 1.0);
+    }
+}
 
-
+//SIDE TAUNT FACING LEFT
+unsafe extern "C" fn falco_appealsl(agent: &mut L2CAgentBase) {
+    macros::REVERSE_LR(agent);
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::FT_MOTION_RATE(agent, 1.2);
+    }
+    frame(agent.lua_state_agent, 42.0);
+    if macros::is_excute(agent) {
+        macros::FT_MOTION_RATE(agent, 1.0);
+    }
+}
 
 // Char opff, Global opff
 unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
@@ -455,6 +476,8 @@ pub fn install() {
         .game_acmd("game_attackhi3", falco_attackhi3, Low)
         .game_acmd("game_attackairhi", falco_attackairhi, Low)
         .game_acmd("game_specialhi", falco_specialhi, Low)
+        .game_acmd("game_appealsr", falco_appealsr, Low)
+        .game_acmd("game_appealsl", falco_appealsl, Low)
         .on_line(Main, falco_frame) // Char opff
         .install();
 }

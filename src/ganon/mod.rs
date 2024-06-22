@@ -615,6 +615,7 @@ unsafe extern "C" fn ganon_attackairlw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         FighterAreaModuleImpl::enable_fix_jostle_area_xy(agent.module_accessor, 4.5, 4.5, 12.5, 0.0);
     }
+}
 
 //---------------SMASH ATTACKS-----------------
 
