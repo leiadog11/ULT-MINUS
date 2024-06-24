@@ -51,25 +51,20 @@ unsafe extern "C" fn wario_attack12(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
+        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
     }
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO)
+        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
     }
 }
+
+/*
 
 //RAPID JAB START
 unsafe extern "C" fn wario_attack100start(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         FighterAreaModuleImpl::enable_fix_jostle_area(agent.module_accessor, 5.0, 4.0);
-    }
-}
-
-//RAPID JAB START EXPRESSION
-unsafe extern "C" fn wario_expression_attack100start(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
     }
 }
 
@@ -122,6 +117,20 @@ unsafe extern "C" fn wario_attack100(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
 }
 
+//RAPID JAB SUB
+unsafe extern "C" fn wario_attack100sub(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.6, 361, 10, 0, 8, 5.2, 0.0, 8.0, 8.0, Some(0.0), Some(8.0), Some(13.0), 0.5, 0.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BITE);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
+        macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 9);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CONTINUE_CHECK);
+    }
+}
+
 //RAPID JAB EXPRESSION
 unsafe extern "C" fn wario_expression_attack100(agent: &mut L2CAgentBase) {
     wait_loop_sync_mot(0);
@@ -166,6 +175,8 @@ unsafe extern "C" fn wario_expression_attack100end(agent: &mut L2CAgentBase) {
     }
 }
 
+*/
+
 //FORWARD TILT
 unsafe extern "C" fn wario_attacks3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
@@ -182,21 +193,26 @@ unsafe extern "C" fn wario_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 22.0);
-    if macros::is_excute(agent) {
-        GrabModule::set_rebound(agent.module_accessor, true);
-    }
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 3.7, 0.0, 7.0, 4.0, Some(0.0), Some(7.0), Some(10.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-        macros::CATCH(agent, 1, Hash40::new("top"), 1.85, 0.0, 7.0, 2.15, Some(0.0), Some(7.0), Some(12.15), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+        macros::ATTACK(agent, 0, 0, Hash40::new("arml"), 0.0, 180, 100, 0, 100, 3.0, -5.5, 0.0, 0.0, Some(5.5), None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, true, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
     }
-    macros::game_CaptureCutCommon(agent);
     frame(agent.lua_state_agent, 29.0);
     if macros::is_excute(agent) {
-        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
-        GrabModule::set_rebound(agent.module_accessor, false);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+//DAFT
+unsafe extern "C" fn wario_attacks3lw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("handl"), 13.0, 361, 1, 1, 1, 5.7, 2.3, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("arml"), 11.0, 361, 1, 1, 1, 3.0, -0.5, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+    }
+    wait(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
     }
 }
 
@@ -810,11 +826,11 @@ unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("throw_b") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.75, y: PostureModule::pos_y(fighter.module_accessor)});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.75, y: PostureModule::pos_y(fighter.module_accessor)});
             }
         }
 
@@ -942,6 +958,7 @@ unsafe extern "C" fn wario_special_hi_check_attack_status(fighter: &mut L2CFight
     }
     0.into()
 }
+
 //SPECIAL S DRIVE
 unsafe extern "C" fn wario_specialsdrive_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     fighter.sub_shift_status_main(L2CValue::Ptr(wario_specialsdrive_main_loop as *const () as _))
@@ -981,10 +998,12 @@ pub fn install() {
     Agent::new("wario")
         .game_acmd("game_attack11", wario_attack11, Low)
         .game_acmd("game_attack12", wario_attack12, Low)
-        .game_acmd("game_attack100start", wario_attack100start, Low)
-        .game_acmd("game_attack100", wario_attack100, Low)
-        .game_acmd("game_attack100end", wario_attack100end, Low)
+        //.game_acmd("game_attack100start", wario_attack100start, Low)
+        //.game_acmd("game_attack100", wario_attack100, Low)
+        //.game_acmd("game_attack100end", wario_attack100end, Low)
+        //.game_acmd("game_attack100sub", wario_attack100sub, Low)
         .game_acmd("game_attacks3", wario_attacks3, Low)
+        .game_acmd("game_attacks3lw", wario_attacks3lw, Low)
         .game_acmd("game_attackdash", wario_attackdash, Low)
         .game_acmd("game_attackairf", wario_attackairf, Low)
         .game_acmd("game_attackairn", wario_attackairn, Low)
@@ -1004,9 +1023,8 @@ pub fn install() {
         .game_acmd("game_appeallwr", wario_appeallw, Low)
         .game_acmd("game_appeallwl", wario_appeallw, Low)
         .effect_acmd("effect_attackhi4", wario_effect_attackhi4, Low)
-        .expression_acmd("expression_attack100start", wario_expression_attack100start, Low)
-        .expression_acmd("expression_attack100end", wario_expression_attack100end, Low)
-        .expression_acmd("expression_attack100", wario_expression_attack100, Low)
+        //.expression_acmd("expression_attack100end", wario_expression_attack100end, Low)
+        //.expression_acmd("expression_attack100", wario_expression_attack100, Low)
         .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_N_BITE, wario_special_n_check_attack_status)
         .status(CheckAttack, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_HI_JUMP, wario_special_hi_check_attack_status)
         .status(Main, *FIGHTER_WARIO_STATUS_KIND_SPECIAL_S_DRIVE, wario_specialsdrive_main)
