@@ -19,7 +19,8 @@ use skyline::libc::*;
 
 
 static mut FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK: i32 = 0x100000C4;
-static mut FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE: i32 = 0x100000C4;
+static mut FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE: i32 = 0x100000C5;
+pub const SITUATION_KIND:                  i32 = 0x16;
 
 
 
@@ -83,7 +84,6 @@ unsafe extern "C" fn rob_sound_attack13(agent: &mut L2CAgentBase) {
 }
 
 unsafe extern "C" fn rob_expression_attack13(agent: &mut L2CAgentBase) {
-
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
@@ -92,7 +92,6 @@ unsafe extern "C" fn rob_expression_attack13(agent: &mut L2CAgentBase) {
 }
 
 // UP TILT
-
 unsafe extern "C" fn rob_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     macros::FT_MOTION_RATE(agent, 0.5);
@@ -146,7 +145,6 @@ unsafe extern "C" fn rob_attacks3(agent: &mut L2CAgentBase) {
 }
 
 // DOWN ANGLED FORWARD TILT
-
 unsafe extern "C" fn rob_attacks3lw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
@@ -163,7 +161,6 @@ unsafe extern "C" fn rob_attacks3lw(agent: &mut L2CAgentBase) {
 }
 
 // DOWN TILT
-
 unsafe extern "C" fn rob_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -309,7 +306,7 @@ unsafe extern "C" fn rob_attacklw4(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("body"), 11.0, 72, 90, 0, 110, 8.5, -1.5, 13.0, 13.0, Some(-1.5), Some(0.0), Some(-13.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("body"), 11.0, 72, 90, 0, 100, 8.5, -1.5, 13.0, 13.0, Some(-1.5), Some(0.0), Some(-13.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
     }
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
@@ -526,7 +523,7 @@ unsafe extern "C" fn rob_effect_attackairhi(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP AIR SOUND
+// UP AIR SOUND
 unsafe extern "C" fn rob_sound_attackairhi(agent: &mut L2CAgentBase) {
 
     wait(agent.lua_state_agent, 6.0);
@@ -535,7 +532,7 @@ unsafe extern "C" fn rob_sound_attackairhi(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP AIR EXPRESSION
+// UP AIR EXPRESSION
 unsafe extern "C" fn rob_expression_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
@@ -548,10 +545,7 @@ unsafe extern "C" fn rob_expression_attackairhi(agent: &mut L2CAgentBase) {
 }
 
 
-
-
-// NEUTRAL AIR
-
+// NAIR
 unsafe extern "C" fn rob_attackairn(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
@@ -575,6 +569,24 @@ unsafe extern "C" fn rob_attackairn(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+    }
+}
+
+// NAIR EXPRESSION
+unsafe extern "C" fn rob_expression_attackairn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohit_explosion"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 19.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohit_explosion"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 27.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohit_explosion"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
 }
 
@@ -623,6 +635,42 @@ unsafe extern "C" fn rob_speciallw(agent: &mut L2CAgentBase) {
     }
 }
 
+//UP B
+unsafe extern "C" fn rob_specialhi(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.8);
+    macros::SET_SPEED_EX(agent, 0.0, 1.25, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_BURNER_FLAG_TRANSFORM_COMP);
+    }
+}
+
+//UP B EFFECT
+unsafe extern "C" fn rob_effect_specialhi(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("robot_roboburner_ring"), Hash40::new("top"), 0, 0, 0, 0, 90, -90, 1, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("robot_roboburner"), Hash40::new("knee"), 0, 0, 0, 0, 90, -90, 1, false);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.75);
+    }
+}
+
+//NEUTRAL B
+unsafe extern "C" fn rob_beam_flymax(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
+    }
+
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, Some(0.0), Some(0.0), Some(-16.0), 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
+    }
+    
+}
+
 
 //-------------ITEM THROW----------------
 
@@ -635,11 +683,9 @@ unsafe extern "C" fn rob_effect_itemlightthrow(agent: &mut L2CAgentBase) {
 
 // ------GRABS-------
 
-// ------GRAB--------
-
+//GRAB
 unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
-    println!("got grabbed: {}", WorkModule::get_int(agent.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK));
-    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -647,7 +693,7 @@ unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
         macros::CATCH(agent, 0, Hash40::new("top"), 2.8, 0.0, 8.0, 4.0, Some(0.0), Some(8.0), Some(11.6), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 1.4, 0.0, 8.0, 2.6, Some(0.0), Some(8.0), Some(13.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_A);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.4, 0.0, 8.0, 2.6, Some(0.0), Some(8.0), Some(13.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 2.0);
@@ -660,10 +706,9 @@ unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
 }
 
 
-// ------DASH GRAB---
-
+//DASH GRAB
 unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -671,7 +716,7 @@ unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
         macros::CATCH(agent, 0, Hash40::new("top"), 2.2, 0.0, 8.0, 4.0, Some(0.0), Some(8.0), Some(12.2), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 1.1, 0.0, 8.0, 2.9, Some(0.0), Some(8.0), Some(13.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_A);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.1, 0.0, 8.0, 2.9, Some(0.0), Some(8.0), Some(13.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 2.0);
@@ -685,10 +730,9 @@ unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
 
 
 
-// ------PIVOT GRAB--
-
+//PIVOT GRAB
 unsafe extern "C" fn rob_catchturn(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -696,7 +740,7 @@ unsafe extern "C" fn rob_catchturn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
         macros::CATCH(agent, 0, Hash40::new("top"), 2.8, 0.0, 8.0, -2.0, Some(0.0), Some(8.0), Some(-17.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 1.4, 0.0, 8.0, -0.6, Some(0.0), Some(8.0), Some(-18.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_A);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.4, 0.0, 8.0, -0.6, Some(0.0), Some(8.0), Some(-18.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 2.0);
@@ -706,10 +750,6 @@ unsafe extern "C" fn rob_catchturn(agent: &mut L2CAgentBase) {
         GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
-
-
-
-
 
 // ------THROWS------
 
@@ -814,24 +854,137 @@ unsafe extern "C" fn rob_appeals(agent: &mut L2CAgentBase) {
 }
 */
 
-//------BEAM---------------
-unsafe extern "C" fn rob_flymax(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-        PostureModule::set_rot(agent.module_accessor, &Vector3f{x: 90.0, y: 0.0, z: 0.0}, 0);
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
-    }
-    frame(agent.lua_state_agent, 4.0);
-    if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 45, 43, 0, 50, 3.5, 0.0, 0.0, 2.0, Some(0.0), Some(0.0), Some(-16.0), 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, -3.7, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_ENERGY);
-    }
-    
+//--------------------STATUS SCRIPTS--------------------
+
+//UP B
+unsafe extern "C" fn rob_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+        0
+    );
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (
+            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+        ) as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
+        0
+    );
+    return 0.into();
 }
+
+unsafe extern "C" fn rob_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+    fighter.sub_shift_status_main(L2CValue::Ptr(rob_specialhi_main_loop as *const () as _))
+}
+
+unsafe extern "C" fn rob_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if MotionModule::frame(fighter.module_accessor) > 2.0 {
+        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
+            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
+            return 1.into();
+        }
+        else {
+            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
+            return 1.into();
+        }   
+    }
+
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_specialhi_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_specialhi_exec(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
+}
+
+
+//BEAM
+
+/*
+unsafe extern "C" fn rob_beam_fly_init(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    GroundModule::set_test_coll_stop_status(weapon.module_accessor, true);
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_beam_fly_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    StatusModule::init_settings(
+        weapon.module_accessor, 
+        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
+        GROUND_CORRECT_KIND_AIR.into(), 
+        smash::app::GroundCliffCheckKind(0), 
+        false, 
+        *WEAPON_STATUS_WORK_KEEP_FLAG_NONE_FLAG, 
+        *WEAPON_STATUS_WORK_KEEP_FLAG_NONE_INT, 
+        *WEAPON_STATUS_WORK_KEEP_FLAG_NONE_FLOAT, 
+        0
+    );
+      
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_beam_fly_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    if !WorkModule::is_flag(weapon.module_accessor, *WEAPON_ROBOT_BEAM_INSTANCE_WORK_ID_FLAG_STRONG) {
+        MotionModule::change_motion(weapon.module_accessor, Hash40::new("fly"), 0.0, 1.0, false, 0.0, false, false);
+    }
+    else {
+        MotionModule::change_motion(weapon.module_accessor, Hash40::new("fly_max"), 0.0, 1.0, false, 0.0, false, false);
+    } 
+
+    if StopModule::is_stop(weapon.module_accessor) {
+    //FUN HAHAHA
+    }
+  
+    weapon.fastshift(L2CValue::Ptr(rob_beam_fly_main_loop as *const () as _))
+}
+
+unsafe extern "C" fn rob_beam_fly_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_beam_fly_end(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_beam_fly_exec(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    //FUN HAHAHA
+    return 0.into();
+}
+
+unsafe extern "C" fn rob_beam_fly_exec_stop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    //FUN HAHAHA
+    return 0.into();
+}
+*/
 
 
 //OPFF
 unsafe extern "C" fn rob_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
-        println!("Gyro life: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE));
         let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1)); //opp boma, this if statement checks for P1 slot or P2 slot
         if opponent_boma == fighter.module_accessor {
             opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0)); 
@@ -902,98 +1055,104 @@ unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFig
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK ) == 3 {
+            if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK) == 3 {
                 StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BURY, false);
-                WorkModule::set_int(fighter.module_accessor,0,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+                WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
             }
-            else{
-                WorkModule::add_int(fighter.module_accessor,1,FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+            else {
+                WorkModule::inc_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
             }
         }
     }
     0.into()
 }
 
-
-
-
-
-
 pub fn install() {
-    unsafe {
-
-    }
     Agent::new("robot")
-    .game_acmd("game_attack12", rob_attack12, Low)
-    .game_acmd("game_attack13", rob_attack13, Low)
-    .effect_acmd("effect_attack13", rob_effect_attack13, Low)
-    .sound_acmd("sound_attack13", rob_sound_attack13, Low)
-    .expression_acmd("expression_attack13", rob_expression_attack13, Low)
-    .game_acmd("game_attacklw3", rob_attacklw3, Low)
-    .game_acmd("game_catch", rob_catch, Low)
-    .game_acmd("game_catchdash", rob_catchdash, Low)
-    .game_acmd("game_catchturn", rob_catchturn, Low)
-    .game_acmd("game_attackhi3", rob_attackhi3, Low)
-    .game_acmd("game_attacks3hi", rob_attacks3hi, Low)
-    .game_acmd("game_attacks3", rob_attacks3, Low)
-    .game_acmd("game_attacks3lw", rob_attacks3lw, Low)
-    .game_acmd("game_attacks4hi", rob_attacks4, Low)
-    .game_acmd("game_attacks4lw", rob_attacks4, Low)
-    .game_acmd("game_attacks4", rob_attacks4, Low)
-    .game_acmd("game_attacklw4", rob_attacklw4, Low)
-    .game_acmd("game_attackhi4", rob_attackhi4, Low)
-    .game_acmd("game_attackdash", rob_attackdash, Low)
-    .game_acmd("game_attackairf", rob_attackairf, Low)
-    .game_acmd("game_attackairlw",rob_attackairlw, Low)
-    .game_acmd("game_attackairhi", rob_attackairhi, Low)
-    .game_acmd("game_attackairn", rob_attackairn, Low)
-    .game_acmd("game_attackairb", rob_attackairb, Low)
-    .game_acmd("game_speciallw", rob_speciallw, Low)
-    .game_acmd("game_specialairlw", rob_speciallw, Low)
-    .game_acmd("game_throwhi", rob_throwhi, Low)
-    .game_acmd("game_throwf", rob_throwf, Low)
-    .game_acmd("game_throwb", rob_throwb, Low)
-    .game_acmd("game_appealhir", rob_appealhi, Low)
-    .game_acmd("game_appealhil", rob_appealhi, Low)
-    //.game_acmd("game_appealsr", rob_appeals, Low)
-    //.game_acmd("game_appealsl", rob_appeals, Low)
-    // .game_acmd("game_fly", rob_flymax, Low)
-    .sound_acmd("sound_attackairhi", rob_sound_attackairhi, Low)
-    .sound_acmd("sound_attacks4", rob_sound_attacks4, Low)
-    .sound_acmd("sound_attacks4lw", rob_sound_attacks4, Low)
-    .sound_acmd("sound_attacks4hi", rob_sound_attacks4, Low)
-    .effect_acmd("effect_itemlightthrowf", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowf4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairf", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairf4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowb", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowb4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairb", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairb4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowlw", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowlw4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairlw", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairlw4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowhi", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowhi4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairhi", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowairhi4", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowdash", rob_effect_itemlightthrow, Low)
-    .effect_acmd("effect_itemlightthrowdrop", rob_effect_itemlightthrow, Low)
-    .effect_acmd("sound_attacklw4", rob_sound_attacklw4, Low)
-    .effect_acmd("effect_attacks4", rob_effect_attacks4, Low)
-    .effect_acmd("effect_attacks4lw", rob_effect_attacks4, Low)
-    .effect_acmd("effect_attacks4hi", rob_effect_attacks4, Low)
-    .effect_acmd("effect_attackairhi", rob_effect_attackairhi, Low)
-    .effect_acmd("effect_attacklw4", rob_effect_attacklw4, Low)
-    .expression_acmd("expression_attackairhi", rob_expression_attackairhi, Low)
-    .expression_acmd("expression_attacks4", rob_expression_attacks4, Low)
-    .expression_acmd("expression_attacks4lw", rob_expression_attacks4, Low)
-    .expression_acmd("expression_attacks4hi", rob_expression_attacks4, Low)
-    .effect_acmd("expression_attacklw4", rob_expression_attacklw4, Low)
-    .status(CheckAttack, *FIGHTER_STATUS_KIND_CATCH_ATTACK, robot_catch_attack_check_attack_status)
+        .game_acmd("game_attack12", rob_attack12, Low)
+        .game_acmd("game_attack13", rob_attack13, Low)
+        .effect_acmd("effect_attack13", rob_effect_attack13, Low)
+        .sound_acmd("sound_attack13", rob_sound_attack13, Low)
+        .expression_acmd("expression_attack13", rob_expression_attack13, Low)
+        .game_acmd("game_attacklw3", rob_attacklw3, Low)
+        .game_acmd("game_catch", rob_catch, Low)
+        .game_acmd("game_catchdash", rob_catchdash, Low)
+        .game_acmd("game_catchturn", rob_catchturn, Low)
+        .game_acmd("game_attackhi3", rob_attackhi3, Low)
+        .game_acmd("game_attacks3hi", rob_attacks3hi, Low)
+        .game_acmd("game_attacks3", rob_attacks3, Low)
+        .game_acmd("game_attacks3lw", rob_attacks3lw, Low)
+        .game_acmd("game_attacks4hi", rob_attacks4, Low)
+        .game_acmd("game_attacks4lw", rob_attacks4, Low)
+        .game_acmd("game_attacks4", rob_attacks4, Low)
+        .game_acmd("game_attacklw4", rob_attacklw4, Low)
+        .game_acmd("game_attackhi4", rob_attackhi4, Low)
+        .game_acmd("game_attackdash", rob_attackdash, Low)
+        .game_acmd("game_attackairf", rob_attackairf, Low)
+        .game_acmd("game_attackairlw",rob_attackairlw, Low)
+        .game_acmd("game_attackairhi", rob_attackairhi, Low)
+        .game_acmd("game_attackairn", rob_attackairn, Low)
+        .game_acmd("game_attackairb", rob_attackairb, Low)
+        .game_acmd("game_speciallw", rob_speciallw, Low)
+        .game_acmd("game_specialairlw", rob_speciallw, Low)
+        .game_acmd("game_specialhi", rob_specialhi, Low)
+        .game_acmd("game_throwhi", rob_throwhi, Low)
+        .game_acmd("game_throwf", rob_throwf, Low)
+        .game_acmd("game_throwb", rob_throwb, Low)
+        .game_acmd("game_appealhir", rob_appealhi, Low)
+        .game_acmd("game_appealhil", rob_appealhi, Low)
+        //.game_acmd("game_appealsr", rob_appeals, Low)
+        //.game_acmd("game_appealsl", rob_appeals, Low)
+        .sound_acmd("sound_attackairhi", rob_sound_attackairhi, Low)
+        .sound_acmd("sound_attacks4", rob_sound_attacks4, Low)
+        .sound_acmd("sound_attacks4lw", rob_sound_attacks4, Low)
+        .sound_acmd("sound_attacks4hi", rob_sound_attacks4, Low)
+        .effect_acmd("effect_itemlightthrowf", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowf4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairf", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairf4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowb", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowb4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairb", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairb4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowlw", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowlw4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairlw", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairlw4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowhi", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowhi4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairhi", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowairhi4", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowdash", rob_effect_itemlightthrow, Low)
+        .effect_acmd("effect_itemlightthrowdrop", rob_effect_itemlightthrow, Low)
+        .effect_acmd("sound_attacklw4", rob_sound_attacklw4, Low)
+        .effect_acmd("effect_attacks4", rob_effect_attacks4, Low)
+        .effect_acmd("effect_attacks4lw", rob_effect_attacks4, Low)
+        .effect_acmd("effect_attacks4hi", rob_effect_attacks4, Low)
+        .effect_acmd("effect_attackairhi", rob_effect_attackairhi, Low)
+        .effect_acmd("effect_attacklw4", rob_effect_attacklw4, Low)
+        .effect_acmd("effect_specialhi", rob_effect_specialhi, Low)
+        .expression_acmd("expression_attackairn", rob_expression_attackairn, Low)
+        .expression_acmd("expression_attackairhi", rob_expression_attackairhi, Low)
+        .expression_acmd("expression_attacks4", rob_expression_attacks4, Low)
+        .expression_acmd("expression_attacks4lw", rob_expression_attacks4, Low)
+        .expression_acmd("expression_attacks4hi", rob_expression_attacks4, Low)
+        .effect_acmd("expression_attacklw4", rob_expression_attacklw4, Low)
+        .status(CheckAttack, *FIGHTER_STATUS_KIND_CATCH_ATTACK, robot_catch_attack_check_attack_status)
         .on_line(Main, rob_frame)
+        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, rob_specialhi_init)
+        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, rob_specialhi_exec)
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, rob_specialhi_pre)
+        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, rob_specialhi_main)
+        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, rob_specialhi_end)
         .install();
-
+    Agent::new("robot_beam")
+        .game_acmd("game_flymax", rob_beam_flymax, Low)
+        //.status(Init, *WEAPON_ROBOT_BEAM_STATUS_KIND_FLY, rob_beam_fly_init)
+        //.status(Exec, *WEAPON_ROBOT_BEAM_STATUS_KIND_FLY, rob_beam_fly_exec)
+        //.status(Pre, *WEAPON_ROBOT_BEAM_STATUS_KIND_FLY, rob_beam_fly_pre)
+        //.status(Main, *WEAPON_ROBOT_BEAM_STATUS_KIND_FLY, rob_beam_fly_main)
+        //.status(End, *WEAPON_ROBOT_BEAM_STATUS_KIND_FLY, rob_beam_fly_end)
+        .install();
 
 }

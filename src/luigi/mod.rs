@@ -974,7 +974,7 @@ unsafe extern "C" fn luigi_guardon(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         let dumb = Vector3f{x:0.0,y:0.0,z:0.0};
         let eff = EffectModule::req_on_joint(agent.module_accessor, Hash40::new("sys_timer"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
-        EffectModule::set_rgb(agent.module_accessor, eff.try_into().unwrap(), 0.0, 1.0, 0.0);
+        EffectModule::set_rgb(agent.module_accessor, eff.try_into().unwrap(), 0.0, 1.0, 0.5);
     }
 }
 
@@ -1100,6 +1100,8 @@ pub unsafe extern "C" fn fireball_remove(weapon: &mut smashline::L2CWeaponCommon
 
 
 //SIDE B
+
+/*
 
 //CHARGE - PRE
 unsafe extern "C" fn luigi_specials_charge_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -1268,6 +1270,9 @@ unsafe extern "C" fn luigi_specials_charge_end(fighter: &mut L2CFighterCommon) -
       
     return 0.into();
 }
+*/
+
+/*
 
 //RAM - INIT
 unsafe extern "C" fn luigi_specials_ram_init(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -1416,6 +1421,7 @@ unsafe extern "C" fn luigi_specials_ram_end(fighter: &mut L2CFighterCommon) -> L
     return 0.into();
 }
 
+*/
 
 //OPFF
 unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
@@ -1440,7 +1446,7 @@ unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
         
         if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD ||
            StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD_ON {
-            if d < 25.0 {
+            if d < 21.0 {
                 macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
                 DamageModule::add_damage(opponent_boma, 0.05, 0);
             }      
@@ -1610,13 +1616,13 @@ pub fn install() {
         .game_acmd("game_guardon", luigi_guardon, Low)
         .game_acmd("game_specialn", luigi_specialn, Low)
         .effect_acmd("effect_attackairlw", luigi_effect_attackairlw, Low)
-        .status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)
-        .status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_main)
-        .status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_end)
-        .status(Init, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_init)
-        .status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_pre)
-        .status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_main)
-        .status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_end)
+        //.status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)
+        //.status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_main)
+        //.status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_end)
+        //.status(Init, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_init)
+        //.status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_pre)
+        //.status(Main, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_main)
+        //.status(End, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_RAM, luigi_specials_ram_end)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_LW3, luigi_attack_lw3_check_attack_status)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_AIR, luigi_attack_airn_check_attack_status)
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_HI4, luigi_attack_hi4_check_attack_status)
