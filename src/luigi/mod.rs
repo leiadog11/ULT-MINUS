@@ -19,8 +19,8 @@ use skyline::nn::ro::LookupSymbol;
 use skyline::hooks::{Region,getRegionAddress};
 use skyline::libc::*;
 
-pub const SUB_STATUS2:                     i32 = 0x14;
-pub const SITUATION_KIND:                  i32 = 0x16;
+//pub const SUB_STATUS2:                     i32 = 0x14;
+//pub const SITUATION_KIND:                  i32 = 0x16;
 
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_SPECIAL_N : i32 = 0x200000E4;
 const FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4 : i32 = 0x200000E5;
@@ -947,8 +947,8 @@ unsafe extern "C" fn luigi_sound_appealhi(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.2);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        let se = SoundModule::play_se(agent.module_accessor, Hash40::new("vc_luigi_appeal01"), true, false, false, false, enSEType(0));
-        SoundModule::set_se_speed(agent.module_accessor, se as i32, 4.0); 
+        let up_taunt = SoundModule::play_se(agent.module_accessor, Hash40::new("vc_luigi_appeal01"), true, false, false, false, enSEType(0));
+        SoundModule::set_se_speed(agent.module_accessor, up_taunt as i32, 4.0); 
     }
 }
 
