@@ -21,16 +21,18 @@ mod wario;
 mod ganon;
 mod purin;
 mod falco;
+mod pichu;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
+    common::install();
     pacman::install();
     luigi::install();
     robot::install();
     wario::install();
     ganon::install();
-    common::install();
     purin::install();
     falco::install();
+    pichu::install();
     smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
 }

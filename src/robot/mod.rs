@@ -314,8 +314,8 @@ unsafe extern "C" fn rob_attacklw4(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
-    macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.5, 170, 120, 0, 100, 3.0, 0.0, 1.5, -3.0, Some(0.0), Some(1.5), Some(3.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_BOMB);
-    macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.0, 170, 120, 0, 100, 3.0, 0.0, 1.5, -13.0, Some(0.0), Some(1.5), Some(13.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_BOMB);
+    macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.5, 170, 110, 0, 85, 3.0, 0.0, 1.5, -3.0, Some(0.0), Some(1.5), Some(3.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_BOMB);
+    macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.0, 170, 110, 0, 85, 3.0, 0.0, 1.5, -13.0, Some(0.0), Some(1.5), Some(13.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_BOMB);
     }
     wait(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
@@ -638,7 +638,7 @@ unsafe extern "C" fn rob_speciallw(agent: &mut L2CAgentBase) {
 //UP B
 unsafe extern "C" fn rob_specialhi(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.8);
-    macros::SET_SPEED_EX(agent, 0.0, 1.25, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    macros::SET_SPEED_EX(agent, 0.0, 1.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         CancelModule::enable_cancel(agent.module_accessor);

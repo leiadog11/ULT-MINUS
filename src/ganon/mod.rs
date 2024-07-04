@@ -1700,7 +1700,7 @@ unsafe extern "C" fn ganon_throwlw(agent: &mut L2CAgentBase) {
 
 //DOWN TAUNT
 unsafe extern "C" fn ganon_appeallw(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.4);
+    macros::FT_MOTION_RATE(agent, 0.6);
     frame(agent.lua_state_agent, 37.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
@@ -2231,7 +2231,7 @@ unsafe extern "C" fn ganon_specialhi2_pre(fighter: &mut L2CFighterCommon) -> L2C
         smash::app::SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -2356,7 +2356,7 @@ unsafe extern "C" fn ganon_specialhi2_main_loop(fighter: &mut L2CFighterCommon) 
         GroundModule::set_passable_check(fighter.module_accessor, false);
         KineticModule::resume_energy_all(fighter.module_accessor);
 
-        if MotionModule::frame(fighter.module_accessor) >= 40.0 {
+        if MotionModule::is_end(fighter.module_accessor) {
             fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
         }
@@ -2391,6 +2391,7 @@ pub fn install() {
         .game_acmd("game_attacks4", ganon_attacks4, Low)
         .game_acmd("game_attacks42", ganon_attacks42, Low)
         .game_acmd("game_attacklw4", ganon_attacklw4, Low)
+        .game_acmd("game_attacklw4charge", ganon_attacklw4charge, Low)
         .game_acmd("game_attacklw42", ganon_attacklw42, Low)
         .game_acmd("game_attackairn", ganon_attackairn, Low)
         .game_acmd("game_attackairn2", ganon_attackairn2, Low)
