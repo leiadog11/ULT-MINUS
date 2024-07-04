@@ -549,42 +549,50 @@
         "fighter/falco/c00": [
             "fighter/falco/motion/body/c00/motion_list.bin",
             "fighter/falco/motion/body/c00/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c00/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c00/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c00/c05attackairhihold"
         ],
         "fighter/falco/c01": [
             "fighter/falco/motion/body/c01/motion_list.bin",
             "fighter/falco/motion/body/c01/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c01/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c01/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c01/c05attackairhihold"
         ],
         "fighter/falco/c02": [
             "fighter/falco/motion/body/c02/motion_list.bin",
             "fighter/falco/motion/body/c02/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c02/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c02/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c02/c05attackairhihold"
         ],
         "fighter/falco/c03": [
             "fighter/falco/motion/body/c03/motion_list.bin",
             "fighter/falco/motion/body/c03/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c03/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c03/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c03/c05attackairhihold"
         ],
         "fighter/falco/c04": [
             "fighter/falco/motion/body/c04/motion_list.bin",
             "fighter/falco/motion/body/c04/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c04/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c04/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c04/c05attackairhihold"
         ],
         "fighter/falco/c05": [
             "fighter/falco/motion/body/c05/motion_list.bin",
             "fighter/falco/motion/body/c05/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c05/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c05/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c05/c05attackairhihold"
         ],
         "fighter/falco/c06": [
             "fighter/falco/motion/body/c06/motion_list.bin",
             "fighter/falco/motion/body/c06/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c06/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c06/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c06/c05attackairhihold"
         ],
         "fighter/falco/c07": [
             "fighter/falco/motion/body/c07/motion_list.bin",
             "fighter/falco/motion/body/c07/c05attackairfbeakbonk",
-            "fighter/falco/motion/body/c07/c05attackairfbeakbonkend"
+            "fighter/falco/motion/body/c07/c05attackairfbeakbonkend",
+            "fighter/falco/motion/body/c07/c05attackairhihold"
         ]
     }
 }

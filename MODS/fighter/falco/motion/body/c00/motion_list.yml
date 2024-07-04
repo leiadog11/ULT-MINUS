@@ -2521,7 +2521,7 @@ list:
       xlu_end: 0
       cancel_frame: 59
       no_stop_intp: true
-  attack_air_f_wall:
+  attack_air_f_beak_bonk:
     game_script: game_attackairfbeakbonk
     flags:
       turn: false
@@ -2551,7 +2551,7 @@ list:
       xlu_end: 0
       cancel_frame: 0
       no_stop_intp: false
-  attack_air_f_wall_end:
+  attack_air_f_beak_bonk_end:
     game_script: game_attackairfbeakbonkend
     flags:
       turn: false
@@ -2640,6 +2640,36 @@ list:
       xlu_start: 0
       xlu_end: 0
       cancel_frame: 36
+      no_stop_intp: false
+  attack_air_hi_hold:
+    game_script: game_attackairhihold
+    flags:
+      turn: false
+      loop: true
+      move: false
+      fix_trans: false
+      fix_rot: false
+      fix_scale: false
+      unk_40: false
+      unk_80: true
+      unk_100: false
+      unk_200: false
+      unk_400: false
+      unk_800: false
+      unk_1000: false
+      unk_2000: false
+    blend_frames: 0
+    animations:
+      - name: c05attackairhihold.nuanmb
+        unk: 0
+    scripts:
+      - expression_attackairhihold
+      - sound_attackairhihold
+      - effect_attackairhihold
+    extra:
+      xlu_start: 0
+      xlu_end: 0
+      cancel_frame: 13
       no_stop_intp: false
   attack_air_lw:
     game_script: game_attackairlw
