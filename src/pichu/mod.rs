@@ -50,12 +50,12 @@ unsafe extern "C" fn pichu_selfdestruct(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 20.0, 90, 160, 0, 85, 35.0, 0.0, 4.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BODY);
+        WorkModule::off_flag(agent.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP);
+        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_DEAD, true);
     }
-    frame(agent.lua_state_agent, 3.0);
+    frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_DEAD, true);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP);
     }
 }
 

@@ -1018,7 +1018,7 @@ unsafe extern "C" fn ganon_effect_attacks42(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
-        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("arml"), 0, 12, 18.5, 0, 0, 0, 1.5, 0, 0, 0, 0, 0, 0, true, 0.8);
+        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("arml"), 0, 12, 0.5, 0, 0, 0, 1.5, 0, 0, 0, 0, 0, 0, true, 0.8);
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
@@ -1302,9 +1302,9 @@ unsafe extern "C" fn ganon_specialsstart(agent: &mut L2CAgentBase) {
 //SIDE B
 unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
     let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-        if opponent_boma == agent.module_accessor {
-            opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
-        }
+    if opponent_boma == agent.module_accessor {
+        opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
+    }
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 361, 90, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
@@ -1747,7 +1747,6 @@ unsafe extern "C" fn ganon_gsword_effect_regular(agent: &mut L2CAgentBase) {
     }
 }
 
-
 //-------------------STATUS--------------------
 
 /////GSWORD - REGULAR
@@ -2165,7 +2164,7 @@ unsafe extern "C" fn ganon_specialhi2_start_pre(fighter: &mut L2CFighterCommon) 
         smash::app::SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,

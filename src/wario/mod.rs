@@ -44,8 +44,8 @@ unsafe extern "C" fn wario_attack11(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn wario_attack12(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 361, 20, 0, 25, 3.8, 0.0, 8.0, 6.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
-        macros::ATTACK(agent, 1, 0, Hash40::new("handr"), 7.0, 361, 20, 0, 25, 5.8, 3.0, 0.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 361, 20, 0, 55, 3.8, 0.0, 8.0, 6.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("handr"), 7.0, 361, 20, 0, 55, 5.8, 3.0, 0.0, 0.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
         AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
     }
     wait(agent.lua_state_agent, 2.0);
@@ -607,7 +607,7 @@ unsafe extern "C" fn wario_attackairlw(agent: &mut L2CAgentBase) {
 
 //UP SPECIAL
 unsafe extern "C" fn wario_specialhijump(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 1.5);
+    macros::FT_MOTION_RATE(agent, 2.5);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 100, 100, 110, 0, 3.0, 0.0, 5.0, -1.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
@@ -670,7 +670,7 @@ unsafe extern "C" fn wario_regular(agent: &mut L2CAgentBase) {
 
 //BIKE HITBOX
 unsafe extern "C" fn wario_wariobike_specialsdrive(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor, 15, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP);
+    WorkModule::set_int(agent.module_accessor, 10, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("hip"), 9.0, 361, 50, 0, 50, 5.0, 0.0, 2.0, 4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
         macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 9.0, 361, 50, 0, 50, 3.0, 0.0, 2.0, 4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
@@ -839,14 +839,12 @@ unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
                 if WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR) < max_speed {
                     WorkModule::add_float(fighter.module_accessor, 0.15, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
                     PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR), y: PostureModule::pos_y(fighter.module_accessor)});
-                    println!("Wector: {}", WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR));
                 }
             }
             else if  xpos > 0.5 && lr == 1.0 { //right if facing right
                 if WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR) < max_speed {
                     WorkModule::add_float(fighter.module_accessor, 0.15, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
                     PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR), y: PostureModule::pos_y(fighter.module_accessor)});
-                    println!("Wector: {}", WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR));
                 }
             }
         }
@@ -882,7 +880,7 @@ unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
         if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) &&  //bike jump
         WorkModule::get_int(fighter.module_accessor, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP) != 0 {
             PostureModule::pos_y(fighter.module_accessor);
-            for _ in 0..15 {
+            for _ in 0..10 {
                 PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: PostureModule::pos_x(fighter.module_accessor), y: PostureModule::pos_y(fighter.module_accessor) + 0.5});
             }
             WorkModule::dec_int(fighter.module_accessor, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP);
@@ -901,7 +899,6 @@ unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
 unsafe extern "C" fn wario_start(fighter: &mut L2CFighterCommon) {
     unsafe {
         WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4);
-        println!("On start? {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4));
     }
 }
 

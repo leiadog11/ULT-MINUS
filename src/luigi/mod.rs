@@ -71,8 +71,8 @@ unsafe extern "C" fn luigi_attack12(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn luigi_attacks3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 9.0, 10, 0, 0, 30, 4.8, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("legl"), 9.0, 10, 0, 0, 30, 3.8, 1.2, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 9.0, 10, 50, 50, 50, 4.8, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("legl"), 9.0, 10, 50, 50, 50, 3.8, 1.2, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -943,18 +943,8 @@ unsafe extern "C" fn luigi_appealhi(agent: &mut L2CAgentBase) {
     }
 }
 
-unsafe extern "C" fn luigi_sound_appealhi(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.2);
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        let up_taunt = SoundModule::play_se(agent.module_accessor, Hash40::new("vc_luigi_appeal01"), true, false, false, false, enSEType(0));
-        SoundModule::set_se_speed(agent.module_accessor, up_taunt as i32, 4.0); 
-    }
-}
-
 //SIDE TAUNT
 unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
-    println!("in this motion");
     frame(agent.lua_state_agent, 44.0);
     if macros::is_excute(agent) {
         if true {
@@ -963,8 +953,7 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
         
         if StatusModule::situation_kind(agent.module_accessor) == *SITUATION_KIND_AIR { 
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 270, 50, 0, 100, 7.2, 4.2, 3.0, -1.0, None, None, None, 1.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        }
-            
+        }  
     }
 }
 
@@ -1445,7 +1434,8 @@ unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
         let d = dSquared.sqrt();
         
         if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD ||
-           StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD_ON {
+           StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD_ON ||
+           StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_GUARD_DAMAGE {
             if d < 21.0 {
                 macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
                 DamageModule::add_damage(opponent_boma, 0.05, 0);
@@ -1593,8 +1583,6 @@ pub fn install() {
         .game_acmd("game_appeallwr", luigi_appeallw, Low)
         .game_acmd("game_appealhir", luigi_appealhi, Low)
         .game_acmd("game_appealhil", luigi_appealhi, Low)
-        .sound_acmd("sound_appealhir", luigi_sound_appealhi, Low)
-        .sound_acmd("sound_appealhil", luigi_sound_appealhi, Low)
         .game_acmd("game_appealsr", luigi_appeals, Low)
         .game_acmd("game_appealsl", luigi_appeals, Low)
         .game_acmd("game_attackairlw", luigi_attackairlw, Low)
@@ -1614,6 +1602,8 @@ pub fn install() {
         .game_acmd("game_attack12", luigi_attack12, Low)
         //.game_acmd("game_firebarswing1", luigi_catchsuck, Low)
         .game_acmd("game_guardon", luigi_guardon, Low)
+        .game_acmd("game_guard", luigi_guardon, Low)
+        .game_acmd("game_guarddamage", luigi_guardon, Low)
         .game_acmd("game_specialn", luigi_specialn, Low)
         .effect_acmd("effect_attackairlw", luigi_effect_attackairlw, Low)
         //.status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)
