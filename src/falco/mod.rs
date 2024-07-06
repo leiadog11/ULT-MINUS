@@ -424,6 +424,7 @@ unsafe extern "C" fn falco_attackairf(agent: &mut L2CAgentBase) {
     }
 }
 
+/*
 //FORWARD AIR BEAK BONK
 unsafe extern "C" fn falco_attackairfbeakbonk(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
@@ -431,6 +432,7 @@ unsafe extern "C" fn falco_attackairfbeakbonk(agent: &mut L2CAgentBase) {
         println!("im beak bonked");
     }
 }
+*/
 
 
 //UP AIR
@@ -1028,9 +1030,11 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        /*
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_f") && is_touch {
             MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_air_f_beak_bonk"), 0.0, 1.0, false, 0.0, false, false);
         }
+        */
     }
 }
 // Status script
@@ -1086,7 +1090,7 @@ pub fn install() {
         .game_acmd("game_specialairlw", falco_specialairlw, Low)
         .game_acmd("game_attackairhihold", falco_attackairhihold, Low)
         .game_acmd("game_attackairf", falco_attackairf, Low)
-        .game_acmd("game_attackairfbeakbonk", falco_attackairfbeakbonk, Low)
+        //.game_acmd("game_attackairfbeakbonk", falco_attackairfbeakbonk, Low)
         .game_acmd("game_attackairb", falco_attackairb, Low)
         .game_acmd("game_throwb", falco_throwb, Low)
         .game_acmd("game_throwhi", falco_throwhi, Low)

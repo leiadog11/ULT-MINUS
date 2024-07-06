@@ -16,14 +16,7 @@ const FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP: i32 = 0x200000E7;
 // OPFF
 unsafe extern "C" fn pichu_frame(fighter: &mut L2CFighterCommon) {
     unsafe {
-        if DamageModule::damage(fighter.module_accessor, 0) >= 120.0 {
-            if !WorkModule::is_flag(fighter.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP) {
-                MotionModule::change_motion(fighter.module_accessor, Hash40::new("self_destruct"), 0.0, 1.0, false, 0.0, false, false);
-                WorkModule::on_flag(fighter.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP);
-            }
-        }
-
-        if DamageModule::damage(fighter.module_accessor, 0) >= 130.0 {
+        if DamageModule::damage(fighter.module_accessor, 0) >= 150.0 {
             if !WorkModule::is_flag(fighter.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP) {
                 MotionModule::change_motion(fighter.module_accessor, Hash40::new("self_destruct"), 0.0, 1.0, false, 0.0, false, false);
                 WorkModule::on_flag(fighter.module_accessor, FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP);

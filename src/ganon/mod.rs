@@ -208,6 +208,11 @@ unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
             ControlModule::clear_command(fighter.module_accessor, false);
             WorkModule::set_flag(fighter.module_accessor, false, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_DIVE);
         };
+
+        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_FALL ||
+        StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_WAIT {
+            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
     }
 }
 

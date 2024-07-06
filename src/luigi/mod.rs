@@ -1602,8 +1602,6 @@ pub fn install() {
         .game_acmd("game_attack12", luigi_attack12, Low)
         //.game_acmd("game_firebarswing1", luigi_catchsuck, Low)
         .game_acmd("game_guardon", luigi_guardon, Low)
-        .game_acmd("game_guard", luigi_guardon, Low)
-        .game_acmd("game_guarddamage", luigi_guardon, Low)
         .game_acmd("game_specialn", luigi_specialn, Low)
         .effect_acmd("effect_attackairlw", luigi_effect_attackairlw, Low)
         //.status(Pre, *FIGHTER_LUIGI_STATUS_KIND_SPECIAL_S_CHARGE, luigi_specials_charge_pre)

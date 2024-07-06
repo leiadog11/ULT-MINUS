@@ -490,7 +490,7 @@ unsafe extern "C" fn wario_attackairn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 70, 50, 0, 50, 9.5, 0.0, 5.0, 0.0, None, None, None, 1.1, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0.7, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 70, 50, 0, 50, 11.5, 0.0, 5.0, 0.0, None, None, None, 1.1, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0.7, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
@@ -857,6 +857,16 @@ unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
                 CancelModule::enable_cancel(fighter.module_accessor);
             }
         }
+
+        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_FALL ||
+        StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_WAIT || 
+        StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
+            SlowModule::clear_whole(fighter.module_accessor);
+            CameraModule::reset_all(fighter.module_accessor);
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
+            macros::CAM_ZOOM_OUT(fighter);
+        }
+
     }
 }
 
@@ -950,7 +960,6 @@ unsafe extern "C" fn wario_special_hi_check_attack_status(fighter: &mut L2CFight
             macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
             EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
             macros::PLAY_SE(fighter, Hash40::new("se_common_criticalhit"));
-        
         }
     }
     0.into()
