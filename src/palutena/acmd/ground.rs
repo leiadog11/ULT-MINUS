@@ -38,10 +38,11 @@ unsafe extern "C" fn palutena_attackdash(agent: &mut L2CAgentBase) {
         AttackModule::clear(agent.module_accessor, 1, false);
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 60, 56, 0, 61, 2.5, 0.0, 9.0, 10.0, Some(0.0), Some(12.0), Some(10.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 3, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
     }
-    frame(agent.lua_state_agent, 13.0);
+    frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         AttackModule::clear(agent.module_accessor, 1, false);
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 361, 30, 30, 30, 3.5, 0.0, 9.0, 9.7, Some(10.0), Some(12.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.6, 361, 74, 0, 50, 3.5, 0.0, 10.0, 10.0, Some(0.0), Some(10.0), Some(43.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 0, 7.0, false);
     }
     frame(agent.lua_state_agent, 17.0);
     if macros::is_excute(agent) {
@@ -83,7 +84,7 @@ unsafe extern "C" fn palutena_effect_attackdash(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) { 
-        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 12, 6, 90, 0, 0, 0.5, true);
         macros::LAST_EFFECT_SET_RATE(agent, 1.1);
     }
 }

@@ -1,6 +1,6 @@
 use super::*;
 
-//---------------GRABS------------------
+//--------------------GRABS----------------------
 
 // GRAB
 unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
@@ -35,7 +35,7 @@ unsafe extern "C" fn pacman_catch(agent: &mut L2CAgentBase) {
     }
 }
 
-//GRAB SOUND
+// GRAB SOUND
 unsafe extern "C" fn pacman_sound_catch(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -45,13 +45,13 @@ unsafe extern "C" fn pacman_sound_catch(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::PLAY_STATUS(agent, Hash40::new("se_pacman_capture"));
     }
-    frame(agent.lua_state_agent, 154.0);
+    frame(agent.lua_state_agent, 175.0);
     if macros::is_excute(agent) {
         sound!(agent, *MA_MSC_CMD_SOUND_STOP_SE_STATUS);
     }
 }
 
-//DASH GRAB
+// DASH GRAB
 unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
@@ -81,6 +81,75 @@ unsafe extern "C" fn pacman_catchdash(agent: &mut L2CAgentBase) {
         GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
+
+// DASH GRAB SOUND
+unsafe extern "C" fn pacman_sound_catchdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_pacman_step_right_m"));
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_common_swing_05"));
+    }
+    frame(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_STATUS(agent, Hash40::new("se_pacman_capture"));
+    }
+    frame(agent.lua_state_agent, 175.0);
+    if macros::is_excute(agent) {
+        sound!(agent, *MA_MSC_CMD_SOUND_STOP_SE_STATUS);
+    }
+}
+
+// PIVOT GRAB
+unsafe extern "C" fn pacman_catchturn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 15.0);
+    macros::FT_MOTION_RATE(agent, 4.0);
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_ALWAYS, 0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, -10.7, None, None, None, *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    frame(agent.lua_state_agent, 23.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.0, 0.0, 6.2, -10.7, Some(0.0), Some(6.2), Some(-16.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("throw"), 3.5, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    frame(agent.lua_state_agent, 30.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 1, Hash40::new("throw"), 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(-2.5), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    frame(agent.lua_state_agent, 37.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+}
+
+// PIVOT GRAB SOUND
+unsafe extern "C" fn pacman_sound_catchturn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_common_swing_05"));
+    }
+    frame(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_STATUS(agent, Hash40::new("se_pacman_capture"));
+    }
+    frame(agent.lua_state_agent, 175.0);
+    if macros::is_excute(agent) {
+        sound!(agent, *MA_MSC_CMD_SOUND_STOP_SE_STATUS);
+    }
+}
+
+//----------------------THROWS-------------------------
 
 // UP THROW
 unsafe extern "C" fn pacman_throwhi(agent: &mut L2CAgentBase) {
@@ -195,6 +264,10 @@ pub fn install() {
         .sound_acmd("sound_catch", pacman_sound_catch, Low)
 
         .game_acmd("game_catchdash", pacman_catchdash, Low)
+        .sound_acmd("sound_catchdash", pacman_sound_catchdash, Low)
+
+        .game_acmd("game_catchturn", pacman_catchturn, Low)
+        .sound_acmd("sound_catchturn", pacman_sound_catchturn, Low)
         
         .game_acmd("game_throwhi", pacman_throwhi, Low)
 

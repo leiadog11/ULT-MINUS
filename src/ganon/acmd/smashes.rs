@@ -85,7 +85,7 @@ unsafe extern "C" fn ganon_effect_attacks42(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
-        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("arml"), 0, 12, 0.5, 0, 0, 0, 1.5, 0, 0, 0, 0, 0, 0, true, 0.8);
+        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("arml"), 0, 5, 5.5, 0, 0, 0, 1.5, 0, 0, 0, 0, 0, 0, true, 0.8);
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
