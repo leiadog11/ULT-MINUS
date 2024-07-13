@@ -14,3 +14,18 @@ Do not use UI mods, music mods, or any other mod that changes the moves of a cha
 Current Character Amount: 9
 
 Change Log Linked Here
+
+# Credits
+JC Ho (leiadog) - Creator, Dev Lead\
+Jackson Mueth (Jmuze) - Dev\
+Daniel Palomarez (OpZ) - Dev\
+
+Jack Yarnell (PladMan) - Character UI Artist\
+Gabe Crandall (Architect) - Menu UI Artist\
+Tatum Pond - Logo Artist\
+
+# Special Thanks
+Big shoutout to the modding discord and the modding scene as a whole for creating the tools and resources to be able to make a mod like this. Also for all of the help and answers to my questions!
+
+# Legal Disclaimer 
+ULT MINUS is not endorsed by Nintendo or other copyright holders involved in Smash Ultimate. This repository does not contain copyrighted code.
