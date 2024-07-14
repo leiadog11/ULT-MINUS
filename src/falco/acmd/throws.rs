@@ -143,26 +143,17 @@ unsafe extern "C" fn falco_throwhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 21.0);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
-    }
-    frame(agent.lua_state_agent, 23.0);
-    if macros::is_excute(agent) {
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
-    }
-    frame(agent.lua_state_agent, 25.0);
-    if macros::is_excute(agent) {
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
-    }
-    frame(agent.lua_state_agent, 27.0);
-    if macros::is_excute(agent) {
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
+        macros::PLAY_SE(agent, Hash40::new("se_falco_special_n01"));
     }
     frame(agent.lua_state_agent, 29.0);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
+        macros::PLAY_SE(agent, Hash40::new("se_falco_special_n01"));
     }
     frame(agent.lua_state_agent, 31.0);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_FOX_GENERATE_ARTICLE_BLASTER_BULLET, false, -1);
+        macros::PLAY_SE(agent, Hash40::new("se_falco_special_n01"));
     }
     frame(agent.lua_state_agent, 37.0);
     if macros::is_excute(agent) {

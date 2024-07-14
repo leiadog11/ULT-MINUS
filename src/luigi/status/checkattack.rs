@@ -37,7 +37,7 @@ unsafe extern "C" fn luigi_attack_airn_check_attack_status(fighter: &mut L2CFigh
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
 	        if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_n") {
-		        WorkModule::set_int(fighter.module_accessor, 1, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
+		        WorkModule::inc_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
 	        }
 	    }
     }

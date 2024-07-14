@@ -4,13 +4,16 @@ use super::*;
 
 // INIT
 unsafe extern "C" fn pichu_specials_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
+
+    if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND { 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+        fighter.set_situation(SITUATION_KIND_AIR.into());
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    }
+
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
 
     return 0.into();
@@ -49,9 +52,6 @@ unsafe extern "C" fn pichu_specials_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // MAIN
 unsafe extern "C" fn pichu_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-    fighter.set_situation(SITUATION_KIND_AIR.into());
-    GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s"), 0.0, 1.0, false, 0.0, false, false);
 
     //smash input check?
@@ -128,13 +128,9 @@ unsafe extern "C" fn pichu_specials_hold_main_loop(fighter: &mut L2CFighterCommo
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) ||
     ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
-        sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-        sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
         fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
 
@@ -219,13 +215,9 @@ unsafe extern "C" fn pichu_specials_end_main_loop(fighter: &mut L2CFighterCommon
 
 // END
 unsafe extern "C" fn pichu_specials_end_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
 
     return 0.into();

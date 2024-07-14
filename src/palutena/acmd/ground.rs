@@ -59,7 +59,7 @@ unsafe extern "C" fn palutena_attackdash(agent: &mut L2CAgentBase) {
         macros::HIT_NODE(agent, Hash40::new("kneel"), *HIT_STATUS_NORMAL);
         macros::HIT_NODE(agent, Hash40::new("virtualshield"), *HIT_STATUS_OFF);
     }
-    frame(agent.lua_state_agent, 18.0);
+    frame(agent.lua_state_agent, 35.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
@@ -136,7 +136,6 @@ unsafe extern "C" fn palutena_attacks3(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.6);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, false, -1);
-        ArticleModule::change_motion(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, Hash40::new("attack_s4_charge"), false, -1.0);
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
@@ -160,7 +159,7 @@ unsafe extern "C" fn palutena_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 60.0);
+    frame(agent.lua_state_agent, 40.0);
     if macros::is_excute(agent) {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
@@ -232,7 +231,6 @@ unsafe extern "C" fn palutena_attacklw3(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.6);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, false, -1);
-        ArticleModule::change_motion(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, Hash40::new("attack_lw4_charge"), false, -1.0);
     }
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
@@ -254,7 +252,7 @@ unsafe extern "C" fn palutena_attacklw3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 60.0);
+    frame(agent.lua_state_agent, 35.0);
     if macros::is_excute(agent) {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }

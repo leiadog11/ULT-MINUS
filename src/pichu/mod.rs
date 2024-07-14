@@ -24,6 +24,7 @@ use {
 };
 
 const FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP: i32 = 0x200000E7;
+pub const SITUATION_KIND:                  i32 = 0x16;
 
 pub fn install() {
     acmd::install();

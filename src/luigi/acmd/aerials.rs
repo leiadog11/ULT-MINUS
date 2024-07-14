@@ -3,7 +3,7 @@ use super::*;
 //-------------AERIALS---------------
 
 
-// NEUTRAL AIR
+// NEUTRAL AIR - NAIR
 unsafe extern "C" fn luigi_attackairn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -26,7 +26,7 @@ unsafe extern "C" fn luigi_attackairn(agent: &mut L2CAgentBase) {
     }
 }
 
-// BACK AIR
+// BACK AIR - BAIR
 unsafe extern "C" fn luigi_attackairb(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     macros::FT_MOTION_RATE(agent, 0.8);
