@@ -5,6 +5,8 @@
 pub mod acmd;
 pub mod frame;
 pub mod status;
+pub mod explosiveflame;
+pub mod reflectionboard;
 
 use {
     smash::{
@@ -20,8 +22,12 @@ use {
     smashline::Priority::*
 };
 
+const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL : i32 = 0x4E;
+
 pub fn install() {
     acmd::install();
     frame::install();
     status::install();
+    explosiveflame::install();
+    reflectionboard::install();
 }
