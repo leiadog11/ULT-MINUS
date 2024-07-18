@@ -136,7 +136,6 @@ unsafe extern "C" fn palutena_sound_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-
 pub fn install() {
     Agent::new("palutena")
         .game_acmd("game_attackhi4", palutena_attackhi4, Low)

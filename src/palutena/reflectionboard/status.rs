@@ -66,8 +66,8 @@ unsafe extern "C" fn reflectionboard_shoot_main_loop(weapon: &mut L2CWeaponCommo
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
     if life < 0 {
-        return 0.into();
-        WorkModule::on_flag(weapon.module_accessor, WEAPON_PALUTENA_REFLECTIONBOARD_INSTANCE_WORK_ID_FLAG_BREAK);
+        weapon.change_status(WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_BREAK.into(), false.into());
+        return 1.into();
     }
 
     return 0.into();
