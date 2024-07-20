@@ -1,22 +1,22 @@
 use super::*;
 
 // OPFF
-pub unsafe extern "C" fn agent_frame(fighter: &mut L2CFighterCommon) {
+pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
 
     }
 }
 
 // ON START
-pub unsafe extern "C" fn agent_start(fighter: &mut L2CFighterCommon) {
+pub unsafe extern "C" fn captain_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
 
     }
 }
 
 pub fn install() {
-    Agent::new("agent")
-        .on_line(Main, agent_frame)
-        .on_start(agent_start)
+    Agent::new("captain")
+        .on_line(Main, captain_frame)
+        .on_start(captain_start)
         .install();
 }

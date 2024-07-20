@@ -1,6 +1,6 @@
 use super::*;
 
 pub fn install() {
-    Agent::new("agent")
+    Agent::new("captain")
         .install();
 }
