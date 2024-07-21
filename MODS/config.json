@@ -593,6 +593,70 @@
             "fighter/falco/motion/body/c07/c05attackairfbeakbonk",
             "fighter/falco/motion/body/c07/c05attackairfbeakbonkend",
             "fighter/falco/motion/body/c07/c05attackairhihold"
+        ],
+        "fighter/palutena/c00": [
+            "fighter/palutena/motion/body/c00/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c00/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c00/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c00/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c00/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c00/motion_list.bin"
+        ],
+        "fighter/palutena/c01": [
+            "fighter/palutena/motion/body/c01/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c01/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c01/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c01/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c01/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c01/motion_list.bin"
+        ],
+        "fighter/palutena/c02": [
+            "fighter/palutena/motion/body/c02/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c02/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c02/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c02/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c02/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c02/motion_list.bin"
+        ],
+        "fighter/palutena/c03": [
+            "fighter/palutena/motion/body/c03/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c03/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c03/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c03/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c03/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c03/motion_list.bin"
+        ],
+        "fighter/palutena/c04": [
+            "fighter/palutena/motion/body/c04/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c04/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c04/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c04/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c04/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c04/motion_list.bin"
+        ],
+        "fighter/palutena/c05": [
+            "fighter/palutena/motion/body/c05/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c05/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c05/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c05/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c05/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c05/motion_list.bin"
+        ],
+        "fighter/palutena/c06": [
+            "fighter/palutena/motion/body/c06/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c06/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c06/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c06/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c06/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c06/motion_list.bin"
+        ],
+        "fighter/palutena/c07": [
+            "fighter/palutena/motion/body/c07/c00attack11.nuanmb",
+            "fighter/palutena/motion/body/c07/c00attack12.nuanmb",
+            "fighter/palutena/motion/body/c07/c00attack13.nuanmb",
+            "fighter/palutena/motion/body/c07/d00specialncharge.nuanmb",
+            "fighter/palutena/motion/body/c07/d00specialnshoot.nuanmb",
+            "fighter/palutena/motion/body/c07/motion_list.bin"
         ]
     }
 }

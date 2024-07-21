@@ -7,6 +7,7 @@ pub mod frame;
 pub mod status;
 pub mod explosiveflame;
 pub mod reflectionboard;
+pub mod beam;
 
 use {
     smash::{
@@ -22,7 +23,10 @@ use {
     smashline::Priority::*
 };
 
-const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL : i32 = 0x4E;
+pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL : i32 = 0x4E;
+pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE: i32 = 0x100000BF;
+pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE: i32 = 0x1EA;
+pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT: i32 = 0x1EB;
 
 pub fn install() {
     acmd::install();
@@ -30,4 +34,5 @@ pub fn install() {
     status::install();
     explosiveflame::install();
     reflectionboard::install();
+    beam::install();
 }

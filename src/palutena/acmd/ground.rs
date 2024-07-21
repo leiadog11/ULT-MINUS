@@ -2,6 +2,210 @@ use super::*;
 
 //------------------GROUND MOVES---------------------
 
+// JAB 1
+unsafe extern "C" fn palutena_attack11(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::HIT_NODE(agent, Hash40::new("bust"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("hip"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("head"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("shoulderr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("shoulderl"), *HIT_STATUS_INVINCIBLE);
+        macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("arml"), *HIT_STATUS_INVINCIBLE);
+        macros::HIT_NODE(agent, Hash40::new("legr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("legl"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("kneel"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("virtualshield"), *HIT_STATUS_INVINCIBLE);
+        macros::HIT_NODE(agent, Hash40::new("bust"), *HIT_STATUS_INVINCIBLE);
+        macros::HIT_NODE(agent, Hash40::new("head"), *HIT_STATUS_INVINCIBLE);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_ATTACK_DISABLE_MINI_JUMP_ATTACK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.5, 361, 50, 0, 20, 2.5, 0.0, 10.0, 5.5, None, None, None, 1.8, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 1.5, 361, 33, 0, 15, 2.8, 0.0, 10.0, 8.5, None, None, None, 1.8, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 1.5, 180, 20, 0, 10, 3.2, 0.0, 10.0, 11.5, None, None, None, 1.8, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 1.5, 361, 20, 0, 10, 3.2, 0.0, 10.0, 11.5, None, None, None, 1.8, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 10.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 6.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 2, 2.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 3, 2.0, false);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::HIT_NODE(agent, Hash40::new("bust"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("hip"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("head"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("shoulderr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("shoulderl"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("arml"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("legr"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("legl"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("kneel"), *HIT_STATUS_NORMAL);
+        macros::HIT_NODE(agent, Hash40::new("virtualshield"), *HIT_STATUS_OFF);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_RESTART);
+    }
+}
+
+// JAB 1 EFFECT
+unsafe extern "C" fn palutena_effect_attack11(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::FOOT_EFFECT(agent, Hash40::new("null"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+        macros::LAST_EFFECT_SET_RATE(agent, 2);
+    }
+}
+
+// JAB 1 SOUND
+unsafe extern "C" fn palutena_sound_attack11(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_common_swing_06"));
+    }
+}
+
+// JAB 1 EXPRESSION
+unsafe extern "C" fn palutena_expression_attack11(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 5, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
+// JAB 2
+unsafe extern "C" fn palutena_attack12(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 361, 20, 0, 25, 2.2, 0.0, 8.5, 5.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.0, 361, 20, 0, 25, 2.2, 0.0, 8.5, 8.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 3.0, 180, 20, 0, 20, 2.5, 0.0, 8.5, 12.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 3.0, 361, 20, 0, 20, 2.5, 0.0, 8.5, 12.0, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 2, 4.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 3, 4.0, false);
+    }
+    wait(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
+    }
+    macros::FT_MOTION_RATE(agent, 0.7);
+    wait(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_100);
+    }
+}
+
+// JAB 2 EFFECT
+unsafe extern "C" fn palutena_effect_attack12(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::FOOT_EFFECT(agent, Hash40::new("null"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("palutena_wand_atk1"), Hash40::new("stick"), 0, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_wand_light1"), Hash40::new("stick"), 0, 8.65, 0, 0, 0, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 17.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("palutena_wand_light1"), false, true);
+    }
+}
+
+// JAB 2 SOUND
+unsafe extern "C" fn palutena_sound_attack12(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_palutena_swing_s"));
+    }
+}
+
+// JAB 2 EXPRESSION
+unsafe extern "C" fn palutena_expression_attack12(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_beams"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
+// JAB 3
+unsafe extern "C" fn palutena_attack13(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.5, 361, 120, 0, 55, 4.0, 0.0, 9.0, 10.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.5, 361, 120, 0, 55, 4.0, 0.0, 9.0, 14.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 8.8, 361, 140, 0, 75, 6.0, 0.0, 9.0, 23.0, None, None, None, 2.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+// JAB 3 EFFECT
+unsafe extern "C" fn palutena_effect_attack13(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        macros::FOOT_EFFECT(agent, Hash40::new("null"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.2, 0, 0, 0, 0, 0, 0, false);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_wand_light1"), Hash40::new("stick"), 0, 8.65, 0, 0, 0, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("palutena_wand_spark"), false, true);
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_bomb_a"), Hash40::new("top"), 0.0, 9.25, 19.0, 0, 180, 0, 0.5, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_wand_finish"), Hash40::new("stick"), 0, 8.65, 0, 0, 0, 0, 1, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_wand_light1"), Hash40::new("stick"), 0, 8.65, 0, 0, 0, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("palutena_wand_light1"), false, true);
+    }
+}
+
+// JAB 3 SOUND
+unsafe extern "C" fn palutena_sound_attack13(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        sound!(agent, *MA_MSC_CMD_SOUND_STOP_SE_STATUS);
+        macros::PLAY_SE(agent, Hash40::new("vc_palutena_attack03"));
+        macros::PLAY_SE(agent, Hash40::new("se_common_bomb_s"));
+    }
+}
+
+// JAB 3 EXPRESSION
+unsafe extern "C" fn palutena_expression_attack13(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_beamm"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 // DASH ATTACK
 unsafe extern "C" fn palutena_attackdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
@@ -226,6 +430,37 @@ unsafe extern "C" fn palutena_expression_attacks3(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP TILT
+unsafe extern "C" fn palutena_attackhi3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 2.0);
+    macros::FT_MOTION_RATE(agent, 0.6);
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) { 
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.5, 40, 100, 70, 0, 5.0, 0.0, 5.0, -13.5, Some(0.0), Some(5.0), Some(-13.5), 0.5, 0.3, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.5, 140, 100, 70, 0, 5.0, 0.0, 5.0, 13.5, Some(0.0), Some(5.0), Some(13.5), 0.5, 0.3, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.4, 367, 100, 20, 0, 3.0, 0.0, 18.0, 4.0, None, None, None, 0.5, 0.3, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 3, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 1.4, 130, 100, 50, 0, 2.0, 0.0, 15.0, 10.5, Some(0.0), Some(15.0), Some(-5.0), 0.5, 0.3, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 3, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 1.4, 190, 100, 30, 0, 2.0, 0.0, 20.0, 10.5, Some(0.0), Some(20.0), Some(-5.0), 0.5, 0.3, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 3, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+    }
+    frame(agent.lua_state_agent, 30.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 31.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.5, 90, 136, 0, 75, 3.0, 0.0, 23.0, 10.5, Some(0.0), Some(23.0), Some(-5.0), 1.3, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 3, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.5, 90, 136, 0, 75, 3.0, 0.0, 17.0, 10.5, Some(0.0), Some(17.0), Some(-5.0), 1.3, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 1, 0.0, 3, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+    }
+    frame(agent.lua_state_agent, 33.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
 // DOWN TILT
 unsafe extern "C" fn palutena_attacklw3(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.6);
@@ -329,6 +564,21 @@ unsafe extern "C" fn palutena_expression_attacklw3(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("palutena")
+        .game_acmd("game_attack11", palutena_attack11, Low)
+        .effect_acmd("effect_attack11", palutena_effect_attack11, Low)
+        .sound_acmd("sound_attack11", palutena_sound_attack11, Low)
+        .expression_acmd("expression_attack11", palutena_expression_attack11, Low)
+
+        .game_acmd("game_attack12", palutena_attack12, Low)
+        .effect_acmd("effect_attack12", palutena_effect_attack12, Low)
+        .sound_acmd("sound_attack12", palutena_sound_attack12, Low)
+        .expression_acmd("expression_attack12", palutena_expression_attack12, Low)
+
+        .game_acmd("game_attack13", palutena_attack13, Low)
+        .effect_acmd("effect_attack13", palutena_effect_attack13, Low)
+        .sound_acmd("sound_attack13", palutena_sound_attack13, Low)
+        .expression_acmd("expression_attack13", palutena_expression_attack13, Low)
+        
         .game_acmd("game_attackdash", palutena_attackdash, Low)
         .effect_acmd("effect_attackdash", palutena_effect_attackdash, Low)
         .sound_acmd("sound_attackdash", palutena_sound_attackdash, Low)
@@ -338,6 +588,8 @@ pub fn install() {
         .effect_acmd("effect_attacks3", palutena_effect_attacks3, Low)
         .sound_acmd("sound_attacks3", palutena_sound_attacks3, Low)
         .expression_acmd("expression_attacks3", palutena_expression_attacks3, Low)
+
+        .game_acmd("game_attackhi3", palutena_attackhi3, Low)
 
         .game_acmd("game_attacklw3", palutena_attacklw3, Low)
         .effect_acmd("effect_attacklw3", palutena_effect_attacklw3, Low)

@@ -1,5 +1,7 @@
 use super::*;
 
-pub fn install() {
+mod specialn;
 
+pub fn install() {
+    specialn::install();
 }

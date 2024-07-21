@@ -62,11 +62,13 @@ unsafe extern "C" fn reflectionboard_shoot_main(weapon: &mut L2CWeaponCommon) ->
 
 // MAIN LOOP
 unsafe extern "C" fn reflectionboard_shoot_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
     if life < 0 {
         weapon.change_status(WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_BREAK.into(), false.into());
+        WorkModule::set_float(owner_boma, 1.0, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
         return 1.into();
     }
 

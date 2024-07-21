@@ -51,6 +51,7 @@ unsafe extern "C" fn captain_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
+/* 
 // UP TILT EFFECT
 unsafe extern "C" fn captain_effect_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 8.0);
@@ -89,6 +90,7 @@ if macros::is_excute(agent) {
     macros::LANDING_EFFECT(agent, Hash40::new("sys_h_smoke_b"), Hash40::new("top"), -6, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
 }
 }
+*/
 
 //UP TILT SOUND
 unsafe extern "C" fn captain_sound_attackhi3(agent: &mut L2CAgentBase) {
@@ -107,6 +109,7 @@ unsafe extern "C" fn captain_sound_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
+/* 
 //UP TILT EXPRESSION
 unsafe extern "C" fn captain_expression_attackhi3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -147,6 +150,7 @@ unsafe extern "C" fn captain_expression_attackhi3(agent: &mut L2CAgentBase) {
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 10);
     }
 }
+*/
 
 // DASH ATTACK 
 unsafe extern "C" fn captain_attackdash(agent: &mut L2CAgentBase) {
@@ -174,9 +178,9 @@ pub fn install() {
         .game_acmd("game_attacklw3", captain_attacklw3, Low)
 
         .game_acmd("game_attackhi3", captain_attackhi3, Low)
-        .effect_acmd("effect_attackhi3", captain_effect_attackhi3, Low)
+       // .effect_acmd("effect_attackhi3", captain_effect_attackhi3, Low)
         .sound_acmd("sound_attackhi3", captain_sound_attackhi3, Low)
-        .expression_acmd("expression_attackhi3", captain_expression_attackhi3, Low)
+        //.expression_acmd("expression_attackhi3", captain_expression_attackhi3, Low)
 
         .game_acmd("game_attackdash", captain_attackdash, Low)
         .install();
