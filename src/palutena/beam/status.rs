@@ -22,7 +22,15 @@ unsafe extern "C" fn beam_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
 // MAIN
 unsafe extern "C" fn beam_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("beam"), 0.0, 1.0, false, 0.0, false, false);
-    println!("BEAM STATUS!");
+
+    LinkModule::set_model_constraint_pos_ort(weapon.module_accessor,*LINK_NO_CONSTRAINT,Hash40::new("top"),Hash40::new("top"),(*CONSTRAINT_FLAG_ORIENTATION | *CONSTRAINT_FLAG_OFFSET_TRANSLATE) as u32,true);
+    LinkModule::set_constraint_translate_offset(weapon.module_accessor, &Vector3f{x: 0.0, y: 15.0, z: 30.0});
+
+    weapon.fastshift(L2CValue::Ptr(beam_main_loop as *const () as _))
+}
+
+// MAIN LOOP
+unsafe extern "C" fn beam_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     //Snap to throw position
     let mut offset_add = Vector3f{x:10.0,y:50.0,z:0.0};
@@ -37,15 +45,8 @@ unsafe extern "C" fn beam_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     }
 
     PostureModule::set_pos(weapon.module_accessor, &newPos);
-
-    println!("Beam X: {}", PostureModule::pos_x(weapon.module_accessor));
-    println!("Beam Y: {}", PostureModule::pos_y(weapon.module_accessor));
-
-    weapon.fastshift(L2CValue::Ptr(beam_main_loop as *const () as _))
-}
-
-// MAIN LOOP
-unsafe extern "C" fn beam_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    ArticleModule::set_pos(weapon.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_BEAM, newPos);
+    
     return 0.into();
 }
 
