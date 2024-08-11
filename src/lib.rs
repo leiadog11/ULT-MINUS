@@ -24,6 +24,7 @@ mod falco;
 mod pichu;
 mod palutena;
 mod captain;
+mod ridley;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
@@ -38,5 +39,6 @@ pub fn main() {
     pichu::install();
     palutena::install();
     captain::install();
+    ridley::install();
     smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
 }
