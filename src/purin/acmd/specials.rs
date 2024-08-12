@@ -101,6 +101,47 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// NEUTRAL B
+unsafe extern "C" fn purin_specialn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    macros::FT_MOTION_RATE(agent, 1.9);
+}
+
+// NEUTRAL B EFFECT
+unsafe extern "C" fn purin_effect_specialn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_assist_deathflash"), Hash40::new("top"), 0, 6, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
+// NEUTRAL B SOUND
+unsafe extern "C" fn purin_sound_specialn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_purin_special_n01"));
+    }
+}
+
+// NEUTRAL B EXPRESSION
+unsafe extern "C" fn purin_expression_specialn(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitl"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 pub fn install() {
     Agent::new("purin")
         .game_acmd("game_specials", purin_specials, Low)
@@ -116,6 +157,12 @@ pub fn install() {
         .game_acmd("game_specialhil", purin_specialhi, Low)
         .game_acmd("game_specialairhir", purin_specialhi, Low)
         .game_acmd("game_specialairhil", purin_specialhi, Low)
+
+        .game_acmd("game_specialn", purin_specialn, Low)
+        .effect_acmd("effect_specialn", purin_effect_specialn, Low)
+        .sound_acmd("sound_specialn", purin_sound_specialn, Low)
+        .expression_acmd("expression_specialn", purin_expression_specialn, Low)
+
 
         .install();
 }
