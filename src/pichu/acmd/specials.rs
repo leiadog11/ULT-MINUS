@@ -53,8 +53,8 @@ unsafe extern "C" fn pichu_specialshold(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) { 
         for _ in 0..7 {
             macros::FT_ADD_DAMAGE(agent, 0.2);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.6, 5, 60, 0, 50, 5.5, 0.0, 0.0, 5.0, Some(0.0), Some(0.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, f32::NAN, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);        
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.6, 5, 60, 0, 30, 5.5, 0.0, 10.0, 5.0, Some(0.0), Some(10.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, f32::NAN, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.6, 5, 60, 0, 50, 5.5, 0.0, 0.0, 5.0, Some(0.0), Some(0.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);        
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.6, 5, 60, 0, 30, 5.5, 0.0, 10.0, 5.0, Some(0.0), Some(10.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);
             wait(agent.lua_state_agent, 2.0);
             AttackModule::clear_all(agent.module_accessor);
         }
@@ -90,18 +90,14 @@ unsafe extern "C" fn pichu_expression_specialshold(agent: &mut L2CAgentBase) {
 
 // SIDE B END - SPECIALS_END
 unsafe extern "C" fn pichu_specialsend(agent: &mut L2CAgentBase) { 
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) {
-        macros::WHOLE_HIT(agent, *HIT_STATUS_XLU);
-    }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 12.2, 45, 92, 0, 73, 28.0, 0.0, 8.0, 0.0, None, None, None, 0.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, f32::NAN, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 12.2, 45, 92, 0, 73, 28.0, 0.0, 8.0, 0.0, None, None, None, 0.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
         AttackModule::set_force_reaction(agent.module_accessor, 0, true, false);
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, 0.5);
+        macros::FT_ADD_DAMAGE(agent, 7.5);
         AttackModule::clear_all(agent.module_accessor);
     }
 }
