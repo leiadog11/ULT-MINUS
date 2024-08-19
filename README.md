@@ -21,7 +21,7 @@ Jackson Mueth (Jmuze) - Dev\
 Daniel Palomarez (OpZ) - Dev
 
 Jack Yarnell (PladMan) - Character UI Artist\
-Gabe Crandall (Architect) - Menu UI Artist\
+Gabe Crandall (Architect) - Menu UI Artist
 
 # Special Thanks
 Big shoutout to the modding discord and the modding scene as a whole for creating the tools and resources to be able to make a mod like this. Also for all of the help and answers to my questions!
