@@ -11,9 +11,9 @@ Compatability With Other Mods: Skin Mods\
 Do not use UI mods, music mods, or any other mod that changes the moves of a character.
 
 ## Character Change Log
-Current Character Amount: 9
+Current Character Amount: 11
 
-Change Log Linked Here
+Change Log Linked [Here](https://docs.google.com/document/d/1ljZ57RQu8Xp7I35-QuW9bDr22O7RT_vPG4ErxPwNd8Y/edit?usp=sharing)
 
 # Credits
 JC Ho (leiadog) - Creator, Dev Lead\
