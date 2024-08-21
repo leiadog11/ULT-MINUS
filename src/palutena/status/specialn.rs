@@ -49,6 +49,7 @@ unsafe extern "C" fn palutena_specialn_init(fighter: &mut L2CFighterCommon) -> L
 // MAIN
 unsafe extern "C" fn palutena_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(palutena_specialn_main_loop as *const () as _))
 }
@@ -166,8 +167,14 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
         let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_falling_smoke"), Hash40::new("top"), &dumb, &dumb, 2.0, true, 0, 0, 0, 0, 0, true, true) as u32;
         EffectModule::set_rgb(fighter.module_accessor, effect, 1.0, 1.0, 1.0);
         EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
-        fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
-        return 1.into();
+        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+            return 1.into();
+        }
+        else {
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            return 1.into();
+        }
     }
 
     return 0.into();

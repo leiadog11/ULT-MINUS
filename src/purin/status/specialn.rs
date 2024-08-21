@@ -42,12 +42,12 @@ unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CV
 unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
   if MotionModule::frame(fighter.module_accessor) >= 28.0 && MotionModule::frame(fighter.module_accessor) < 29.0 {
     let rand = smash::app::sv_math::rand(hash40("fighter"), 2) as u64;
-    // Grenade
+    // DRILL
     if rand == 0 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_DRILL), 0, 0, false, false);
     }
     
-    // Saw
+    // FREEZER
     else if rand == 1 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_FREEZER), 0, 0, false, false);
     }
@@ -59,18 +59,20 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
   if MotionModule::is_end(fighter.module_accessor) {
     if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_GROUND {
       fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+      return 1.into();
     }
     else {
       fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+      return 1.into();
     }   
   }
 
-  return 0.into()
+  return 0.into();
 }
 
 // SPECIAL N - END
 unsafe extern "C" fn purin_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
-    return 0.into();
+  return 0.into();
 }
 
 pub fn install() {

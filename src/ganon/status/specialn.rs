@@ -44,6 +44,7 @@ unsafe extern "C" fn ganon_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 //MAIN
 unsafe extern "C" fn ganon_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialn_main_loop as *const () as _))
 }
