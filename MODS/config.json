@@ -681,6 +681,46 @@
             "fighter/palutena/motion/body/c07/d01specialsshoot.nuanmb",
             "fighter/palutena/motion/body/c07/d03speciallw.nuanmb",
             "fighter/palutena/motion/body/c07/motion_list.bin"
+        ],
+        "fighter/ridley/c00": [ 
+            "fighter/ridley/motion/body/c00/motion_list.bin",
+            "fighter/ridley/motion/body/c00/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c00/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c01": [ 
+            "fighter/ridley/motion/body/c01/motion_list.bin",
+            "fighter/ridley/motion/body/c01/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c01/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c02": [ 
+            "fighter/ridley/motion/body/c02/motion_list.bin",
+            "fighter/ridley/motion/body/c02/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c02/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c03": [ 
+            "fighter/ridley/motion/body/c03/motion_list.bin",
+            "fighter/ridley/motion/body/c03/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c03/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c04": [ 
+            "fighter/ridley/motion/body/c04/motion_list.bin",
+            "fighter/ridley/motion/body/c04/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c04/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c05": [ 
+            "fighter/ridley/motion/body/c05/motion_list.bin",
+            "fighter/ridley/motion/body/c05/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c05/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c06": [ 
+            "fighter/ridley/motion/body/c06/motion_list.bin",
+            "fighter/ridley/motion/body/c06/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c06/a01walktaunt.nuanmb"
+        ],
+        "fighter/ridley/c07": [ 
+            "fighter/ridley/motion/body/c07/motion_list.bin",
+            "fighter/ridley/motion/body/c07/a00waittaunt.nuanmb",
+            "fighter/ridley/motion/body/c07/a01walktaunt.nuanmb"
         ]
     }
 }

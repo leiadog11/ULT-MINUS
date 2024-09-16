@@ -48,9 +48,15 @@ unsafe extern "C" fn pacman_attacklw4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_BIGPACMAN, false, -1);
     }
-    wait(agent.lua_state_agent, 9.0);
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_BIGPACMAN, false, -1);
+    }
+    wait(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
     }
 }
 
