@@ -6,7 +6,10 @@ use super::*;
 unsafe extern "C" fn captain_specialn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_RAYGUN), 0, 0, false, false);
+        if WorkModule::get_int(agent.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN) > 0 {
+            WorkModule::set_int(agent.module_accessor, 480, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN);
+            ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_RAYGUN), 0, 0, false, false);
+        }
     }
 }
 

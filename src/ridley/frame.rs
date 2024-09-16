@@ -3,6 +3,7 @@ use super::*;
 // OPFF
 pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
+        // ACTIVATE AURA
         if DamageModule::damage(fighter.module_accessor, 0) >= 100.0 && !WorkModule::is_flag(fighter.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) { 
             let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
             SoundModule::play_se(fighter.module_accessor, Hash40::new("se_common_boss_core_hit"), true, false, false, false, enSEType(0));
@@ -11,6 +12,11 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             EffectModule::set_rgb(fighter.module_accessor, effect, 0.9, 0.0, 0.5);
             EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
             WorkModule::on_flag(fighter.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA);
+        }
+
+        // REMOVE AURA ON DEATH
+        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_DEAD {
+            WorkModule::off_flag(fighter.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA);
         }
     }
 }

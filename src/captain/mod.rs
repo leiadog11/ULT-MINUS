@@ -20,6 +20,8 @@ use {
     smashline::Priority::*
 };
 
+pub const FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN: i32 = 0x100000BA;
+
 pub fn install() {
     acmd::install();
     frame::install();
