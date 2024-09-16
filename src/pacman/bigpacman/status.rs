@@ -13,6 +13,9 @@ pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2C
     if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH) {
         offset_add = Vector3f{x:0.0,y:20.0,z:0.0};
     }
+    if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
+        offset_add = Vector3f{x:-20.0,y:0.0,z:0.0};
+    }
 
     let lr = PostureModule::lr(owner);
     let owner_offset = ModelModule::joint_global_offset_from_top(owner, Hash40{hash: hash40("throw")}, &mut owner_pos);  
@@ -57,6 +60,10 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
     if WorkModule::is_flag(owner_boma, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH) {
         speed_x = 0.0;
         speed_y = 1.0;
+    }
+    else if WorkModule::is_flag(owner_boma, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
+        speed_x = if facing == 1.0 { -1.0 } else { 1.0 };
+        speed_y = 0.0; 
     }
     else { 
         speed_x = if facing == 1.0 { 1.0 } else { -1.0 };
