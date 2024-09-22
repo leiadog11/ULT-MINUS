@@ -3,6 +3,8 @@ use super::*;
 // OPFF
 pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
+        let motion = MotionModule::motion_kind(fighter.module_accessor);
+
         if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN) > 0 {
             WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN);
         }
@@ -23,6 +25,11 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
             ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
             ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost2"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
         }
+
+        if motion != hash40("attack_s4") || motion != hash40("attack_lw4") || motion != hash40("attack_hi4") {
+            WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+            WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
+        } 
     }
 }
 
