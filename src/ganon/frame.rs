@@ -20,6 +20,7 @@ static mut Y_ACCEL_MUL : f32 = 0.06;
 pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
+        let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
 
         if motion_kind == hash40("attack_s4_s2") || motion_kind == hash40("attack_s4_hold2") || 
         motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") {
@@ -35,7 +36,8 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
             WorkModule::set_flag(fighter.module_accessor, true, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
         }
 
-        if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+        // GROUND CHECK FOR UP B 2
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
             WorkModule::on_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_GROUND_CHECK);
         }
 

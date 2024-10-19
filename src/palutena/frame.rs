@@ -11,13 +11,13 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         // NO SPECIAL FALL ON UP B + EXTRA JUMP
         if WorkModule::is_flag(fighter.module_accessor, *FIGHTER_PALUTENA_STATUS_SPECIAL_HI_DIVE) {
             if frame >= 20.0 {
-                WorkModule::inc_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
+                //WorkModule::inc_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
                 WorkModule::on_flag(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_UP_B_USED);
                 StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
             }
         }
 
-        if situation_kind == *SITUATION_KIND_GROUND { 
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
             WorkModule::off_flag(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_UP_B_USED);
         } 
 

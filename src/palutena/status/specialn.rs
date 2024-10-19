@@ -141,18 +141,6 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
         }
     }
 
-    // CANCEL WITH B
-    if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
-        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
-            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
-            return 1.into();
-        }
-        else {
-            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
-            return 1.into();
-        }
-    }
-
     // HALF CHARGE EFFECT
     if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 240 && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) <= 241  { 
         let dumb = Vector3f{x:0.0,y:0.0,z:0.0};

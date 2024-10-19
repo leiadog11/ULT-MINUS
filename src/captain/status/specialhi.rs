@@ -40,25 +40,42 @@ unsafe extern "C" fn captain_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2
 
 // MAIN
 unsafe extern "C" fn captain_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    println!("Up Smash Amount START: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT));
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+    fighter.set_situation(SITUATION_KIND_AIR.into());
+    GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+    HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_XLU), 0);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(captain_specialhi_main_loop as *const () as _))
 }
 
 
 //MAIN LOOP
-unsafe extern "C" fn captain_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::frame(fighter.module_accessor) == 2.0 {
         let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         let lr = PostureModule::lr(fighter.module_accessor);
-        if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel - 0.4, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, x_vel + 0.4, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+        if lr == 1.0 { macros::SET_SPEED_EX(fighter, -0.55, 0.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, 0.55, 0.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
         return 0.into();
     }
     if MotionModule::frame(fighter.module_accessor) >= 3.0 {
+        if MotionModule::frame(fighter.module_accessor) == 12.0 { 
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT);
+            HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_NORMAL), 0);
+        }
         if MotionModule::is_end(fighter.module_accessor) {
-            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
-            return 1.into();
+            if WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT) <= 0 {
+                fighter.change_status(FIGHTER_STATUS_KIND_FALL_SPECIAL.into(), false.into());
+                println!("Up Smash Amount END SPECIAL: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT));
+                return 1.into();
+            }
+            else {
+                fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+                println!("Up Smash Amount END: {}", WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT));
+                return 1.into();
+            }
         }
         return 0.into();
     }
@@ -82,11 +99,11 @@ unsafe extern "C" fn captain_specialhi_end(fighter: &mut L2CFighterCommon) -> L2
 
 pub fn install() {
     Agent::new("captain")
-        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialn_pre)
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_pre)
 
-        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, captain_specialn_main)
+        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_main)
 
-        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, captain_specialn_end)
+        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_end)
 
         .install();
 }

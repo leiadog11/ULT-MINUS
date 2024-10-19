@@ -27,8 +27,8 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
         }
 
         if motion != hash40("attack_s4") || motion != hash40("attack_lw4") || motion != hash40("attack_hi4") {
-            WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
-            WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
+            WorkModule::off_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+            WorkModule::off_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
         } 
     }
 }

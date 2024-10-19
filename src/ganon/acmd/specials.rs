@@ -292,6 +292,14 @@ unsafe extern "C" fn ganon_effect_specialhi2_start(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP B 2
+unsafe extern "C" fn ganon_specialhi2(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) { 
+        notify_event_msc_cmd!(agent, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES);
+    }
+}
+
 // UP B 2 EFFECT
 unsafe extern "C" fn ganon_effect_specialhi2(agent: &mut L2CAgentBase) { 
     frame(agent.lua_state_agent, 7.0);
@@ -346,6 +354,7 @@ pub fn install() {
         .effect_acmd("effect_specialhi2_start", ganon_effect_specialhi2_start, Low)
         .sound_acmd("sound_specialhi2_start", ganon_sound_specialhi2_start, Low)
 
+        .game_acmd("game_specialhi2", ganon_specialhi2, Low)
         .effect_acmd("effect_specialhi2", ganon_effect_specialhi2, Low)
         .sound_acmd("sound_specialhi2", ganon_sound_specialhi2, Low)
 
