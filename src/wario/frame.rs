@@ -20,7 +20,7 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        // CAMERA ZOOM OUT ON LEDGE GRAB
+        // CAMERA ZOOM OUT ON LEDGE GRAB AND DAMAGE
         if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_CLIFF_CATCH ||
         DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
             SlowModule::clear_whole(fighter.module_accessor);

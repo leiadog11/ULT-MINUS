@@ -22,7 +22,7 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // REMOVE AURA ON DEATH
-        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_DEAD {
+        if DamageModule::damage(fighter.module_accessor, 0) == 0.0 {
             WorkModule::off_flag(fighter.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA);
         }
 

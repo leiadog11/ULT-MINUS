@@ -9,7 +9,7 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         let ypos = ControlModule::get_stick_y(fighter.module_accessor);
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
 
-        //SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
+        // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
             if WorkModule::get_float(fighter.module_accessor, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL) < 5.0 {
                 WorkModule::add_float(fighter.module_accessor, 0.05, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
@@ -24,14 +24,14 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
             WorkModule::set_float(fighter.module_accessor, 0.0, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
         }
 
-        //MOVE ON DOWN TAUNT
+        // MOVE ON DOWN TAUNT
         if motion_kind == hash40("appeal_lw_r") || motion_kind == hash40("appeal_lw_l") {
-            //RIGHT
+            // RIGHT
             if xpos > 0.0  {
                 PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.8, y: posy});
             }
 
-            //LEFT
+            // LEFT
             if xpos < 0.0  {
                 PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.8, y: posy});
             }
@@ -45,16 +45,22 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        //RISE ON UP B
+        // RISE ON UP B + UP B CANCEL
         if motion_kind == hash40("special_hi_r") || motion_kind == hash40("special_hi_l") || 
         motion_kind == hash40("special_air_hi_r") || motion_kind == hash40("special_air_hi_l") {
             KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
             fighter.set_situation(SITUATION_KIND_AIR.into());
             GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
             PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx, y: posy + 0.1});
+
+            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) ||
+               ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
+               ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
+                CancelModule::enable_cancel(fighter.module_accessor);
+            }
         }
 
-        //SLEEP TALK
+        // SLEEP TALK
         if motion_kind == hash40("special_lw_r") || motion_kind == hash40("special_lw_l") ||
         motion_kind == hash40("special_air_lw_r") || motion_kind == hash40("special_air_lw_l") {
             if MotionModule::frame(fighter.module_accessor) >= 40.0 {

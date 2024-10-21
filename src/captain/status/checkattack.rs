@@ -59,7 +59,7 @@ unsafe extern "C" fn captain_attack_hi3_check_attack_status(fighter: &mut L2CFig
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            if MotionModule::frame(fighter.module_accessor) > 33.0 {
+            if MotionModule::frame(fighter.module_accessor) > 50.0 {
                 SlowModule::set_whole(fighter.module_accessor, 8, 20);
                 macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
                 EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
@@ -82,7 +82,7 @@ unsafe extern "C" fn captain_attack_airf_check_attack_status(fighter: &mut L2CFi
             let opponent_boma = sv_battle_object::module_accessor(object_id);
             if MotionModule::frame(fighter.module_accessor) < 17.0 && MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_f") {
                 SlowModule::set_whole(fighter.module_accessor, 120, 20);
-                macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 1.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 28.5,/*xrot*/ 60.0);
+                macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 28.5,/*xrot*/ 60.0);
                 EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_boss_finishhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
                 macros::PLAY_SE(fighter, Hash40::new("se_dragoon_attack"));
             }

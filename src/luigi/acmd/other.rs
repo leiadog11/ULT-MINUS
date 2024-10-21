@@ -37,7 +37,7 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 44.0);
     if macros::is_excute(agent) {
         if true {
-            macros::FT_MOTION_RATE(agent, 100.0);
+            MotionModule::set_rate(agent.module_accessor, 0.0);
         }
         
         if StatusModule::situation_kind(agent.module_accessor) == *SITUATION_KIND_AIR { 

@@ -9,7 +9,7 @@ unsafe extern "C" fn purin_appeallw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 78.0);
     if macros::is_excute(agent) {
         if true {
-            macros::FT_MOTION_RATE(agent, 1000.0);
+            MotionModule::set_rate(agent.module_accessor, 0.0);
         }
     }
 }
