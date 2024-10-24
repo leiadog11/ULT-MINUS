@@ -20,14 +20,16 @@ unsafe extern "C" fn gamewatch_attack_dash_check_attack_status(fighter: &mut L2C
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            CancelModule::enable_cancel(agent.module_accessor);
+            CancelModule::enable_cancel(fighter.module_accessor);
         }
     }
     0.into()
 }
 
+
+
 pub fn install() {
     Agent::new("gamewatch")
-        .status(CheckAttack, *FIGHTER_GAMEWATCH_STATUS_KIND_ATTACK_DASH, gamewatch_attack_dash_check_attack_status)
+        .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_DASH, gamewatch_attack_dash_check_attack_status)
         .install();
 }
