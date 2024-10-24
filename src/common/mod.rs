@@ -46,31 +46,6 @@ param_hash: u64) -> i32 {
 ret
 }
 
-//CHANGE DASH SPEED AND AIR ACCELERATION
-#[skyline::hook(offset=FLOAT_OFFSET)]
-pub unsafe fn float_param_accessor_hook(
-boma: u64,
-param_type: u64,
-param_hash: u64) -> f32 {
-    let ret = original!()(boma, param_type, param_hash);
-	let module_accessor = &mut *(*((boma as *mut u64).offset(1)) as *mut BattleObjectModuleAccessor);
-    let fighter_kind = smash::app::utility::get_kind(module_accessor);
-    let color = WorkModule::get_int(module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR);
-    if param_hash == 0 {
-		
-		if fighter_kind == FIGHTER_KIND_ALL {
-				if param_type == hash40("dash_speed") {
-					return 4.22;
-				}
-                else if param_type == hash40("air_accel_x_add") {
-                    return 0.20;
-                }
-        }
-		
-	}
-ret
-}
-
 
 //Parry Reflects
 #[skyline::hook(replace=smash::app::FighterUtil::is_valid_just_shield_reflector)]
@@ -150,6 +125,5 @@ pub fn install() {
     skyline::install_hooks!(
         is_valid_just_shield_reflector,
         int_param_accessor_hook,
-        float_param_accessor_hook
-    );
+        );
 }

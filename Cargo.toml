@@ -1,12 +1,7 @@
 [package]
 name = "_ULT_MINUS"
-<<<<<<< Updated upstream
-version = "0.1.0"
-authors = ["leiadog, OpZ, Jmuze"]
-=======
 version = "0.2.0"
 authors = ["leiadog, Jmuze, OpZ"]
->>>>>>> Stashed changes
 edition = "2021"
 
 [package.metadata.skyline]
@@ -22,7 +17,6 @@ smash_script = { git = "https://github.com/blu-dev/smash-script.git", branch = "
 smashline = { git = "https://github.com/hdr-development/smashline.git" }
 smash_singletons = { git = "https://github.com/WuBoytH/smash_singletons.git" }
 smash2 = { package = "smash", git = "https://github.com/blu-dev/smash-rs" }
-
 
 [profile.dev]
 panic = "abort"
