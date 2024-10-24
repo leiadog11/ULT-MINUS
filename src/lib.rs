@@ -38,6 +38,7 @@ mod pichu;
 mod palutena;
 mod captain;
 mod ridley;
+mod gamewatch;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
@@ -53,6 +54,7 @@ pub fn main() {
     palutena::install();
     captain::install();
     ridley::install();
+    gamewatch::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);

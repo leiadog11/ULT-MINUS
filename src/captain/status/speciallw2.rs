@@ -39,7 +39,6 @@ unsafe extern "C" fn captain_speciallw2_pre(fighter: &mut L2CFighterCommon) -> L
 
 // MAIN
 unsafe extern "C" fn captain_speciallw2_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    println!("IN FALCON DEFLECT!");
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw2"), 0.0, 1.0, false, 0.0, false, false);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_INVINCIBLE), 0);
@@ -57,14 +56,14 @@ unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon
     if frame >= 4.0 && frame <= 24.0 {
         if AttackModule::is_infliction_status(opponent_boma, *COLLISION_KIND_MASK_HIT) {
             println!("TRUE!");
+            //fighter.change_status(FIGHTER_STATUS_KIND_ATTACK_S4.into(), false.into());
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
+            return 1.into();
         }
-        if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) { 
-            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) { 
-                WorkModule::on_flag(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_FLAG_KICK);
-                fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_LW.into(), false.into());
-                return 1.into();
-            }
-            return 0.into();
+        if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) { 
+            WorkModule::on_flag(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_FLAG_KICK);
+            fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_LW.into(), false.into());
+            return 1.into();
         }
         return 0.into();
     }
