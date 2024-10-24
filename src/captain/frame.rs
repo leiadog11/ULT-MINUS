@@ -8,15 +8,14 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(fighter.module_accessor);
 
         if motion_kind != hash40("attack_hi3") && motion_kind != hash40("attack_100") && motion_kind != hash40("attack_air_f")  {
-            if MotionModule::is_end(fighter.module_accessor) && situation_kind == *SITUATION_KIND_GROUND {
-                SlowModule::clear_whole(fighter.module_accessor);
-                CameraModule::reset_all(fighter.module_accessor);
-                EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
-                EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_boss_finishhit"), false, false);
-                macros::CAM_ZOOM_OUT(fighter);
-            }
+            SlowModule::clear_whole(fighter.module_accessor);
+            CameraModule::reset_all(fighter.module_accessor);
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_boss_finishhit"), false, false);
+            macros::CAM_ZOOM_OUT(fighter);
         }
 
+        /*
         if status_kind == *FIGHTER_STATUS_KIND_FALL || status_kind == *FIGHTER_STATUS_KIND_WAIT {
             SlowModule::clear_whole(fighter.module_accessor);
             CameraModule::reset_all(fighter.module_accessor);
@@ -24,6 +23,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
             EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_boss_finishhit"), false, false);
             macros::CAM_ZOOM_OUT(fighter);
         }
+        */
 
         // CLEAR FIRE BIRD ON F SMASH DAMAGE
         if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
@@ -33,6 +33,11 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         // GUN COOLDOWN
         if WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN) > 0 {
             WorkModule::dec_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN);
+        }
+
+        // UP SPECIAL DEC COOLDOWN
+        if WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_DEC_COOLDOWN) > 0 {
+            WorkModule::dec_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_DEC_COOLDOWN);
         }
 
         // GROUND CHECK FOR UP B COUNT
@@ -47,6 +52,8 @@ pub unsafe extern "C" fn captain_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_GUN_COOLDOWN);
         WorkModule::set_int(fighter.module_accessor, 2, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT);
+        WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_DEC_COOLDOWN);
+        WorkModule::off_flag(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_FLAG_KICK);
     }
 }
 
