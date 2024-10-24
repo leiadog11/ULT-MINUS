@@ -1,6 +1,6 @@
 use super::*;
 
-/////////// SPECIAL N
+//--------------------SPECIAL N------------------------
 
 // PRE
 unsafe extern "C" fn captain_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {

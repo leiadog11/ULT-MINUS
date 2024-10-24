@@ -21,14 +21,11 @@ mod wario;
 mod ganon;
 mod purin;
 mod falco;
-<<<<<<< Updated upstream
-=======
 mod pichu;
 mod palutena;
 mod captain;
 mod ridley;
 mod gamewatch;
->>>>>>> Stashed changes
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
@@ -40,10 +37,6 @@ pub fn main() {
     common::install();
     purin::install();
     falco::install();
-<<<<<<< Updated upstream
-    smashline::clone_weapon("mario", "fireball", "wario", "cloud", true);
-    smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
-=======
     pichu::install();
     palutena::install();
     captain::install();
@@ -52,5 +45,4 @@ pub fn main() {
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
->>>>>>> Stashed changes
 }
