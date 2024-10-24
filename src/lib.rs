@@ -13,19 +13,6 @@
     clippy::borrow_interior_mutable_const
 )]
 
-use {
-    smash::{
-        lua2cpp::*,
-        phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
-        lib::{lua_const::*, L2CValue, L2CAgent},
-        hash40
-    },
-    smash2::*,
-    smash_script::*,
-    smashline::*,
-};
-
 mod pacman;
 mod luigi;
 mod robot;
@@ -34,26 +21,36 @@ mod wario;
 mod ganon;
 mod purin;
 mod falco;
+<<<<<<< Updated upstream
+=======
 mod pichu;
 mod palutena;
 mod captain;
 mod ridley;
+mod gamewatch;
+>>>>>>> Stashed changes
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
-    common::install();
     pacman::install();
     luigi::install();
     robot::install();
     wario::install();
     ganon::install();
+    common::install();
     purin::install();
     falco::install();
+<<<<<<< Updated upstream
+    smashline::clone_weapon("mario", "fireball", "wario", "cloud", true);
+    smashline::clone_weapon("mario", "fireball", "ganon", "gsword", false);
+=======
     pichu::install();
     palutena::install();
     captain::install();
     ridley::install();
+    gamewatch::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
+>>>>>>> Stashed changes
 }
