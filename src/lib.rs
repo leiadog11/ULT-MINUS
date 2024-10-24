@@ -13,19 +13,6 @@
     clippy::borrow_interior_mutable_const
 )]
 
-use {
-    smash::{
-        lua2cpp::*,
-        phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
-        lib::{lua_const::*, L2CValue, L2CAgent},
-        hash40
-    },
-    smash2::*,
-    smash_script::*,
-    smashline::*,
-};
-
 mod pacman;
 mod luigi;
 mod robot;
@@ -42,12 +29,12 @@ mod gamewatch;
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
-    common::install();
     pacman::install();
     luigi::install();
     robot::install();
     wario::install();
     ganon::install();
+    common::install();
     purin::install();
     falco::install();
     pichu::install();
