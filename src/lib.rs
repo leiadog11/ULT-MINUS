@@ -13,6 +13,20 @@
     clippy::borrow_interior_mutable_const
 )]
 
+use {
+    smash::{
+        lua2cpp::*,
+        phx::*,
+        app::{sv_animcmd::*, lua_bind::*, *},
+        lib::{lua_const::*, L2CValue, L2CAgent},
+        hash40
+    },
+    smash2::*,
+    smash_script::*,
+    smashline::*,
+    smashline::Priority::*
+};
+
 mod pacman;
 mod luigi;
 mod robot;

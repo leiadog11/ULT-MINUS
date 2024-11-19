@@ -39,10 +39,7 @@ unsafe extern "C" fn captain_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2
 
 // INIT
 unsafe extern "C" fn captain_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_DEC_COOLDOWN) <= 0 {
-        WorkModule::set_int(fighter.module_accessor, 20, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_DEC_COOLDOWN);
-        WorkModule::dec_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT);
-    }
+    WorkModule::dec_int(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_INT_UP_SPECIAL_AMOUNT);
     return 0.into();
 }
 
