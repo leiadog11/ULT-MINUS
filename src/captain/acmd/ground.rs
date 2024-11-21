@@ -124,6 +124,20 @@ unsafe extern "C" fn captain_effect_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP TILT SOUND
+unsafe extern "C" fn captain_sound_attackhi3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("vc_captain_heavyget"));
+        macros::PLAY_SE(agent, Hash40::new("se_captain_special_n04"));
+    }
+    frame(agent.lua_state_agent, 57.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("vc_captain_attack05"));
+        macros::PLAY_SE(agent, Hash40::new("se_captain_special_n03"));
+    }
+}
+
 
 // DASH ATTACK 
 unsafe extern "C" fn captain_attackdash(agent: &mut L2CAgentBase) {
@@ -158,6 +172,7 @@ pub fn install() {
         .game_acmd("game_attacklw3", captain_attacklw3, Low)
 
         .game_acmd("game_attackhi3", captain_attackhi3, Low)
+        .sound_acmd("sound_attackhi3", captain_sound_attackhi3, Low)
         .effect_acmd("effect_attackhi3", captain_effect_attackhi3, Low)
 
         .game_acmd("game_attackdash", captain_attackdash, Low)

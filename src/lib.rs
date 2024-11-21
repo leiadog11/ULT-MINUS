@@ -1,3 +1,8 @@
+#![deny(deprecated)]
+#![allow(unused)]
+#![allow(non_snake_case)]
+#![allow(improper_ctypes_definitions)]
+
 #![feature(
     concat_idents,
     proc_macro_hygiene
@@ -13,6 +18,20 @@
     clippy::borrow_interior_mutable_const
 )]
 
+use {
+    smash::{
+        lua2cpp::*,
+        phx::*,
+        app::{sv_animcmd::*, lua_bind::*, *},
+        lib::{lua_const::*, L2CValue, L2CAgent},
+        hash40
+    },
+    smash2::*,
+    smash_script::*,
+    smashline::*,
+    smashline::Priority::*
+};
+
 mod pacman;
 mod luigi;
 mod robot;
@@ -26,6 +45,31 @@ mod palutena;
 mod captain;
 mod ridley;
 mod gamewatch;
+
+// GLOBAL VARIABLES
+pub const SITUATION_KIND: i32 = 0x16;
+pub const PREV_SITUATION_KIND: i32 = 0x17;
+static mut OPPONENT_BOMAS: Option<Vec<*mut BattleObjectModuleAccessor>> = None;
+
+// THE GREAT OPPONENT BOMA LIST
+unsafe extern "C" fn get_opponent_bomas(fighter: &mut L2CFighterCommon) -> Vec<*mut BattleObjectModuleAccessor> { 
+    let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
+    let entry_count_usize = entry_count as usize;
+    let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(entry_count_usize);
+    let mut boma_counter = 0;
+    
+    for _ in 0..entry_count_usize { 
+        let curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+        if curr_boma == fighter.module_accessor {
+        }
+        else {
+            opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
+        }
+        boma_counter += 1;
+    }
+
+    return opponent_bomas;
+}
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
