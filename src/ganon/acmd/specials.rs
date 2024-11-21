@@ -82,10 +82,7 @@ unsafe extern "C" fn ganon_specialsstart(agent: &mut L2CAgentBase) {
 
 // SIDE B
 unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
-    let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-    if opponent_boma == agent.module_accessor {
-        opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
-    }
+    OPPONENT_BOMAS = Some(get_opponent_bomas_agent(agent));
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 361, 90, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
@@ -96,12 +93,20 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 31.0); 
     if macros::is_excute(agent) {
-        DamageModule::add_damage(opponent_boma, 5.0, 0);
+        if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
+            for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
+                DamageModule::add_damage(boma_ptr, 5.0, 0);
+            }
+        }
         DamageModule::add_damage(agent.module_accessor, -5.0, 0);
     }
     frame(agent.lua_state_agent, 38.0); 
     if macros::is_excute(agent) {
-        DamageModule::add_damage(opponent_boma, 5.0, 0);
+        if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
+            for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
+                DamageModule::add_damage(boma_ptr, 5.0, 0);
+            }
+        }
         DamageModule::add_damage(agent.module_accessor, -5.0, 0);
     }
     frame(agent.lua_state_agent, 45.0);

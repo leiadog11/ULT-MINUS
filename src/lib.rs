@@ -70,6 +70,24 @@ unsafe extern "C" fn get_opponent_bomas(fighter: &mut L2CFighterCommon) -> Vec<*
 
     return opponent_bomas;
 }
+unsafe extern "C" fn get_opponent_bomas_agent(agent: &mut L2CAgentBase) -> Vec<*mut BattleObjectModuleAccessor> { 
+    let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
+    let entry_count_usize = entry_count as usize;
+    let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(entry_count_usize);
+    let mut boma_counter = 0;
+    
+    for _ in 0..entry_count_usize { 
+        let curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+        if curr_boma == agent.module_accessor {
+        }
+        else {
+            opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
+        }
+        boma_counter += 1;
+    }
+
+    return opponent_bomas;
+}
 
 #[skyline::main(name = "ult_minus")]
 pub fn main() {

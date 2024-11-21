@@ -49,16 +49,17 @@ unsafe extern "C" fn captain_speciallw2_main(fighter: &mut L2CFighterCommon) -> 
 // MAIN LOOP
 unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let frame = MotionModule::frame(fighter.module_accessor);
-    let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-        if opponent_boma == fighter.module_accessor {
-            opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
-        }
+    OPPONENT_BOMAS = Some(get_opponent_bomas(fighter));
     if frame >= 4.0 && frame <= 24.0 {
-        if AttackModule::is_infliction_status(opponent_boma, *COLLISION_KIND_MASK_HIT) {
-            println!("TRUE!");
-            //fighter.change_status(FIGHTER_STATUS_KIND_ATTACK_S4.into(), false.into());
-            MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
-            return 1.into();
+        if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
+            for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
+                if AttackModule::is_infliction_status(boma_ptr, *COLLISION_KIND_MASK_HIT) {
+                    println!("TRUE!");
+                    //fighter.change_status(FIGHTER_STATUS_KIND_ATTACK_S4.into(), false.into());
+                    MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
+                    return 1.into();
+                }
+            }
         }
         if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) { 
             WorkModule::on_flag(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_FLAG_KICK);

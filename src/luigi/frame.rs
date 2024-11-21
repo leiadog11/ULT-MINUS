@@ -31,8 +31,8 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     
                 if status_kind == *FIGHTER_STATUS_KIND_GUARD || status_kind == *FIGHTER_STATUS_KIND_GUARD_ON || status_kind == *FIGHTER_STATUS_KIND_GUARD_DAMAGE {
                     if d < 21.0 {
-                        SlowModule::set_whole(boma_ptr, 2, 1);
-                        //macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
+                        //SlowModule::set_whole(boma_ptr, 2, 1);
+                        macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
                         DamageModule::add_damage(boma_ptr, 0.05, 0);
                     }
                 }
@@ -40,9 +40,7 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                     EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_timer"), false, true);
                 }
             }
-        } else {
-            println!("OPPONENT_BOMAS is not initialized!");
-        }
+        } 
 
         let xpos = ControlModule::get_stick_x(fighter.module_accessor);
         let ypos = ControlModule::get_stick_y(fighter.module_accessor);
