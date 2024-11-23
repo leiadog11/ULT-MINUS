@@ -7,7 +7,6 @@ pub unsafe extern "C" fn octopus_frame(weapon: &mut L2CWeaponCommon) {
         if WorkModule::is_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS) {
             StatusModule::change_status_request_from_script(weapon.module_accessor, WEAPON_GAMEWATCH_OCTOPUS_STATUS_KIND_ATTACKAIRN, true);
             WorkModule::set_flag(owner_boma, false, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
-            println!("im in a frame");
         }
     }
 }

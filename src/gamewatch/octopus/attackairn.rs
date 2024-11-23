@@ -4,7 +4,6 @@ use super::*;
 
 // PRE
 unsafe extern "C" fn gamewatch_octopus_attackairn_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    println!("IM PRECUMMING");
     StatusModule::init_settings(
         weapon.module_accessor, 
         smash::app::SituationKind(*SITUATION_KIND_NONE), 
@@ -22,7 +21,6 @@ unsafe extern "C" fn gamewatch_octopus_attackairn_pre(weapon: &mut L2CWeaponComm
 
 // MAIN
 unsafe extern "C" fn gamewatch_octopus_attackairn_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
-    println!("peach main");
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("attack_air_n"), 0.0, 1.0, false, 0.0, false, false);
 
     weapon.fastshift(L2CValue::Ptr(gamewatch_octopus_attackairn_main_loop as *const () as _))
@@ -30,7 +28,6 @@ unsafe extern "C" fn gamewatch_octopus_attackairn_main(weapon: &mut L2CWeaponCom
 
 // MAIN LOOP
 unsafe extern "C" fn gamewatch_octopus_attackairn_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue { 
-    println!("im looping all over the place");
     if MotionModule::frame(weapon.module_accessor) >= 15.0{
         smash_script::notify_event_msc_cmd!(weapon, Hash40::new_raw(0x199c462b5d));
         
@@ -42,7 +39,6 @@ unsafe extern "C" fn gamewatch_octopus_attackairn_main_loop(weapon: &mut L2CWeap
 
 // END
 unsafe extern "C" fn gamewatch_octopus_attackairn_end(weapon: &mut L2CWeaponCommon) -> L2CValue { 
-    println!("this is the end...");
     return 0.into();
 }
 
