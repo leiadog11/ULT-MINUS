@@ -2,6 +2,54 @@ use super::*;
 
 //----------------AERIALS------------------
 
+//NEUTRAL AIR
+unsafe extern "C" fn gamewatch_attackairn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    }
+    frame(agent.lua_state_agent, 38.0);
+    if macros::is_excute(agent) {
+        WorkModule::set_flag(agent.module_accessor, true, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OCTOPUS, false, -1);
+        VisibilityModule::set_whole(agent.module_accessor, false);
+    }
+    frame(agent.lua_state_agent, 53.0);
+    if macros::is_excute(agent) {
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_FALL_SPECIAL, true);
+        VisibilityModule::set_whole(agent.module_accessor, true);
+    }
+}
+
+//NEUTRAL AIR SOUND
+unsafe extern "C" fn gamewatch_sound_attackairn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 7.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_final02"));
+    }
+    frame(agent.lua_state_agent, 38.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_wave04_hi"));
+    }
+    frame(agent.lua_state_agent, 53.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_final03"));
+    }
+}
+
+//NEUTRAL AIR EXPRESSION
+unsafe extern "C" fn gamewatch_expression_attackairn(agent: &mut L2CAgentBase) {
+}
+
+
+
 //UP AIR
 unsafe extern "C" fn gamewatch_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 12.0);
@@ -44,6 +92,10 @@ unsafe extern "C" fn gamewatch_effect_attackairhi(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("gamewatch")
+        .game_acmd("game_attackairn", gamewatch_attackairn, Low)
+        .sound_acmd("sound_attackairn", gamewatch_sound_attackairn, Low)
+        .expression_acmd("expression_attackairn", gamewatch_expression_attackairn, Low)
+
         .game_acmd("game_attackairhi", gamewatch_attackairhi, Low)
         .effect_acmd("effect_attackairhi", gamewatch_effect_attackairhi, Low)
 
