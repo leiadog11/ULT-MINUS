@@ -94,7 +94,9 @@ unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponComm
 
     // REFLECTION CHECK
     if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
-        println!("GHOST REFLECTION!!!");
+        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 1.2, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        return 0.into();
     }
 
     if life < 0 {

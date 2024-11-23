@@ -69,7 +69,7 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // AND MEGA LASER
-        if motion_kind == hash40("special_s_shoot") && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 480 && frame >= 25.0 {
+        if motion_kind == hash40("special_s_shoot") && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 360 && frame >= 25.0 {
             if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
                 StatusModule::change_status_request_from_script(fighter.module_accessor, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT, false);
             }

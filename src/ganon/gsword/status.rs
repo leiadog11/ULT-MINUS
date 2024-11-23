@@ -62,6 +62,12 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
     weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_y));
     sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
+    // REFLECTION CHECK
+    if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
+        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 0.5, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        return 0.into();
+    }
 
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
