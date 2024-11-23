@@ -46,6 +46,7 @@ mod palutena;
 mod captain;
 mod ridley;
 mod gamewatch;
+mod mario;
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
@@ -90,6 +91,25 @@ unsafe extern "C" fn get_opponent_bomas_agent(agent: &mut L2CAgentBase) -> Vec<*
     return opponent_bomas;
 }
 
+unsafe extern "C" fn get_opponent_bomas_weapon(owner_boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
+    let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
+    let entry_count_usize = entry_count as usize;
+    let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(entry_count_usize);
+    let mut boma_counter = 0;
+    
+    for _ in 0..entry_count_usize { 
+        let curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+        if curr_boma == owner_boma {
+        }
+        else {
+            opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
+        }
+        boma_counter += 1;
+    }
+
+    return opponent_bomas;
+}
+
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
     pacman::install();
@@ -105,6 +125,7 @@ pub fn main() {
     captain::install();
     ridley::install();
     gamewatch::install();
+    mario::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
