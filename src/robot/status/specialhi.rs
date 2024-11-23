@@ -43,6 +43,9 @@ unsafe extern "C" fn rob_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CVa
 // MAIN
 unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+    fighter.set_situation(SITUATION_KIND_AIR.into());
+    GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     fighter.sub_shift_status_main(L2CValue::Ptr(rob_specialhi_main_loop as *const () as _))
 }
 

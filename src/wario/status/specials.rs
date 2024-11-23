@@ -4,7 +4,8 @@ use super::*;
 
 // MAIN
 unsafe extern "C" fn wario_specialsdrive_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    fighter.sub_shift_status_main(L2CValue::Ptr(wario_specialsdrive_main_loop as *const () as _))
+  MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+  fighter.sub_shift_status_main(L2CValue::Ptr(wario_specialsdrive_main_loop as *const () as _))
 }
   
 // MAIN LOOP

@@ -1,6 +1,7 @@
 #![deny(deprecated)]
 #![allow(unused)]
 #![allow(non_snake_case)]
+#![allow(static_mut_refs)]
 #![allow(improper_ctypes_definitions)]
 
 #![feature(
