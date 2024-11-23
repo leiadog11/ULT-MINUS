@@ -48,10 +48,6 @@ unsafe extern "C" fn luigi_fireball_start_main(weapon: &mut L2CWeaponCommon) -> 
 // MAIN LOOP
 unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-        if opponent_boma == owner_boma {
-            opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
-        }
     let rot_x = PostureModule::rot(weapon.module_accessor, 0);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
@@ -68,21 +64,6 @@ unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon
         fireball_remove(weapon);
         return 0.into();
     }
-
-    //Check hit
-    if AttackModule::is_infliction_status(weapon.module_accessor, *COLLISION_KIND_MASK_HIT) {
-        SlowModule::set_whole(weapon.module_accessor, 8, 80);
-        macros::CAM_ZOOM_IN_arg5(weapon, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        EffectModule::req_follow(weapon.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
-        macros::PLAY_SE(weapon, Hash40::new("se_common_criticalhit"));
-    }
-
-    /*
-    SlowModule::clear_whole(weapon.module_accessor);
-    CameraModule::reset_all(weapon.module_accessor);
-    EffectModule::kill_kind(weapon.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
-    macros::CAM_ZOOM_OUT(weapon);
-    */
 
     // Set speed
     weapon.agent.clear_lua_stack();

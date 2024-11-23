@@ -85,10 +85,7 @@ unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
         }
     }
 	else {
-        let mut opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(1));
-        if opponent_boma == agent.module_accessor {
-            opponent_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(0));
-        }
+        OPPONENT_BOMAS = Some(get_opponent_bomas_agent(agent));
         frame(agent.lua_state_agent, 9.0);
         if macros::is_excute(agent) {
             WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
@@ -103,7 +100,11 @@ unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
         wait(agent.lua_state_agent, 5.0);
         if macros::is_excute(agent) {
             HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
-            GroundModule::set_collidable(opponent_boma, true);
+            if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
+                for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
+                    GroundModule::set_collidable(boma_ptr, true);
+                }
+            }
             WorkModule::off_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
             AttackModule::clear_all(agent.module_accessor);
         }
