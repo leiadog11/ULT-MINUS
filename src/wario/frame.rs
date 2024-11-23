@@ -45,11 +45,11 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("throw_b") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 1.25, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 1.45, y: PostureModule::pos_y(fighter.module_accessor)});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 1.25, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 1.45, y: PostureModule::pos_y(fighter.module_accessor)});
             }
         }
 
@@ -60,10 +60,10 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         if damage > 30.0 && damage < 60.0 {
             max_speed = 6.0
         }
-        if damage > 60.0 && damage < 80.0 {
+        if damage > 60.0 && damage < 90.0 {
             max_speed = 8.0
         }
-        if damage > 80.0{
+        if damage > 90.0 {
             max_speed = 10.0
         }        
 

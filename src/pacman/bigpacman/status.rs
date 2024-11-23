@@ -8,13 +8,16 @@ pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2C
     //Snap to throw position
     let mut owner_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
-    let mut offset_add = Vector3f{x:20.0,y:0.0,z:0.0};
+    let mut offset_add = Vector3f{x:0.0,y:0.0,z:0.0};
 
     if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH) {
         offset_add = Vector3f{x:0.0,y:20.0,z:0.0};
     }
-    if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
+    else if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
         offset_add = Vector3f{x:-20.0,y:0.0,z:0.0};
+    }
+    else {
+        offset_add = Vector3f{x:20.0,y:0.0,z:0.0};
     }
 
     let lr = PostureModule::lr(owner);
@@ -46,13 +49,12 @@ unsafe extern "C" fn pacman_bigpacman_start_pre(weapon: &mut L2CWeaponCommon) ->
 // MAIN
 unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     //Life
-    let life = 200;
+    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);;
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
-    WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("start"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let facing = PostureModule::lr(weapon.module_accessor);
+    let lr = PostureModule::lr(weapon.module_accessor);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
     let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
@@ -62,11 +64,11 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
         speed_y = 1.0;
     }
     else if WorkModule::is_flag(owner_boma, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
-        speed_x = if facing == 1.0 { -1.0 } else { 1.0 };
+        speed_x = if lr == 1.0 { -1.0 } else { 1.0 };
         speed_y = 0.0; 
     }
     else { 
-        speed_x = if facing == 1.0 { 1.0 } else { -1.0 };
+        speed_x = if lr == 1.0 { 1.0 } else { -1.0 };
         speed_y = 0.0; 
     }
 
@@ -89,6 +91,12 @@ unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponComm
 
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+
+    // REFLECTION CHECK
+    if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
+        println!("GHOST REFLECTION!!!");
+    }
+
     if life < 0 {
         bigpacman_remove(weapon);
         return 0.into();

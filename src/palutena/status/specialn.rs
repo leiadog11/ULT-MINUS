@@ -118,7 +118,7 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
     WorkModule::inc_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE);
 
     // SHIELD CANCEL
-    if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
+    if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
         if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR {
             fighter.change_status(FIGHTER_STATUS_KIND_GUARD_ON.into(), false.into());
             return 1.into();

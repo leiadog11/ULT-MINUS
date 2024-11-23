@@ -721,6 +721,38 @@
             "fighter/ridley/motion/body/c07/motion_list.bin",
             "fighter/ridley/motion/body/c07/a00waittaunt.nuanmb",
             "fighter/ridley/motion/body/c07/a01walktaunt.nuanmb"
+        ],
+        "fighter/captain/c00": [ 
+            "fighter/captain/motion/body/c00/motion_list.bin",
+            "fighter/captain/motion/body/c00/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c01": [ 
+            "fighter/captain/motion/body/c01/motion_list.bin",
+            "fighter/captain/motion/body/c01/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c02": [ 
+            "fighter/captain/motion/body/c02/motion_list.bin",
+            "fighter/captain/motion/body/c02/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c03": [ 
+            "fighter/captain/motion/body/c03/motion_list.bin",
+            "fighter/captain/motion/body/c03/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c04": [ 
+            "fighter/captain/motion/body/c04/motion_list.bin",
+            "fighter/captain/motion/body/c04/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c05": [ 
+            "fighter/captain/motion/body/c05/motion_list.bin",
+            "fighter/captain/motion/body/c05/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c06": [ 
+            "fighter/captain/motion/body/c06/motion_list.bin",
+            "fighter/captain/motion/body/c06/d03speciallw2.nuanmb"
+        ],
+        "fighter/captain/c07": [ 
+            "fighter/captain/motion/body/c07/motion_list.bin",
+            "fighter/captain/motion/body/c07/d03speciallw2.nuanmb"
         ]
     }
 }

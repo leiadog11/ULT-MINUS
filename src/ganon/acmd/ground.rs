@@ -124,6 +124,7 @@ unsafe extern "C" fn ganon_attackdash(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
         AttackModule::clear_all(agent.module_accessor);
     }
 }

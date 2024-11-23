@@ -71,6 +71,7 @@ unsafe extern "C" fn ganon_specialsstart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 31.0);
     if macros::is_excute(agent) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
         AttackModule::clear_all(agent.module_accessor);
     }
     frame(agent.lua_state_agent, 42.0);
@@ -224,6 +225,7 @@ unsafe extern "C" fn ganon_speciallw(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_GANON_STATUS_WORK_ID_FLAG_GANON_KICK_WALL_CHECK);
     }
 }
