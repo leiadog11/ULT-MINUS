@@ -13,7 +13,7 @@ unsafe extern "C" fn gamewatch_attacks4(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 48, 100, 0, 42, 2.6, 0.0, 5.3, 7.8, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_OBJECT);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 18.0, 48, 97, 0, 46, 2.9, 0.0, 6.8, 12.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
         macros::ATTACK(agent, 2, 0, Hash40::new("top"), 18.0, 48, 97, 0, 46, 5.3, 0.0, 7.8, 16.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_BRAVE_GENERATE_ARTICLE_FIREBALL, false, -1);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_FOOD, false, -1);
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
@@ -45,6 +45,31 @@ unsafe extern "C" fn gamewatch_attacklw4(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.5);
 }
 
+//DOWN SMASH EXPRESSION
+unsafe extern "C" fn gamewatch_expression_attacklw4(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        //ItemModule::set_attach_item_visibility(agent.module_accessor, false);
+        VisibilityModule::set_int64(agent.module_accessor, hash40("head") as i64, hash40("head_none") as i64);
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_TOP);
+    }
+    frame(agent.lua_state_agent, 8.0);
+    execute(agent.lua_state_agent, 8.0);
+    WorkModule::is_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_SMASH_SMASH_HOLD_TO_ATTACK);
+    //if(methodlib::L2CValue::operator==(lib::L2CValueconst&)const(false, true)){
+        if macros::is_excute(agent) {
+            //ItemModule::set_attach_item_visibility(agent.module_accessor, false);
+            slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_TOP);
+            ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+        }
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_impact"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+        macros::QUAKE(agent, *CAMERA_QUAKE_KIND_L);
+    }
+}
+
 //UP SMASH
 unsafe extern "C" fn gamewatch_attackhi4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 16.0);
@@ -71,7 +96,11 @@ unsafe extern "C" fn gamewatch_attackhi4(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("gamewatch")
         .game_acmd("game_attacks4", gamewatch_attacks4, Low)
+
         .game_acmd("game_attacklw4", gamewatch_attacklw4, Low)
+        .expression_acmd("expression_attacklw4", gamewatch_expression_attacklw4, Low)
+
         .game_acmd("game_attackhi4", gamewatch_attackhi4, Low)
+
         .install();
 }
