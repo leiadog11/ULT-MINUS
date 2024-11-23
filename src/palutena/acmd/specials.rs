@@ -71,6 +71,7 @@ unsafe extern "C" fn palutena_specialnshoot(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 75.0);
     if macros::is_excute(agent) { 
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_BEAM, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_BLACKHOLE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
 }
 
