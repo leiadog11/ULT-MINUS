@@ -36,17 +36,13 @@ unsafe extern "C" fn pacman_appeal_side(agent: &mut L2CAgentBase) {
 }
 
 // DOWN TAUNT
-unsafe extern "C" fn pacman_appeallwr(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn pacman_appeallw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
         macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, true);
-        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_SLEEP, false.into());
     }
-}
-unsafe extern "C" fn pacman_appeallwl(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 14.0);
-    if macros::is_excute(agent) {
-        macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, true);
+    frame(agent.lua_state_agent, 32.0);
+    if macros::is_excute(agent) { 
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_SLEEP, false.into());
     }
 }
@@ -56,8 +52,8 @@ pub fn install() {
         .game_acmd("game_appealsr", pacman_appeal_side, Low)
         .game_acmd("game_appealsl", pacman_appeal_side, Low)
 
-        .game_acmd("game_appeallwr", pacman_appeallwr, Low)
-        .game_acmd("game_appeallwl", pacman_appeallwl, Low)
+        .game_acmd("game_appeallwr", pacman_appeallw, Low)
+        .game_acmd("game_appeallwl", pacman_appeallw, Low)
         
         .install();
 }

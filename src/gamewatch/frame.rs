@@ -3,31 +3,33 @@ use super::*;
 // OPFF
 pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
+        let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
         let frame = MotionModule::frame(fighter.module_accessor);
-        let facing = PostureModule::lr(fighter.module_accessor);
+        let lr = PostureModule::lr(fighter.module_accessor);
         let xpos = ControlModule::get_stick_x(fighter.module_accessor);
         let ypos = ControlModule::get_stick_y(fighter.module_accessor);
         let posx = PostureModule::pos_x(fighter.module_accessor);
-        if MotionModule::motion_kind(fighter.module_accessor) == smash::hash40("attack_lw3"){
-            if frame == 6.0 {
+
+        // MOVE ON DOWN TILT
+        if motion_kind == smash::hash40("attack_lw3") {
+            if frame >= 6.0 && frame <= 8.0 {
                 if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
                     MotionModule::set_rate(fighter.module_accessor, 0.0);
+                    if lr == 1.0 {
+                        PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(fighter.module_accessor)});
+                    } 
+                    else {
+                        PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 1.1, y: PostureModule::pos_y(fighter.module_accessor)});
+                    }
                 }
                 else {
                     MotionModule::set_rate(fighter.module_accessor, 1.0);
                 }
             }
-            //RIGHT
-            if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.6, y: PostureModule::pos_y(fighter.module_accessor)});
-            }
-
-            //LEFT
-            if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.6, y: PostureModule::pos_y(fighter.module_accessor)});
-            }
         }
-        if MotionModule::motion_kind(fighter.module_accessor) == smash::hash40("special_lw"){
+
+        // MOVE ON DOWN B
+        if motion_kind == smash::hash40("special_lw") {
             if frame == 6.0 {
                 if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
                     MotionModule::set_rate(fighter.module_accessor, 0.0);
@@ -46,6 +48,11 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
                 PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.6, y: PostureModule::pos_y(fighter.module_accessor)});
             }
         }
+
+        // INVISIBLE FIX
+        if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
+            VisibilityModule::set_whole(fighter.module_accessor, true);
+        }
     }
 }
 
@@ -53,6 +60,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn gamewatch_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         WorkModule::set_flag(fighter.module_accessor, false, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("flag"), false);
     }
 }
 
