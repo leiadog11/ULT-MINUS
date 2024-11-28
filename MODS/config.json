@@ -753,6 +753,26 @@
         "fighter/captain/c07": [ 
             "fighter/captain/motion/body/c07/motion_list.bin",
             "fighter/captain/motion/body/c07/d03speciallw2.nuanmb"
+        ],
+        "stage/battlefield_s/normal/model/bg_skydome_set": [
+            "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
+            "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"
+        ],
+        "stage/battlefield_s/normal/model/ring_plant_set": [ 
+           "stage/battlefield_s/normal/model/ring_plant_set/diss_00.nutexb",
+           "stage/battlefield_s/normal/model/ring_plant_set/diss_01.nutexb",
+           "stage/battlefield_s/normal/model/ring_plant_set/sign.nutexb"
+        ],
+        "stage/battlefield_s/normal/model/bg_far_skycity_set": [ 
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtaboobody01.nutexb",
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtaboocore01.nutexb",
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtaboobody02.nutexb",
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtaboobody03.nutexb",
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtabooenv.nutexb",
+            "stage/battlefield_s/normal/model/bg_far_skycity_set/enmtaboowing01.nutexb"
+        ],
+        "stage/battlefield_s/normal/model/bg_ground_set": [ 
+            "stage/battlefield_s/normal/model/bg_ground_set/rock_front_col.nutexb"
         ]
     }
 }

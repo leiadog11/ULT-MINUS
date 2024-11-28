@@ -36,12 +36,12 @@ unsafe extern "C" fn reflectionboard_shoot_main(weapon: &mut L2CWeaponCommon) ->
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let charge_mul = WorkModule::get_float(owner_boma, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
     let lr = PostureModule::lr(weapon.module_accessor);
-    let mut life = 120;
+    let mut life = 135;
 
     ReflectorModule::set_status(weapon.module_accessor, *WEAPON_PALUTENA_REFLECTIONBOARD_REFLECTOR_KIND_REFLECTOR, smash::app::ShieldStatus(*SHIELD_STATUS_NORMAL), 0);
 
     if charge_mul > 1.0 {
-        life = 120 * charge_mul as i32;
+        life = 135 * charge_mul as i32;
     }
 
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
@@ -66,7 +66,14 @@ unsafe extern "C" fn reflectionboard_shoot_main_loop(weapon: &mut L2CWeaponCommo
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    if life < 0 {
+    // REFLECTION CHECK
+    if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
+        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 1.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        return 0.into();
+    }
+
+    if life < 10 {
         weapon.change_status(WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_BREAK.into(), false.into());
         WorkModule::set_float(owner_boma, 1.0, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
         return 1.into();

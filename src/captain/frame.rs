@@ -6,6 +6,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
         let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
         let status_kind = StatusModule::status_kind(fighter.module_accessor);
+        let frame = MotionModule::frame(fighter.module_accessor);
 
         // CLEAR ZOOM IN UP TILT
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_hi3") {
@@ -35,7 +36,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
 
         // CLEAR ZOOM IN FORWARD AIR
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_f") { 
-            if MotionModule::is_end(fighter.module_accessor) || DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
+            if frame >= 40.0 || DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
                 SlowModule::clear_whole(fighter.module_accessor);
                 CameraModule::reset_all(fighter.module_accessor);
                 EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_boss_finishhit"), false, false);

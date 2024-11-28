@@ -5,23 +5,27 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let status_kind = StatusModule::status_kind(fighter.module_accessor);
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
+        let lr = PostureModule::lr(fighter.module_accessor);
+        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+        let ypos = ControlModule::get_stick_y(fighter.module_accessor);
+        let posx = PostureModule::pos_x(fighter.module_accessor);
         static mut opp_bomas: Option<Vec<*mut BattleObjectModuleAccessor>> = None;
 
+        // DOWN TILT COUNTER
         if WorkModule::get_int(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW) > 3 {
             WorkModule::set_int(fighter.module_accessor, 1, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
         }
 
-        // GET OPPONENT BOMAS ON START
-        if motion_kind == hash40("entry_r") || motion_kind == hash40("entry_l") { 
-            if MotionModule::is_end(fighter.module_accessor) {
-                OPPONENT_BOMAS = Some(get_opponent_bomas(fighter));
-                opp_bomas = OPPONENT_BOMAS.clone();
-            }
+        // GET OPPONENT BOMAS ON SHIELD
+        if status_kind == *FIGHTER_STATUS_KIND_GUARD {
+            OPPONENT_BOMAS = Some(get_opponent_bomas(fighter));
+            opp_bomas = OPPONENT_BOMAS.clone();
         }
 
         let b1x = PostureModule::pos_x(fighter.module_accessor);
         let b1y = PostureModule::pos_y(fighter.module_accessor);
 
+        // NEGATIVE ZONE
         if let Some(ref opponent_bomas) = opp_bomas {
             for (index, &boma_ptr) in opponent_bomas.iter().enumerate() {
                 let b2x = PostureModule::pos_x(boma_ptr);
@@ -44,9 +48,7 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
             }
         } 
 
-        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
-        let ypos = ControlModule::get_stick_y(fighter.module_accessor);
-        let posx = PostureModule::pos_x(fighter.module_accessor);
+        // MOVE DURING SIDE TAUNT
         if motion_kind == hash40("appeal_s_r") || motion_kind == hash40("appeal_s_l") {
             //RIGHT
             if xpos > 0.0  {
@@ -67,6 +69,7 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        // USE SIDE TAUNT IN AIR
         if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
             if ControlModule::check_button_release(fighter.module_accessor, *CONTROL_PAD_BUTTON_APPEAL_S_R) {
                 MotionModule::change_motion(fighter.module_accessor, Hash40::new("appeal_s_r"), 0.0, 1.0, false, 0.0, false, false);

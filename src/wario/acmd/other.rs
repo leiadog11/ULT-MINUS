@@ -8,6 +8,10 @@ unsafe extern "C" fn wario_appeallw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_WARIOBIKE), 0, 0, false, false);
     }
+    frame(agent.lua_state_agent, 41.0);
+    if macros::is_excute(agent) {
+        ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
+    }
 }
 
 pub fn install() {
