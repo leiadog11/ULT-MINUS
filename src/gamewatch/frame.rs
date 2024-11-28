@@ -52,6 +52,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         // INVISIBLE FIX
         if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
             VisibilityModule::set_whole(fighter.module_accessor, true);
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("flag"), false);
         }
     }
 }
