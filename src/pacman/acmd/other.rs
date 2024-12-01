@@ -47,6 +47,63 @@ unsafe extern "C" fn pacman_appeallw(agent: &mut L2CAgentBase) {
     }
 }
 
+// WIN 1 EFFECT
+unsafe extern "C" fn pacman_effect_win1(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+        macros::EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("rot"), 0, -4, 0, 0, 90, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 24.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("rot"), 0, -4, 0, 0, 90, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 40.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_change_end"), Hash40::new("rot"), -1, 0, 0, 0, 0, 0, 1.3, false);
+    }
+    frame(agent.lua_state_agent, 43.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+    }
+    frame(agent.lua_state_agent, 69.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_landing_smoke"), Hash40::new("top"), 0, 0, 0, 0, 90, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 93.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
+// WIN 2 EFFECT
+unsafe extern "C" fn pacman_effect_win2(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 80.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_change_end"), Hash40::new("rot"), -1, 0, 0, 0, 0, 0, 1.3, false);
+    }
+    frame(agent.lua_state_agent, 45.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+    }
+    frame(agent.lua_state_agent, 100.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_landing_smoke"), Hash40::new("top"), 0, 0, 3, 0, 90, 0, 0.8, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
+// WIN 3 EFFECT
+unsafe extern "C" fn pacman_effect_win3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+    }
+    frame(agent.lua_state_agent, 61.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_landing_smoke_s"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
 pub fn install() {
     Agent::new("pacman")
         .game_acmd("game_appealsr", pacman_appeal_side, Low)
@@ -54,6 +111,12 @@ pub fn install() {
 
         .game_acmd("game_appeallwr", pacman_appeallw, Low)
         .game_acmd("game_appeallwl", pacman_appeallw, Low)
+
+        .effect_acmd("effect_win1", pacman_effect_win1, Low)
+
+        .effect_acmd("effect_win2", pacman_effect_win2, Low)
+
+        .effect_acmd("effect_win3", pacman_effect_win3, Low)
         
         .install();
 }

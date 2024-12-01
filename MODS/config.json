@@ -1,7 +1,6 @@
 {
     "new-dir-files": {
         "fighter/pacman/c00": [
-            "fighter/pacman/motion/body/c00/motion_list.yaml",
             "fighter/pacman/model/body/c00/apple.nutexb",
             "fighter/pacman/model/body/c00/bell2.nutexb",
             "fighter/pacman/model/body/c00/melon.nutexb",
@@ -22,7 +21,9 @@
             "fighter/pacman/motion/body/c00/update.prc"
         ],
         "fighter/pacman/c01": [
-            "fighter/pacman/motion/body/c01/motion_list.yaml",
+            "fighter/pacman/model/body/c01/alp_ganon_002_col.nutexb",
+            "fighter/pacman/model/body/c01/alp_ganon_002_nor.nutexb",
+            "fighter/pacman/model/body/c01/alp_ganon_002_prm.nutexb",
             "fighter/pacman/model/body/c01/apple.nutexb",
             "fighter/pacman/model/body/c01/bell2.nutexb",
             "fighter/pacman/model/body/c01/melon.nutexb",
@@ -40,10 +41,10 @@
             "fighter/pacman/model/body/c01/oldgames_col.nutexb",
             "fighter/pacman/model/body/c01/oldgames2_col.nutexb",
             "fighter/pacman/model/body/c01/pacman_gost_col.nutexb",
-            "fighter/pacman/motion/body/c01/update.prc"
+            "fighter/pacman/motion/body/c01/update.prc",
+            "fighter/pacman/motion/body/c01/swing.prc"
         ],
         "fighter/pacman/c02": [
-            "fighter/pacman/motion/body/c02/motion_list.yaml",
             "fighter/pacman/model/body/c02/apple.nutexb",
             "fighter/pacman/model/body/c02/bell2.nutexb",
             "fighter/pacman/model/body/c02/melon.nutexb",
@@ -64,7 +65,6 @@
             "fighter/pacman/motion/body/c02/update.prc"
         ],
         "fighter/pacman/c03": [
-            "fighter/pacman/motion/body/c03/motion_list.yaml",
             "fighter/pacman/model/body/c03/apple.nutexb",
             "fighter/pacman/model/body/c03/bell2.nutexb",
             "fighter/pacman/model/body/c03/melon.nutexb",
@@ -85,7 +85,6 @@
             "fighter/pacman/motion/body/c03/update.prc"
         ],
         "fighter/pacman/c04": [
-            "fighter/pacman/motion/body/c04/motion_list.yaml",
             "fighter/pacman/model/body/c04/apple.nutexb",
             "fighter/pacman/model/body/c04/bell2.nutexb",
             "fighter/pacman/model/body/c04/melon.nutexb",
@@ -106,7 +105,6 @@
             "fighter/pacman/motion/body/c04/update.prc"
         ],
         "fighter/pacman/c05": [
-            "fighter/pacman/motion/body/c05/motion_list.yaml",
             "fighter/pacman/model/body/c05/apple.nutexb",
             "fighter/pacman/model/body/c05/bell2.nutexb",
             "fighter/pacman/model/body/c05/melon.nutexb",
@@ -127,7 +125,6 @@
             "fighter/pacman/motion/body/c05/update.prc"
         ],
         "fighter/pacman/c06": [
-            "fighter/pacman/motion/body/c06/motion_list.yaml",
             "fighter/pacman/model/body/c06/apple.nutexb",
             "fighter/pacman/model/body/c06/bell2.nutexb",
             "fighter/pacman/model/body/c06/melon.nutexb",
@@ -148,7 +145,6 @@
             "fighter/pacman/motion/body/c06/update.prc"
         ],
         "fighter/pacman/c07": [
-            "fighter/pacman/motion/body/c07/motion_list.yaml",
             "fighter/pacman/model/body/c07/apple.nutexb",
             "fighter/pacman/model/body/c07/bell2.nutexb",
             "fighter/pacman/model/body/c07/melon.nutexb",

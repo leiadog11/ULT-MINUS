@@ -67,6 +67,7 @@ unsafe extern "C" fn pacman_attack13(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), false);
         macros::ATTACK(agent, 0, 1, Hash40::new("pizzapacman"), 0.0, 361, 100, 12, 0, 5.0, 0.0, 3.0, 0.0, None, None, None, 0.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 4, false, false, true, true, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_NO_ITEM, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
     }
     wait(agent.lua_state_agent, 7.0);
@@ -89,6 +90,7 @@ unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
         AttackModule::clear_all(agent.module_accessor);
     }
 }
