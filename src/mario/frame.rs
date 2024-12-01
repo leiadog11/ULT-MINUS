@@ -16,6 +16,9 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         if motion_kind == hash40("attack_lw4") {
             macros::SET_SPEED_EX(fighter, 0.8, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         }
+        if DamageModule::reaction(fighter.module_accessor, 0) > 90.0 {
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
+        }
     }
 }
 

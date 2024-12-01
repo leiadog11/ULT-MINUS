@@ -14,10 +14,46 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
     }
 }
 
+//SHRINK
+unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
+    let posx = PostureModule::pos_x(agent.module_accessor);
+    let posy = PostureModule::pos_y(agent.module_accessor);
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        CameraModule::reset_all(agent.module_accessor);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        //StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_SMALL, true);
+        ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHD), 0, 0, false, false);
+    }
+    frame(agent.lua_state_agent, 11.0);
+    ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
+    for _ in 0..9 {
+        if macros::is_excute(agent) {
+            PostureModule::set_pos_2d(agent.module_accessor, &Vector2f {x: posx, y: posy});
+            wait(agent.lua_state_agent, 1.0);
+        }
+    }
+    wait(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        CameraModule::reset_all(agent.module_accessor);
+        macros::CAM_ZOOM_OUT(agent);
+    }
+}
 
 
 pub fn install() {
     Agent::new("mario")
         .game_acmd("game_stepjump", mario_stepjump, Low)
+
+        .game_acmd("game_shrink", mario_shrink, Low)
+
         .install();
 }
