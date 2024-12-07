@@ -85,7 +85,7 @@ unsafe extern "C" fn rob_effect_attackairhi(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_robot_swing_s"));
+        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, 28, -1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, true, 0.7);
     }
 }
 

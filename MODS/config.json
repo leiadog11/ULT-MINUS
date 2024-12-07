@@ -166,6 +166,9 @@
         ],
         "fighter/robot/c00": [
             "fighter/robot/motion/body/c00/motion_list.bin", 
+            "fighter/robot/model/body/c00/kart_body.nutexb",
+            "fighter/robot/model/body/c00/kart_tire.nutexb",
+            "fighter/robot/model/body/c00/kart_emblem.nutexb",
             "fighter/robot/motion/body/c00/c00attack13.nuanmb"
         ],
         "fighter/robot/c01": [
