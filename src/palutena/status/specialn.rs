@@ -39,7 +39,7 @@ unsafe extern "C" fn palutena_specialn_pre(fighter: &mut L2CFighterCommon) -> L2
 
 // INIT
 unsafe extern "C" fn palutena_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 480 {
+    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 360 {
         fighter.change_status(FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT.into(), false.into());
         return 1.into();
     }
@@ -142,13 +142,13 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
     }
 
     // HALF CHARGE EFFECT
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 240 && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) <= 241  { 
+    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 120 && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) <= 121  { 
         let dumb = Vector3f{x:0.0,y:0.0,z:0.0};
         EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 0.5, &dumb, &dumb, false, 0, 0, 0);
     }
 
     // FINISH
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 480 {
+    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE) >= 360 {
         let dumb = Vector3f{x:0.0,y:5.0,z:0.0};
         EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
         SoundModule::play_se(fighter.module_accessor, Hash40::new("se_gohoubi_icon_money"), true, false, false, false, enSEType(0));

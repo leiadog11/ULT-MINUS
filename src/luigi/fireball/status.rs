@@ -47,16 +47,24 @@ unsafe extern "C" fn luigi_fireball_start_main(weapon: &mut L2CWeaponCommon) -> 
 
 // MAIN LOOP
 unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let rot_x = PostureModule::rot(weapon.module_accessor, 0);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
     speed_x = WorkModule::get_float(weapon.module_accessor, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X);
 
-    // Declare status_frame
-    let status_frame = weapon.global_table[0xe].get_f32();
+    PostureModule::set_rot(weapon.module_accessor, &Vector3f {x:0.0, y:15.0, z:0.0}, 0);
 
-    PostureModule::set_rot(weapon.module_accessor, &Vector3f {x:60.0, y:60.0, z:0.0}, 0);
+    // REFLECTION CHECK
+    if AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR) {
+        WorkModule::set_float(weapon.module_accessor, -speed_x, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X);
+        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 0.75, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        return 0.into();
+    }
+
+    weapon.agent.clear_lua_stack();
+    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
+    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
+    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
@@ -64,12 +72,6 @@ unsafe extern "C" fn luigi_fireball_start_main_loop(weapon: &mut L2CWeaponCommon
         fireball_remove(weapon);
         return 0.into();
     }
-
-    // Set speed
-    weapon.agent.clear_lua_stack();
-    weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
-    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
-    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     return 0.into();
 }

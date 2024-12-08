@@ -58,6 +58,29 @@ unsafe extern "C" fn luigi_guardon(agent: &mut L2CAgentBase) {
     }
 }
 
+// CROUCH
+unsafe extern "C" fn luigi_squat(agent: &mut L2CAgentBase) {
+    let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let lr = PostureModule::lr(agent.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        GroundModule::set_ignore_friction(agent.module_accessor, true);
+        if lr == 1.0 {
+            macros::SET_SPEED_EX(agent, x_vel + 0.1, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        } else {
+            macros::SET_SPEED_EX(agent, -x_vel - 0.1, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        }
+    }
+    frame(agent.lua_state_agent, 7.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
+    }
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) { 
+        GroundModule::set_ignore_friction(agent.module_accessor, false);
+    }
+}
+
 pub fn install() {
     Agent::new("luigi")
         .game_acmd("game_appeallwl", luigi_appeallw, Low)
@@ -70,6 +93,8 @@ pub fn install() {
         .game_acmd("game_appealsl", luigi_appeals, Low)
 
         .game_acmd("game_guardon", luigi_guardon, Low)
+
+        .game_acmd("game_squat", luigi_squat, Low)
         
         .install();
 }

@@ -1,5 +1,7 @@
 use super::*;
 
+static mut exploded: bool = false;
+
 // OPFF
 pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
     unsafe { 
@@ -8,11 +10,13 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
         let motion_kind = MotionModule::motion_kind(weapon.module_accessor);
 
         if motion_kind == hash40("fly") { 
-            OPPONENT_BOMAS = Some(get_opponent_bomas_weapon(owner_boma));
-            opp_bomas = OPPONENT_BOMAS.clone();
+            if MotionModule::frame(weapon.module_accessor) == 1.0 {
+                exploded = false;
+                OPPONENT_BOMAS = Some(get_opponent_bomas_weapon(owner_boma));
+                opp_bomas = OPPONENT_BOMAS.clone();
+            }
         }
         
-
         let b1x = PostureModule::pos_x(weapon.module_accessor);
         let b1y = PostureModule::pos_y(weapon.module_accessor);
 
@@ -25,9 +29,9 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
                 let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
                 let d = dSquared.sqrt();
     
-                if d < 21.0 {
+                if d < 21.0 && !exploded {
+                    exploded = true;
                     MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
-                    ArticleModule::remove_exist(owner_boma, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_BOMB, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
                 }
             }
         } 

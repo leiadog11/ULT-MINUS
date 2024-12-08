@@ -37,12 +37,47 @@ unsafe extern "C" fn pacman_specialsreturn(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP B START EFFECT
+unsafe extern "C" fn pacman_effect_specialairhistart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), false);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_change_start"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
+    }
+}
+unsafe extern "C" fn pacman_effect_specialhistart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), false);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pacman_change_start"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
+// SPECIAL FALL LANDING
+unsafe extern "C" fn pacman_effect_landingfallspecial(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+    }
+}
+
+
 pub fn install() {
     Agent::new("pacman")
         .game_acmd("game_specialsdash", pacman_specialsdash, Low)
         .game_acmd("game_specialsmove", pacman_specialsmove, Low)
         .game_acmd("game_specialsreturn", pacman_specialsreturn, Low)
         .game_acmd("game_specialairsreturn", pacman_specialsreturn, Low)
+
+        .effect_acmd("effect_specialairhistart", pacman_effect_specialairhistart, Low)
+
+        .effect_acmd("effect_specialhistart", pacman_effect_specialhistart, Low)
+
+        .effect_acmd("effect_landingfallspecial", pacman_effect_landingfallspecial, Low)
         
         .install();
 }

@@ -48,11 +48,11 @@ unsafe extern "C" fn pichu_appeallw(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, -0.6);
+        macros::FT_ADD_DAMAGE(agent, -1.2);
     }
     frame(agent.lua_state_agent, 43.0);
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, -0.6);
+        macros::FT_ADD_DAMAGE(agent, -1.2);
     }
 }
 
