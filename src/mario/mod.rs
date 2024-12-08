@@ -5,6 +5,8 @@
 pub mod acmd;
 pub mod frame;
 pub mod status;
+pub mod fireball;
+
 
 use {
     smash::{
@@ -24,4 +26,5 @@ pub fn install() {
     acmd::install();
     frame::install();
     status::install();
+    fireball::install();
 }
