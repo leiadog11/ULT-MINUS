@@ -2,7 +2,7 @@ use super::*;
 
 //----------------AERIALS------------------
 
-//NAIR
+// NAIR
 unsafe extern "C" fn mario_attackairn(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.75);
     frame(agent.lua_state_agent, 3.0);
@@ -20,7 +20,7 @@ unsafe extern "C" fn mario_attackairn(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP AIR
+// UP AIR
 unsafe extern "C" fn mario_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 0.75);
@@ -53,7 +53,7 @@ unsafe extern "C" fn mario_attackairhi(agent: &mut L2CAgentBase) {
     }
 }
 
-//BACK AIR
+// BACK AIR
 unsafe extern "C" fn mario_attackairb(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
@@ -77,7 +77,7 @@ unsafe extern "C" fn mario_attackairb(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN AIR
+// DOWN AIR
 unsafe extern "C" fn mario_attackairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -109,6 +109,27 @@ unsafe extern "C" fn mario_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
+// DOWN AIR EFFECT
+unsafe extern "C" fn mario_effect_attackairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 7, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+    }
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 7, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+    }
+}
+
+// DOWN AIR SOUND
+unsafe extern "C" fn mario_sound_attackairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("vc_mario_attack08"));
+        macros::PLAY_SE(agent, Hash40::new("se_mario_attackair_l03"));
+    }
+}
+
 
 pub fn install() {
     Agent::new("mario")
@@ -119,6 +140,8 @@ pub fn install() {
         .game_acmd("game_attackairb", mario_attackairb, Low)
 
         .game_acmd("game_attackairlw", mario_attackairlw, Low)
+        .effect_acmd("effect_attackairlw", mario_effect_attackairlw, Low)
+        .sound_acmd("sound_attackairlw", mario_sound_attackairlw, Low)
 
         .install();
 }

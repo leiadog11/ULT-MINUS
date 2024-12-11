@@ -90,7 +90,6 @@ unsafe extern "C" fn get_opponent_bomas_agent(agent: &mut L2CAgentBase) -> Vec<*
 
     return opponent_bomas;
 }
-
 unsafe extern "C" fn get_opponent_bomas_weapon(owner_boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
     let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
     let entry_count_usize = entry_count as usize;
