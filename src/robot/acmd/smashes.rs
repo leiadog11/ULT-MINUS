@@ -43,27 +43,13 @@ unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("robot_armspin"), Hash40::new("body"), 1, 0, 0, 0, 60, 90, 1, true);
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 0 {
-        if WorkModule::is_flag(agent.module_accessor, *FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_REGION_JP) {
-            if macros::is_excute(agent) {
-                macros::LAST_EFFECT_SET_COLOR(agent, 0.1, 0.01, 0);
-            }
-            else {
-                if macros::is_excute(agent) {
-                    macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
-                }
-            }
+        if macros::is_excute(agent) {
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
         }
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 1 {
-        if WorkModule::is_flag(agent.module_accessor, *FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_REGION_JP) {
-            if macros::is_excute(agent) {
-                macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
-            }
-            else {
-                if macros::is_excute(agent) {
-                    macros::LAST_EFFECT_SET_COLOR(agent, 0.22, 0.059, 0.039);
-                }
-            }
+        if macros::is_excute(agent) {
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.22, 0.059, 0.039);
         }
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 2 {

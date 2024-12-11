@@ -1,6 +1,6 @@
 use super::*;
 
-//BACK THROW
+// BACK THROW
 unsafe extern "C" fn mario_throwb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 11.0, 45, 75, 0, 85, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -30,7 +30,32 @@ unsafe extern "C" fn mario_throwb(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD THROW
+// BACK THROW SOUND
+unsafe extern "C" fn mario_sound_throwb(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_common_throw_01"));
+        macros::PLAY_SE(agent, Hash40::new("vc_mario_throw01"));
+    }
+    wait(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_DOWN_SE(agent, Hash40::new("se_common_down_m_01"));
+    }
+    wait(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_mario_throw_b01"));
+    }
+    wait(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_mario_throw_b01"));
+    }
+    wait(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_common_throw_02"));
+    }
+}
+
+// FORWARD THROW
 unsafe extern "C" fn mario_throwf(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 8.0, 15, 45, 0, 50, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -51,7 +76,7 @@ unsafe extern "C" fn mario_throwf(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN THROW
+// DOWN THROW
 unsafe extern "C" fn mario_throwlw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 68, 50, 0, 50, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -73,7 +98,7 @@ unsafe extern "C" fn mario_throwlw(agent: &mut L2CAgentBase) {
 
 }
 
-//UP THROW
+// UP THROW
 unsafe extern "C" fn mario_throwhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 7.0, 90, 60, 0, 45, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -98,7 +123,7 @@ unsafe extern "C" fn mario_throwhi(agent: &mut L2CAgentBase) {
     }
 }
 
-//PUMMEL
+// PUMMEL
 unsafe extern "C" fn mario_catchattack(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -114,6 +139,7 @@ unsafe extern "C" fn mario_catchattack(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("mario")
         .game_acmd("game_throwb", mario_throwb, Low)
+        .sound_acmd("sound_throwb", mario_sound_throwb, Low)
 
         .game_acmd("game_throwf", mario_throwf, Low)
 
