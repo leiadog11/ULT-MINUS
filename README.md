@@ -5,13 +5,17 @@ The smash overhaul mod where every character is only buffed to be more broken th
 
 This is a full modpack with changes to the SSS, game music, and characters. There are future skins, stage changes, UI changes, and much more planned.
 
-Current Version: Alpha 0.2.0
+Current Version: Alpha 0.2.1
 
-Compatability With Other Mods: Skin Mods\
-Do not use UI mods, music mods, or any other mod that changes the moves of a character.
+## Skins
+- Super Pac-Man (Pac-Man c01)
+- ROBLGS (R.O.B. c01)
+
+## Stages
+- MINUS ZONE (SBF)
 
 ## Character Change Log
-Current Character Amount: 11
+Current Character Amount: 13
 
 Change Log Linked [Here](https://docs.google.com/document/d/1ljZ57RQu8Xp7I35-QuW9bDr22O7RT_vPG4ErxPwNd8Y/edit?usp=sharing)
 
@@ -20,6 +24,7 @@ JC Ho (leiadog) - Creator, Dev Lead\
 Jackson Mueth (Jmuze) - Dev\
 Daniel Palomarez (OpZ) - Dev
 
+Isaac Martinez (Pow) - Production\
 Jack Yarnell (PladMan) - Character UI Artist\
 Gabe Crandall (Architect) - Menu UI Artist
 
