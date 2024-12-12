@@ -168,6 +168,7 @@ unsafe extern "C" fn gamewatch_expression_attackairlw(agent: &mut L2CAgentBase) 
 unsafe extern "C" fn gamewatch_attackairb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, false, -1);
+        ArticleModule::change_motion(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, Hash40::new("attack_air_b"), false, -1.0);
     }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
@@ -258,6 +259,7 @@ unsafe extern "C" fn gamewatch_attackairf(agent: &mut L2CAgentBase) {
 
 // FORWARD AIR 2
 unsafe extern "C" fn gamewatch_attackairf2(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
@@ -288,6 +290,7 @@ unsafe extern "C" fn gamewatch_sound_attackairf2(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn gamewatch_expression_attackairf2(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         VisibilityModule::set_int64(agent.module_accessor, hash40("lhand") as i64, hash40("lhand_block") as i64);
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("block"), true);
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
     }
     frame(agent.lua_state_agent, 9.0);
@@ -296,11 +299,15 @@ unsafe extern "C" fn gamewatch_expression_attackairf2(agent: &mut L2CAgentBase) 
     }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 7);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 1);
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackss"), 7);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackss"), 1);
+    }
+    frame(agent.lua_state_agent, 32.0);
+    if macros::is_excute(agent) { 
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("block"), false);
     }
 }
 

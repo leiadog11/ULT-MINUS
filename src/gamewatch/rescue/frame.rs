@@ -10,12 +10,13 @@ pub unsafe extern "C" fn rescue_frame(weapon: &mut L2CWeaponCommon) {
         let lr = PostureModule::lr(owner_boma);
         let motion_kind = MotionModule::motion_kind(weapon.module_accessor);
         let frame = MotionModule::frame(weapon.module_accessor);
-        
+
         println!("rescue frame");
 
         if motion_kind == hash40("attack_air_b") {
             println!("rescue back air");
             if frame >= 1.0 && frame <= 13.0 {
+                println!("phase 1");
                 PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 35.0, y: 0.0, z: 0.0}, 0);
                 if lr == 1.0 {
                     PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx, y: owner_posy, z: owner_posz});
@@ -25,6 +26,7 @@ pub unsafe extern "C" fn rescue_frame(weapon: &mut L2CWeaponCommon) {
                 }
             }
             if frame >= 14.0 && frame <= 27.0 {
+                println!("phase 2");
                 PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 35.0, y: 0.0, z: 0.0}, 0);
                 if lr == 1.0 {
                     PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx, y: owner_posy, z: owner_posz});
@@ -34,6 +36,7 @@ pub unsafe extern "C" fn rescue_frame(weapon: &mut L2CWeaponCommon) {
                 }
             }
             if frame >= 28.0 && frame <= 42.0 {
+                println!("phase 3");
                 PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 35.0, y: 0.0, z: 0.0}, 0);
                 if lr == 1.0 {
                     PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx, y: owner_posy, z: owner_posz});

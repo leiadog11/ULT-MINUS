@@ -116,17 +116,17 @@ unsafe extern "C" fn gamewatch_expression_attackhi3(agent: &mut L2CAgentBase) {
         notify_event_msc_cmd!(agent, Hash40::new_raw(0x28f4e20a43), true);
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_TOP);
     }
-    frame(agent.lua_state_agent, 8.0);
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 8, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 0);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 1);
     }
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 1);
     }
     frame(agent.lua_state_agent, 34.0);
     if macros::is_excute(agent) {
