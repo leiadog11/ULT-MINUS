@@ -41,6 +41,7 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
         }
         
         if StatusModule::situation_kind(agent.module_accessor) == *SITUATION_KIND_AIR { 
+            macros::FT_MOTION_RATE(agent, 0.9);
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 270, 50, 0, 100, 7.2, 4.2, 3.0, -1.0, None, None, None, 1.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         }  
     }

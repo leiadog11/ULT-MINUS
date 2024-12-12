@@ -86,7 +86,6 @@ unsafe extern "C" fn gamewatch_attackhi3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_NORMAL);
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        AttackModule::clear_all(agent.module_accessor);
     }
 }
 

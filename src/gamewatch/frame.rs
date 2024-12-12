@@ -52,6 +52,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         // INVISIBLE FIX
         if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
             VisibilityModule::set_whole(fighter.module_accessor, true);
+            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
     }
 }
@@ -60,6 +61,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn gamewatch_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         WorkModule::set_flag(fighter.module_accessor, false, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
+        WorkModule::set_flag(fighter.module_accessor, false, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
     }
 }
 

@@ -82,24 +82,13 @@ unsafe extern "C" fn mario_attackairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        macros::SET_SPEED_EX(agent, -0.3, 2.8, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        let lr = PostureModule::lr(agent.module_accessor);
+        if lr == 1.0 {macros::SET_SPEED_EX(agent, x_vel, 1.6, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);} else {macros::SET_SPEED_EX(agent, -x_vel, 1.6, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);}
+        macros::ATTACK(agent, 0, 0, Hash40::new("handl"), 9.5, 45, 120, 0, 60, 8.0, 0.0, 0.8, 0.0, None, None, None, 1.0, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("handr"), 9.5, 45, 120, 0, 60, 8.0, 0.0, 0.8, 0.0, None, None, None, 1.0, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_PUNCH);
     }
-    for _ in 0..5 {
-        if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.4, 94, 15, 0, 50, 4.0, 0.0, -0.5, 0.0, None, None, None, 1.0, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 1.4, 94, 15, 0, 25, 7.0, 0.0, 6.0, 0.0, None, None, None, 1.0, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
-        }
-        wait(agent.lua_state_agent, 1.0);
-        if macros::is_excute(agent) {
-            AttackModule::clear_all(agent.module_accessor);
-        }
-        wait(agent.lua_state_agent, 1.0);
-    }
-    frame(agent.lua_state_agent, 23.0);
-    if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.5, 30, 100, 0, 80, 11.0, 0.0, 6.8, 0.0, None, None, None, 1.0, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
-    }
-    wait(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 24.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
@@ -114,10 +103,18 @@ unsafe extern "C" fn mario_effect_attackairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 7, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_attack_arc_d"), Hash40::new("sys_attack_arc_d"), Hash40::new("top"), 0, 6, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+        macros::LAST_EFFECT_SET_COLOR(agent, 0.066, 0.135, 0.245);
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_attack_arc_d"), Hash40::new("sys_attack_arc_d"), Hash40::new("top"), 0, 6, 0, 180, 0, 180, 0.95, true, *EF_FLIP_XY);
+        macros::LAST_EFFECT_SET_COLOR(agent, 0.066, 0.135, 0.245);
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_spin_wind"), Hash40::new("sys_spin_wind"), Hash40::new("top"), 0, 7, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_attack_arc_d"), Hash40::new("sys_attack_arc_d"), Hash40::new("top"), 0, 6, 0, 0, 0, 0, 0.95, true, *EF_FLIP_YZ);
+        macros::LAST_EFFECT_SET_COLOR(agent, 0.066, 0.135, 0.245);
+        macros::EFFECT_FOLLOW_FLIP(agent, Hash40::new("sys_attack_arc_d"), Hash40::new("sys_attack_arc_d"), Hash40::new("top"), 0, 6, 0, 180, 0, 180, 0.95, true, *EF_FLIP_XY);
+        macros::LAST_EFFECT_SET_COLOR(agent, 0.066, 0.135, 0.245);
     }
 }
 

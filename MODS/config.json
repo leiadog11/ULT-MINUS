@@ -550,6 +550,38 @@
         "fighter/captain/c07": [ 
             "fighter/captain/motion/body/c07/d03speciallw2.nuanmb"
         ],
+        "fighter/gamewatch/c00": [
+            "fighter/gamewatch/motion/body/c00/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c00/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c01": [
+            "fighter/gamewatch/motion/body/c01/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c01/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c02": [
+            "fighter/gamewatch/motion/body/c02/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c02/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c03": [
+            "fighter/gamewatch/motion/body/c03/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c03/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c04": [
+            "fighter/gamewatch/motion/body/c04/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c04/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c05": [
+            "fighter/gamewatch/motion/body/c05/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c05/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c06": [
+            "fighter/gamewatch/motion/body/c06/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c06/d02specialhistart.nuanmb"
+        ],
+        "fighter/gamewatch/c07": [
+            "fighter/gamewatch/motion/body/c07/c05attackairf2.nuanmb",
+            "fighter/gamewatch/motion/body/c07/d02specialhistart.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"

@@ -42,11 +42,13 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                         SlowModule::set_whole(boma_ptr, 2, 1);
                     }
                 }
-                else {
-                    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_timer"), false, true);
-                }
             }
         } 
+
+        // REMOVE NEGATIVE ZONE EFFECT
+        if status_kind == *FIGHTER_STATUS_KIND_GUARD || status_kind == *FIGHTER_STATUS_KIND_GUARD_ON || status_kind == *FIGHTER_STATUS_KIND_GUARD_DAMAGE { 
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_timer"), false, true);
+        }
 
         // MOVE DURING SIDE TAUNT
         if motion_kind == hash40("appeal_s_r") || motion_kind == hash40("appeal_s_l") {
