@@ -53,7 +53,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
             VisibilityModule::set_whole(fighter.module_accessor, true);
             ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("block"), false);
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("blockm"), false);
         }
     }
 }

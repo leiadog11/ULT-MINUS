@@ -1,9 +1,9 @@
 use super::*;
 
 mod acmd;
-mod frame;
+mod attackairb;
 
 pub fn install() {
     acmd::install();
-    frame::install();
+    attackairb::install();
 }
