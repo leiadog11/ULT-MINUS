@@ -4,6 +4,7 @@ use super::*;
 pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
+        let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
         let frame = MotionModule::frame(fighter.module_accessor);
         let lr = PostureModule::lr(fighter.module_accessor);
         let xpos = ControlModule::get_stick_x(fighter.module_accessor);
@@ -28,24 +29,10 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        // MOVE ON DOWN B
+        // MOVE ON DOWN B IN THE AIR
         if motion_kind == smash::hash40("special_lw") {
-            if frame == 6.0 {
-                if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
-                    MotionModule::set_rate(fighter.module_accessor, 0.0);
-                }
-                else {
-                    MotionModule::set_rate(fighter.module_accessor, 1.0);
-                }
-            }
-            //RIGHT
-            if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.6, y: PostureModule::pos_y(fighter.module_accessor)});
-            }
-
-            //LEFT
-            if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.6, y: PostureModule::pos_y(fighter.module_accessor)});
+            if situation_kind == *SITUATION_KIND_AIR {
+                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(fighter.module_accessor)});
             }
         }
 

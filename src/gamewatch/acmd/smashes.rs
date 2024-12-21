@@ -17,6 +17,7 @@ unsafe extern "C" fn gamewatch_attacks4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, false, -1);
+        ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -79,6 +80,22 @@ unsafe extern "C" fn gamewatch_attackhi4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
     }
+    frame(agent.lua_state_agent, 17.0);
+    if macros::is_excute(agent) { 
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GEKKOUGA_GENERATE_ARTICLE_SHURIKEN, false, -1);
+    }
+    frame(agent.lua_state_agent, 18.0);
+    if macros::is_excute(agent) { 
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GEKKOUGA_GENERATE_ARTICLE_SHURIKEN, false, -1);
+    }
+    frame(agent.lua_state_agent, 19.0);
+    if macros::is_excute(agent) { 
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GEKKOUGA_GENERATE_ARTICLE_SHURIKEN, false, -1);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) { 
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GEKKOUGA_GENERATE_ARTICLE_SHURIKEN, false, -1);
+    }
     frame(agent.lua_state_agent, 21.0);
     if macros::is_excute(agent) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_INVINCIBLE);
@@ -104,6 +121,7 @@ pub fn install() {
         .expression_acmd("expression_attacklw4", gamewatch_expression_attacklw4, Low)
 
         .game_acmd("game_attackhi4", gamewatch_attackhi4, Low)
+        .game_acmd("game_attackhi4r", gamewatch_attackhi4, Low)
 
         .install();
 }
