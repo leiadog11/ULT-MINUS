@@ -582,6 +582,102 @@
             "fighter/gamewatch/motion/body/c07/c05attackairf2.nuanmb",
             "fighter/gamewatch/motion/body/c07/d02specialhistart.nuanmb"
         ],
+        "fighter/link/c00": [
+            "fighter/link/motion/body/c00/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c00/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c00/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c00/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c00/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c00/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c00/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c00/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c00/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c01": [
+            "fighter/link/motion/body/c01/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c01/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c01/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c01/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c01/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c01/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c01/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c01/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c01/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c02": [
+            "fighter/link/motion/body/c02/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c02/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c02/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c02/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c02/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c02/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c02/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c02/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c02/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c03": [
+            "fighter/link/motion/body/c03/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c03/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c03/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c03/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c03/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c03/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c03/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c03/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c03/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c04": [
+            "fighter/link/motion/body/c04/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c04/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c04/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c04/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c04/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c04/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c04/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c04/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c04/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c05": [
+            "fighter/link/motion/body/c05/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c05/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c05/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c05/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c05/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c05/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c05/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c05/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c05/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c06": [
+            "fighter/link/motion/body/c06/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c06/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c06/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c06/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c06/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c06/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c06/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c06/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c06/d02specialairhiunequip.nuanmb"
+        ],
+        "fighter/link/c07": [
+            "fighter/link/motion/body/c07/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/body/c07/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/body/c07/d02specialairhilanding.nuanmb",
+            "fighter/link/motion/body/c07/d02specialairhistart.nuanmb",
+            "fighter/link/motion/body/c07/d02specialairhiunequip.nuanmb",
+
+            "fighter/link/motion/parasail/c07/d02specialairhiequip.nuanmb",
+            "fighter/link/motion/parasail/c07/d02specialairhiglide.nuanmb",
+            "fighter/link/motion/parasail/c07/d02specialairhistart.nuanmb",
+            "fighter/link/motion/parasail/c07/d02specialairhiunequip.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"
