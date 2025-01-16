@@ -17,6 +17,7 @@ smash_script = { git = "https://github.com/blu-dev/smash-script.git", branch = "
 smashline = { git = "https://github.com/hdr-development/smashline.git" }
 smash_singletons = { git = "https://github.com/WuBoytH/smash_singletons.git" }
 smash2 = { package = "smash", git = "https://github.com/blu-dev/smash-rs" }
+param_config = { git = "https://github.com/csharpm7/lib_paramconfig.git"}
 
 [profile.dev]
 panic = "abort"
