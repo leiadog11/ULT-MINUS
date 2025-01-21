@@ -130,4 +130,6 @@ pub fn main() {
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
+    smashline::update_weapon_count(*WEAPON_KIND_LINK_SWORD_BEAM, 3);
+    smashline::update_weapon_count(*WEAPON_KIND_GAMEWATCH_FOOD, 15);
 }

@@ -4,7 +4,7 @@ use super::*;
 
 // NAIR
 unsafe extern "C" fn mario_attackairn(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.75);
+    macros::FT_MOTION_RATE(agent, 0.55);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("legr"), 5.0, 361, 90, 0, 13, 2.8, 0.8, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -126,8 +126,8 @@ unsafe extern "C" fn mario_effect_attackairlw(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn mario_sound_attackairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("vc_mario_attack08"));
-        macros::PLAY_SE(agent, Hash40::new("se_mario_attackair_l03"));
+        macros::PLAY_SE(agent, Hash40::new("vc_mario_attack_08"));
+        macros::PLAY_SE(agent, Hash40::new("se_mario_attackairl03"));
     }
 }
 

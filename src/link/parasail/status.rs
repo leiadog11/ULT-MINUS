@@ -22,20 +22,12 @@ unsafe extern "C" fn parasail_specialairhistart_pre(weapon: &mut L2CWeaponCommon
 // MAIN
 unsafe extern "C" fn parasail_specialairhistart_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("special_air_hi_start"), 0.0, 1.0, false, 0.0, false, false);
-    println!("I EXIST!");
 
     weapon.fastshift(L2CValue::Ptr(parasail_specialairhistart_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn parasail_specialairhistart_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    
-    if MotionModule::is_end(weapon.module_accessor) {
-        println!("CHANGE TO GLIDE!");
-        weapon.change_status(WEAPON_LINK_PARASAIL_STATUS_KIND_SPECIAL_AIR_HI_GLIDE.into(), false.into());
-        return 1.into();
-    }
-
     return 0.into();
 }
 
@@ -66,23 +58,12 @@ unsafe extern "C" fn parasail_specialairhiglide_pre(weapon: &mut L2CWeaponCommon
 // MAIN
 unsafe extern "C" fn parasail_specialairhiglide_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("special_air_hi_glide"), 0.0, 1.0, false, 0.0, false, false);
-    println!("NOW I WILL GLIDE?");
 
     weapon.fastshift(L2CValue::Ptr(parasail_specialairhiglide_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn parasail_specialairhiglide_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    
-    // UNEQUIP GLIDER WITH A, B, JUMP OR SHIELD/DODGE
-    if ControlModule::check_button_trigger(weapon.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) ||
-    ControlModule::check_button_trigger(weapon.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
-    ControlModule::check_button_trigger(weapon.module_accessor, *CONTROL_PAD_BUTTON_JUMP) ||
-    ControlModule::check_button_trigger(weapon.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
-        weapon.change_status(WEAPON_LINK_PARASAIL_STATUS_KIND_SPECIAL_AIR_HI_EQUIP.into(), false.into());
-        return 1.into();
-    }
-
     return 0.into();
 }
 

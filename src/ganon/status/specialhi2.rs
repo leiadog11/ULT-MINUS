@@ -114,6 +114,8 @@ unsafe extern "C" fn ganon_specialhi2_main_loop(fighter: &mut L2CFighterCommon) 
 	let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
     let mut stick_choice = 0;
 
+    fighter.sub_transition_group_check_air_cliff();
+
     //right
     if stick_x > 0.5 && stick_y == 0.0 {
         stick_choice = 1;

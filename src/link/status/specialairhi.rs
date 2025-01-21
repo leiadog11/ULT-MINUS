@@ -16,6 +16,22 @@ unsafe extern "C" fn link_specialairhistart_pre(fighter: &mut L2CFighterCommon) 
         0, 
         0
     );
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (
+            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+        ) as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
     return 0.into();
 }
 
@@ -28,6 +44,8 @@ unsafe extern "C" fn link_specialairhistart_init(fighter: &mut L2CFighterCommon)
 unsafe extern "C" fn link_specialairhistart_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_hi_start"), 0.0, 1.0, false, 0.0, false, false);
     HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_XLU), 0);
+    WorkModule::on_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_EQUIPPED);
+    WorkModule::on_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_USED);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(link_specialairhistart_main_loop as *const () as _))
 }
@@ -36,9 +54,12 @@ unsafe extern "C" fn link_specialairhistart_main(fighter: &mut L2CFighterCommon)
 unsafe extern "C" fn link_specialairhistart_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let lr = PostureModule::lr(fighter.module_accessor);
+
+    fighter.sub_transition_group_check_air_cliff();
 
     // RISE WITH WIND
-    macros::SET_SPEED_EX(fighter, x_vel, y_vel + 0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel, y_vel + 0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel, y_vel + 0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
 
     if MotionModule::frame(fighter.module_accessor) == 12.0 {
         HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_NORMAL), 0);
@@ -74,6 +95,22 @@ unsafe extern "C" fn link_specialairhiglide_pre(fighter: &mut L2CFighterCommon) 
         0, 
         0
     );
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (
+            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+        ) as u64,
+        0,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
     return 0.into();
 }
 
@@ -95,8 +132,10 @@ unsafe extern "C" fn link_specialairhiglide_main_loop(fighter: &mut L2CFighterCo
     let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(fighter.module_accessor);
 
+    fighter.sub_transition_group_check_air_cliff();
+
     // GLIDE
-    if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel + 0.05, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel + 0.05, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+    if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel + 0.02, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel + 0.02, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
 
     // UNEQUIP GLIDER WITH A, B, JUMP, OR SHIELD/DODGE
     if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) ||
@@ -137,6 +176,22 @@ unsafe extern "C" fn link_specialairhiequip_pre(fighter: &mut L2CFighterCommon) 
         0, 
         0
     );
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (
+            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+        ) as u64,
+        0,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
     return 0.into();
 }
 
@@ -159,6 +214,13 @@ unsafe extern "C" fn link_specialairhiequip_main(fighter: &mut L2CFighterCommon)
 
 // MAIN LOOP
 unsafe extern "C" fn link_specialairhiequip_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let lr = PostureModule::lr(fighter.module_accessor);
+
+    if !WorkModule::is_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_EQUIPPED) { 
+        if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel, -0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel, -0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+    }
 
     if WorkModule::is_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_EQUIPPED) { 
         // CHANGE TO FALL WHEN ANIM IS OVER - UNEQUIP
@@ -201,6 +263,22 @@ unsafe extern "C" fn link_specialairhilanding_pre(fighter: &mut L2CFighterCommon
         0, 
         0
     );
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (
+            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
+            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
+        ) as u64,
+        0,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
     return 0.into();
 }
 
@@ -220,6 +298,22 @@ unsafe extern "C" fn link_specialairhilanding_main(fighter: &mut L2CFighterCommo
 
 // MAIN LOOP
 unsafe extern "C" fn link_specialairhilanding_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let stick_x = ControlModule::get_stick_x(fighter.module_accessor);
+
+    if MotionModule::frame(fighter.module_accessor) == 29.0 { 
+        macros::SET_SPEED_EX(fighter, 0, 0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    }
+
+    if MotionModule::frame(fighter.module_accessor) >= 30.0 {
+        if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) ||
+        ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) ||
+        ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
+        ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) || 
+        stick_x >= 0.3 || stick_x <= 0.3 { 
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+            return 1.into();
+        }
+    }
 
     // CHANGE TO WAIT WHEN ANIM IS OVER
     if MotionModule::is_end(fighter.module_accessor) {
