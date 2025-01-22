@@ -2,7 +2,7 @@ use super::*;
 
 //-----------------SMASH ATTACKS------------------
 
-//FORWARD SMASH
+// FORWARD SMASH
 unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
@@ -33,7 +33,7 @@ unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD SMASH EFFECT
+// FORWARD SMASH EFFECT
 unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), -3, 0, 0, 0, 0, 0, 1.25, 0, 0, 0, 0, 0, 0, false);
@@ -84,7 +84,7 @@ unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD SMASH SOUND
+// FORWARD SMASH SOUND
 unsafe extern "C" fn rob_sound_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -105,7 +105,7 @@ unsafe extern "C" fn rob_sound_attacks4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 5.0);
 }
 
-//FORWARD SMASH EXPRESSION
+// FORWARD SMASH EXPRESSION
 unsafe extern "C" fn rob_expression_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
@@ -192,7 +192,7 @@ unsafe extern "C" fn rob_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH EFFECT
+// DOWN SMASH EFFECT
 unsafe extern "C" fn rob_effect_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -216,7 +216,7 @@ unsafe extern "C" fn rob_effect_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH SOUND
+// DOWN SMASH SOUND
 unsafe extern "C" fn rob_sound_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -249,7 +249,7 @@ unsafe extern "C" fn rob_sound_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH EXPRESSION
+// DOWN SMASH EXPRESSION
 unsafe extern "C" fn rob_expression_attacklw4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_TOP, 3);

@@ -77,6 +77,7 @@ unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon)
                 return 1.into();
             }
         }
+        fighter.sub_transition_group_check_air_cliff();
         return 0.into();
     }
     return 0.into();

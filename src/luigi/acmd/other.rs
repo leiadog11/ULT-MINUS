@@ -41,6 +41,7 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
         }
         
         if StatusModule::situation_kind(agent.module_accessor) == *SITUATION_KIND_AIR { 
+            macros::FT_MOTION_RATE(agent, 0.9);
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 270, 50, 0, 100, 7.2, 4.2, 3.0, -1.0, None, None, None, 1.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         }  
     }
@@ -48,13 +49,35 @@ unsafe extern "C" fn luigi_appeals(agent: &mut L2CAgentBase) {
 
 //------------------SHIELD------------------
 
-// GUARD ON
-unsafe extern "C" fn luigi_guardon(agent: &mut L2CAgentBase) {
+// GUARD ON EFFECT
+unsafe extern "C" fn luigi_effect_guardon(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-        let dumb = Vector3f{x:0.0,y:0.0,z:0.0};
-        let eff = EffectModule::req_on_joint(agent.module_accessor, Hash40::new("sys_timer"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
-        EffectModule::set_rgb(agent.module_accessor, eff.try_into().unwrap(), 0.0, 1.0, 0.5);
+        
+    }
+}
+
+// GUARD ON SOUND
+unsafe extern "C" fn luigi_sound_guardon(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_luigi_negative_zone"));
+    }
+}
+
+// GUARD OFF EFFECT
+unsafe extern "C" fn luigi_effect_guardoff(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("luigi_negative_zone"), false, false);
+    }
+}
+
+// GUARD OFF SOUND
+unsafe extern "C" fn luigi_sound_guardoff(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::STOP_SE(agent, Hash40::new("se_luigi_negative_zone"));
     }
 }
 
@@ -62,18 +85,11 @@ unsafe extern "C" fn luigi_guardon(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn luigi_squat(agent: &mut L2CAgentBase) {
     let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(agent.module_accessor);
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) { 
-        GroundModule::set_ignore_friction(agent.module_accessor, true);
-        if lr == 1.0 {
-            macros::SET_SPEED_EX(agent, x_vel + 0.1, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        } else {
-            macros::SET_SPEED_EX(agent, -x_vel - 0.1, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        }
-    }
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
+        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
+        GroundModule::set_ignore_friction(agent.module_accessor, true);
+        if lr == 1.0 {macros::SET_SPEED_EX(agent, x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);} else {macros::SET_SPEED_EX(agent, -x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);}
     }
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) { 
@@ -92,7 +108,11 @@ pub fn install() {
         .game_acmd("game_appealsr", luigi_appeals, Low)
         .game_acmd("game_appealsl", luigi_appeals, Low)
 
-        .game_acmd("game_guardon", luigi_guardon, Low)
+        .effect_acmd("effect_guardon", luigi_effect_guardon, Low)
+        .sound_acmd("sound_guardon", luigi_sound_guardon, Low)
+
+        .effect_acmd("effect_guardoff", luigi_effect_guardoff, Low)
+        .sound_acmd("sound_guardoff", luigi_sound_guardoff, Low)
 
         .game_acmd("game_squat", luigi_squat, Low)
         
