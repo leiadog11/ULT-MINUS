@@ -35,32 +35,32 @@ unsafe extern "C" fn gamewatch_rescue_attackairb_main_loop(weapon: &mut L2CWeapo
     let lr = PostureModule::lr(owner_boma);
     let frame = MotionModule::frame(owner_boma);
     if frame >= 1.0 && frame <= 13.0 {
-        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
+        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: - 18.0, y: 2.0, z: 0.0}, 0);
         if lr == 1.0 {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 4.0, y: owner_posy + 2.0, z: owner_posz});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 3.5, y: owner_posy + 3.5, z: owner_posz - 2.0});
         }
         else {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 4.0, y: owner_posy + 2.0, z: owner_posz - 2.0});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 3.5, y: owner_posy + 3.5, z: owner_posz - 2.0});
         }
         return 0.into();
     }
     if frame >= 14.0 && frame <= 27.0 {
-        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
+        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: - 12.0, y: 2.0, z: 0.0}, 0);
         if lr == 1.0 {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 4.0, y: owner_posy + 3.0, z: owner_posz});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 3.5, y: owner_posy + 4.5, z: owner_posz - 2.0});
         }
         else {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 4.0, y: owner_posy + 3.0, z: owner_posz - 2.0});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 3.5, y: owner_posy + 4.5, z: owner_posz - 2.0});
         }
         return 0.into();
     }
     if frame >= 28.0 && frame <= 42.0 {
-        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
+        PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: - 6.0, y: 2.0, z: 0.0}, 0);
         if lr == 1.0 {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 4.0, y: owner_posy + 4.0, z: owner_posz});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 2.5, y: owner_posy + 5.5, z: owner_posz - 2.0});
         }
         else {
-            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx - 4.0, y: owner_posy + 4.0, z: owner_posz - 2.0});
+            PostureModule::set_pos(weapon.module_accessor, &Vector3f{x: owner_posx + 2.5, y: owner_posy + 5.5, z: owner_posz - 2.0});
         }
         return 0.into();
     }
