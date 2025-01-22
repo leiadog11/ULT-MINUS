@@ -77,18 +77,15 @@ unsafe extern "C" fn gamewatch_attackhi3(agent: &mut L2CAgentBase) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, false, -1);
         ArticleModule::change_motion(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, Hash40::new("attack_hi3"), false, -1.0);
         macros::HIT_NODE(agent, Hash40::new("arml"), *HIT_STATUS_XLU);
-        macros::ATTACK(agent, 0, 0, Hash40::new("havel"), 3.0, 80, 40, 0, 20, 4.0, 0.0, 15.0, 0.0, Some(0.0), Some(15.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
     }
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
         macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_XLU);
-        macros::ATTACK(agent, 1, 0, Hash40::new("havel"), 7.0, 90, 60, 0, 40, 4.0, 0.0, 20.0, 0.0, Some(0.0), Some(20.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
     }
     frame(agent.lua_state_agent, 34.0);
     if macros::is_excute(agent) {
         macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_NORMAL);
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        AttackModule::clear_all(agent.module_accessor);
     }
 }
 
@@ -119,17 +116,17 @@ unsafe extern "C" fn gamewatch_expression_attackhi3(agent: &mut L2CAgentBase) {
         notify_event_msc_cmd!(agent, Hash40::new_raw(0x28f4e20a43), true);
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_TOP);
     }
-    frame(agent.lua_state_agent, 8.0);
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 8, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 0);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 1);
     }
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 1);
     }
     frame(agent.lua_state_agent, 34.0);
     if macros::is_excute(agent) {

@@ -1,6 +1,6 @@
 use super::*;
 
-//FOOTSTOOL
+// FOOTSTOOL
 unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -14,7 +14,7 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
     }
 }
 
-//SHRINK
+// SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     let posx = PostureModule::pos_x(agent.module_accessor);
     let posy = PostureModule::pos_y(agent.module_accessor);
@@ -48,12 +48,25 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     }
 }
 
+// CROUCH
+unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
+    let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let lr = PostureModule::lr(agent.module_accessor);
+    frame(agent.lua_state_agent, 7.0);
+    if macros::is_excute(agent) {
+        AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+        if lr == 1.0 {macros::SET_SPEED_EX(agent, x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);} else {macros::SET_SPEED_EX(agent, -x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);}
+        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
+    }
+}
 
 pub fn install() {
     Agent::new("mario")
         .game_acmd("game_stepjump", mario_stepjump, Low)
 
         .game_acmd("game_shrink", mario_shrink, Low)
+
+        .game_acmd("game_squat", mario_squat, Low)
 
         .install();
 }

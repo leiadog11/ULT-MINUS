@@ -47,6 +47,7 @@ mod captain;
 mod ridley;
 mod gamewatch;
 mod mario;
+mod link;
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
@@ -90,7 +91,6 @@ unsafe extern "C" fn get_opponent_bomas_agent(agent: &mut L2CAgentBase) -> Vec<*
 
     return opponent_bomas;
 }
-
 unsafe extern "C" fn get_opponent_bomas_weapon(owner_boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
     let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
     let entry_count_usize = entry_count as usize;
@@ -126,7 +126,10 @@ pub fn main() {
     ridley::install();
     gamewatch::install();
     mario::install();
+    link::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
+    smashline::update_weapon_count(*WEAPON_KIND_LINK_SWORD_BEAM, 3);
+    smashline::update_weapon_count(*WEAPON_KIND_GAMEWATCH_FOOD, 15);
 }

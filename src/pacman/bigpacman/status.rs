@@ -49,7 +49,7 @@ unsafe extern "C" fn pacman_bigpacman_start_pre(weapon: &mut L2CWeaponCommon) ->
 // MAIN
 unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     //Life
-    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);;
+    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("start"), 0.0, 1.0, false, 0.0, false, false);
 

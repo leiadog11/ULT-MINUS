@@ -11,6 +11,7 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
 
         if motion_kind == hash40("fly") { 
             if MotionModule::frame(weapon.module_accessor) == 1.0 {
+                WorkModule::on_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
                 exploded = false;
                 OPPONENT_BOMAS = Some(get_opponent_bomas_weapon(owner_boma));
                 opp_bomas = OPPONENT_BOMAS.clone();
@@ -31,10 +32,15 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
     
                 if d < 21.0 && !exploded {
                     exploded = true;
+                    WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
                     MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
                 }
             }
         } 
+
+        if motion_kind == hash40("burst") { 
+            WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
+        }
     }
 }
 

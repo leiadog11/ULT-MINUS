@@ -164,6 +164,161 @@ unsafe extern "C" fn gamewatch_expression_attackairlw(agent: &mut L2CAgentBase) 
     }
 }
 
+// BACK AIR
+unsafe extern "C" fn gamewatch_attackairb(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, false, -1);
+        ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, WEAPON_GAMEWATCH_RESCUE_STATUS_KIND_ATTACKAIRB, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    }
+    frame(agent.lua_state_agent, 41.0);
+    if macros::is_excute(agent) {
+        WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    }
+}
+
+// BACK AIR SOUND
+unsafe extern "C" fn gamewatch_sound_attackairb(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_wave08_mi"));
+    }
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_wave08_hi"));
+    }
+}
+
+// BACK AIR EXPRESSION
+unsafe extern "C" fn gamewatch_expression_attackairb(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        AttackModule::set_attack_reference_joint_id(agent.module_accessor, Hash40::new("havel"), AttackDirectionAxis(*ATTACK_DIRECTION_Z), AttackDirectionAxis(*ATTACK_DIRECTION_Y), AttackDirectionAxis(*ATTACK_DIRECTION_X));
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 7);
+    }
+    frame(agent.lua_state_agent, 26.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 7);
+    }
+}
+
+// BACK AIR LANDING
+unsafe extern "C" fn gamewatch_landingairb(agent: &mut L2CAgentBase) {
+    if macros::IS_EXIST_ARTICLE(agent, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE) {
+        if macros::is_excute(agent) {
+            ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+    }
+}
+
+// FORWARD AIR
+unsafe extern "C" fn gamewatch_attackairf(agent: &mut L2CAgentBase) {
+    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT) {
+        MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_f2"), 0.0, 1.0, false, 0.0, false, false);
+    }
+    else {
+        if macros::is_excute(agent) {
+            WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+            ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_BOMB, false, -1);
+        }
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 361, 50, 30, 0, 2.0, 0.0, 9.0, 11.3, None, None, None, 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_NONE);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 5.0, false);
+    }
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        ArticleModule::shoot(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_BOMB, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL), false);
+    }
+    frame(agent.lua_state_agent, 42.0);
+    if macros::is_excute(agent) {
+        WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+    }
+}
+
+// FORWARD AIR LANDING EXPRESSION
+unsafe extern "C" fn gamewatch_expression_landingairf(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        VisibilityModule::set_int64(agent.module_accessor, hash40("head") as i64, hash40("head_close") as i64);
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_TOP);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_lands"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("blockm"), false);
+    }
+}
+
+// FORWARD AIR 2
+unsafe extern "C" fn gamewatch_attackairf2(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.8);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+    }
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("havel"), 7.2, 55, 76, 0, 40, 7.0, 0.0, 3.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+    }
+    frame(agent.lua_state_agent, 21.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("havel"), 4.2, 70, 60, 0, 20, 7.0, 0.0, 3.0, 0.0, None, None, None, 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+    }
+    frame(agent.lua_state_agent, 32.0);
+    if macros::is_excute(agent) {
+        WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+// FORWARD AIR 2 SOUND
+unsafe extern "C" fn gamewatch_sound_attackairf2(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_gamewatch_wave08_hi"));
+    }
+}
+
+// FORWARD AIR 2 EXPRESSION
+unsafe extern "C" fn gamewatch_expression_attackairf2(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        VisibilityModule::set_int64(agent.module_accessor, hash40("lhand") as i64, hash40("lhand_block") as i64);
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("blockm"), true);
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 1);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackss"), 1);
+    }
+    frame(agent.lua_state_agent, 32.0);
+    if macros::is_excute(agent) { 
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("blockm"), false);
+    }
+}
+
 pub fn install() {
     Agent::new("gamewatch")
         .game_acmd("game_attackairn", gamewatch_attackairn, Low)
@@ -177,6 +332,20 @@ pub fn install() {
         .game_acmd("game_attackairlw", gamewatch_attackairlw, Low)
         .sound_acmd("sound_attackairlw", gamewatch_sound_attackairlw, Low)
         .expression_acmd("expression_attackairlw", gamewatch_expression_attackairlw, Low)
+
+        .game_acmd("game_attackairb", gamewatch_attackairb, Low)
+        .sound_acmd("sound_attackairb", gamewatch_sound_attackairb, Low)
+        .expression_acmd("expression_attackairb", gamewatch_expression_attackairb, Low)
+
+        .game_acmd("game_landingairb", gamewatch_landingairb, Low)
+
+        .game_acmd("game_attackairf", gamewatch_attackairf, Low)
+
+        .expression_acmd("expression_landingairf", gamewatch_expression_landingairf, Low)
+
+        .game_acmd("game_attackairf2", gamewatch_attackairf2, Low)
+        .sound_acmd("sound_attackairf2", gamewatch_sound_attackairf2, Low)
+        .expression_acmd("expression_attackairf2", gamewatch_expression_attackairf2, Low)
 
         .install();
 }

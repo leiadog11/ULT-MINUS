@@ -2,7 +2,7 @@ use super::*;
 
 //-----------------SMASH ATTACKS------------------
 
-//FORWARD SMASH
+// FORWARD SMASH
 unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
@@ -33,7 +33,7 @@ unsafe extern "C" fn rob_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD SMASH EFFECT
+// FORWARD SMASH EFFECT
 unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), -3, 0, 0, 0, 0, 0, 1.25, 0, 0, 0, 0, 0, 0, false);
@@ -43,27 +43,13 @@ unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("robot_armspin"), Hash40::new("body"), 1, 0, 0, 0, 60, 90, 1, true);
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 0 {
-        if WorkModule::is_flag(agent.module_accessor, *FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_REGION_JP) {
-            if macros::is_excute(agent) {
-                macros::LAST_EFFECT_SET_COLOR(agent, 0.1, 0.01, 0);
-            }
-            else {
-                if macros::is_excute(agent) {
-                    macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
-                }
-            }
+        if macros::is_excute(agent) {
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
         }
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 1 {
-        if WorkModule::is_flag(agent.module_accessor, *FIGHTER_ROBOT_INSTANCE_WORK_ID_FLAG_REGION_JP) {
-            if macros::is_excute(agent) {
-                macros::LAST_EFFECT_SET_COLOR(agent, 0.196, 0.196, 0.216);
-            }
-            else {
-                if macros::is_excute(agent) {
-                    macros::LAST_EFFECT_SET_COLOR(agent, 0.22, 0.059, 0.039);
-                }
-            }
+        if macros::is_excute(agent) {
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.22, 0.059, 0.039);
         }
     }
     if WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_COLOR) == 2 {
@@ -98,7 +84,7 @@ unsafe extern "C" fn rob_effect_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD SMASH SOUND
+// FORWARD SMASH SOUND
 unsafe extern "C" fn rob_sound_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -119,7 +105,7 @@ unsafe extern "C" fn rob_sound_attacks4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 5.0);
 }
 
-//FORWARD SMASH EXPRESSION
+// FORWARD SMASH EXPRESSION
 unsafe extern "C" fn rob_expression_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
@@ -206,7 +192,7 @@ unsafe extern "C" fn rob_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH EFFECT
+// DOWN SMASH EFFECT
 unsafe extern "C" fn rob_effect_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -230,7 +216,7 @@ unsafe extern "C" fn rob_effect_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH SOUND
+// DOWN SMASH SOUND
 unsafe extern "C" fn rob_sound_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -263,7 +249,7 @@ unsafe extern "C" fn rob_sound_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH EXPRESSION
+// DOWN SMASH EXPRESSION
 unsafe extern "C" fn rob_expression_attacklw4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_TOP, 3);
