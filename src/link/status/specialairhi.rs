@@ -219,7 +219,7 @@ unsafe extern "C" fn link_specialairhiequip_main_loop(fighter: &mut L2CFighterCo
     let lr = PostureModule::lr(fighter.module_accessor);
 
     if !WorkModule::is_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_EQUIPPED) { 
-        if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel, -0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel, -0.01, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+        if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel, -0.05, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel, -0.05, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
     }
 
     if WorkModule::is_flag(fighter.module_accessor, FIGHTER_LINK_INSTANCE_WORK_ID_FLAG_SPECIAL_AIR_HI_EQUIPPED) { 

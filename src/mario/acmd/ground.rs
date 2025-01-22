@@ -21,21 +21,26 @@ unsafe extern "C" fn mario_attack12(agent: &mut L2CAgentBase) {
     }
 }
 
-//FORWARD TILT
+// FORWARD TILT
 unsafe extern "C" fn mario_attacks3(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 1.0);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 7.0, 100, 0, 0, 70, 3.8, 4.6, 0.0, 0.3, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 7.0, 100, 0, 0, 70, 3.0, 1.2, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 2, 0, Hash40::new("hip"), 7.0, 100, 0, 0, 70, 2.0, 1.1, -2.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 6.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 6.0, false);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 2, 6.0, false);
     }
     frame(agent.lua_state_agent, 8.0);
+    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
 }
 
-//UP ANGLED FORWARD TILT
+// UP ANGLED FORWARD TILT
 unsafe extern "C" fn mario_attacks3hi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -49,7 +54,7 @@ unsafe extern "C" fn mario_attacks3hi(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWNWARD ANGLED FORWARD TILT
+// DOWNWARD ANGLED FORWARD TILT
 unsafe extern "C" fn mario_attacks3lw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -64,7 +69,7 @@ unsafe extern "C" fn mario_attacks3lw(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN TILT
+// DOWN TILT
 unsafe extern "C" fn mario_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -78,22 +83,17 @@ unsafe extern "C" fn mario_attacklw3(agent: &mut L2CAgentBase) {
     }
 }
 
-//DASH ATTACK
+// DASH ATTACK
 unsafe extern "C" fn mario_attackdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 8.0, 30, 23, 0, 40, 3.5, 0.0, 1.5, 5.4, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 8.0, 30, 23, 0, 40, 3.5, 0.0, 1.5, 5.4, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.875);
         FighterAreaModuleImpl::enable_fix_jostle_area(agent.module_accessor, 4.0, 6.0);
-        if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
-            wait(agent.lua_state_agent, 2.0);
-            AttackModule::clear_all(agent.module_accessor);
-            MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_lw4"), 0.0, 1.0, false, 0.0, false, false);
-        }
     }
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 48, 18, 0, 40, 2.7, 0.0, 1.5, 4.9, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 48, 18, 0, 40, 2.7, 0.0, 1.5, 4.9, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 1, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.875);
     }
     wait(agent.lua_state_agent, 16.0);
@@ -110,7 +110,7 @@ unsafe extern "C" fn mario_attackdash(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP TILT
+// UP TILT
 unsafe extern "C" fn mario_attackhi3(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.85);
     frame(agent.lua_state_agent, 3.0);
