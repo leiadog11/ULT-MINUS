@@ -8,7 +8,7 @@ unsafe extern "C" fn pichu_attackairn(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::FT_ADD_DAMAGE(agent, 0.3);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 7.0, 361, 72, 0, 15, 4.0, 5.0, 0.0, 0.0, Some(0.0), Some(0.0), Some(0.0), 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 7.0, 361, 72, 0, 15, 4.0, 5.0, 0.0, 0.0, Some(0.0), Some(0.0), Some(0.0), 0.5, 1.6, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
         macros::HIT_NODE(agent, Hash40::new("mimir1"), *HIT_STATUS_XLU);
         macros::HIT_NODE(agent, Hash40::new("mimil1"), *HIT_STATUS_XLU);
     }
@@ -18,7 +18,7 @@ unsafe extern "C" fn pichu_attackairn(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 5.0, 361, 112, 0, 0, 4.0, 5.0, 0.0, 0.0, Some(-1.0), Some(0.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 5.0, 361, 112, 0, 0, 4.0, 5.0, 0.0, 0.0, Some(-1.0), Some(0.0), Some(0.0), 1.0, 1.6, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
         HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
     }
     wait(agent.lua_state_agent, 18.0);
@@ -74,8 +74,8 @@ unsafe extern "C" fn pichu_attackairf(agent: &mut L2CAgentBase) {
     }
     for _ in 0..3 {
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 3.5, 366, 100, 20, 0, 6.8, 2.2, 0.5, 0.0, None, None, None, 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
-            macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 3.5, 366, 100, 20, 0, 5.6, 0.0, 0.0, 0.0, None, None, None, 0.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
+            macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 3.5, 366, 100, 20, 0, 6.8, 2.2, 0.5, 0.0, None, None, None, 0.5, 1.6, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
+            macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 3.5, 366, 100, 20, 0, 5.6, 0.0, 0.0, 0.0, None, None, None, 0.5, 1.6, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
             CancelModule::enable_cancel(agent.module_accessor);
         }
         wait(agent.lua_state_agent, 3.0);
@@ -105,7 +105,7 @@ unsafe extern "C" fn pichu_attackairb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::FT_ADD_DAMAGE(agent, 0.7);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 367, 100, 50, 0, 4.0, 0.0, 1.8, -11.5, Some(0.0), Some(1.8), Some(0.5), 0.5, 1.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 367, 100, 50, 0, 4.0, 0.0, 1.8, -11.5, Some(0.0), Some(1.8), Some(0.5), 0.5, 1.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
     }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) { 
@@ -118,7 +118,7 @@ unsafe extern "C" fn pichu_attackairb(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 11.0);
     for _ in 0..3 {
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 367, 100, 50, 0, 3.5, 0.0, 2.5, -10.5, Some(0.0), Some(2.5), Some(-0.5), 0.5, 1.3, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 367, 100, 50, 0, 3.5, 0.0, 2.5, -10.5, Some(0.0), Some(2.5), Some(-0.5), 0.5, 1.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
         }
         wait(agent.lua_state_agent, 2.0);
         if macros::is_excute(agent) {
@@ -230,6 +230,26 @@ unsafe extern "C" fn pichu_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
+// BACK AIR / FORWARD AIR / UP AIR / NEUTRAL AIR LANDING
+unsafe extern "C" fn pichu_landingairbfhin(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
+
+// DOWN AIR LANDING
+unsafe extern "C" fn pichu_landingairlw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::FT_ADD_DAMAGE(agent, 0.5);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 361, 100, 0, 50, 4.0, 0.0, 4.0, -6.0, Some(0.0), Some(4.0), Some(6.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
+
 pub fn install() {
     Agent::new("pichu")
         .game_acmd("game_attackairn", pichu_attackairn, Low)
@@ -245,6 +265,13 @@ pub fn install() {
         .sound_acmd("sound_attackairhi", pichu_sound_attackairhi, Low)
 
         .game_acmd("game_attackairlw", pichu_attackairlw, Low)
+
+        .game_acmd("game_landingairb", pichu_landingairbfhin, Low)
+        .game_acmd("game_landingairf", pichu_landingairbfhin, Low)
+        .game_acmd("game_landingairhi", pichu_landingairbfhin, Low)
+        .game_acmd("game_landingairn", pichu_landingairbfhin, Low)
+
+        .game_acmd("game_landingairlw", pichu_landingairlw, Low)
         
         .install();
 }
