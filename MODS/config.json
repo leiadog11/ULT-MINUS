@@ -678,6 +678,30 @@
             "fighter/link/motion/parasail/c07/d02specialairhistart.nuanmb",
             "fighter/link/motion/parasail/c07/d02specialairhiunequip.nuanmb"
         ],
+        "fighter/mario/c00": [
+            "fighter/mario/motion/body/c00/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c01": [
+            "fighter/mario/motion/body/c01/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c02": [
+            "fighter/mario/motion/body/c02/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c03": [
+            "fighter/mario/motion/body/c03/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c04": [
+            "fighter/mario/motion/body/c04/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c05": [
+            "fighter/mario/motion/body/c05/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c06": [
+            "fighter/mario/motion/body/c06/c01breakdance.nuanmb"
+        ],
+        "fighter/mario/c07": [
+            "fighter/mario/motion/body/c07/c01breakdance.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"

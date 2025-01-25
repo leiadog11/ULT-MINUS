@@ -36,7 +36,10 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
 
             if neg_zone < 1.7 {
                 WorkModule::add_float(fighter.module_accessor, 0.05, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_FLOAT_NEG_ZONE);
-                macros::EFFECT(fighter, Hash40::new("luigi_negative_zone"), Hash40::new("top"), 0.0, 7.5, 0.0, 0, 0, 0, neg_zone, 0, 0, 0, 0, 0, 0, true);
+                if (neg_zone % 0.2 < 0.0001) || (0.2 - (neg_zone % 0.2) < 0.0001) {
+                    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("luigi_negative_zone"), false, true);
+                }
+                macros::EFFECT(fighter, Hash40::new("luigi_negative_zone"), Hash40::new("top"), 0.5, 7.5, 0.0, 0, 0, 0, neg_zone, 0, 0, 0, 0, 0, 0, true);
             }
 
             let b1x = PostureModule::pos_x(fighter.module_accessor);

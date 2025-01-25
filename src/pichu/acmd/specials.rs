@@ -2,6 +2,21 @@ use super::*;
 
 //--------------------SPECIALS-----------------------
 
+// NEUTRAL B
+unsafe extern "C" fn pichu_specialn(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.8);
+    frame(agent.lua_state_agent, 18.0);
+    if macros::is_excute(agent) {
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PICHU_GENERATE_ARTICLE_DENGEKIDAMA, false, -1);
+    }
+    if macros::is_excute(agent) {
+        macros::FT_ADD_DAMAGE(agent, 0.7);
+    }
+    frame(agent.lua_state_agent, 19.0); {
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
+
 // SIDE B - SPECIALS
 unsafe extern "C" fn pichu_specials(agent: &mut L2CAgentBase) { 
     frame(agent.lua_state_agent, 1.0);
@@ -92,7 +107,7 @@ unsafe extern "C" fn pichu_expression_specialshold(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pichu_specialsend(agent: &mut L2CAgentBase) { 
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 12.2, 45, 92, 0, 73, 28.0, 0.0, 8.0, 0.0, None, None, None, 0.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 11.5, 45, 92, 0, 73, 24.0, 0.0, 8.0, 0.0, None, None, None, 0.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
         AttackModule::set_force_reaction(agent.module_accessor, 0, true, false);
     }
     frame(agent.lua_state_agent, 12.0);
@@ -143,15 +158,29 @@ unsafe extern "C" fn pichu_expression_specialsend(agent: &mut L2CAgentBase) {
     }
 }
 
-/*
 // DOWN B
 unsafe extern "C" fn pichu_speciallw(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_PIKACHU_STATUS_WORK_ID_FLAG_KAMINARI_GENERATE);
     }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) { 
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
 }
-*/
+
+// DOWN B HIT
+unsafe extern "C" fn pichu_speciallwhit(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::FT_ADD_DAMAGE(agent, 3.5);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 361, 65, 0, 90, 11.0, 0.0, 10.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_F, false, 2, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);
+    }
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
 
 // UP B
 unsafe extern "C" fn pichu_specialairhiend(agent: &mut L2CAgentBase) {
@@ -174,6 +203,9 @@ unsafe extern "C" fn pichu_specialairhiend(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("pichu")
+        .game_acmd("game_specialn", pichu_specialn, Low)
+        .game_acmd("game_specialairn", pichu_specialn, Low)
+        
         .game_acmd("game_specials", pichu_specials, Low)
         .effect_acmd("effect_specials", pichu_effect_specials, Low)
         .sound_acmd("sound_specials", pichu_sound_specials, Low)
@@ -188,7 +220,11 @@ pub fn install() {
         .sound_acmd("sound_specialsend", pichu_sound_specialsend, Low)
         .expression_acmd("expression_specialsend", pichu_expression_specialsend, Low)
 
-        //.game_acmd("game_speciallw", pichu_speciallw, Low)
+        .game_acmd("game_speciallw", pichu_speciallw, Low)
+        .game_acmd("game_specialairlw", pichu_speciallw, Low)
+
+        .game_acmd("game_speciallwhit", pichu_speciallwhit, Low)
+        .game_acmd("game_specialairlwhit", pichu_speciallwhit, Low)
 
         .game_acmd("game_specialhiend", pichu_specialairhiend, Low)
         
