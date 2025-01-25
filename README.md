@@ -5,7 +5,7 @@ The smash overhaul mod where every character is only buffed to be more broken th
 
 This is a full modpack with changes to the SSS, game music, and characters. There are future skins, stage changes, UI changes, and much more planned.
 
-Current Version: Alpha 0.2.1
+Current Version: Alpha 0.2.2
 
 ## Skins
 - Super Pac-Man (Pac-Man c01)
