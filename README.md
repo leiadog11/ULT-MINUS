@@ -15,7 +15,7 @@ Current Version: Alpha 0.2.2
 - MINUS ZONE (SBF)
 
 ## Character Change Log
-Current Character Amount: 13
+Current Character Amount: 14
 
 Change Log Linked [Here](https://docs.google.com/document/d/1ljZ57RQu8Xp7I35-QuW9bDr22O7RT_vPG4ErxPwNd8Y/edit?usp=sharing)
 
