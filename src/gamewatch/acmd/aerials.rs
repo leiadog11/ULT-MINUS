@@ -229,6 +229,9 @@ unsafe extern "C" fn gamewatch_landingairb(agent: &mut L2CAgentBase) {
 
 // FORWARD AIR
 unsafe extern "C" fn gamewatch_attackairf(agent: &mut L2CAgentBase) {
+    if !ArticleModule::is_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_BOMB) {
+        WorkModule::off_flag(agent.module_accessor, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT)
+    }
     if WorkModule::is_flag(agent.module_accessor, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT) {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_f2"), 0.0, 1.0, false, 0.0, false, false);
     }

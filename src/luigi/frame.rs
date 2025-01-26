@@ -59,6 +59,10 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                     DamageModule::add_damage(boma_ptr, 0.05, 0);
                     SlowModule::set_whole(boma_ptr, 2, 1);
                 }
+
+                if motion_kind != hash40("attack_hi4") {
+                    GroundModule::set_collidable(boma_ptr, true);
+                }
             } 
         }
         else {
