@@ -53,7 +53,7 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
         if motion_kind == hash40("burst") { 
             WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
         }
-        if status_kind == *WEAPON_GAMEWATCH_BOMB_STATUS_WORK_FLAG_DAMAGE {
+        if WorkModule::is_flag(weapon.module_accessor, *WEAPON_GAMEWATCH_BOMB_STATUS_WORK_FLAG_DAMAGE) {
             WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
         }
     }

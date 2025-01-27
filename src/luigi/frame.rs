@@ -5,6 +5,7 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let status_kind = StatusModule::status_kind(fighter.module_accessor);
         let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
+        let frame = MotionModule::frame(fighter.module_accessor);
         let lr = PostureModule::lr(fighter.module_accessor);
         let xpos = ControlModule::get_stick_x(fighter.module_accessor);
         let ypos = ControlModule::get_stick_y(fighter.module_accessor);
@@ -59,16 +60,35 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                     DamageModule::add_damage(boma_ptr, 0.05, 0);
                     SlowModule::set_whole(boma_ptr, 2, 1);
                 }
-
-                if motion_kind != hash40("attack_hi4") {
-                    GroundModule::set_collidable(boma_ptr, true);
-                }
             } 
         }
         else {
             EffectModule::kill_kind(fighter.module_accessor, Hash40::new("luigi_negative_zone"), false, true);
             SoundModule::stop_se(fighter.module_accessor, Hash40::new("se_luigi_negative_zone"), 0);
             WorkModule::set_float(fighter.module_accessor, 0.1, WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_FLOAT_NEG_ZONE);
+        }
+
+        // COLLISION FIX
+        if motion_kind == hash40("attack_hi4") {
+            if frame >= 25.0 {
+                let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
+                let entry_count_usize = entry_count as usize;
+                let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(entry_count_usize);
+                let mut boma_counter = 0;
+        
+                for _ in 0..entry_count_usize { 
+                    let curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+                    if curr_boma == fighter.module_accessor {
+                    }
+                    else {
+                        opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
+                    }
+                    boma_counter += 1;
+                }
+                for &boma_ptr in &opponent_bomas { 
+                    GroundModule::set_collidable(boma_ptr, true);
+                }
+            }
         }
 
         // MOVE DURING SIDE TAUNT
