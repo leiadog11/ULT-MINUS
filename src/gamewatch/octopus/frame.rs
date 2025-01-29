@@ -4,9 +4,10 @@ use super::*;
 pub unsafe extern "C" fn octopus_frame(weapon: &mut L2CWeaponCommon) {
     unsafe { 
         let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-        if WorkModule::is_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS) {
+        let ENTRY_ID = WorkModule::get_int(owner_boma, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
+        if OCTOPUS[ENTRY_ID] {
             StatusModule::change_status_request_from_script(weapon.module_accessor, WEAPON_GAMEWATCH_OCTOPUS_STATUS_KIND_ATTACKAIRN, true);
-            WorkModule::set_flag(owner_boma, false, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
+            OCTOPUS[ENTRY_ID] = false;
         }
     }
 }

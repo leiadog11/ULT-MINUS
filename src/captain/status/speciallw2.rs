@@ -48,6 +48,7 @@ unsafe extern "C" fn captain_speciallw2_main(fighter: &mut L2CFighterCommon) -> 
 
 // MAIN LOOP
 unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = WorkModule::get_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
     let frame = MotionModule::frame(fighter.module_accessor);
     OPPONENT_BOMAS = Some(get_opponent_bomas(fighter));
     if frame >= 4.0 && frame <= 24.0 {
@@ -62,7 +63,7 @@ unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon
             }
         }
         if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) { 
-            WorkModule::on_flag(fighter.module_accessor, FIGHTER_CAPTAIN_INSTANCE_WORK_ID_FLAG_KICK);
+            KICK[ENTRY_ID] = true;
             fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_LW.into(), false.into());
             return 1.into();
         }

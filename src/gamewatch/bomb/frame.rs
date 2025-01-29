@@ -5,14 +5,14 @@ static mut exploded: bool = false;
 // OPFF
 pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
     unsafe { 
-        static mut opp_bomas: Option<Vec<*mut BattleObjectModuleAccessor>> = None;
         let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+        let ENTRY_ID = WorkModule::get_int(owner_boma, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
         let motion_kind = MotionModule::motion_kind(weapon.module_accessor);
         let status_kind = StatusModule::status_kind(weapon.module_accessor);
 
         if motion_kind == hash40("fly") { 
             if MotionModule::frame(weapon.module_accessor) == 1.0 {
-                WorkModule::on_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
+                BOMB_OUT[ENTRY_ID] = true;
                 exploded = false;
             }
             let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
@@ -43,7 +43,7 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
     
                 if d < 21.0 && !exploded {
                     exploded = true;
-                    WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
+                    BOMB_OUT[ENTRY_ID] = false;
                     MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
                 }
             }
@@ -51,10 +51,10 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
 
         // RESET BOMB FLAG
         if motion_kind == hash40("burst") { 
-            WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
+            BOMB_OUT[ENTRY_ID] = false;
         }
         if WorkModule::is_flag(weapon.module_accessor, *WEAPON_GAMEWATCH_BOMB_STATUS_WORK_FLAG_DAMAGE) {
-            WorkModule::off_flag(owner_boma, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT);
+            BOMB_OUT[ENTRY_ID] = false;
         }
     }
 }
