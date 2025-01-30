@@ -13,7 +13,7 @@ unsafe extern "C" fn ridley_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         FighterAreaModuleImpl::enable_fix_jostle_area(agent.module_accessor, 6.0, 7.0);
     }
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) { 
+    if AURA[get_entry_id(agent.module_accessor)] { 
         frame(agent.lua_state_agent, 18.0);
         for _ in 0..3 { 
             if macros::is_excute(agent) {
@@ -53,7 +53,7 @@ unsafe extern "C" fn ridley_effect_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::EFFECT(agent, Hash40::new("sys_attack_speedline"), Hash40::new("top"), 0, 11.5, -9, 0, 0, 0, 1.2, 0, 0, 0, 0, 0, 0, true);
     }
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) { 
+    if AURA[get_entry_id(agent.module_accessor)] { 
         frame(agent.lua_state_agent, 18.0);
         if macros::is_excute(agent) { 
             macros::LANDING_EFFECT(agent, Hash40::new("sys_h_smoke_a"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
@@ -90,7 +90,7 @@ unsafe extern "C" fn ridley_sound_attacks4(agent: &mut L2CAgentBase) {
         macros::PLAY_SE(agent, Hash40::new("se_ridley_smash_s01"));
         macros::PLAY_SE(agent, Hash40::new("vc_ridley_special_s02"));
     }
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) { 
+    if AURA[get_entry_id(agent.module_accessor)] { 
         frame(agent.lua_state_agent, 18.0);
         for _ in 0..3 { 
             if macros::is_excute(agent) {
@@ -117,7 +117,7 @@ unsafe extern "C" fn ridley_expression_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
     }
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) { 
+    if AURA[get_entry_id(agent.module_accessor)] { 
         frame(agent.lua_state_agent, 18.0);
         for _ in 0..3 { 
             if macros::is_excute(agent) { 

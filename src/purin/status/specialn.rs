@@ -34,6 +34,7 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 // SPECIAL N - MAIN
 unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
   MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
+  println!("PUFF'S BOMA POINTER (FIGHTER) {:?}", fighter.module_accessor);
 
   fighter.sub_shift_status_main(L2CValue::Ptr(purin_specialn_main_loop as *const () as _))
 }
@@ -41,7 +42,7 @@ unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CV
 // SPECIAL N - MAIN LOOP
 unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
   if MotionModule::frame(fighter.module_accessor) >= 28.0 && MotionModule::frame(fighter.module_accessor) < 29.0 {
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 2) as u64;
+    let rand = smash::app::sv_math::rand(hash40("fighter"), 4) as u64;
     // DRILL
     if rand == 0 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_DRILL), 0, 0, false, false);
@@ -51,8 +52,17 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
     else if rand == 1 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_FREEZER), 0, 0, false, false);
     }
-    else {
-      println!("huh? {}", rand);
+
+    // TURN TO METAL
+    else if rand == 2 {
+      ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_METALBLOCK), 0, 0, false, false);
+    }
+
+    // HEAL
+    else if rand == 3 {
+      DamageModule::add_damage(fighter.module_accessor, -8.0, 0);
+      SoundModule::play_se(fighter.module_accessor, Hash40::new("se_item_teamhealfield_recover"), true, false, false, false, enSEType(0));
+      macros::EFFECT(fighter, Hash40::new("sys_recovery"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
     }
   }
 

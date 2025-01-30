@@ -7,7 +7,7 @@ unsafe extern "C" fn ganon_appeallw(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.6);
     frame(agent.lua_state_agent, 37.0);
     if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
+        SWORD[get_entry_id(agent.module_accessor)] = true;
     }
 
 }

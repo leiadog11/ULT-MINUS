@@ -22,8 +22,8 @@ unsafe extern "C" fn autoaimbullet_shot_pre(weapon: &mut L2CWeaponCommon) -> L2C
 // MAIN
 unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("shot"), 0.0, 1.0, false, 0.0, false, false);
-    println!("PLANTED");
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
     //Snap to throw position
     let mut offset_add = Vector3f{x:0.0,y:4.0,z:0.0};
     let mut newPos = Vector3f{x:0.0,y:0.0,z:0.0};
@@ -39,8 +39,8 @@ unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2
     PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 90.0}, 0);
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
-    BULLET_X_POS = PostureModule::pos_x(weapon.module_accessor);
-    BULLET_Y_POS = PostureModule::pos_y(weapon.module_accessor);
+    BULLET_X_POS[ENTRY_ID] = PostureModule::pos_x(weapon.module_accessor);
+    BULLET_Y_POS[ENTRY_ID] = PostureModule::pos_y(weapon.module_accessor);
 
     weapon.fastshift(L2CValue::Ptr(autoaimbullet_shot_main_loop as *const () as _))
 }
@@ -63,7 +63,7 @@ unsafe extern "C" fn autoaimbullet_shot_main_loop(weapon: &mut L2CWeaponCommon) 
             return 0.into();
         }
     }
-    if WorkModule::is_flag(owner_boma, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_ANCHOR_TP) {
+    if ANCHOR_PLANTED[get_entry_id(owner_boma)] {
         if StatusModule::status_kind(owner_boma) == *FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_HI_3 && StatusModule::situation_kind(owner_boma) == *SITUATION_KIND_AIR { 
             autoaimbullet_remove(weapon);
             return 0.into();

@@ -21,7 +21,7 @@ unsafe extern "C" fn luigi_attack_lw3_check_attack_status(fighter: &mut L2CFight
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            WorkModule::add_int(fighter.module_accessor, 1, FIGHTER_LUIGI_INSTANCE_WORK_ID_INT_ATTACK_LW);
+            DOWN_TILT_COUNTER[get_entry_id(fighter.module_accessor)] += 1;
         }
     }
     0.into()
@@ -46,6 +46,7 @@ unsafe extern "C" fn luigi_attack_airn_check_attack_status(fighter: &mut L2CFigh
 
 // UP SMASH
 unsafe extern "C" fn luigi_attack_hi4_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
@@ -53,9 +54,9 @@ unsafe extern "C" fn luigi_attack_hi4_check_attack_status(fighter: &mut L2CFight
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            if WorkModule::is_flag(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4) {
+            if MISFIRE_UP_SMASH[ENTRY_ID] {
                 GroundModule::set_collidable(opponent_boma, false);
-                WorkModule::off_flag(fighter.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
+                MISFIRE_UP_SMASH[ENTRY_ID] = false;
             }
 	    }
     }

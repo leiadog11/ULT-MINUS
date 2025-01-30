@@ -40,8 +40,7 @@ unsafe extern "C" fn palutena_speciallw_pre(fighter: &mut L2CFighterCommon) -> L
 // INIT
 unsafe extern "C" fn palutena_speciallw_init(fighter: &mut L2CFighterCommon) -> L2CValue {
     if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
-        if WorkModule::is_flag(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_PLANTED) {
-            WorkModule::on_flag(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_ANCHOR_TP);
+        if ANCHOR_PLANTED[get_entry_id(fighter.module_accessor)] {
             fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_HI.into(), false.into());
             return 1.into();
         }

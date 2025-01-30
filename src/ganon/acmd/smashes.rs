@@ -4,7 +4,7 @@ use super::*;
 
 // FORWARD SMASH CHARGE
 unsafe extern "C" fn ganon_attacks4charge(agent: &mut L2CAgentBase) {
-    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_s4_hold2"), 0.0, 1.0, false, 0.0, false, false);
     }
@@ -23,7 +23,7 @@ unsafe extern "C" fn ganon_effect_attacks4charge2(agent: &mut L2CAgentBase) {
 
 // FORWARD SMASH
 unsafe extern "C" fn ganon_attacks4(agent: &mut L2CAgentBase) {
-    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_s4_s2"), 0.0, 1.0, false, 0.0, false, false);
     }
@@ -133,7 +133,7 @@ unsafe extern "C" fn ganon_expression_attacks42(agent: &mut L2CAgentBase) {
 // DOWN SMASH CHARGE
 unsafe extern "C" fn ganon_attacklw4charge(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 4.0);
-    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_lw4_hold2"), 0.0, 1.0, false, 0.0, false, false);
     }
@@ -152,7 +152,7 @@ unsafe extern "C" fn ganon_effect_attacklw4charge2(agent: &mut L2CAgentBase) {
 
 // DOWN SMASH
 unsafe extern "C" fn ganon_attacklw4(agent: &mut L2CAgentBase) {
-    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_lw42"), 0.0, 1.0, false, 0.0, false, false);
     }

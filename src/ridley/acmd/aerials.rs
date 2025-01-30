@@ -49,7 +49,7 @@ unsafe extern "C" fn ridley_attackairb(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.5);
     frame(agent.lua_state_agent, 8.0);
     macros::FT_MOTION_RATE(agent, 1.0);
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA) {
+    if AURA[get_entry_id(agent.module_accessor)] {
         macros::FT_MOTION_RATE(agent, 0.7);
     }
     frame(agent.lua_state_agent, 14.0);

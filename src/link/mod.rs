@@ -14,12 +14,12 @@ const WEAPON_LINK_PARASAIL_STATUS_KIND_SPECIAL_AIR_HI_START : i32 = 0x1F5;
 const WEAPON_LINK_PARASAIL_STATUS_KIND_SPECIAL_AIR_HI_GLIDE : i32 = 0x1F6;
 const WEAPON_LINK_PARASAIL_STATUS_KIND_SPECIAL_AIR_HI_EQUIP : i32 = 0x1F7;
 
-static mut UP_B_USED : bool = false;
-static mut EQUIPPED : bool = false;
-static mut MIPHAS_GRACE : bool = false;
-static mut DARUKS_PROTECTION : bool = false;
-static mut REVALIS_GALE : bool = false;
-static mut URBOSAS_FURY : bool = false;
+static mut UP_B_USED: [bool; 8] = [false; 8];
+static mut EQUIPPED: [bool; 8] = [false; 8];
+static mut MIPHAS_GRACE: [bool; 8] = [true; 8];
+static mut DARUKS_PROTECTION: [bool; 8] = [true; 8];
+static mut REVALIS_GALE: [bool; 8] = [true; 8];
+static mut URBOSAS_FURY: [bool; 8] = [true; 8];
 
 pub fn install() {
     acmd::install();

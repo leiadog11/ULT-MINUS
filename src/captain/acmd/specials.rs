@@ -4,7 +4,7 @@ use super::*;
 
 // NEUTRAL SPECIAL
 unsafe extern "C" fn captain_specialn(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         if GUN_COOLDOWN[ENTRY_ID] <= 0 {
@@ -147,9 +147,8 @@ unsafe extern "C" fn captain_expression_specialhi(agent: &mut L2CAgentBase) {
 
 // DOWN SPECIAL
 unsafe extern "C" fn captain_speciallw(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
     frame(agent.lua_state_agent, 1.0);
-    KICK[ENTRY_ID] = false;
+    KICK[get_entry_id(agent.module_accessor)] = false;
     macros::FT_MOTION_RATE(agent, 0.857);
     frame(agent.lua_state_agent, 15.0);
     macros::FT_MOTION_RATE(agent, 1.0);
@@ -178,9 +177,8 @@ unsafe extern "C" fn captain_speciallw(agent: &mut L2CAgentBase) {
 
 // AERIAL DOWN SPECIAL
 unsafe extern "C" fn captain_specialairlw(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = WorkModule::get_int(agent.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
     frame(agent.lua_state_agent, 1.0);
-    KICK[ENTRY_ID] = false;
+    KICK[get_entry_id(agent.module_accessor)] = false;
     macros::FT_MOTION_RATE(agent, 0.867);
     frame(agent.lua_state_agent, 16.0);
     macros::FT_MOTION_RATE(agent, 1.0);

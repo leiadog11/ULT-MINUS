@@ -102,7 +102,7 @@ unsafe extern "C" fn ganon_specialhi2_pre(fighter: &mut L2CFighterCommon) -> L2C
 
 // MAIN
 unsafe extern "C" fn ganon_specialhi2_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    WorkModule::off_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_GROUND_CHECK);
+    GROUND_CHECK[get_entry_id(fighter.module_accessor)] = false;
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi2"), 0.0, 1.0, false, 0.0, false, false);
     HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_XLU), 0);
     fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialhi2_main_loop as *const () as _))

@@ -8,7 +8,7 @@ unsafe extern "C" fn rob_speciallw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_ROBOT_STATUS_GYRO_FLAG_SHOOT);
         ArticleModule::set_visibility_whole(agent.module_accessor, *FIGHTER_ROBOT_GENERATE_ARTICLE_GYRO, false, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        WorkModule::set_int(agent.module_accessor, 300, FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE);
+        GYRO_LIFE[get_entry_id(agent.module_accessor)] = 300;
     }
 }
 

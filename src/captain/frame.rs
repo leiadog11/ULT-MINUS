@@ -4,7 +4,7 @@ use super::*;
 pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
-        let ENTRY_ID = WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
+        let ENTRY_ID = get_entry_id(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);

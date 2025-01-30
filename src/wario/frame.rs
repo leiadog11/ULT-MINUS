@@ -3,53 +3,61 @@ use super::*;
 // OPFF
 pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
-        let ypos = ControlModule::get_stick_y(fighter.module_accessor);
-        let posx = PostureModule::pos_x(fighter.module_accessor);
-        let lr = PostureModule::lr(fighter.module_accessor);
+        let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+        let ENTRY_ID = get_entry_id(boma);
+        let xpos = ControlModule::get_stick_x(boma);
+        let ypos = ControlModule::get_stick_y(boma);
+        let pos_x = PostureModule::pos_x(boma);
+        let pos_y = PostureModule::pos_y(boma);
+        let lr = PostureModule::lr(boma);
         let mut max_speed = 0.0;
-        let damage = DamageModule::damage(fighter.module_accessor, 0);
+        let damage = DamageModule::damage(boma, 0);
 
         // CAMERA ZOOM OUT ON END OF UP B
-        if MotionModule::motion_kind(fighter.module_accessor) == hash40("special_hi_jump") {
-            if MotionModule::is_end(fighter.module_accessor) {
-                SlowModule::clear_whole(fighter.module_accessor);
-                CameraModule::reset_all(fighter.module_accessor);
-                EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
+        if MotionModule::motion_kind(boma) == hash40("special_hi_jump") {
+            if MotionModule::is_end(boma) {
+                SlowModule::clear_whole(boma);
+                CameraModule::reset_all(boma);
+                EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
                 macros::CAM_ZOOM_OUT(fighter);
             }
         }
 
         // CAMERA ZOOM OUT ON LEDGE GRAB AND DAMAGE
-        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_CLIFF_CATCH ||
-        DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
-            SlowModule::clear_whole(fighter.module_accessor);
-            CameraModule::reset_all(fighter.module_accessor);
-            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
+        if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_CLIFF_CATCH ||
+        DamageModule::reaction(boma, 0) > 1.0 {
+            SlowModule::clear_whole(boma);
+            CameraModule::reset_all(boma);
+            EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
             macros::CAM_ZOOM_OUT(fighter);
         }
 
+        // RESET DOWN SMASH COUNT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            DOWN_SMASH_AMOUNT[ENTRY_ID] = 0;
+        }
+
         // MOVING ON DOWN SMASH
-        if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_lw4") {
+        if MotionModule::motion_kind(boma) == hash40("attack_lw4") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.55, y: pos_y});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 0.5, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 0.55, y: pos_y});
             }
         }
 
         // MOVING ON BACK THROW
-        if MotionModule::motion_kind(fighter.module_accessor) == hash40("throw_b") {
+        if MotionModule::motion_kind(boma) == hash40("throw_b") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + 1.45, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 1.45, y: pos_y});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - 1.45, y: PostureModule::pos_y(fighter.module_accessor)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 1.45, y: pos_y});
             }
         }
 
@@ -70,28 +78,28 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
             max_speed = 0.0
         }   
 
-        if StatusModule::status_kind(fighter.module_accessor) == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
+        if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
             if xpos < -0.5 && lr == -1.0 { //left if facing left
-                if WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR) < max_speed {
-                    WorkModule::add_float(fighter.module_accessor, 0.15, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
-                    PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx - WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR), y: PostureModule::pos_y(fighter.module_accessor)});
+                if WECTOR[ENTRY_ID] < max_speed {
+                    WECTOR[ENTRY_ID] += 0.15;
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - WECTOR[ENTRY_ID], y: pos_y});
                 }
             }
             else if xpos > 0.5 && lr == 1.0 { //right if facing right
-                if WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR) < max_speed {
-                    WorkModule::add_float(fighter.module_accessor, 0.15, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
-                    PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: posx + WorkModule::get_float(fighter.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR), y: PostureModule::pos_y(fighter.module_accessor)});
+                if WECTOR[ENTRY_ID] < max_speed {
+                    WECTOR[ENTRY_ID] += 0.15;
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + WECTOR[ENTRY_ID], y: pos_y});
                 }
             }
         }
         else {
-            WorkModule::set_float(fighter.module_accessor, 0.0, FIGHTER_WARIO_INSTANCE_WORK_ID_FLOAT_WECTOR);
+            WECTOR[ENTRY_ID] = 0.0;
         }
       
         // JUMP CANCEL DOWN AIR
-        if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_lw") {
-            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
-                CancelModule::enable_cancel(fighter.module_accessor);
+        if MotionModule::motion_kind(boma) == hash40("attack_air_lw") {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) {
+                CancelModule::enable_cancel(boma);
             }
         }
     }
@@ -100,7 +108,7 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn wario_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4);
+        
     }
 }
 

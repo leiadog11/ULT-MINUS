@@ -239,17 +239,18 @@ unsafe extern "C" fn palutena_expression_specialsshoot(agent: &mut L2CAgentBase)
 
 // DOWN B
 unsafe extern "C" fn palutena_speciallw(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_PLANTED);
+        ANCHOR_PLANTED[ENTRY_ID] = false;
         macros::FT_MOTION_RATE(agent, 0.5);
         KineticModule::set_consider_ground_friction(agent.module_accessor, false, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
     frame(agent.lua_state_agent, 46.0);
     if macros::is_excute(agent) { 
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, false, -1);
-        WorkModule::on_flag(agent.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_PLANTED);
+        ANCHOR_PLANTED[ENTRY_ID] = true;
     }
 }
 

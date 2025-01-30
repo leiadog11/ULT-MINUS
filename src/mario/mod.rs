@@ -5,9 +5,9 @@ pub mod frame;
 pub mod status;
 pub mod fireball;
 
-pub const FIGHTER_MARIO_INSTANCE_WORK_ID_FLAG_ICEBALL : i32 = 0x200000F1;
-pub const FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_SMASH_CHARGE : i32 = 0x4E;
-pub const FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_AIR_CHARGE : i32 = 0x4F;
+static mut ICEBALL: [bool; 8] = [false; 8];
+static mut FORWARD_SMASH_CHARGE: [f32; 8] = [0.0; 8];
+static mut FORWARD_AIR_CHARGE: [f32; 8] = [0.0; 8];
 
 pub fn install() {
     acmd::install();

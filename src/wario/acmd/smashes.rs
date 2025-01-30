@@ -79,6 +79,7 @@ unsafe extern "C" fn wario_attacks4(agent: &mut L2CAgentBase) {
 
 // DOWN SMASH
 unsafe extern "C" fn wario_attacklw4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
@@ -106,18 +107,18 @@ unsafe extern "C" fn wario_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 28.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 30, 88, 0, 10, 2.6, 0.0, 4.5, 2.0, Some(0.0), Some(4.5), Some(-2.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
-        WorkModule::add_int(agent.module_accessor, 1, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4);
+        DOWN_SMASH_AMOUNT[ENTRY_ID] += 1;
     }
     frame(agent.lua_state_agent, 29.0);
     if macros::is_excute(agent) {
-        if WorkModule::get_int(agent.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4) <= 7 {
+        if DOWN_SMASH_AMOUNT[ENTRY_ID] <= 7 {
             StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_ATTACK_LW4, true);
         }
     }
     frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
-        if WorkModule::get_int(agent.module_accessor, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4) == 8 {
-            WorkModule::set_int(agent.module_accessor, 0, FIGHTER_WARIO_INSTANCE_WORK_ID_INT_ATTACK_LW4);
+        if DOWN_SMASH_AMOUNT[ENTRY_ID] == 8 {
+            DOWN_SMASH_AMOUNT[ENTRY_ID] = 0;
             AttackModule::clear_all(agent.module_accessor);
         }
     }

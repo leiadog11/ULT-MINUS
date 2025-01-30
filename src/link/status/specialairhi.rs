@@ -42,10 +42,11 @@ unsafe extern "C" fn link_specialairhistart_init(fighter: &mut L2CFighterCommon)
 
 // MAIN
 unsafe extern "C" fn link_specialairhistart_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_hi_start"), 0.0, 1.0, false, 0.0, false, false);
     HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_XLU), 0);
-    EQUIPPED = true;
-    UP_B_USED = true;
+    EQUIPPED[ENTRY_ID] = true;
+    UP_B_USED[ENTRY_ID] = true;
 
     fighter.sub_shift_status_main(L2CValue::Ptr(link_specialairhistart_main_loop as *const () as _))
 }
@@ -202,7 +203,7 @@ unsafe extern "C" fn link_specialairhiequip_init(fighter: &mut L2CFighterCommon)
 
 // MAIN
 unsafe extern "C" fn link_specialairhiequip_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if EQUIPPED {
+    if EQUIPPED[get_entry_id(fighter.module_accessor)] {
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_hi_unequip"), 0.0, 1.0, false, 0.0, false, false);
     }
     else {
@@ -214,18 +215,19 @@ unsafe extern "C" fn link_specialairhiequip_main(fighter: &mut L2CFighterCommon)
 
 // MAIN LOOP
 unsafe extern "C" fn link_specialairhiequip_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(fighter.module_accessor);
 
-    if !EQUIPPED { 
+    if !EQUIPPED[ENTRY_ID] { 
         if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel, -0.05, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, -x_vel, -0.05, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
     }
 
-    if EQUIPPED { 
+    if EQUIPPED[ENTRY_ID] { 
         // CHANGE TO FALL WHEN ANIM IS OVER - UNEQUIP
         if MotionModule::is_end(fighter.module_accessor) {
-            EQUIPPED = false;
+            EQUIPPED[ENTRY_ID] = false;
             fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
         }
@@ -233,7 +235,7 @@ unsafe extern "C" fn link_specialairhiequip_main_loop(fighter: &mut L2CFighterCo
     else {
         // CHANGE TO GLIDE WHEN ANIM IS OVER - EQUIP
         if MotionModule::is_end(fighter.module_accessor) {
-            EQUIPPED = true;
+            EQUIPPED[ENTRY_ID] = true;
             fighter.change_status(FIGHTER_LINK_STATUS_KIND_SPECIAL_AIR_HI_GLIDE.into(), false.into());
             return 1.into();
         }

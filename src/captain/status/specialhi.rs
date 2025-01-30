@@ -39,8 +39,7 @@ unsafe extern "C" fn captain_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2
 
 // INIT
 unsafe extern "C" fn captain_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    let ENTRY_ID = WorkModule::get_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
-    UP_B_AMOUNT[ENTRY_ID] -= 1;
+    UP_B_AMOUNT[get_entry_id(fighter.module_accessor)] -= 1;
     return 0.into();
 }
 
@@ -57,8 +56,6 @@ unsafe extern "C" fn captain_specialhi_main(fighter: &mut L2CFighterCommon) -> L
 
 // MAIN LOOP
 unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
-    let ENTRY_ID = WorkModule::get_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
-
     if MotionModule::frame(fighter.module_accessor) == 2.0 {
         macros::SET_SPEED_EX(fighter, -0.55, 0.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         return 0.into();
@@ -68,7 +65,7 @@ unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon)
             HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_NORMAL), 0);
         }
         if MotionModule::is_end(fighter.module_accessor) {
-            if UP_B_AMOUNT[ENTRY_ID] <= 0 {
+            if UP_B_AMOUNT[get_entry_id(fighter.module_accessor)] <= 0 {
                 fighter.change_status(FIGHTER_STATUS_KIND_FALL_SPECIAL.into(), false.into());
                 return 1.into();
             }

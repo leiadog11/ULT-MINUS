@@ -18,10 +18,11 @@ unsafe extern "C" fn link_specialnstart(agent: &mut L2CAgentBase) {
 
 // UP B
 unsafe extern "C" fn link_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
         if WorkModule::get_float(agent.module_accessor, *FIGHTER_LINK_STATUS_RSLASH_WORK_HOLD_FRAME) >= 59.0 { 
-            if URBOSAS_FURY { 
+            if URBOSAS_FURY[ENTRY_ID] { 
                 macros::PLAY_SE(agent, Hash40::new("se_link_spirit_activate"));
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 2.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -2.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
@@ -50,8 +51,8 @@ unsafe extern "C" fn link_specialhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) { 
         // URBOSAS FURY
         if WorkModule::get_float(agent.module_accessor, *FIGHTER_LINK_STATUS_RSLASH_WORK_HOLD_FRAME) >= 59.0 {  
-            if URBOSAS_FURY { 
-                URBOSAS_FURY = false;
+            if URBOSAS_FURY[ENTRY_ID] { 
+                URBOSAS_FURY[ENTRY_ID] = false;
                 macros::PLAY_SE(agent, Hash40::new("se_link_spirit_lightning"));
                 macros::ATTACK(agent, 3, 0, Hash40::new("hip"), 12.0, 43, 88, 0, 52, 35.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_paralyze"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_SWORD);
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_hit_elec"), Hash40::new("hip"), 0.0, 0.0, 0.0, 0, 0, 0, 2.0, true);

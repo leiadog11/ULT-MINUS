@@ -39,7 +39,7 @@ unsafe extern "C" fn palutena_specials_pre(fighter: &mut L2CFighterCommon) -> L2
 
 // INIT
 unsafe extern "C" fn palutena_specials_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE) >= 360 {
+    if BLACKHOLE_CHARGE[get_entry_id(fighter.module_accessor)] >= 360 {
         fighter.change_status(FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT.into(), false.into());
         return 1.into();
     }
@@ -107,6 +107,7 @@ unsafe extern "C" fn palutena_specials_charge_pre(fighter: &mut L2CFighterCommon
 
 // MAIN
 unsafe extern "C" fn palutena_specials_charge_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s_charge"), 0.0, 1.0, false, 0.0, false, false);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
@@ -115,7 +116,8 @@ unsafe extern "C" fn palutena_specials_charge_main(fighter: &mut L2CFighterCommo
 
 // MAIN LOOP
 unsafe extern "C" fn palutena_specials_charge_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
-    WorkModule::inc_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE);
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
+    BLACKHOLE_CHARGE[ENTRY_ID] += 1;
 
     // SHIELD CANCEL
     if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
@@ -154,14 +156,14 @@ unsafe extern "C" fn palutena_specials_charge_main_loop(fighter: &mut L2CFighter
     }
 
     // HALF CHARGE EFFECT
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE) >= 120 && WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE) <= 121  { 
+    if BLACKHOLE_CHARGE[ENTRY_ID] >= 120 && BLACKHOLE_CHARGE[ENTRY_ID] <= 121  { 
         let dumb = Vector3f{x:0.0,y:5.0,z:0.0};
         let eff = EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 0.5, &dumb, &dumb, false, 0, 0, 0);
         EffectModule::set_rgb(fighter.module_accessor, eff.try_into().unwrap(), 0.5, 0.0, 0.5);
     }
 
     // FINISH
-    if WorkModule::get_int(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE) >= 360 {
+    if BLACKHOLE_CHARGE[ENTRY_ID] >= 360 {
         let mut dumb = Vector3f{x:0.0,y:10.0,z:0.0};
         let eff = EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
         EffectModule::set_rgb(fighter.module_accessor, eff.try_into().unwrap(), 0.5, 0.0, 0.5);
@@ -220,7 +222,7 @@ unsafe extern "C" fn palutena_specials_shoot_pre(fighter: &mut L2CFighterCommon)
 // MAIN
 unsafe extern "C" fn palutena_specials_shoot_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s_shoot"), 0.0, 1.0, false, 0.0, false, false);
-    WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE);
+    BLACKHOLE_CHARGE[get_entry_id(fighter.module_accessor)] = 0;
     DamageModule::set_no_reaction_mode_status(fighter.module_accessor, DamageNoReactionMode{_address: *DAMAGE_NO_REACTION_MODE_ALWAYS as u8}, -1.0, -1.0, -1);
     AreaModule::set_whole(fighter.module_accessor, false);
     WorkModule::on_flag(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_FLAG_NO_DEAD);

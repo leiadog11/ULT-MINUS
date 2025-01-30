@@ -95,7 +95,7 @@ unsafe extern "C" fn parasail_specialairhiequip_pre(weapon: &mut L2CWeaponCommon
 unsafe extern "C" fn parasail_specialairhiequip_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
 
-    if EQUIPPED { 
+    if EQUIPPED[get_entry_id(owner_boma)] { 
         MotionModule::change_motion(weapon.module_accessor, Hash40::new("special_air_hi_unequip"), 0.0, 1.0, false, 0.0, false, false);
     }
     else {
