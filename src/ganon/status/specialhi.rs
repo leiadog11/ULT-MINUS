@@ -4,7 +4,7 @@ use super::*;
 
 // INIT
 unsafe extern "C" fn ganon_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::is_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_GROUND_CHECK) {
+    if GROUND_CHECK[get_entry_id(fighter.module_accessor)] {
         fighter.change_status(FIGHTER_GANON_STATUS_KIND_SPECIAL_HI2_START.into(), false.into());
         return 1.into();
     }

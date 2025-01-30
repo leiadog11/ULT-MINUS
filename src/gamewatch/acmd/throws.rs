@@ -45,7 +45,7 @@ unsafe extern "C" fn gamewatch_throwlw(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.5);
 }
 
-//UP THROW
+// UP THROW
 unsafe extern "C" fn gamewatch_throwhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 90, 20, 0, 30, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -87,8 +87,80 @@ unsafe extern "C" fn gamewatch_throwhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// GRAB
+unsafe extern "C" fn gamewatch_catch(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.2, 0.0, 5.0, 4.0, Some(0.0), Some(5.0), Some(9.3), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.6, 0.0, 5.0, 2.4, Some(0.0), Some(5.0), Some(10.9), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+    macros::FT_MOTION_RATE(agent, 1.22);
+}
+
+// DASH GRAB
+unsafe extern "C" fn gamewatch_catchdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 2.6, 0.0, 5.0, 4.0, Some(0.0), Some(5.0), Some(13.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.3, 0.0, 5.0, 2.7, Some(0.0), Some(5.0), Some(14.8), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+    macros::FT_MOTION_RATE(agent, 1.06);
+}
+
+// PIVOT GRAB
+unsafe extern "C" fn gamewatch_catchturn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        GrabModule::set_rebound(agent.module_accessor, true);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::CATCH(agent, 0, Hash40::new("top"), 3.2, 0.0, 5.0, -4.0, Some(0.0), Some(5.0), Some(-15.6), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 1.6, 0.0, 5.0, -2.4, Some(0.0), Some(5.0), Some(-17.2), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
+    }
+    macros::FT_MOTION_RATE(agent, 1.037);
+}
+
 pub fn install() {
     Agent::new("gamewatch")
         .game_acmd("game_throwlw", gamewatch_throwlw, Low)
+
+        .game_acmd("game_throwhi", gamewatch_throwhi, Low)
+
+        .game_acmd("game_catch", gamewatch_catch, Low)
+
+        .game_acmd("game_catchdash", gamewatch_catchdash, Low)
+
+        .game_acmd("game_catchturn", gamewatch_catchturn, Low)
+
         .install();
 }

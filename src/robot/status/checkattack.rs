@@ -10,8 +10,9 @@ unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash
     (*table).get_map(hash).unwrap().clone()
 }
 
-//PUMMEL
+// PUMMEL
 unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
@@ -19,12 +20,12 @@ unsafe extern "C" fn robot_catch_attack_check_attack_status(fighter: &mut L2CFig
         if collision_kind == *COLLISION_KIND_HIT {
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
-            if WorkModule::get_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK) == 3 {
+            if PUMMEL_AMOUNT[ENTRY_ID] == 3 {
                 StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BURY, false);
-                WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+                PUMMEL_AMOUNT[ENTRY_ID] = 0;
             }
             else {
-                WorkModule::inc_int(fighter.module_accessor, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+                PUMMEL_AMOUNT[ENTRY_ID] += 1;
             }
         }
     }

@@ -3,42 +3,44 @@ use super::*;
 // OPFF
 pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        let motion = MotionModule::motion_kind(fighter.module_accessor);
-        let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
-        let status_kind = StatusModule::status_kind(fighter.module_accessor);
+        let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+        let ENTRY_ID = get_entry_id(boma);
+        let motion = MotionModule::motion_kind(boma);
+        let situation_kind = StatusModule::situation_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
 
         // CLIFF CAPE CHECK
-        if situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(fighter.module_accessor, 0) > 1.0 || status_kind == *FIGHTER_STATUS_KIND_DEAD { 
-            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("cape"), true);
+        if situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(boma, 0) > 1.0 || status_kind == *FIGHTER_STATUS_KIND_DEAD { 
+            ModelModule::set_mesh_visibility(boma, Hash40::new("cape"), true);
         }
 
         // ITEM COOLDOWNS
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN) > 0 {
-            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN);
+        if KEY_COOLDOWN[ENTRY_ID] > 0 {
+            KEY_COOLDOWN[ENTRY_ID] -= 1; 
         }
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN) > 0 {
-            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN);
+        if APPLE_COOLDOWN[ENTRY_ID] > 0 {
+            APPLE_COOLDOWN[ENTRY_ID] -= 1; 
         }
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN) > 0 {
-            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN);
+        if MELON_COOLDOWN[ENTRY_ID] > 0 {
+            MELON_COOLDOWN[ENTRY_ID] -= 1; 
         }
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN) > 0 {
-            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
+        if GALAXIAN_COOLDOWN[ENTRY_ID] > 0 {
+            GALAXIAN_COOLDOWN[ENTRY_ID] -= 1; 
         }
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN) > 0 {
-            WorkModule::dec_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN);
+        if BELL_COOLDOWN[ENTRY_ID] > 0 {
+            BELL_COOLDOWN[ENTRY_ID] -= 1; 
         }
 
         // NEUTRAL B MONADO WHEEL
         if status_kind != *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD {
-            ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost1"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
-            ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("ghost2"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+            ModelModule::set_joint_rotate(boma, Hash40::new("ghost1"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+            ModelModule::set_joint_rotate(boma, Hash40::new("ghost2"), &Vector3f{x: 0.0, y: -90.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
         }
 
         // GHOST DIRECTIONS
         if motion != hash40("attack_s4") || motion != hash40("attack_lw4") || motion != hash40("attack_hi4") {
-            WorkModule::off_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
-            WorkModule::off_flag(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
+            DOWN_SMASH[ENTRY_ID] = false;
+            UP_SMASH[ENTRY_ID] = false;
         } 
     }
 }

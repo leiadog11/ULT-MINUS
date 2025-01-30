@@ -64,6 +64,7 @@ unsafe extern "C" fn luigi_attacks4lw(agent: &mut L2CAgentBase) {
 
 // UP SMASH
 unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
@@ -81,14 +82,13 @@ unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
             AttackModule::clear_all(agent.module_accessor);
-            WorkModule::off_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
+            MISFIRE_UP_SMASH[ENTRY_ID] = false;
         }
     }
 	else {
-        OPPONENT_BOMAS = Some(get_opponent_bomas_agent(agent));
         frame(agent.lua_state_agent, 9.0);
         if macros::is_excute(agent) {
-            WorkModule::on_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
+            MISFIRE_UP_SMASH[ENTRY_ID] = true;
 	        macros::ATTACK(agent, 0, 0, Hash40::new("head"), 14.0, 270, 102, 0, 35, 4.8, 2.8, -1.2, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
             macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 14.0, 270, 102, 0, 35, 4.0, 4.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_HEAD);
             macros::LANDING_EFFECT(agent, Hash40::new("luigi_rocket_bomb"), Hash40::new("head"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
@@ -100,12 +100,7 @@ unsafe extern "C" fn luigi_attackhi4(agent: &mut L2CAgentBase) {
         wait(agent.lua_state_agent, 5.0);
         if macros::is_excute(agent) {
             HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
-            if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
-                for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
-                    GroundModule::set_collidable(boma_ptr, true);
-                }
-            }
-            WorkModule::off_flag(agent.module_accessor, FIGHTER_LUIGI_INSTANCE_WORK_ID_FLAG_MISFIRE_ATTACK_HI4);
+            MISFIRE_UP_SMASH[ENTRY_ID] = false;
             AttackModule::clear_all(agent.module_accessor);
         }
     }

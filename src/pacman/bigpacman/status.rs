@@ -4,26 +4,27 @@ use super::*;
 
 // INIT
 pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2CWeaponCommon) -> smashline::L2CValue {
-    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
     //Snap to throw position
     let mut owner_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut offset_add = Vector3f{x:0.0,y:0.0,z:0.0};
 
-    if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH) {
+    if UP_SMASH[ENTRY_ID] {
         offset_add = Vector3f{x:0.0,y:20.0,z:0.0};
     }
-    else if WorkModule::is_flag(owner, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
+    else if DOWN_SMASH[ENTRY_ID] {
         offset_add = Vector3f{x:-20.0,y:0.0,z:0.0};
     }
     else {
         offset_add = Vector3f{x:20.0,y:0.0,z:0.0};
     }
 
-    let lr = PostureModule::lr(owner);
-    let owner_offset = ModelModule::joint_global_offset_from_top(owner, Hash40{hash: hash40("throw")}, &mut owner_pos);  
+    let lr = PostureModule::lr(owner_boma);
+    let owner_offset = ModelModule::joint_global_offset_from_top(owner_boma, Hash40{hash: hash40("throw")}, &mut owner_pos);  
     let cap_offset = ModelModule::joint_global_offset_from_top(weapon.module_accessor, Hash40{hash: hash40("have")}, &mut article_pos);       
-    let newPos = Vector3f{x: PostureModule::pos_x(owner) + owner_pos.x - article_pos.x + (offset_add.x*lr), y: PostureModule::pos_y(owner) + owner_pos.y - (article_pos.y)+ offset_add.y, z: PostureModule::pos_z(owner) + owner_pos.z - article_pos.z};
+    let newPos = Vector3f{x: PostureModule::pos_x(owner_boma) + owner_pos.x - article_pos.x + (offset_add.x*lr), y: PostureModule::pos_y(owner_boma) + owner_pos.y - (article_pos.y)+ offset_add.y, z: PostureModule::pos_z(owner_boma) + owner_pos.z - article_pos.z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     0.into()
@@ -54,16 +55,17 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("start"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
     let lr = PostureModule::lr(weapon.module_accessor);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
     let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
 
-    if WorkModule::is_flag(owner_boma, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH) {
+    if UP_SMASH[ENTRY_ID] {
         speed_x = 0.0;
         speed_y = 1.0;
     }
-    else if WorkModule::is_flag(owner_boma, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH) {
+    else if DOWN_SMASH[ENTRY_ID] {
         speed_x = if lr == 1.0 { -1.0 } else { 1.0 };
         speed_y = 0.0; 
     }

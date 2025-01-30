@@ -4,10 +4,11 @@ use super::*;
 
 // FORWARD SMASH
 unsafe extern "C" fn pacman_attacks4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        UP_SMASH[ENTRY_ID] = false;
+        DOWN_SMASH[ENTRY_ID] = false;
     }
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -35,10 +36,11 @@ unsafe extern "C" fn pacman_attacks4(agent: &mut L2CAgentBase) {
 
 // DOWN SMASH
 unsafe extern "C" fn pacman_attacklw4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        UP_SMASH[ENTRY_ID] = false;
+        DOWN_SMASH[ENTRY_ID] = false;
     }
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -60,22 +62,23 @@ unsafe extern "C" fn pacman_attacklw4(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        DOWN_SMASH[ENTRY_ID] = true;
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_BIGPACMAN, false, -1);
     }
     wait(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        DOWN_SMASH[ENTRY_ID] = false;
     }
 }
 
 // UP SMASH
 unsafe extern "C" fn pacman_attackhi4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_DOWN_SMASH);
+        UP_SMASH[ENTRY_ID] = false;
+        DOWN_SMASH[ENTRY_ID] = false;
     }
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -99,12 +102,12 @@ unsafe extern "C" fn pacman_attackhi4(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
+        UP_SMASH[ENTRY_ID] = true;
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PACMAN_GENERATE_ARTICLE_BIGPACMAN, false, -1);
     }
     wait(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_FLAG_UP_SMASH);
+        UP_SMASH[ENTRY_ID] = false;
         AttackModule::clear_all(agent.module_accessor);
     }
 }

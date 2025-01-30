@@ -4,7 +4,7 @@ use super::*;
 
 // PRE
 unsafe extern "C" fn palutena_specialhi_exec(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if WorkModule::is_flag(fighter.module_accessor, FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_UP_B_USED) {
+    if UP_B_USED[get_entry_id(fighter.module_accessor)] {
         StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
     }
 

@@ -5,7 +5,7 @@ use super::*;
 // NEUTRAL B
 unsafe extern "C" fn ganon_specialn(agent: &mut L2CAgentBase) {
     let facing = PostureModule::lr(agent.module_accessor);
-    if !WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
         if facing == 1.0 {
             MotionModule::change_motion(agent.module_accessor, Hash40::new("appeal_lw_r"), 0.0, 1.0, false, 0.0, false, false);
         }
@@ -24,7 +24,7 @@ unsafe extern "C" fn ganon_specialn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 40.0);
     if macros::is_excute(agent) {
-        WorkModule::off_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
+        SWORD[get_entry_id(agent.module_accessor)] = false;
     }
 }
 
@@ -82,7 +82,7 @@ unsafe extern "C" fn ganon_specialsstart(agent: &mut L2CAgentBase) {
 
 // SIDE B
 unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
-    OPPONENT_BOMAS = Some(get_opponent_bomas_agent(agent));
+    let opponent_bomas = get_opponent_bomas(agent.module_accessor);
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 361, 90, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_BOMB, *ATTACK_REGION_NONE);
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 4.0, 0, 10, 0, 100, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_bury_r"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
@@ -93,19 +93,15 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 31.0); 
     if macros::is_excute(agent) {
-        if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
-            for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
-                DamageModule::add_damage(boma_ptr, 5.0, 0);
-            }
+        for opponent_boma in opponent_bomas.iter() { 
+            DamageModule::add_damage(*opponent_boma, 5.0, 0);
         }
         DamageModule::add_damage(agent.module_accessor, -5.0, 0);
     }
     frame(agent.lua_state_agent, 38.0); 
     if macros::is_excute(agent) {
-        if let Some(ref opponent_bomas) = OPPONENT_BOMAS {
-            for (index, &boma_ptr) in opponent_bomas.iter().enumerate() { 
-                DamageModule::add_damage(boma_ptr, 5.0, 0);
-            }
+        for opponent_boma in opponent_bomas.iter() { 
+            DamageModule::add_damage(*opponent_boma, 5.0, 0);
         }
         DamageModule::add_damage(agent.module_accessor, -5.0, 0);
     }

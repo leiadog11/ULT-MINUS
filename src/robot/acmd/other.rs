@@ -5,7 +5,7 @@ use super::*;
 //ITEM THROW 
 unsafe extern "C" fn rob_effect_itemlightthrow(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        WorkModule::set_int(agent.module_accessor, 300, FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE);
+        GYRO_LIFE[get_entry_id(agent.module_accessor)] = 360;
     }
 }
 

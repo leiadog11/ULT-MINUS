@@ -7,7 +7,7 @@ pub mod dengekidama;
 pub mod kaminari;
 pub mod cloud;
 
-const FIGHTER_PICHU_INSTANCE_WORK_ID_FLAG_BLOWN_UP: i32 = 0x200000E7;
+static mut BLOWN_UP: [bool; 8] = [false; 8];
 
 pub fn install() {
     acmd::install();

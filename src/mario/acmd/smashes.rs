@@ -66,7 +66,7 @@ unsafe extern "C" fn mario_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_SMASH_CHARGE) >= 60.0 {
+    if FORWARD_SMASH_CHARGE[get_entry_id(agent.module_accessor)] >= 60.0 {
         frame(agent.lua_state_agent, 18.0);
         if macros::is_excute(agent) {
             macros::ATTACK(agent, 0, 0, Hash40::new("arml"), 14.7, 361, 105, 0, 25, 2.0, -1.0, 0.7, 0.0, Some(-3.0), Some(1.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
@@ -98,7 +98,7 @@ unsafe extern "C" fn mario_effect_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
     }
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_SMASH_CHARGE) >= 60.0 { 
+    if FORWARD_SMASH_CHARGE[get_entry_id(agent.module_accessor)] >= 60.0 { 
         frame(agent.lua_state_agent, 18.0);
         if macros::is_excute(agent) {
             macros::EFFECT(agent, Hash40::new("sys_flame"), Hash40::new("top"), 0, 8, 12, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 360, true);
@@ -125,7 +125,7 @@ unsafe extern "C" fn mario_sound_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_mario_smash_s01"));
     }
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_SMASH_CHARGE) >= 60.0 { 
+    if FORWARD_SMASH_CHARGE[get_entry_id(agent.module_accessor)] >= 60.0 { 
         frame(agent.lua_state_agent, 17.0);
         if macros::is_excute(agent) {
             macros::STOP_SE(agent, Hash40::new("se_common_smash_start"));
@@ -161,7 +161,7 @@ unsafe extern "C" fn mario_expression_attacks4(agent: &mut L2CAgentBase) {
         macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackll"), 0);
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohit_explosion"), 16, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_MARIO_INSTANCE_WORK_ID_FLOAT_FORWARD_SMASH_CHARGE) >= 60.0 { 
+    if FORWARD_SMASH_CHARGE[get_entry_id(agent.module_accessor)] >= 60.0 { 
         frame(agent.lua_state_agent, 18.0);
         if macros::is_excute(agent) {
             slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);

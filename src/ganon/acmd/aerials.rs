@@ -4,7 +4,7 @@ use super::*;
 
 // NAIR 
 unsafe extern "C" fn ganon_attackairn(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_n2"), 0.0, 1.0, false, 0.0, false, false);
     }
     macros::FT_MOTION_RATE(agent, 0.8);
@@ -143,7 +143,7 @@ unsafe extern "C" fn ganon_landingairn(agent: &mut L2CAgentBase) {
 
 // FAIR
 unsafe extern "C" fn ganon_attackairf(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_f2"), 0.0, 1.0, false, 0.0, false, false);
     }
     frame(agent.lua_state_agent, 7.0);
@@ -240,7 +240,7 @@ unsafe extern "C" fn ganon_expression_attackairf2(agent: &mut L2CAgentBase) {
 
 // FAIR LANDING
 unsafe extern "C" fn ganon_landingairf(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("landing_air_f2"), 0.0, 1.0, false, 0.0, false, false);
     }
 }
@@ -256,7 +256,7 @@ unsafe extern "C" fn ganon_landingairf2(agent: &mut L2CAgentBase) {
 
 // BAIR
 unsafe extern "C" fn ganon_attackairb(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_b2"), 0.0, 1.0, false, 0.0, false, false);
     }
     frame(agent.lua_state_agent, 7.0);
@@ -344,7 +344,7 @@ unsafe extern "C" fn ganon_expression_attackairb2(agent: &mut L2CAgentBase) {
 
 // BAIR LANDING
 unsafe extern "C" fn ganon_landingairb(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("landing_air_b2"), 0.0, 1.0, false, 0.0, false, false);
     }
 }
@@ -358,7 +358,7 @@ unsafe extern "C" fn ganon_landingairb2(agent: &mut L2CAgentBase) {
 
 // UP AIR
 unsafe extern "C" fn ganon_attackairhi(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_hi2"), 0.0, 1.0, false, 0.0, false, false);
     }
     if macros::is_excute(agent) {
@@ -453,7 +453,7 @@ unsafe extern "C" fn ganon_expression_attackairhi2(agent: &mut L2CAgentBase) {
 
 // UP AIR LANDING
 unsafe extern "C" fn ganon_landingairhi(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("landing_air_hi2"), 0.0, 1.0, false, 0.0, false, false);
     }
 }
@@ -469,7 +469,7 @@ unsafe extern "C" fn ganon_landingairhi2(agent: &mut L2CAgentBase) {
 
 // DOWN AIR
 unsafe extern "C" fn ganon_attackairlw(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_lw2"), 0.0, 1.0, false, 0.0, false, false);
     }
     frame(agent.lua_state_agent, 1.0);
@@ -592,7 +592,7 @@ unsafe extern "C" fn ganon_expression_attackairlw2(agent: &mut L2CAgentBase) {
 
 // DOWN AIR LANDING
 unsafe extern "C" fn ganon_landingairlw(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD) {
+    if SWORD[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("landing_air_lw2"), 0.0, 1.0, false, 0.0, false, false);
     }
 }

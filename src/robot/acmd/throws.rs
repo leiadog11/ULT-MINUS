@@ -4,7 +4,7 @@ use super::*;
 
 // GRAB
 unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    PUMMEL_AMOUNT[get_entry_id(agent.module_accessor)] = 0;
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -26,7 +26,7 @@ unsafe extern "C" fn rob_catch(agent: &mut L2CAgentBase) {
 
 // DASH GRAB
 unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    PUMMEL_AMOUNT[get_entry_id(agent.module_accessor)] = 0;
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -48,7 +48,7 @@ unsafe extern "C" fn rob_catchdash(agent: &mut L2CAgentBase) {
 
 // PIVOT GRAB
 unsafe extern "C" fn rob_catchturn(agent: &mut L2CAgentBase) {
-    WorkModule::set_int(agent.module_accessor, 0, FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK);
+    PUMMEL_AMOUNT[get_entry_id(agent.module_accessor)] = 0;
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);

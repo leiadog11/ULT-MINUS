@@ -101,8 +101,7 @@ unsafe extern "C" fn pacman_specialn_hold_main(fighter: &mut L2CFighterCommon) -
     ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), true);
     ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), true);
     ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), true);
-    let item_choice = 0;
-    WorkModule::set_int(fighter.module_accessor, item_choice, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+    ITEM_CHOICE[get_entry_id(fighter.module_accessor)] = 0;
 
     fighter.fastshift(L2CValue::Ptr(pacman_specialn_hold_main_loop as *const () as _ ));
     return 0.into()
@@ -110,6 +109,7 @@ unsafe extern "C" fn pacman_specialn_hold_main(fighter: &mut L2CFighterCommon) -
 
 // MAIN LOOP
 unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let xpos = ControlModule::get_stick_x(fighter.module_accessor);
     let ypos = ControlModule::get_stick_y(fighter.module_accessor);
     let selected_scale = Vector3f{x: 1.5, y: 1.5, z: 1.0};
@@ -139,7 +139,7 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         }
 
         //key
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN) != 0 {
+        if KEY_COOLDOWN[ENTRY_ID] != 0 {
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
         }
         else {
@@ -149,12 +149,12 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
                     SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n08"), true, false, false, false, enSEType(0));
                 }
                 ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
-                WorkModule::set_int(fighter.module_accessor, 1, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+                ITEM_CHOICE[ENTRY_ID] = 1;
             }
         }
 
         //apple
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN) != 0 {
+        if APPLE_COOLDOWN[ENTRY_ID] != 0 {
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
         }
         else {
@@ -164,12 +164,12 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
                     SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n04"), true, false, false, false, enSEType(0));
                 }
                 ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
-                WorkModule::set_int(fighter.module_accessor, 2, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+                ITEM_CHOICE[ENTRY_ID] = 2;
             }
         }
 
         //melon
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN) != 0 {
+        if MELON_COOLDOWN[ENTRY_ID] != 0 {
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);       
         }
         else {
@@ -179,12 +179,12 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
                     SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n05"), true, false, false, false, enSEType(0));
                 }
                 ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
-                WorkModule::set_int(fighter.module_accessor, 3, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+                ITEM_CHOICE[ENTRY_ID] = 3;
             }
         }
 
         //galaxian
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN) != 0 {
+        if GALAXIAN_COOLDOWN[ENTRY_ID] != 0 {
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);       
         }
         else {
@@ -194,12 +194,12 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
                     SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n06"), true, false, false, false, enSEType(0));
                 }
                 ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
-                WorkModule::set_int(fighter.module_accessor, 4, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+                ITEM_CHOICE[ENTRY_ID] = 4;
             }
         }
 
         //bell
-        if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN) != 0 {
+        if BELL_COOLDOWN[ENTRY_ID] != 0 {
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);        
         }
         else {
@@ -209,50 +209,49 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
                     SoundModule::play_se(fighter.module_accessor, Hash40::new("se_pacman_special_n07"), true, false, false, false, enSEType(0));
                 }
                 ControlModule::set_rumble(fighter.module_accessor, Hash40::new("rbkind_attacks"), 0, false, 0);
-                WorkModule::set_int(fighter.module_accessor, 5, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+                ITEM_CHOICE[ENTRY_ID] = 5;
             }
         }
 
         if xpos == 0.0 && ypos == 0.0 {
-            WorkModule::set_int(fighter.module_accessor, 0, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE);
+            ITEM_CHOICE[ENTRY_ID] = 0;
         }
     }
     else {
         //key
-        if  WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 1 {
+        if  ITEM_CHOICE[ENTRY_ID] == 1 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANKEY), 0, 0, false, false);
-            WorkModule::set_int(fighter.module_accessor, 180, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_KEY_COOLDOWN);
+            KEY_COOLDOWN[ENTRY_ID] = 180;
         }
 
         //apple
-        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 2 {
+        else if ITEM_CHOICE[ENTRY_ID] == 2 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANAPPLE), 0, 0, false, false);
-            WorkModule::set_int(fighter.module_accessor, 60, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_APPLE_COOLDOWN);
+            APPLE_COOLDOWN[ENTRY_ID] = 90;
         }
 
         //melon
-        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 3 {
+        else if ITEM_CHOICE[ENTRY_ID] == 3 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANMELON), 0, 0, false, false);
-            WorkModule::set_int(fighter.module_accessor, 60, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_MELON_COOLDOWN);
+            MELON_COOLDOWN[ENTRY_ID] = 90;
         }
 
         //galaxian
-        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 4 {
+        else if ITEM_CHOICE[ENTRY_ID] == 4 {
             let rand = smash::app::sv_math::rand(hash40("fighter"), 12) as u64;
             if rand != 1 {
                 ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBOSS), 0, 0, false, false);
-                WorkModule::set_int(fighter.module_accessor, 90, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
             }
             else {
                 ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_BOSSGALAGA), 0, 0, false, false);
-                WorkModule::set_int(fighter.module_accessor, 90, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_GALAXIAN_COOLDOWN);
             }
+            GALAXIAN_COOLDOWN[ENTRY_ID] = 120;
         }
 
         //bell
-        else if WorkModule::get_int(fighter.module_accessor, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_ITEM_CHOICE) == 5 {
+        else if ITEM_CHOICE[ENTRY_ID] == 5 {
             ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_PACMANBELL), 0, 0, false, false);
-            WorkModule::set_int(fighter.module_accessor, 180, FIGHTER_PACMAN_INSTANCE_WORK_ID_INT_BELL_COOLDOWN);
+            BELL_COOLDOWN[ENTRY_ID] = 210;
         }
 
         else {

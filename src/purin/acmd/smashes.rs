@@ -24,15 +24,16 @@ unsafe extern "C" fn purin_attackhi4(agent: &mut L2CAgentBase) {
 
 // FORWARD SMASH 
 unsafe extern "C" fn purin_attacks4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
     }
     frame(agent.lua_state_agent, 16.0);
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL) > 1.0 { 
+    if CHARGE_MUL[ENTRY_ID] > 1.0 { 
         macros::FT_MOTION_RATE(agent, 2.5);
     }
-    macros::SET_SPEED_EX(agent, WorkModule::get_float(agent.module_accessor, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL), 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    macros::SET_SPEED_EX(agent, CHARGE_MUL[ENTRY_ID], 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("footl"), 16.0, 361, 110, 0, 10, 5.0, 0.0, 1.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("footl"), 16.0, 361, 110, 0, 10, 5.0, 0.0, -2.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -46,20 +47,21 @@ unsafe extern "C" fn purin_attacks4(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        WorkModule::set_float(agent.module_accessor, 0.0, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
+        CHARGE_MUL[ENTRY_ID] = 0.0;
     }
 }
 
 // DOWN SMASH
 unsafe extern "C" fn purin_attacklw4(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
     }
     frame(agent.lua_state_agent, 9.0);
     macros::FT_MOTION_RATE(agent, 1.5);
-    if WorkModule::get_float(agent.module_accessor, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL) > 1.0 {
-        PostureModule::set_scale(agent.module_accessor, WorkModule::get_float(agent.module_accessor, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL), false);
+    if CHARGE_MUL[ENTRY_ID] > 1.0 {
+        PostureModule::set_scale(agent.module_accessor, CHARGE_MUL[ENTRY_ID], false);
     }
     if macros::is_excute(agent) {
         macros::HIT_NODE(agent, Hash40::new("top"), *HIT_STATUS_XLU);
@@ -69,7 +71,7 @@ unsafe extern "C" fn purin_attacklw4(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.0);
     if macros::is_excute(agent) {
         PostureModule::set_scale(agent.module_accessor, 1.0, false);
-        WorkModule::set_float(agent.module_accessor, 0.0, FIGHTER_PURIN_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL);
+        CHARGE_MUL[ENTRY_ID] = 0.0;
         HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
         AttackModule::clear_all(agent.module_accessor);
     }

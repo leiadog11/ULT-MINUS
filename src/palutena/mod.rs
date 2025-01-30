@@ -9,18 +9,18 @@ pub mod beam;
 pub mod autoaimbullet;
 pub mod blackhole;
 
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLOAT_CHARGE_MUL : i32 = 0x4E;
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_N_CHARGE: i32 = 0x100000BF;
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_INT_SPECIAL_S_CHARGE: i32 = 0x100000CA;
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_PLANTED: i32 = 0x200000F1;
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_ANCHOR_TP: i32 = 0x200000F2;
-pub const FIGHTER_PALUTENA_INSTANCE_WORK_ID_FLAG_UP_B_USED: i32 = 0x200000F3;
-pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE: i32 = 0x1EA;
-pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT: i32 = 0x1EB;
-pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_CHARGE: i32 = 0x1EC;
-pub const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT: i32 = 0x1ED;
-pub static mut BULLET_X_POS : f32 = 0.0; 
-pub static mut BULLET_Y_POS : f32 = 0.0; // MAYBE DONT MAKE THESE PUBLIC FOR 2+ PALUS!!! 
+const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE: i32 = 0x1EA;
+const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT: i32 = 0x1EB;
+const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_CHARGE: i32 = 0x1EC;
+const FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT: i32 = 0x1ED;
+
+static mut ANCHOR_PLANTED: [bool; 8] = [false; 8];
+static mut UP_B_USED: [bool; 8] = [false; 8];
+static mut MEGA_LASER_CHARGE: [i32; 8] = [0; 8];
+static mut BLACKHOLE_CHARGE: [i32; 8] = [0; 8];
+static mut CHARGE_MUL: [f32; 8] = [1.0; 8];
+static mut BULLET_X_POS: [f32; 8] = [0.0; 8];
+static mut BULLET_Y_POS: [f32; 8] = [0.0; 8];
 
 //Gets Article Boma
 pub unsafe fn get_article_boma(boma: *mut BattleObjectModuleAccessor, article_type: skyline::libc::c_int) -> *mut BattleObjectModuleAccessor {

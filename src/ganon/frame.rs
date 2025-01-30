@@ -19,64 +19,67 @@ static mut Y_ACCEL_MUL : f32 = 0.06;
 // OPFF
 pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        let motion_kind = MotionModule::motion_kind(fighter.module_accessor);
-        let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
+        let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+        let motion_kind = MotionModule::motion_kind(boma);
+        let situation_kind = StatusModule::situation_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
+        let ENTRY_ID = get_entry_id(boma);
 
+        // REMOVE SWORD IF IN BRAWLER SMASH ATTACKS
         if motion_kind == hash40("attack_s4_s2") || motion_kind == hash40("attack_s4_hold2") || 
         motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") {
-            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }   
 
-        if DamageModule::reaction(fighter.module_accessor, 0) > 1.0 {
-            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        // REMOVE SWORD IF HIT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
 
+        // GAIN PLAYER CURSOR BACK IF NOT IN UP B
         if motion_kind != hash40("special_hi2_start") || motion_kind != hash40("special_hi2") {
-            VisibilityModule::set_whole(fighter.module_accessor, true);
-            WorkModule::set_flag(fighter.module_accessor, true, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
+            VisibilityModule::set_whole(boma, true);
+            WorkModule::set_flag(boma, true, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
         }
 
         // GROUND CHECK FOR UP B 2
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
-            WorkModule::on_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_GROUND_CHECK);
+            GROUND_CHECK[ENTRY_ID] = true;
         }
 
-        //FLOAT
-        let ENTRY_ID = WorkModule::get_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
-        let stick_x = ControlModule::get_stick_x(fighter.module_accessor) * PostureModule::lr(fighter.module_accessor);
-		let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
-		let speed_x = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-		let speed_y = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        let status_kind = smash::app::lua_bind::StatusModule::status_kind(fighter.module_accessor);
-        let situation_kind = StatusModule::situation_kind(fighter.module_accessor);
+        // FLOAT
+        let stick_x = ControlModule::get_stick_x(boma) * PostureModule::lr(boma);
+		let stick_y = ControlModule::get_stick_y(boma);
+		let speed_x = KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+		let speed_y = KineticModule::get_sum_speed_y(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
-        if StatusModule::situation_kind(fighter.module_accessor) != SITUATION_KIND_AIR {
+        if situation_kind != *SITUATION_KIND_AIR {
             FLOAT[ENTRY_ID] = 0;
             START_FLOAT[ENTRY_ID] = false;
             CHECK_FLOAT[ENTRY_ID] = 0;
         };
         //Effect Code
-        if FLOAT[ENTRY_ID] % 5 == 0 && FLOAT[ENTRY_ID] > 1{
-                macros::EFFECT_FOLLOW(fighter, Hash40::new("ganon_rekkikyaku"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, true);
-        };
+        if FLOAT[ENTRY_ID] % 5 == 0 && FLOAT[ENTRY_ID] > 1 {
+            macros::EFFECT_FOLLOW(fighter, Hash40::new("ganon_rekkikyaku"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, true);
+        }
         //Float Code
-        if FLOAT[ENTRY_ID] == 1{
-            if KineticModule::get_kinetic_type(fighter.module_accessor) == *FIGHTER_KINETIC_TYPE_MOTION_AIR && [*FIGHTER_STATUS_KIND_SPECIAL_LW, FIGHTER_GANON_STATUS_KIND_SPECIAL_LW_CONTINUE, *FIGHTER_STATUS_KIND_SPECIAL_HI, *FIGHTER_STATUS_KIND_SPECIAL_S, *FIGHTER_GANON_STATUS_KIND_SPECIAL_AIR_S_CATCH, *FIGHTER_GANON_STATUS_KIND_SPECIAL_AIR_S_END].contains(&status_kind) == false {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
-            };
-        };
-        if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::get_stick_y(fighter.module_accessor) < -0.5 {
+        if FLOAT[ENTRY_ID] == 1 {
+            if KineticModule::get_kinetic_type(boma) == *FIGHTER_KINETIC_TYPE_MOTION_AIR && [*FIGHTER_STATUS_KIND_SPECIAL_LW, FIGHTER_GANON_STATUS_KIND_SPECIAL_LW_CONTINUE, *FIGHTER_STATUS_KIND_SPECIAL_HI, *FIGHTER_STATUS_KIND_SPECIAL_S, FIGHTER_GANON_STATUS_KIND_SPECIAL_HI2_START, FIGHTER_GANON_STATUS_KIND_SPECIAL_HI2, *FIGHTER_GANON_STATUS_KIND_SPECIAL_AIR_S_CATCH, *FIGHTER_GANON_STATUS_KIND_SPECIAL_AIR_S_END].contains(&status_kind) == false {
+                KineticModule::change_kinetic(boma, *FIGHTER_KINETIC_TYPE_FALL);
+            }
+        }
+        if ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::get_stick_y(boma) < -0.5 {
             CAN_DOUBLE_JUMP[ENTRY_ID] = 1;
         } else {
             CAN_DOUBLE_JUMP[ENTRY_ID] = 0;
         }
         if situation_kind == *SITUATION_KIND_AIR && (!(*FIGHTER_STATUS_KIND_DAMAGE..*FIGHTER_STATUS_KIND_DAMAGE_FALL).contains(&status_kind) && status_kind != *FIGHTER_STATUS_KIND_FALL_SPECIAL){
-            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) && stick_y < -0.5 {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && stick_y < -0.5 {
                 CHECK_FLOAT[ENTRY_ID] += 1;
             } else {
                 CHECK_FLOAT[ENTRY_ID] = 0;
             };
-            if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) && stick_y < -0.5 {
+            if ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && stick_y < -0.5 {
                 CHECK_FLOAT[ENTRY_ID] = CHECK_FLOAT_MAX;
             };
             if (CHECK_FLOAT[ENTRY_ID] >= CHECK_FLOAT_MAX || JUMPSQUAT_FLOAT[ENTRY_ID]) && FLOAT[ENTRY_ID] == 0 {
@@ -84,15 +87,15 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
             };
         };
         if status_kind == *FIGHTER_STATUS_KIND_JUMP && JUMPSQUAT_FLOAT[ENTRY_ID] {
-            StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         };
-        if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK_RAW) || ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_CSTICK_ON) {
+        if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK_RAW) || ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_CSTICK_ON) {
             JUMPSQUAT_FLOAT[ENTRY_ID] = false;
         }
         if status_kind == *FIGHTER_STATUS_KIND_JUMP_SQUAT {
-            if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) && ControlModule::get_stick_y(fighter.module_accessor) < -0.5 {
+            if ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_CSTICK_ON) && ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_ATTACK_RAW) && ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && ControlModule::get_stick_y(boma) < -0.5 {
                 JUMPSQUAT_FLOAT[ENTRY_ID] = true;
-                WorkModule::set_flag(fighter.module_accessor, false, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_JUMP_MINI);
+                WorkModule::set_flag(boma, false, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_JUMP_MINI);
             } else {
                 JUMPSQUAT_FLOAT[ENTRY_ID] = false;
                 CHECK_FLOAT[ENTRY_ID] = 0;
@@ -112,13 +115,13 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         };
         if FLOAT[ENTRY_ID] > 1 {
             FLOAT[ENTRY_ID] -= 1;
-            if KineticModule::get_kinetic_type(fighter.module_accessor) != *FIGHTER_KINETIC_TYPE_MOTION_AIR {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+            if KineticModule::get_kinetic_type(boma) != *FIGHTER_KINETIC_TYPE_MOTION_AIR {
+                KineticModule::change_kinetic(boma, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
             };
-            if ControlModule::check_button_off(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
+            if ControlModule::check_button_off(boma, *CONTROL_PAD_BUTTON_JUMP) {
                 FLOAT[ENTRY_ID] = 1;
             };
-            if ControlModule::check_button_on_trriger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
+            if ControlModule::check_button_on_trriger(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
                 FLOAT[ENTRY_ID] = 1;
             };
             let mut y_add = 0.0;
@@ -180,16 +183,16 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         } else {
             X[ENTRY_ID] = 0.0;
             Y[ENTRY_ID] = 0.0;
-            KineticModule::resume_energy_all(fighter.module_accessor);
+            KineticModule::resume_energy_all(boma);
         };
         if START_FLOAT[ENTRY_ID] == true {
-            WorkModule::off_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_GROUND_CHECK);
-            StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
-            SoundModule::play_se(fighter.module_accessor, Hash40::new("se_ganon_appear01"), true, false, false, false, enSEType(0));
+            GROUND_CHECK[ENTRY_ID] = false;
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
+            SoundModule::play_se(boma, Hash40::new("se_ganon_appear01"), true, false, false, false, enSEType(0));
             FLOAT[ENTRY_ID] = FLOAT_MAX;
             START_FLOAT[ENTRY_ID] = false;
-            ControlModule::clear_command(fighter.module_accessor, false);
-            WorkModule::set_flag(fighter.module_accessor, false, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_DIVE);
+            ControlModule::clear_command(boma, false);
+            WorkModule::set_flag(boma, false, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_DIVE);
         };
     }
 }
@@ -197,7 +200,7 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn ganon_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        WorkModule::on_flag(fighter.module_accessor, FIGHTER_GANON_INSTANCE_WORK_ID_FLAG_SWORD);
+        
     }
 }
 

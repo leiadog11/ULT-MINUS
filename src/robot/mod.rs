@@ -5,8 +5,8 @@ pub mod frame;
 pub mod status;
 pub mod beam;
 
-static mut FIGHTER_ROBOT_INSTANCE_WORK_ID_INT_CATCH_ATTACK: i32 = 0x100000C4;
-static mut FIGHTER_ROB_INSTANCE_WORK_INT_GYRO_LIFE: i32 = 0x100000C5;
+static mut PUMMEL_AMOUNT: [i32; 8] = [0; 8];
+static mut GYRO_LIFE: [i32; 8] = [0; 8];
 
 pub fn install() {
     acmd::install();

@@ -13,7 +13,7 @@ unsafe extern "C" fn gamewatch_attackairn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 38.0);
     if macros::is_excute(agent) {
-        WorkModule::set_flag(agent.module_accessor, true, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_OCTOPUS);
+        OCTOPUS[get_entry_id(agent.module_accessor)] = true;
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OCTOPUS, false, -1);
         VisibilityModule::set_whole(agent.module_accessor, false);
     }
@@ -229,7 +229,7 @@ unsafe extern "C" fn gamewatch_landingairb(agent: &mut L2CAgentBase) {
 
 // FORWARD AIR
 unsafe extern "C" fn gamewatch_attackairf(agent: &mut L2CAgentBase) {
-    if WorkModule::is_flag(agent.module_accessor, FIGHTER_GAMEWATCH_INSTANCE_WORK_ID_FLAG_BOMB_OUT) {
+    if BOMB_OUT[get_entry_id(agent.module_accessor)] {
         MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_air_f2"), 0.0, 1.0, false, 0.0, false, false);
     }
     else {

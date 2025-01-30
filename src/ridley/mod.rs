@@ -4,7 +4,7 @@ pub mod acmd;
 pub mod frame;
 pub mod status;
 
-pub const FIGHTER_RIDLEY_INSTANCE_WORK_ID_FLAG_AURA: i32 = 0x200000E4;
+static mut AURA: [bool; 8] = [false; 8];
 
 pub fn install() {
     acmd::install();
