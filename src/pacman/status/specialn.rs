@@ -37,6 +37,7 @@ unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CV
 
 // MAIN
 unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    println!("PACMAN'S BOMA POINTER {:?}", fighter.module_accessor);
     if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { 
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);

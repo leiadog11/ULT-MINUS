@@ -103,7 +103,6 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
 
 // NEUTRAL B
 unsafe extern "C" fn purin_specialn(agent: &mut L2CAgentBase) {
-    println!("PUFF'S BOMA POINTER (AGENT) {:?}", agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 1.9);
 }
