@@ -50,9 +50,8 @@ unsafe extern "C" fn palutena_attackhi4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 36.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-        if ANCHOR_PLANTED[ENTRY_ID] {
-            ANCHOR_PLANTED[ENTRY_ID] = false;
-        }
+        ANCHOR_PLANTED[ENTRY_ID] = false;
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
 }
 

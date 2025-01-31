@@ -25,7 +25,7 @@ pub unsafe extern "C" fn luigi_fireball_start_init(weapon: &mut smashline::L2CWe
     //Snap to throw position
     let mut owner_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
-    let mut offset_add = Vector3f{x:5.0,y:10.0,z:0.0};
+    let mut offset_add = Vector3f{x:6.0,y:8.0,z:0.0};
 
     let lr = PostureModule::lr(owner);
     let owner_offset = ModelModule::joint_global_offset_from_top(owner, Hash40{hash: hash40("throw")}, &mut owner_pos);  
@@ -40,23 +40,27 @@ pub unsafe extern "C" fn luigi_fireball_start_init(weapon: &mut smashline::L2CWe
 unsafe extern "C" fn luigi_fireball_start_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
     let facing = PostureModule::lr(weapon.module_accessor);
     let mut life = 0;
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
     let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
-    if MISFIRE_SPECIAL_N[get_entry_id(owner_boma)] {
+    if MISFIRE_SPECIAL_N[ENTRY_ID] {
         life = 200;
         PostureModule::set_scale(weapon.module_accessor, 2.5, false);
         speed_x = if facing == 1.0 { 0.5 } else { -0.5 };
+        WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
+        WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+        FIREBALL_SPEED_X[ENTRY_ID] = speed_x;
     }
     else {
         life = 50;
         speed_x = if facing == 1.0 { 1.25 } else { -1.25 };
+        WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
+        WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+        FIREBALL_SPEED_X[ENTRY_ID] = speed_x;
     }
 
-    WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
-    WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
-    FIREBALL_SPEED_X[get_entry_id(owner_boma)] = speed_x;
     weapon.fastshift(L2CValue::Ptr(luigi_fireball_start_main_loop as *const () as _))
 }
 

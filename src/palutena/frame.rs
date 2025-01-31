@@ -8,16 +8,13 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
+        let stick_y = ControlModule::get_stick_y(boma);
         let frame = MotionModule::frame(boma);
 
         // NO SPECIAL FALL ON UP B + EXTRA JUMP
-        if WorkModule::is_flag(boma, *FIGHTER_PALUTENA_STATUS_SPECIAL_HI_DIVE) {
-            if frame == 20.0 {
-                let jump_count = WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
-                WorkModule::set_int(boma, jump_count + 1, *FIGHTER_INSTANCE_WORK_ID_INT_JUMP_COUNT);
-                UP_B_USED[ENTRY_ID] = true;
-                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
-            }
+        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
+            UP_B_USED[ENTRY_ID] = true;
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         }
 
         // GET UP B BACK
@@ -50,7 +47,7 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // TP TO ANCHOR WITH AERIAL DOWN B 
-        if ANCHOR_PLANTED[ENTRY_ID] {  
+        if ANCHOR_PLANTED[ENTRY_ID] && stick_y < 0.75  {  
             if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI && situation_kind == *SITUATION_KIND_AIR { 
                 KineticModule::unable_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
                 KineticModule::unable_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_STOP);
@@ -59,13 +56,14 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
             }
 
             if status_kind == *FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_HI_3 && situation_kind == *SITUATION_KIND_AIR {
-                if frame >= 1.0 { 
+                if frame == 1.0 { 
                     GroundModule::set_collidable(boma, false);
                     PostureModule::set_pos(boma, &Vector3f{ x: BULLET_X_POS[ENTRY_ID] , y: BULLET_Y_POS[ENTRY_ID], z: PostureModule::pos_z(boma)});
                 }
-                if frame >= 2.0 { 
+                if frame == 2.0 { 
                     GroundModule::set_collidable(boma, true);
                     ANCHOR_PLANTED[ENTRY_ID] = false;
+                    ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
                 }
             }
         }

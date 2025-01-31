@@ -2,9 +2,9 @@ use super::*;
 
 // FIREBALL
 unsafe extern "C" fn fireball_regular(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = get_entry_id(agent.module_accessor);
     let rand = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(agent.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
     if rand != 1 {
         MISFIRE_SPECIAL_N[ENTRY_ID] = false;
         if macros::is_excute(agent) {
