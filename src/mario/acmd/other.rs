@@ -18,26 +18,25 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     let posx = PostureModule::pos_x(agent.module_accessor);
     let posy = PostureModule::pos_y(agent.module_accessor);
-    frame(agent.lua_state_agent, 10.0);
+    let mut curr_scale = PostureModule::scale(agent.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.2,/*yrot*/ 0.0,/*xrot*/ 0.0);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-        //StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_SMALL, true);
-        ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHD), 0, 0, false, false);
     }
-    frame(agent.lua_state_agent, 11.0);
-    ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
     for _ in 0..9 {
         if macros::is_excute(agent) {
+            curr_scale = PostureModule::scale(agent.module_accessor);
+            PostureModule::set_scale(agent.module_accessor, curr_scale - 0.1, false);
             PostureModule::set_pos_2d(agent.module_accessor, &Vector2f {x: posx, y: posy});
             wait(agent.lua_state_agent, 1.0);
         }
     }
-    wait(agent.lua_state_agent, 20.0);
+    frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
@@ -55,7 +54,12 @@ unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
-        if lr == 1.0 {macros::SET_SPEED_EX(agent, x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);} else {macros::SET_SPEED_EX(agent, -x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);}
+        if x_vel > 0.0 {
+            macros::SET_SPEED_EX(agent, (x_vel * lr) + 0.2, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        }
+        else {
+            macros::SET_SPEED_EX(agent, (x_vel * lr), 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        }
         //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
     }
 }

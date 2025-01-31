@@ -74,9 +74,6 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
         speed_y = 0.0; 
     }
 
-    // Declare status_frame
-    let status_frame = weapon.global_table[0xe].get_f32();
-    
     // Set speed
     weapon.clear_lua_stack();
     weapon.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
@@ -90,7 +87,9 @@ unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -
 // MAIN LOOP
 unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-
+    let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
+    let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
+    let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
@@ -100,6 +99,13 @@ unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponComm
         KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
         return 0.into();
     }
+
+    // Set speed
+    weapon.clear_lua_stack();
+    weapon.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
+    weapon.push_lua_stack(&mut L2CValue::new_num(speed_x));
+    weapon.push_lua_stack(&mut L2CValue::new_num(speed_y));
+    sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     if life < 0 {
         bigpacman_remove(weapon);

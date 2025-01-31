@@ -111,6 +111,7 @@ unsafe extern "C" fn palutena_attackairb(agent: &mut L2CAgentBase) {
 
 // BACK AIR EFFECT
 unsafe extern "C" fn palutena_effect_attackairb(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_shield_flash"), Hash40::new("shield"), 0, 0, 0, 0, 0, 0, 1, true);
@@ -121,9 +122,60 @@ unsafe extern "C" fn palutena_effect_attackairb(agent: &mut L2CAgentBase) {
         macros::EFFECT_DETACH_KIND(agent, Hash40::new("sys_flash"), -1);
     }
     frame(agent.lua_state_agent, 13.0);
-    if macros::is_excute(agent) { 
-        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
-        macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+    if ENTRY_ID == 0 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0);
+        }
+    }
+    else if ENTRY_ID == 1 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+        }
+    }
+    else if ENTRY_ID == 2 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.255, 0);
+        }
+    }
+    else if ENTRY_ID == 3 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
+        }
+    }
+    else if ENTRY_ID == 4 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
+        }
+    }
+    else if ENTRY_ID == 5 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.204, 0.255);
+        }
+    }
+    else if ENTRY_ID == 6 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0.204);
+        }
+    }
+    else if ENTRY_ID == 7 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 14, -7, -90, 0, 0, 0.5, true);
+            macros::LAST_EFFECT_SET_RATE(agent, 1.1);
+            macros::LAST_EFFECT_SET_COLOR(agent, 0.204, 0, 0.255);
+        }
     }
 }
 

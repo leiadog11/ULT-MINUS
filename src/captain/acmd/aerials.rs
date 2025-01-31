@@ -4,7 +4,7 @@ use super::*;
 
 //FORWARD AIR - FAIR
 unsafe extern "C" fn captain_attackairf(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.6);
+    macros::FT_MOTION_RATE(agent, 0.9);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
@@ -12,7 +12,7 @@ unsafe extern "C" fn captain_attackairf(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
         WorkModule::set_int(agent.module_accessor, 0, *FIGHTER_CAPTAIN_STATUS_ATTACK_AIR_WORK_INT_CRITICAL_ATTACK_ID);
-        macros::ATTACK(agent, 0, 0, Hash40::new("legl"), 22.0, 32, 90, 0, 50, 3.75, 4.4, -0.2, -1.0, Some(4.4), Some(0.3), Some(1.0), 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KNEE);
+        macros::ATTACK(agent, 0, 0, Hash40::new("legl"), 21.0, 32, 90, 0, 40, 3.75, 4.4, -0.2, -1.0, Some(4.4), Some(0.3), Some(1.0), 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KNEE);
         macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 5.0, 361, 9001, 0, 55, 2.0, 0.0, 0.0, 0.0, Some(13.5), None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_water"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_WATER, *ATTACK_REGION_BODY);
     }
     wait(agent.lua_state_agent, 3.0);

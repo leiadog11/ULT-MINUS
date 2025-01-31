@@ -6,12 +6,13 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
         let status_kind = StatusModule::status_kind(boma);
+        let situation_kind = StatusModule::situation_kind(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let frame = MotionModule::frame(boma);
-        let posx = PostureModule::pos_x(boma);
-        let posy = PostureModule::pos_y(boma);
+        let pos_x = PostureModule::pos_x(boma);
         let xpos = ControlModule::get_stick_x(boma);
         let ypos = ControlModule::get_stick_y(boma);
+        let lr = PostureModule::lr(boma);
 
         // SHIELD CANCEL FORWARD SMASH CHARGE
         if motion_kind == hash40("attack_s4_hold") {
@@ -19,11 +20,37 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
                 StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_GUARD_ON, true);
             }
         }
-        /*
-        if DamageModule::reaction(boma, 0) > 90.0 {
-            MotionModule::change_motion(boma, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
+        
+        // SHRINK
+        if DamageModule::damage(boma, 0) > 100.0 && DamageModule::reaction(boma, 0) > 90.0 {
+            if !SHRUNK[ENTRY_ID] {
+                MotionModule::change_motion(boma, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
+                SHRUNK[ENTRY_ID] = true;
+            }
+        }   
+
+        // RESET SHRINK ON DEATH
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            SHRUNK[ENTRY_ID] = false;
         }
-        */
+
+        // DASH CANCEL FIREBALL ON THE GROUND
+        if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_N && situation_kind == *SITUATION_KIND_GROUND {
+            if frame >= 13.0 {
+                if xpos > 0.5 {
+                    StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_DASH, true);
+                    if lr == -1.0 {
+                        macros::REVERSE_LR(fighter);
+                    }
+                }
+                else if xpos < -0.5 {
+                    StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_DASH, true);
+                    if lr == 1.0 {
+                        macros::REVERSE_LR(fighter);
+                    }
+                }
+            }
+        }
 
         // CANCEL DASH ATTACK INTO DASH ATTACK 2
         if motion_kind == hash40("attack_dash") && frame > 5.0 { 
@@ -71,14 +98,14 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         // MOVE DURING DOWN SMASH
         if motion_kind == hash40("attack_lw4") {
             if frame < 25.0 {
-            //RIGHT
-            if xpos > 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 0.75, y: PostureModule::pos_y(boma)});
-            }
-            //LEFT
-            if xpos < 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: posx - 0.75, y: PostureModule::pos_y(boma)});
-            }
+                //RIGHT
+                if xpos > 0.0  {
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.75, y: PostureModule::pos_y(boma)});
+                }
+                //LEFT
+                if xpos < 0.0  {
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 0.75, y: PostureModule::pos_y(boma)});
+                }
             }
         }
     }
