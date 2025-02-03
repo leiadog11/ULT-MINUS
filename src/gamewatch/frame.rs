@@ -49,7 +49,9 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn gamewatch_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        OCTOPUS[ENTRY_ID] = false;
+        BOMB_OUT[ENTRY_ID] = false;
     }
 }
 

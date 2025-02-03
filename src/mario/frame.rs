@@ -114,7 +114,11 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn mario_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        SHRUNK[ENTRY_ID] = false;
+        ICEBALL[ENTRY_ID] = false;
+        FORWARD_SMASH_CHARGE[ENTRY_ID] = 0.0;
+        FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
     }
 }
 

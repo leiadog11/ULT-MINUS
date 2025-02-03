@@ -186,7 +186,6 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
             KineticModule::resume_energy_all(boma);
         };
         if START_FLOAT[ENTRY_ID] == true {
-            GROUND_CHECK[ENTRY_ID] = false;
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
             SoundModule::play_se(boma, Hash40::new("se_ganon_appear01"), true, false, false, false, enSEType(0));
             FLOAT[ENTRY_ID] = FLOAT_MAX;
@@ -200,7 +199,9 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn ganon_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        SWORD[ENTRY_ID] = true;
+        GROUND_CHECK[ENTRY_ID] = false;
     }
 }
 

@@ -48,11 +48,20 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn pacman_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("key"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("apple"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);
+        static mut UP_SMASH: [bool; 8] = [false; 8];
+static mut DOWN_SMASH: [bool; 8] = [false; 8];
+static mut ITEM_CHOICE: [i32; 8] = [0; 8];
+static mut KEY_COOLDOWN: [i32; 8] = [0; 8];
+static mut APPLE_COOLDOWN: [i32; 8] = [0; 8];
+static mut MELON_COOLDOWN: [i32; 8] = [0; 8];
+static mut GALAXIAN_COOLDOWN: [i32; 8] = [0; 8];
+static mut BELL_COOLDOWN: [i32; 8] = [0; 8];
     }
 }
 

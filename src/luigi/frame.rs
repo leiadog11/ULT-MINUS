@@ -96,7 +96,11 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        MISFIRE_SPECIAL_N[ENTRY_ID] = false;
+        MISFIRE_UP_SMASH[ENTRY_ID] = false;
+        DOWN_TILT_COUNTER[ENTRY_ID] = 0;
+        NEG_ZONE[ENTRY_ID] = 0.0;
     }
 }
 
