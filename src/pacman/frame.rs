@@ -54,14 +54,14 @@ pub unsafe extern "C" fn pacman_start(fighter: &mut L2CFighterCommon) {
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("melon"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("galaxian"), false);
         ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("bell"), false);
-        static mut UP_SMASH: [bool; 8] = [false; 8];
-static mut DOWN_SMASH: [bool; 8] = [false; 8];
-static mut ITEM_CHOICE: [i32; 8] = [0; 8];
-static mut KEY_COOLDOWN: [i32; 8] = [0; 8];
-static mut APPLE_COOLDOWN: [i32; 8] = [0; 8];
-static mut MELON_COOLDOWN: [i32; 8] = [0; 8];
-static mut GALAXIAN_COOLDOWN: [i32; 8] = [0; 8];
-static mut BELL_COOLDOWN: [i32; 8] = [0; 8];
+        UP_SMASH[ENTRY_ID] = false;
+        DOWN_SMASH[ENTRY_ID] = false;
+        ITEM_CHOICE[ENTRY_ID] = 0;
+        KEY_COOLDOWN[ENTRY_ID] = 0;
+        APPLE_COOLDOWN[ENTRY_ID] = 0;
+        MELON_COOLDOWN[ENTRY_ID] = 0;
+        GALAXIAN_COOLDOWN[ENTRY_ID] = 0;
+        BELL_COOLDOWN[ENTRY_ID] = 0;
     }
 }
 

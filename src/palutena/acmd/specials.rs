@@ -243,14 +243,12 @@ unsafe extern "C" fn palutena_speciallw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        ANCHOR_PLANTED[ENTRY_ID] = false;
         macros::FT_MOTION_RATE(agent, 0.5);
         KineticModule::set_consider_ground_friction(agent.module_accessor, false, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
     frame(agent.lua_state_agent, 46.0);
     if macros::is_excute(agent) { 
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, false, -1);
-        ANCHOR_PLANTED[ENTRY_ID] = true;
     }
 }
 
@@ -290,6 +288,64 @@ unsafe extern "C" fn palutena_expression_speciallw(agent: &mut L2CAgentBase) {
     }
 }
 
+// DOWN B TP
+unsafe extern "C" fn palutena_speciallwtp(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    }
+}
+
+// DOWN B TP EFFECT
+unsafe extern "C" fn palutena_effect_speciallwtp(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_teleport_end"), Hash40::new("rot"), 0, 4, 0, 0, 0, 0, 1, false);
+        macros::FLASH(agent, 1, 1, 1, 1);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_backlight"), Hash40::new("top"), 0, 21.5, 0, 0, 90, 0, 1, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 4);
+        macros::FLASH(agent, 1, 1, 1, 0.3);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::FLASH(agent, 0.25, 1, 1, 0.2);
+    }
+    wait(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("palutena_backlight"), false, true);
+    }
+    wait(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::FLASH(agent, 1, 1, 1, 0.15);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        macros::COL_NORMAL(agent);
+    }
+    frame(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_teleport_feather"), Hash40::new("rot"), 0, 4, 0, 0, 0, 0, 1, true);
+    }
+}
+
+// DOWN B TP SOUND
+unsafe extern "C" fn palutena_sound_speciallwtp(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_palutena_special_h02"));
+    }
+}
+
+// DOWN B TP EXPRESSION
+unsafe extern "C" fn palutena_expression_speciallwtp(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 pub fn install() {
     Agent::new("palutena")
         .game_acmd("game_specialn", palutena_specialn, Low)
@@ -324,6 +380,11 @@ pub fn install() {
         .effect_acmd("effect_speciallw", palutena_effect_speciallw, Low)
         .sound_acmd("sound_speciallw", palutena_sound_speciallw, Low)
         .expression_acmd("expression_speciallw", palutena_expression_speciallw, Low)
+
+        .game_acmd("game_speciallwtp", palutena_speciallwtp, Low)
+        .effect_acmd("effect_speciallwtp", palutena_effect_speciallwtp, Low)
+        .sound_acmd("sound_speciallwtp", palutena_sound_speciallwtp, Low)
+        .expression_acmd("expression_speciallwtp", palutena_expression_speciallwtp, Low)
 
         .install();
 }

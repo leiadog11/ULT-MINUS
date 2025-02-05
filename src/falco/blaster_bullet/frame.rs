@@ -9,9 +9,11 @@ unsafe extern "C" fn blaster_bullet_frame(weapon: &mut L2CWeaponCommon) {
         let pos_y = PostureModule::pos_y(weapon.module_accessor);
 
         // BACK AIR LASER?
+        /* This is close! It needs to set the speed through hashes
         if owner_motion == hash40("attack_air_b") {
             PostureModule::set_pos_2d(weapon.module_accessor, &Vector2f {x: -pos_x, y: pos_y});
         }
+        */
     }
 }
 

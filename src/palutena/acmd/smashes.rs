@@ -88,7 +88,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0);
             }
@@ -100,7 +100,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     else if ENTRY_ID == 1 { 
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -112,7 +112,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.255, 0);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.255, 0);
             }
@@ -125,7 +125,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             }
@@ -138,7 +138,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             }
@@ -151,7 +151,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.204, 0.255);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.204, 0.255);
             }
@@ -164,7 +164,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0.204);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0.204);
             }
@@ -177,7 +177,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
         if macros::is_excute(agent) {
             macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.204, 0, 0.255);
-            if ANCHOR_PLANTED[get_entry_id(agent.module_accessor)] { 
+            if ANCHOR_PLANTED[ENTRY_ID] { 
                 macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.204, 0, 0.255);
             }

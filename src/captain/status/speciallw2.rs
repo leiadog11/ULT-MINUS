@@ -53,10 +53,9 @@ unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon
     if frame >= 4.0 && frame <= 24.0 {
         for opponent_boma in opponent_bomas.iter() { 
             if AttackModule::is_infliction_status(*opponent_boma, *COLLISION_KIND_MASK_HIT) {
-                println!("FALCON DEFLECT!");
                 macros::EFFECT(fighter, Hash40::new("sys_passive"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
-                //SoundModule::play_se(fighter.module_accessor, Hash40::new("se_item_teamhealfield_recover"), true, false, false, false, enSEType(0));
-                StatusModule::change_status_request_from_script(*opponent_boma, *FIGHTER_STATUS_KIND_CATCH_CUT, true);
+                SoundModule::play_se(fighter.module_accessor, Hash40::new("se_item_badge_reflection"), true, false, false, false, enSEType(0));
+                StatusModule::change_status_request_from_script(*opponent_boma, *FIGHTER_STATUS_KIND_FURAFURA, true);
                 //fighter.change_status(FIGHTER_STATUS_KIND_ATTACK_S4.into(), false.into());
                 MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
                 return 1.into();

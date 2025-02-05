@@ -16,27 +16,21 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 
 // SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
-    let posx = PostureModule::pos_x(agent.module_accessor);
-    let posy = PostureModule::pos_y(agent.module_accessor);
+    let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let y_vel = KineticModule::get_sum_speed_y(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let mut curr_scale = PostureModule::scale(agent.module_accessor);
-    frame(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
+        macros::SET_SPEED_EX(agent, (x_vel * 0.0), (y_vel * 0.0), *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.2,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 10.0,/*no*/ 0.0,/*zoom*/ 1.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        PostureModule::set_scale(agent.module_accessor, curr_scale - 0.5, false);
     }
-    for _ in 0..9 {
-        if macros::is_excute(agent) {
-            curr_scale = PostureModule::scale(agent.module_accessor);
-            PostureModule::set_scale(agent.module_accessor, curr_scale - 0.1, false);
-            PostureModule::set_pos_2d(agent.module_accessor, &Vector2f {x: posx, y: posy});
-            wait(agent.lua_state_agent, 1.0);
-        }
-    }
-    frame(agent.lua_state_agent, 12.0);
+    frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);

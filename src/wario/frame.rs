@@ -108,7 +108,9 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn wario_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        DOWN_SMASH_AMOUNT[ENTRY_ID] = 0;
+        WECTOR[ENTRY_ID] = 0.0;
     }
 }
 

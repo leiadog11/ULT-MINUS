@@ -40,7 +40,9 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn robot_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        PUMMEL_AMOUNT[ENTRY_ID] = 0;
+        GYRO_LIFE[ENTRY_ID] = 0;
     }
 }
 

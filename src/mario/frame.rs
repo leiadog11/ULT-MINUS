@@ -22,7 +22,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         }
         
         // SHRINK
-        if DamageModule::damage(boma, 0) > 100.0 && DamageModule::reaction(boma, 0) > 90.0 {
+        if DamageModule::damage(boma, 0) > 110.0 && DamageModule::reaction(boma, 0) > 50.0 {
             if !SHRUNK[ENTRY_ID] {
                 MotionModule::change_motion(boma, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
                 SHRUNK[ENTRY_ID] = true;
@@ -36,7 +36,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 
         // DASH CANCEL FIREBALL ON THE GROUND
         if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_N && situation_kind == *SITUATION_KIND_GROUND {
-            if frame >= 13.0 {
+            if frame > 14.0 {
                 if xpos > 0.5 {
                     StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_DASH, true);
                     if lr == -1.0 {

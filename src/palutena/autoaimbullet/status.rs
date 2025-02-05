@@ -48,10 +48,9 @@ unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2
 // MAIN LOOP
 unsafe extern "C" fn autoaimbullet_shot_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let ypos = ControlModule::get_stick_y(owner_boma);
 
-    if MotionModule::motion_kind(owner_boma) == hash40("special_lw") {
-        if MotionModule::frame(owner_boma) >= 2.0 && MotionModule::frame(owner_boma) <= 3.0  {
+    if MotionModule::motion_kind(owner_boma) == hash40("special_lw_tp") {
+        if MotionModule::frame(owner_boma) > 9.0 {
             autoaimbullet_remove(weapon);
             return 0.into();
         }
@@ -59,12 +58,6 @@ unsafe extern "C" fn autoaimbullet_shot_main_loop(weapon: &mut L2CWeaponCommon) 
 
     if MotionModule::motion_kind(owner_boma) == hash40("attack_hi4") {
         if MotionModule::frame(owner_boma) >= 15.0 {
-            autoaimbullet_remove(weapon);
-            return 0.into();
-        }
-    }
-    if ANCHOR_PLANTED[get_entry_id(owner_boma)] {
-        if StatusModule::status_kind(owner_boma) == *FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_HI_3 && StatusModule::situation_kind(owner_boma) == *SITUATION_KIND_AIR { 
             autoaimbullet_remove(weapon);
             return 0.into();
         }

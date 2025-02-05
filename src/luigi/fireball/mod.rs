@@ -2,12 +2,10 @@ use super::*;
 
 mod acmd;
 mod status;
-mod frame;
 
-static mut FIREBALL_SPEED_X: [f32; 8] = [0.0; 8];
+const WEAPON_LUIGI_FIREBALL_INSTANCE_WORK_INT_SPEED_X : i32 = 0x11000004;
 
 pub fn install() {
     acmd::install();
     status::install();
-    frame::install();
 }

@@ -32,7 +32,6 @@ unsafe extern "C" fn mario_effect_specialn(agent: &mut L2CAgentBase) {
         }
         frame(agent.lua_state_agent, 40.0);
         if macros::is_excute(agent) {
-            ICEBALL[ENTRY_ID] = false; 
             macros::EFFECT_OFF_KIND(agent, Hash40::new("sys_freezer"), false, false);
         }
     }

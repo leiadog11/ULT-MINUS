@@ -1,6 +1,6 @@
 use super::*;
 
-//////////////// SPECIAL N
+//-------------------SPECIAL N--------------------
 
 // PRE
 unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -37,7 +37,6 @@ unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CV
 
 // MAIN
 unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    println!("PACMAN'S BOMA POINTER {:?}", fighter.module_accessor);
     if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { 
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
@@ -76,7 +75,7 @@ unsafe extern "C" fn pacman_specialn_end(fighter: &mut L2CFighterCommon) -> L2CV
     return 0.into();
 }
 
-///////////// SPECIAL N HOLD
+//------------------SPECIAL N HOLD----------------------
 
 // PRE
 unsafe extern "C" fn pacman_specialn_hold_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -126,7 +125,7 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("bell"), &Vector3f{ x:-7.5, y: 22.0, z: 15.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("apple"), &Vector3f{ x:11.0, y: -20.0, z: 0.0 }, false, false);
         ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("melon"), &Vector3f{ x:12.0, y: -18.0, z: 0.0 }, false, false);
-        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-2.0, y: 15.0, z: 5.0 }, false, false);
+        ModelModule::set_joint_translate(fighter.module_accessor, Hash40::new("galaxian"), &Vector3f{ x:-4.0, y: 15.0, z: 5.0 }, false, false);
     }
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {

@@ -18,12 +18,15 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        // RESET SCALE
         if motion_kind != hash40("attack_lw4") {
             PostureModule::set_scale(boma, 1.0, false);
         }
 
+        // RESET CHARGE MUL ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { 
             CHARGE_MUL[ENTRY_ID] = 0.0;
+            macros::STOP_SE(fighter, Hash40::new("se_purin_special_n01"));
         }
 
         // MOVE ON DOWN TAUNT
@@ -110,7 +113,9 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn purin_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        CHARGE_MUL[ENTRY_ID] = 0.0;
+        METRONOME[ENTRY_ID] = 0;
     }
 }
 
