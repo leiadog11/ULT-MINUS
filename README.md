@@ -5,7 +5,7 @@ The smash overhaul mod where every character is only buffed to be more broken th
 
 This is a full modpack with changes to the SSS, game music, and characters. There are future skins, stage changes, UI changes, and much more planned.
 
-Here is a link to the music mod that goes with it: [Here](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD)
+Here is a link to the music mod that goes with it: [LEIADOG'S MUSIC MOD](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD)
 
 Current Version: Alpha 0.2.2
 
