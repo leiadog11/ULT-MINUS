@@ -6,6 +6,7 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
         let status_kind = StatusModule::status_kind(boma);
+        let situation_kind = StatusModule::situation_kind(boma);
         let motion = MotionModule::motion_kind(boma);
         let frame = MotionModule::frame(boma);
         let xpos = ControlModule::get_stick_x(boma);
@@ -22,6 +23,11 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             EffectModule::set_rgb(boma, effect, 0.9, 0.0, 0.5);
             EffectModule::enable_sync_init_pos_last(boma);
             AURA[ENTRY_ID] = true;
+        }
+
+        // UP B USES ON GROUND OR CLIFF
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
+            UP_B_USES[ENTRY_ID] = 3;
         }
 
         // REMOVE AURA ON DEATH
@@ -67,6 +73,34 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
                 CancelModule::enable_cancel(boma);
             }
         }
+
+        // UP AIR 2
+        if motion == hash40("attack_air_hi") { 
+            if frame >= 11.0 && frame <= 22.0 { 
+                if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
+                    MotionModule::set_rate(boma, 0.0);
+                    if UP_AIR_HOLD[ENTRY_ID] < 5 {
+                        UP_AIR_HOLD[ENTRY_ID] += 1;
+                    }
+                }
+                else {
+                    MotionModule::set_rate(boma, 1.0);
+                    if UP_AIR_HOLD[ENTRY_ID] >= 5 {
+                        MotionModule::change_motion(boma, Hash40::new("attack_air_hi2"), 0.0, 1.0, false, 0.0, false, false);
+                    }
+                }
+            }
+        }
+        else {
+            UP_AIR_HOLD[ENTRY_ID] = 0;
+        }
+
+        // CANCEL SIDE B DRAG INTO GRAB
+        if motion == hash40("special_s_drag_f") {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
+                MotionModule::change_motion(boma, Hash40::new("catch"), 0.0, 1.0, false, 0.0, false, false);
+            }
+        }
     }
 }
 
@@ -75,6 +109,8 @@ pub unsafe extern "C" fn ridley_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         AURA[ENTRY_ID] = false;
+        UP_B_USES[ENTRY_ID] = 3;
+        UP_AIR_HOLD[ENTRY_ID] = 0;
     }
 }
 
