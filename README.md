@@ -22,7 +22,7 @@ Current Version: Alpha 0.2.2
 ## Character Change Log
 Current Character Amount: 14
 
-Change Log Linked [Here](https://docs.google.com/document/d/1ljZ57RQu8Xp7I35-QuW9bDr22O7RT_vPG4ErxPwNd8Y/edit?usp=sharing)
+Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
 # Credits
 JC Ho (leiadog) - Creator, Dev Lead\
