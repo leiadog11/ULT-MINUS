@@ -73,7 +73,7 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         } else {
             CAN_DOUBLE_JUMP[ENTRY_ID] = 0;
         }
-        if situation_kind == *SITUATION_KIND_AIR && (!(*FIGHTER_STATUS_KIND_DAMAGE..*FIGHTER_STATUS_KIND_DAMAGE_FALL).contains(&status_kind) && status_kind != *FIGHTER_STATUS_KIND_FALL_SPECIAL){
+        if situation_kind == *SITUATION_KIND_AIR && (!(*FIGHTER_STATUS_KIND_DAMAGE..*FIGHTER_STATUS_KIND_DAMAGE_FALL).contains(&status_kind) && status_kind != *FIGHTER_STATUS_KIND_FALL_SPECIAL && status_kind != *FIGHTER_STATUS_KIND_CAPTURE_PULLED && status_kind != *FIGHTER_STATUS_KIND_CAPTURE_ITEM) {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && stick_y < -0.5 {
                 CHECK_FLOAT[ENTRY_ID] += 1;
             } else {

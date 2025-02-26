@@ -1,5 +1,7 @@
 use super::*;
 
-pub fn install() {
+mod specialhi;
 
+pub fn install() {
+    specialhi::install();
 }
