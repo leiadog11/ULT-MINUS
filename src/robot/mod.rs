@@ -7,6 +7,7 @@ pub mod beam;
 
 static mut PUMMEL_AMOUNT: [i32; 8] = [0; 8];
 static mut GYRO_LIFE: [i32; 8] = [0; 8];
+static mut STALL_TIMER: [i32; 8] = [0; 8];
 
 pub fn install() {
     acmd::install();

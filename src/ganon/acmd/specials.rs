@@ -19,12 +19,9 @@ unsafe extern "C" fn ganon_specialn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
+        SWORD[get_entry_id(agent.module_accessor)] = false;
         ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         ArticleModule::generate_article(agent.module_accessor, FIGHTER_GANON_GENERATE_ARTICLE_GSWORD, false, -1);
-    }
-    frame(agent.lua_state_agent, 40.0);
-    if macros::is_excute(agent) {
-        SWORD[get_entry_id(agent.module_accessor)] = false;
     }
 }
 
@@ -89,7 +86,7 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 17.0);
     if macros::is_excute(agent) {
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_ALWAYS, 0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     }
     frame(agent.lua_state_agent, 31.0); 
     if macros::is_excute(agent) {
@@ -116,7 +113,6 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 46.0);
     if macros::is_excute(agent) {
         damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
-        CancelModule::enable_cancel(agent.module_accessor);
     }
     frame(agent.lua_state_agent, 51.0);
     if macros::is_excute(agent) {

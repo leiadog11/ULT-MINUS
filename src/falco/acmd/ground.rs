@@ -6,6 +6,7 @@ use super::*;
 // RAPID JAB
 unsafe extern "C" fn falco_attack100(agent: &mut L2CAgentBase) {
     loop {
+        macros::FT_MOTION_RATE(agent, 1.2);
         frame(agent.lua_state_agent, 2.0);
         falco_attack100_internal(agent);
         frame(agent.lua_state_agent, 4.0);
@@ -29,7 +30,7 @@ unsafe extern "C" fn falco_attack100(agent: &mut L2CAgentBase) {
 #[inline(always)]
 unsafe extern "C" fn falco_attack100_internal(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.3, 361, 15, 0, 6, 5.5, 0.0, 8.0, 13.0, Some(0.0), Some(8.0), Some(7.0), 0.5, 1.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.3, 361, 15, 0, 6, 5.5, 0.0, 8.0, 13.0, Some(0.0), Some(8.0), Some(7.0), 0.5, 2.5, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PUNCH);
         AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 2.0, false);
         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 5);
     }

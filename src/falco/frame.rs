@@ -19,11 +19,11 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         if motion_kind == hash40("attack_100") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 1.5, y: PostureModule::pos_y(boma)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.5, y: PostureModule::pos_y(boma)});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 1.5, y: PostureModule::pos_y(boma)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 0.5, y: PostureModule::pos_y(boma)});
             }
         }
 
@@ -79,7 +79,7 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // AIR DODGE CANCEL UP B START
-        if situation_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI {
+        if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI {
             if frame > 1.0 && frame < 36.0 {
                 if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
                     StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ESCAPE_AIR, true);

@@ -34,8 +34,8 @@ unsafe extern "C" fn ridley_specialhi_start_pre(fighter: &mut L2CFighterCommon) 
     return 0.into();
 }
 
-// INIT
-unsafe extern "C" fn ridley_specialhi_start_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
+// EXEC
+unsafe extern "C" fn ridley_specialhi_start_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     if UP_B_USES[ENTRY_ID] == 0 {
         fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
@@ -100,7 +100,7 @@ unsafe extern "C" fn ridley_specialhi_start_main_loop(fighter: &mut L2CFighterCo
         stick_choice = 7;
     }
 
-    if MotionModule::frame(fighter.module_accessor) == 4.0 {
+    if MotionModule::frame(fighter.module_accessor) == 5.0 {
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
@@ -108,55 +108,80 @@ unsafe extern "C" fn ridley_specialhi_start_main_loop(fighter: &mut L2CFighterCo
         //up
         if stick_choice == 0 {
             macros::SET_SPEED_EX(fighter, x_vel, y_vel + 2.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -90.0, y: 0.0, z: 0.0}, 0);
+            println!("UP!");
         }
 
         //right
         else if stick_choice == 1 {
-            if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel + 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, x_vel - 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+            if lr != 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
+            macros::SET_SPEED_EX(fighter, x_vel + 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            println!("RIGHT!");
         }
 
         //up right
         else if stick_choice == 2 {
+            if lr != 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
             macros::SET_SPEED_EX(fighter, x_vel + 1.3, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 45.0, y: 0.0, z: 0.0}, 0);
+            println!("UP RIGHT!");
         }
 
         //up left
         else if stick_choice == 3 {
-            if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel - 1.3, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, x_vel + 1.3, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+            if lr == 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
+            macros::SET_SPEED_EX(fighter, x_vel - 1.3, y_vel + 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            println!("UP LEFT!");
         }
 
         //left
         else if stick_choice == 4 {
-            if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel - 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, x_vel + 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+            if lr == 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
+            macros::SET_SPEED_EX(fighter, x_vel - 2.0, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            println!("LEFT!");
         }
 
         //down left
         else if stick_choice == 5 {
-            if lr == 1.0 { macros::SET_SPEED_EX(fighter, x_vel - 1.3, x_vel - 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); } else { macros::SET_SPEED_EX(fighter, x_vel + 1.3, x_vel - 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN); }
+            if lr == 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
+            macros::SET_SPEED_EX(fighter, x_vel - 1.3, x_vel - 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            println!("DOWN LEFT!");
         }
 
         //down
         else if stick_choice == 6 {
             macros::SET_SPEED_EX(fighter, x_vel, y_vel - 2.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -90.0, y: 0.0, z: 0.0}, 0);
+            println!("DOWN!");
         }
 
         //down right
         else if stick_choice == 7 {
+            if lr != 1.0 {
+                macros::REVERSE_LR(fighter);
+            }
             macros::SET_SPEED_EX(fighter, x_vel + 1.3, y_vel - 1.3, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            println!("DOWN RIGHT!");
         }
         return 0.into();
     }
     if MotionModule::frame(fighter.module_accessor) >= 6.0 {
         KineticModule::resume_energy_all(fighter.module_accessor);
 
-        // CANCEL IT
+        // JUMP CANCEL
         if MotionModule::frame(fighter.module_accessor) >= 20.0 { 
-            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
-            ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) ||
-            ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_CATCH) ||
-            ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) ||
-            ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
-                CancelModule::enable_cancel(fighter.module_accessor);
+            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
+                fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
                 return 1.into();
             }
         }
@@ -178,6 +203,7 @@ unsafe extern "C" fn ridley_specialhi_start_main_loop(fighter: &mut L2CFighterCo
 
 // END
 unsafe extern "C" fn ridley_specialhi_start_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
     return 0.into();
 }
 
@@ -230,7 +256,10 @@ unsafe extern "C" fn ridley_specialhi_landing_main_loop(fighter: &mut L2CFighter
     let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(fighter.module_accessor);
 
-    macros::SET_SPEED_EX(fighter, (x_vel + 1.0) * lr, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    if MotionModule::frame(fighter.module_accessor) == 10.0 { 
+        macros::SET_SPEED_EX(fighter, (x_vel + 1.0) * lr, y_vel, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        return 0.into();
+    }
 
     if MotionModule::is_end(fighter.module_accessor) {
         fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
@@ -247,7 +276,7 @@ unsafe extern "C" fn ridley_specialhi_landing_end(fighter: &mut L2CFighterCommon
 pub fn install() {
     Agent::new("ridley")
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_pre)
-        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_init)
+        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_exec)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_end)
         
