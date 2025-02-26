@@ -115,6 +115,12 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
         }
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
     }
 }
 

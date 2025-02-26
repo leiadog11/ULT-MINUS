@@ -11,6 +11,7 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         let ypos = ControlModule::get_stick_y(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
 
         // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
@@ -131,6 +132,12 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         else {
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            STALL_TIMER[ENTRY_ID] = 0;
         }
     }
 }

@@ -97,6 +97,19 @@ unsafe extern "C" fn ridley_expression_appealhi(agent: &mut L2CAgentBase) {
     }
 }
 
+//----------------------WIN/LOSE------------------------
+
+unsafe extern "C" fn ridley_lose(agent: &mut L2CAgentBase) { 
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    if macros::is_excute(agent) { 
+        if ENTRY_ID == 0 {
+            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:-15.0,y:0.0,z:0.0});
+        }
+        else {
+            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:15.0,y:0.0,z:0.0});
+        }
+    }
+}
 
 pub fn install() {
     Agent::new("ridley")
@@ -124,6 +137,8 @@ pub fn install() {
         .effect_acmd("effect_appealhil", ridley_effect_appealhi, Low)
         .expression_acmd("expression_appealhir", ridley_expression_appealhi, Low)
         .expression_acmd("expression_appealhil", ridley_expression_appealhi, Low)
+
+        .game_acmd("game_lose", ridley_lose, Low)
         
         .install();
 }

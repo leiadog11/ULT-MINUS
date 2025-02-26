@@ -14,8 +14,6 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         let posx = PostureModule::pos_x(boma);
         let lr = PostureModule::lr(boma);
 
-        println!("STATUS KIND: ", status_kind);
-
         // ACTIVATE AURA
         if DamageModule::damage(boma, 0) >= 100.0 && !AURA[ENTRY_ID] { 
             let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
@@ -126,6 +124,12 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         else {
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            STALL_TIMER[ENTRY_ID] = 0;
         }
     }
 }

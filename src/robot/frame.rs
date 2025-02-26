@@ -7,6 +7,7 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
         let ENTRY_ID = get_entry_id(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
 
         // GYRO
         if ItemModule::is_have_item(boma, 0)  { 
@@ -59,7 +60,12 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
         }
-
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            STALL_TIMER[ENTRY_ID] = 0;
+        }
     }
 }
 
