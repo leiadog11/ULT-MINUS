@@ -49,7 +49,7 @@ unsafe extern "C" fn bayonetta_attackairb(agent: &mut L2CAgentBase) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
     frame(agent.lua_state_agent, 21.0);
-    macros::FT_MOTION_RATE(agent, 0.5);
+    macros::FT_MOTION_RATE(agent, 0.25);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 13.0, 361, 106, 0, 12, 4.6, 0.0, 13.0, -14.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 10.0, 361, 106, 0, 12, 4.2, 0.0, 13.0, -14.0, Some(0.0), Some(11.0), Some(-4.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_B, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
