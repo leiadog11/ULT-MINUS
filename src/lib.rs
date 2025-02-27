@@ -49,6 +49,7 @@ mod gamewatch;
 mod mario;
 mod link;
 mod bayonetta;
+mod zelda;
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
@@ -95,6 +96,7 @@ pub fn main() {
     mario::install();
     link::install();
     bayonetta::install();
+    zelda::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);

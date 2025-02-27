@@ -1,6 +1,9 @@
 Heavily inspired by the mod Brawl Minus...
 
 # Introducing ULT MINUS
+
+![ULT_LOGO_FINAL](https://github.com/user-attachments/assets/f70bd9b7-f8b7-4dc7-9d0f-e8f01ccb021d)
+
 The smash overhaul mod where every character is only buffed to be more broken than their vanilla iteration! ULT MINUS is a fun casual competitive mod that changes many characters and in the future, many different aspects of the game itself.
 
 This is a full modpack with changes to the SSS, game music, and characters. There are future skins, stage changes, UI changes, and much more planned.
@@ -19,7 +22,7 @@ Current Version: Alpha 0.2.2
 ## Character Change Log
 Current Character Amount: 14
 
-Change Log Linked [Here](https://docs.google.com/document/d/1ljZ57RQu8Xp7I35-QuW9bDr22O7RT_vPG4ErxPwNd8Y/edit?usp=sharing)
+Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
 # Credits
 JC Ho (leiadog) - Creator, Dev Lead\

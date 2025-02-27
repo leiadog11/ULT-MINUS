@@ -14,6 +14,8 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         let posx = PostureModule::pos_x(boma);
         let lr = PostureModule::lr(boma);
 
+        //println!("STATUS KIND: ", status_kind);
+
         // ACTIVATE AURA
         if DamageModule::damage(boma, 0) >= 100.0 && !AURA[ENTRY_ID] { 
             let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
