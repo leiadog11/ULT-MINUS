@@ -2,7 +2,7 @@ use super::*;
 
 //------------------GROUND-------------------
 
-//JAB
+// JAB
 unsafe extern "C" fn zelda_attack11(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
@@ -19,8 +19,13 @@ unsafe extern "C" fn zelda_attack11(agent: &mut L2CAgentBase) {
     }
 }
 
-//JAB EFFECT
+// JAB EFFECT
 unsafe extern "C" fn zelda_effect_attack11(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_attack_arc_d"), Hash40::new("top"), 2, 8.5, 2.2, -8.5, 17, 9.5, 1, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 1.5);
+    }
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
         macros::EFFECT(agent, Hash40::new("sys_attack_line"), Hash40::new("top"), 0, 11.8, -10, 0, 0, 0, 1.6, 0, 0, 0, 0, 0, 0, true);
@@ -29,6 +34,33 @@ unsafe extern "C" fn zelda_effect_attack11(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.2, 0, 0, 0, 0, 0, 0, false);
         macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, 12, 18.5, 0, 0, 0, 1.5, 0, 0, 0, 0, 0, 0, true, 0.8);
+    }
+}
+
+// JAB SOUND
+unsafe extern "C" fn zelda_sound_attack11(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_zelda_swing_s"));
+    }
+}
+
+// JAB EXPRESSION
+unsafe extern "C" fn zelda_expression_attack11(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_L);
+    }
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+    frame(agent.lua_state_agent, 33.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 3);
     }
 }
 
@@ -74,6 +106,7 @@ unsafe extern "C" fn zelda_attacks3lw(agent: &mut L2CAgentBase) {
 
 //DOWN TILT
 unsafe extern "C" fn zelda_attacklw3(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.95);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.5, 62, 125, 0, 15, 2.6, 0.0, 2.0, 2.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_KICK);
@@ -130,13 +163,12 @@ unsafe extern "C" fn zelda_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
-
-
-
 pub fn install() {
     Agent::new("zelda")
         .game_acmd("game_attack11", zelda_attack11, Low)
         .effect_acmd("effect_attack11", zelda_effect_attack11, Low)
+        .sound_acmd("sound_attack11", zelda_sound_attack11, Low)
+        .expression_acmd("expression_attack11", zelda_expression_attack11, Low)
 
         .game_acmd("game_attacks3", zelda_attacks3, Low)
 

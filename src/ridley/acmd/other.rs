@@ -99,8 +99,11 @@ unsafe extern "C" fn ridley_expression_appealhi(agent: &mut L2CAgentBase) {
 
 //----------------------WIN/LOSE------------------------
 
+// LOSE
 unsafe extern "C" fn ridley_lose(agent: &mut L2CAgentBase) { 
+    macros::FT_MOTION_RATE(agent, 1.9);
     let ENTRY_ID = get_entry_id(agent.module_accessor);
+    frame(agent.lua_state_agent, 90.0);
     if macros::is_excute(agent) { 
         if ENTRY_ID == 0 {
             PostureModule::set_pos(agent.module_accessor, &Vector3f{x:-15.0,y:0.0,z:0.0});

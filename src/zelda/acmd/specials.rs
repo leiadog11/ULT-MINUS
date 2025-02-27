@@ -37,8 +37,6 @@ unsafe extern "C" fn zelda_specialn(agent: &mut L2CAgentBase) {
     }
 }
 
-
-
 //AERIAL NEUTRAL SPECIAL
 unsafe extern "C" fn zelda_specialairn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
@@ -115,9 +113,6 @@ unsafe extern "C" fn zelda_specialairhi(agent: &mut L2CAgentBase) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_ZELDA_STATUS_SPECIAL_HI_FLAG_CONTROL);
     }
 }
-
-
-
 
 pub fn install() {
     Agent::new("zelda")

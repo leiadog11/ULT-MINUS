@@ -1,27 +1,15 @@
-#![deny(deprecated)]
-#![allow(unused)]
-#![allow(non_snake_case)]
+use super::*;
 
 pub mod acmd;
 pub mod frame;
 pub mod status;
+pub mod phantom;
 
-use {
-    smash::{
-        lua2cpp::*,
-        phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
-        lib::{lua_const::*, L2CValue, L2CAgent},
-        hash40
-    },
-    smash2::*,
-    smash_script::*,
-    smashline::*,
-    smashline::Priority::*
-};
+static mut STALL_TIMER: [i32; 8] = [0; 8];
 
 pub fn install() {
     acmd::install();
     frame::install();
     status::install();
+    phantom::install();
 }
