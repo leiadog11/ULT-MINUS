@@ -167,6 +167,10 @@ pub fn install() {
 
         .game_acmd("game_specialairn", zelda_specialairn, Low)
 
+        // .game_acmd("game_specialhistart", zelda_specialhistart, Low)
+
+        // .game_acmd("game_specialairhistart", zelda_specialairhistart, Low)
+
         .game_acmd("game_specialhi", zelda_specialhi, Low)
 
         .game_acmd("game_specialairhi", zelda_specialairhi, Low)
