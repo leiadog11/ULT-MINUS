@@ -75,7 +75,7 @@ unsafe extern "C" fn pit_sound_attacks4(agent: &mut L2CAgentBase) {
 // FORWARD SMASH EXPRESSION
 unsafe extern "C" fn pit_expression_attacks4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        VisibilityModule::set_status_default_int64(agent.module_accessor, Hash40::new("weapon"), 0x11242751f5);
+        VisibilityModule::set_status_default_int64(agent.module_accessor, hash40("weapon") as i64, hash40("weapon_bow_r") as i64);
         AttackModule::set_attack_reference_joint_id(agent.module_accessor, Hash40::new("swordr1"), AttackDirectionAxis(*ATTACK_DIRECTION_Z), AttackDirectionAxis(*ATTACK_DIRECTION_Y), AttackDirectionAxis(*ATTACK_DIRECTION_X));
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
     }
@@ -108,6 +108,6 @@ pub fn install() {
         .effect_acmd("effect_attacks4", pit_effect_attacks4, Low)
         .sound_acmd("sound_attacks4", pit_sound_attacks4, Low)
         .expression_acmd("expression_attacks4", pit_expression_attacks4, Low)
-        
+
         .install();
 }

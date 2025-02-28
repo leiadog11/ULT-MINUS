@@ -61,7 +61,7 @@ unsafe extern "C" fn pit_sound_attacks3(agent: &mut L2CAgentBase) {
 // FORWARD TILT EXPRESSION
 unsafe extern "C" fn pit_expression_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        VisibilityModule::set_status_default_int64(agent.module_accessor, Hash40::new("weapon"), Hash40::new("weapon_normal"));
+        VisibilityModule::set_status_default_int64(agent.module_accessor, hash40("weapon") as i64, hash40("weapon_bow_r") as i64);
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
     }
@@ -129,7 +129,7 @@ unsafe extern "C" fn pit_sound_attacks32(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pit_expression_attacks32(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
-        VisibilityModule::set_status_default_int64(agent.module_accessor, Hash40::new("weapon"), Hash40::new("weapon_bow_r"));
+        VisibilityModule::set_status_default_int64(agent.module_accessor, hash40("weapon") as i64, hash40("weapon_bow_r") as i64);
         AttackModule::set_attack_reference_joint_id(agent.module_accessor, Hash40::new("swordl"), AttackDirectionAxis(*ATTACK_DIRECTION_Z), AttackDirectionAxis(*ATTACK_DIRECTION_Y), AttackDirectionAxis(*ATTACK_DIRECTION_X));
     }
     frame(agent.lua_state_agent, 10.0);
