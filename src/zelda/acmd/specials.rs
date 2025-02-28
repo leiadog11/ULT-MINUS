@@ -74,7 +74,7 @@ unsafe extern "C" fn zelda_specialairn(agent: &mut L2CAgentBase) {
 
 // UP SPECIAL START
 unsafe extern "C" fn zelda_specialhistart(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = get_entry_id(agenht.module_accessor);
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
         if UP_B_USED[ENTRY_ID] == true {
