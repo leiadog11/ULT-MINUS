@@ -23,7 +23,7 @@ unsafe extern "C" fn pit_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_ENABLE_COMBO);
     }
-    frame(agent.lua_state_agent, 20.0);
+    frame(agent.lua_state_agent, 24.0);
     if macros::is_excute(agent) {
         CancelModule::enable_cancel(agent.module_accessor);
     }

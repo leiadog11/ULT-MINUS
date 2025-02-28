@@ -4,6 +4,7 @@ use super::*;
 
 // FORWARD SMASH
 unsafe extern "C" fn pit_attacks4(agent: &mut L2CAgentBase) {
+    macros::SET_SPEED_EX(agent, 1.25, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     for _ in 0..10 {
         if macros::is_excute(agent) {
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.7, 48, 100, 50, 0, 3.0, 0.0, 4.6, 0.8, None, None, None, 0.5, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PALUTENA);
@@ -25,10 +26,6 @@ unsafe extern "C" fn pit_attacks4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-    }
-    frame(agent.lua_state_agent, 30.0);
-    if macros::is_excute(agent) {
-        WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
 }
 
