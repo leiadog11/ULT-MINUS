@@ -72,8 +72,52 @@ unsafe extern "C" fn zelda_specialairn(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP SPECIAL START
+unsafe extern "C" fn zelda_specialhistart(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agenht.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        if UP_B_USED[ENTRY_ID] == true {
+            StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
+        }
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 91, 30, 0, 118, 8.0, 0.0, 6.0, -4.0, Some(0.0), Some(6.0), Some(4.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_MAGIC);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+// AERIAL UP SPECIAL START
+unsafe extern "C" fn zelda_specialairhistart(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        notify_event_msc_cmd!(agent, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_NONE);
+        if UP_B_USED[ENTRY_ID] == true {
+            StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
+        }
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("rot"), 6.0, 80, 100, 0, 60, 10.5, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_MAGIC);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 17.0);
+    if macros::is_excute(agent) {
+        notify_event_msc_cmd!(agent, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES);
+    }
+}
+
 //UP SPECIAL
 unsafe extern "C" fn zelda_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         JostleModule::set_status(agent.module_accessor, true);
@@ -83,6 +127,7 @@ unsafe extern "C" fn zelda_specialhi(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        UP_B_USED[ENTRY_ID] = true;
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
     }
     frame(agent.lua_state_agent, 10.0);
@@ -91,6 +136,7 @@ unsafe extern "C" fn zelda_specialhi(agent: &mut L2CAgentBase) {
 
 //AERIAL UP SPECIAL
 unsafe extern "C" fn zelda_specialairhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         JostleModule::set_status(agent.module_accessor, true);
@@ -101,6 +147,7 @@ unsafe extern "C" fn zelda_specialairhi(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        UP_B_USED[ENTRY_ID] = true;
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
     }
     frame(agent.lua_state_agent, 12.0);

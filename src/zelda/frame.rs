@@ -10,12 +10,10 @@ pub unsafe extern "C" fn zelda_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
 
-        // //ACT OUT OF UP SPECIAL
-        // if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI {
-        //     if frame > 38.0 {
-            // StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, false);
-        //     }
-        // }
+        // GET UP B BACK
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(boma, 0) > 1.0 { 
+            UP_B_USED[ENTRY_ID] = false;
+        } 
 
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
@@ -53,7 +51,9 @@ pub unsafe extern "C" fn zelda_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn zelda_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        STALL_TIMER[ENTRY_ID] = 0;
+        UP_B_USED[ENTRY_ID] = false;
     }
 }
 
