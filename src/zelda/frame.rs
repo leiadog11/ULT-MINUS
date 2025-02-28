@@ -8,12 +8,6 @@ pub unsafe extern "C" fn zelda_frame(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
         let status_kind = StatusModule::status_kind(boma);
 
-        // //ACT OUT OF UP SPECIAL
-        // if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_HI {
-        //     if frame > 38.0 {
-            // StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, false);
-        //     }
-        // }
     }
 }
 
