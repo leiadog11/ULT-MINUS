@@ -56,7 +56,6 @@ unsafe extern "C" fn captain_specialsstart(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // AERIAL SIDE SPECIAL
 unsafe extern "C" fn captain_specialairsstart(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -99,8 +98,8 @@ unsafe extern "C" fn captain_specialhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 18.0);
-    macros::FT_MOTION_RATE(agent, 0.6);
+    frame(agent.lua_state_agent, 15.0);
+    macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 19.0);
 }
 

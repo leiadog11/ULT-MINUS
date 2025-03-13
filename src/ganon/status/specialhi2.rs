@@ -50,8 +50,6 @@ unsafe extern "C" fn ganon_specialhi2_start_main(fighter: &mut L2CFighterCommon)
 // MAIN LOOP
 unsafe extern "C" fn ganon_specialhi2_start_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
     if MotionModule::is_end(fighter.module_accessor) { 
-        VisibilityModule::set_whole(fighter.module_accessor, false);
-        WorkModule::set_flag(fighter.module_accessor, false, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
         GroundModule::set_passable_check(fighter.module_accessor, true);
         fighter.change_status(FIGHTER_GANON_STATUS_KIND_SPECIAL_HI2.into(), false.into());
         return 1.into();
@@ -197,8 +195,6 @@ unsafe extern "C" fn ganon_specialhi2_main_loop(fighter: &mut L2CFighterCommon) 
         return 0.into();
     }
     if MotionModule::frame(fighter.module_accessor) >= 7.0 {
-        VisibilityModule::set_whole(fighter.module_accessor, true);
-        WorkModule::set_flag(fighter.module_accessor, true, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
         GroundModule::set_passable_check(fighter.module_accessor, false);
         KineticModule::resume_energy_all(fighter.module_accessor);
 

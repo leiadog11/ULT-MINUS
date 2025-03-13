@@ -18,6 +18,12 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true);
         }
 
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            CHARGE_MUL[ENTRY_ID] = 0.0; // RESET CHARGE MUL
+            macros::STOP_SE(fighter, Hash40::new("se_purin_special_n01")); // STOP METRONOME SOUND
+        }
+
         // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
             if CHARGE_MUL[ENTRY_ID] < 5.0 {
@@ -28,12 +34,6 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         // RESET SCALE
         if motion_kind != hash40("attack_lw4") {
             PostureModule::set_scale(boma, 1.0, false);
-        }
-
-        // RESET CHARGE MUL ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { 
-            CHARGE_MUL[ENTRY_ID] = 0.0;
-            macros::STOP_SE(fighter, Hash40::new("se_purin_special_n01"));
         }
 
         // MOVE ON DOWN TAUNT
@@ -117,13 +117,13 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
 
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
-            if STALL_TIMER[ENTRY_ID] == 900 {
+            if STALL_TIMER[ENTRY_ID] == 720 {
                 let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
                 EffectModule::req_follow(boma, Hash40::new("sys_flies_up"), Hash40::new("top"), &dumb, &dumb, 2.0, true, 0, 0, 0, 0, 0, true, true) as u32;
                 SoundModule::play_se(boma, Hash40::new("se_common_spirits_machstamp_landing"), true, false, false, false, enSEType(0));
-                STALL_TIMER[ENTRY_ID] = 901;
+                STALL_TIMER[ENTRY_ID] = 721;
             }
-            else if STALL_TIMER[ENTRY_ID] == 901 {
+            else if STALL_TIMER[ENTRY_ID] == 721 {
                 DamageModule::add_damage(boma, 0.5, 0);
                 if DamageModule::damage(boma, 0) >= 200.0 {
                     STALL_TIMER[ENTRY_ID] = 0;
@@ -140,9 +140,11 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         }
         if status_kind == *FIGHTER_STATUS_KIND_DEMO {
             STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
         }
         if DamageModule::reaction(boma, 0) > 1.0 { 
             STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
         }
     }
 }

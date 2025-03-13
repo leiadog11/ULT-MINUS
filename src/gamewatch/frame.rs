@@ -18,6 +18,13 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true);
         }
 
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // INVISIBLE FIX
+            VisibilityModule::set_whole(boma, true);
+            ArticleModule::remove_exist(boma, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+            ModelModule::set_mesh_visibility(boma, Hash40::new("blockm"), false);
+        }
+
         // MOVE ON DOWN TILT
         if motion_kind == smash::hash40("attack_lw3") {
             if frame >= 6.0 && frame <= 8.0 {
@@ -41,13 +48,6 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             if situation_kind == *SITUATION_KIND_AIR {
                 PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(boma)});
             }
-        }
-
-        // INVISIBLE FIX
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            VisibilityModule::set_whole(boma, true);
-            ArticleModule::remove_exist(boma, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            ModelModule::set_mesh_visibility(boma, Hash40::new("blockm"), false);
         }
     }
 }

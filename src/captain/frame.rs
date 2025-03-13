@@ -11,9 +11,19 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
 
         // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { // COLLISION FIX
             GroundModule::set_collidable(boma, true);
         }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FIRE BIRD ON F SMASH DAMAGE
+            ArticleModule::remove_exist(boma, *FIGHTER_CAPTAIN_GENERATE_ARTICLE_FALCONPUNCH, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+
+        // ON GROUND
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { // GROUND CHECK FOR UP B COUNT
+            UP_B_AMOUNT[ENTRY_ID] = 2;
+        } 
 
         // CLEAR ZOOM IN UP TILT
         if motion_kind == hash40("attack_hi3") {
@@ -63,20 +73,10 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
             macros::CAM_ZOOM_OUT(fighter);
         }
 
-        // CLEAR FIRE BIRD ON F SMASH DAMAGE
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            ArticleModule::remove_exist(boma, *FIGHTER_CAPTAIN_GENERATE_ARTICLE_FALCONPUNCH, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
         // GUN COOLDOWN
         if GUN_COOLDOWN[ENTRY_ID] > 0 {
             GUN_COOLDOWN[ENTRY_ID] -= 1;
         }
-
-        // GROUND CHECK FOR UP B COUNT
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
-            UP_B_AMOUNT[ENTRY_ID] = 2;
-        } 
     }
 }
 

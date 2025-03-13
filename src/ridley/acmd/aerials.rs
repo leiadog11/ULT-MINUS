@@ -4,6 +4,7 @@ use super::*;
 
 // NAIR
 unsafe extern "C" fn ridley_attackairn(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -44,6 +45,7 @@ unsafe extern "C" fn ridley_attackairn(agent: &mut L2CAgentBase) {
 
 // BACK AIR
 unsafe extern "C" fn ridley_attackairb(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
@@ -72,6 +74,7 @@ unsafe extern "C" fn ridley_attackairb(agent: &mut L2CAgentBase) {
 
 // FORWARD AIR
 unsafe extern "C" fn ridley_attackairf(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     macros::FT_MOTION_RATE(agent, 1.2);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -142,6 +145,7 @@ unsafe extern "C" fn ridley_expression_attackairf(agent: &mut L2CAgentBase) {
 
 // UP AIR
 unsafe extern "C" fn ridley_attackairhi(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
@@ -177,6 +181,7 @@ unsafe extern "C" fn ridley_attackairhi(agent: &mut L2CAgentBase) {
 
 // UP AIR 2
 unsafe extern "C" fn ridley_attackairhi2(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     macros::FT_MOTION_RATE(agent, 1.4);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -238,6 +243,7 @@ unsafe extern "C" fn ridley_expression_attackairhi2(agent: &mut L2CAgentBase) {
 
 // DOWN AIR
 unsafe extern "C" fn ridley_attackairlw(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {

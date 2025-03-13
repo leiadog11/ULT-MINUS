@@ -105,6 +105,7 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        // BEAK BONK
         if motion_kind == hash40("attack_air_f") && is_touch {
             MotionModule::change_motion(boma, Hash40::new("attack_air_f_beak_bonk"), 0.0, 1.0, false, 0.0, false, false);
         }

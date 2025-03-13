@@ -201,8 +201,6 @@ unsafe extern "C" fn captain_attackdash(agent: &mut L2CAgentBase) {
     }
 }
 
-
-
 pub fn install() {
     Agent::new("captain")
         .game_acmd("game_attack100", captain_attack100, Low)

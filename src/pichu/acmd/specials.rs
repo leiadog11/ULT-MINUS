@@ -10,7 +10,7 @@ unsafe extern "C" fn pichu_specialn(agent: &mut L2CAgentBase) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PICHU_GENERATE_ARTICLE_DENGEKIDAMA, false, -1);
     }
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, 0.7);
+        macros::FT_ADD_DAMAGE(agent, 0.8);
     }
     frame(agent.lua_state_agent, 19.0); {
         CancelModule::enable_cancel(agent.module_accessor);
@@ -68,8 +68,8 @@ unsafe extern "C" fn pichu_specialshold(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) { 
         for _ in 0..7 {
             macros::FT_ADD_DAMAGE(agent, 0.2);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.6, 5, 60, 0, 50, 5.5, 0.0, 0.0, 5.0, Some(0.0), Some(0.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);        
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.6, 5, 60, 0, 30, 5.5, 0.0, 10.0, 5.0, Some(0.0), Some(10.0), Some(-5.0), 0.2, 0.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.6, 5, 60, 0, 50, 5.5, 0.0, 0.0, 5.0, Some(0.0), Some(0.0), Some(-5.0), 0.2, 3.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);        
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.6, 5, 60, 0, 30, 5.5, 0.0, 10.0, 5.0, Some(0.0), Some(10.0), Some(-5.0), 0.2, 3.2, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 6, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_NONE);
             wait(agent.lua_state_agent, 2.0);
             AttackModule::clear_all(agent.module_accessor);
         }
