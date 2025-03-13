@@ -25,6 +25,11 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let ENTRY_ID = get_entry_id(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // REMOVE SWORD IF IN BRAWLER SMASH ATTACKS
         if motion_kind == hash40("attack_s4_s2") || motion_kind == hash40("attack_s4_hold2") || 
         motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") {

@@ -248,6 +248,7 @@ unsafe extern "C" fn palutena_speciallw(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 46.0);
     if macros::is_excute(agent) { 
+        ANCHOR_PLANTED[ENTRY_ID] = true; 
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, false, -1);
     }
 }

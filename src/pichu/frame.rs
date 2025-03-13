@@ -8,6 +8,11 @@ pub unsafe extern "C" fn pichu_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // RESET BLOWN UP ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             BLOWN_UP[ENTRY_ID] = false;

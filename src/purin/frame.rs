@@ -13,6 +13,11 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
             if CHARGE_MUL[ENTRY_ID] < 5.0 {

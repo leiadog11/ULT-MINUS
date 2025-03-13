@@ -10,6 +10,11 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
             if STALL_TIMER[ENTRY_ID] == 900 {

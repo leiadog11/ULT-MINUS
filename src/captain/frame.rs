@@ -10,6 +10,11 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // CLEAR ZOOM IN UP TILT
         if motion_kind == hash40("attack_hi3") {
             if MotionModule::is_end(boma) || DamageModule::reaction(boma, 0) > 1.0 {

@@ -12,6 +12,12 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         let lr = PostureModule::lr(boma);
         let mut max_speed = 0.0;
         let damage = DamageModule::damage(boma, 0);
+        let status_kind = StatusModule::status_kind(boma);
+
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
 
         // CAMERA ZOOM OUT ON END OF UP B
         if MotionModule::motion_kind(boma) == hash40("special_hi_jump") {

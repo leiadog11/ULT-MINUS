@@ -11,6 +11,11 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         let stick_y = ControlModule::get_stick_y(boma);
         let frame = MotionModule::frame(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // NO SPECIAL FALL ON UP B + EXTRA JUMP
         if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             UP_B_USED[ENTRY_ID] = true;

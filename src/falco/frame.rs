@@ -15,6 +15,11 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         let is_touch = GroundModule::is_touch(boma, (*GROUND_TOUCH_FLAG_RIGHT).try_into().unwrap());
         let sum_speed_x = KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // MOVE ON RAPID JAB
         if motion_kind == hash40("attack_100") {
             //RIGHT

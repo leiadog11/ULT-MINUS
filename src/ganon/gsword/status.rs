@@ -81,6 +81,13 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
         return 0.into();
     }
 
+    if MotionModule::motion_kind(owner_boma) == hash40("special_n") { 
+        if MotionModule::frame(owner_boma) == 4.0 { 
+            gsword_remove(weapon);
+            return 0.into();
+        } 
+    }
+
     return 0.into();
 }
 

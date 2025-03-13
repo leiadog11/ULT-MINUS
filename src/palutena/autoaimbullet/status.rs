@@ -48,12 +48,22 @@ unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2
 // MAIN LOOP
 unsafe extern "C" fn autoaimbullet_shot_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
 
     if MotionModule::motion_kind(owner_boma) == hash40("special_lw_tp") {
         if MotionModule::frame(owner_boma) > 9.0 {
             autoaimbullet_remove(weapon);
             return 0.into();
         }
+    }
+
+    if MotionModule::motion_kind(owner_boma) == hash40("special_lw") {
+        if ANCHOR_PLANTED[ENTRY_ID] {
+            if MotionModule::frame(owner_boma) == 1.0 {
+                autoaimbullet_remove(weapon);
+                return 0.into();
+            }
+        } 
     }
 
     if MotionModule::motion_kind(owner_boma) == hash40("attack_hi4") {

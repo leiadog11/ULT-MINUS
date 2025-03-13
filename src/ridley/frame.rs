@@ -14,6 +14,12 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         let posx = PostureModule::pos_x(boma);
         let lr = PostureModule::lr(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
+            AURA[ENTRY_ID] = false;
+            GroundModule::set_collidable(boma, true);
+        }
+
         // ACTIVATE AURA
         if DamageModule::damage(boma, 0) >= 100.0 && !AURA[ENTRY_ID] { 
             let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
@@ -28,11 +34,6 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         // UP B USES ON GROUND OR CLIFF
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
             UP_B_USES[ENTRY_ID] = 3;
-        }
-
-        // REMOVE AURA ON DEATH
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
-            AURA[ENTRY_ID] = false;
         }
 
         // TAUNT IDLE

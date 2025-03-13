@@ -9,6 +9,11 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // GYRO
         if ItemModule::is_have_item(boma, 0)  { 
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_CATCH) || 

@@ -14,6 +14,12 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         let ypos = ControlModule::get_stick_y(boma);
         let lr = PostureModule::lr(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+            SHRUNK[ENTRY_ID] = false;
+        }
+
         // SHIELD CANCEL FORWARD SMASH CHARGE
         if motion_kind == hash40("attack_s4_hold") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
@@ -28,11 +34,6 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
                 SHRUNK[ENTRY_ID] = true;
             }
         }   
-
-        // RESET SHRINK ON DEATH
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            SHRUNK[ENTRY_ID] = false;
-        }
 
         // DASH CANCEL FIREBALL ON THE GROUND
         if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_N && situation_kind == *SITUATION_KIND_GROUND {
