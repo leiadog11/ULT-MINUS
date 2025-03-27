@@ -6,11 +6,24 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
         let lr = PostureModule::lr(boma);
         let xpos = ControlModule::get_stick_x(boma);
         let ypos = ControlModule::get_stick_y(boma);
         let posx = PostureModule::pos_x(boma);
+
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // INVISIBLE FIX
+            VisibilityModule::set_whole(boma, true);
+            ArticleModule::remove_exist(boma, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+            ModelModule::set_mesh_visibility(boma, Hash40::new("blockm"), false);
+        }
 
         // MOVE ON DOWN TILT
         if motion_kind == smash::hash40("attack_lw3") {
@@ -35,13 +48,6 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             if situation_kind == *SITUATION_KIND_AIR {
                 PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(boma)});
             }
-        }
-
-        // INVISIBLE FIX
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            VisibilityModule::set_whole(boma, true);
-            ArticleModule::remove_exist(boma, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            ModelModule::set_mesh_visibility(boma, Hash40::new("blockm"), false);
         }
     }
 }

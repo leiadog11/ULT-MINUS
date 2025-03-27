@@ -710,6 +710,30 @@
         "fighter/mario/c07": [
             "fighter/mario/motion/body/c07/c01breakdance.nuanmb"
         ],
+        "fighter/pit/c00": [
+            "fighter/pit/motion/body/c00/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c01": [
+            "fighter/pit/motion/body/c01/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c02": [
+            "fighter/pit/motion/body/c02/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c03": [
+            "fighter/pit/motion/body/c03/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c04": [
+            "fighter/pit/motion/body/c04/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c05": [
+            "fighter/pit/motion/body/c05/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c06": [
+            "fighter/pit/motion/body/c06/c01attacks3s2.nuanmb"
+        ],
+        "fighter/pit/c07": [
+            "fighter/pit/motion/body/c07/c01attacks3s2.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"

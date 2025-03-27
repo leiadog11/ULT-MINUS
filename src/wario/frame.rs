@@ -12,6 +12,17 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         let lr = PostureModule::lr(boma);
         let mut max_speed = 0.0;
         let damage = DamageModule::damage(boma, 0);
+        let status_kind = StatusModule::status_kind(boma);
+
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            DOWN_SMASH_AMOUNT[ENTRY_ID] = 0; // RESET DOWN SMASH COUNT
+        }
 
         // CAMERA ZOOM OUT ON END OF UP B
         if MotionModule::motion_kind(boma) == hash40("special_hi_jump") {
@@ -30,11 +41,6 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
             CameraModule::reset_all(boma);
             EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
             macros::CAM_ZOOM_OUT(fighter);
-        }
-
-        // RESET DOWN SMASH COUNT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            DOWN_SMASH_AMOUNT[ENTRY_ID] = 0;
         }
 
         // MOVING ON DOWN SMASH

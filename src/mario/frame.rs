@@ -14,6 +14,12 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         let ypos = ControlModule::get_stick_y(boma);
         let lr = PostureModule::lr(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+            SHRUNK[ENTRY_ID] = false;
+        }
+
         // SHIELD CANCEL FORWARD SMASH CHARGE
         if motion_kind == hash40("attack_s4_hold") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
@@ -28,11 +34,6 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
                 SHRUNK[ENTRY_ID] = true;
             }
         }   
-
-        // RESET SHRINK ON DEATH
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            SHRUNK[ENTRY_ID] = false;
-        }
 
         // DASH CANCEL FIREBALL ON THE GROUND
         if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_N && situation_kind == *SITUATION_KIND_GROUND {
@@ -111,13 +112,13 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
-            if STALL_TIMER[ENTRY_ID] == 600 {
+            if STALL_TIMER[ENTRY_ID] == 720 {
                 let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
                 EffectModule::req_follow(boma, Hash40::new("sys_flies_up"), Hash40::new("top"), &dumb, &dumb, 2.0, true, 0, 0, 0, 0, 0, true, true) as u32;
                 SoundModule::play_se(boma, Hash40::new("se_common_spirits_machstamp_landing"), true, false, false, false, enSEType(0));
-                STALL_TIMER[ENTRY_ID] = 601;
+                STALL_TIMER[ENTRY_ID] = 721;
             }
-            else if STALL_TIMER[ENTRY_ID] == 601 {
+            else if STALL_TIMER[ENTRY_ID] == 721 {
                 DamageModule::add_damage(boma, 0.5, 0);
                 if DamageModule::damage(boma, 0) >= 200.0 {
                     STALL_TIMER[ENTRY_ID] = 0;
@@ -129,6 +130,14 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
             }
         }
         else {
+            STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
         }

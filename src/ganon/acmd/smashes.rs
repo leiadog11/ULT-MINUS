@@ -10,7 +10,6 @@ unsafe extern "C" fn ganon_attacks4charge(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // FORWARD SMASH 2 CHARGE
 unsafe extern "C" fn ganon_effect_attacks4charge2(agent: &mut L2CAgentBase) {
     ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));

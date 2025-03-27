@@ -15,6 +15,7 @@ unsafe extern "C" fn ganon_specialn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, FIGHTER_GANON_GENERATE_ARTICLE_GSWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, false, -1);
     }
     frame(agent.lua_state_agent, 20.0);
