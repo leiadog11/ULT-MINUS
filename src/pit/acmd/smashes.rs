@@ -4,9 +4,14 @@ use super::*;
 
 // FORWARD SMASH
 unsafe extern "C" fn pit_attacks4(agent: &mut L2CAgentBase) {
-    macros::SET_SPEED_EX(agent, 1.25, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
+    }
+    frame(agent.lua_state_agent, 5.0);
     for _ in 0..10 {
         if macros::is_excute(agent) {
+            macros::SET_SPEED_EX(agent, 1.5, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.7, 48, 100, 50, 0, 3.0, 0.0, 4.6, 0.8, None, None, None, 0.5, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PALUTENA);
             macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.7, 335, 100, 30, 0, 3.0, 0.0, 13.0, 1.2, None, None, None, 0.5, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PALUTENA);
             macros::ATTACK(agent, 2, 0, Hash40::new("top"), 0.7, 220, 100, 30, 0, 2.5, 0.0, 12.5, 8.0, None, None, None, 0.5, 0.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PALUTENA);
@@ -31,11 +36,13 @@ unsafe extern "C" fn pit_attacks4(agent: &mut L2CAgentBase) {
 
 // FORWARD SMASH EFFECT
 unsafe extern "C" fn pit_effect_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("pit_atk_air_n"), Hash40::new("swordr2"), 0, 0, 0, -90, 90, 0, 1, true);
         macros::EFFECT_FOLLOW(agent, Hash40::new("pit_sword"), Hash40::new("swordr2"), 0, -0.8, 0, 180, -90, 0, 1, true);
         macros::EFFECT_FOLLOW(agent, Hash40::new("pit_sword"), Hash40::new("swordr2"), 0, 0.8, 0, 0, 90, 0, 1, true);
+        macros::FOOT_EFFECT(agent, Hash40::new("sys_turn_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 0, 0, false);
+        macros::AFTER_IMAGE_OFF(agent, 3);
     }
     frame(agent.lua_state_agent, 32.0);
     if macros::is_excute(agent) {
@@ -59,9 +66,10 @@ unsafe extern "C" fn pit_effect_attacks4(agent: &mut L2CAgentBase) {
 
 // FORWARD SMASH SOUND
 unsafe extern "C" fn pit_sound_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::PLAY_STATUS(agent, Hash40::new("se_pit_attackair_n01"));
+        macros::PLAY_SE(agent, Hash40::new("vc_pit_attacks4"));
     }
     wait(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {

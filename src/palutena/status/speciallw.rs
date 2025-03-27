@@ -78,7 +78,7 @@ unsafe extern "C" fn palutena_speciallw_main_loop(fighter: &mut L2CFighterCommon
         if frame == 10.0 { 
             PostureModule::set_pos(fighter.module_accessor, &Vector3f{ x: BULLET_X_POS[ENTRY_ID] , y: BULLET_Y_POS[ENTRY_ID], z: PostureModule::pos_z(fighter.module_accessor)});
         } 
-        if MotionModule::is_end(fighter.module_accessor) { 
+        if frame == 11.0 { 
             GroundModule::set_collidable(fighter.module_accessor, true);
             ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_PALUTENA_GENERATE_ARTICLE_AUTOAIMBULLET, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
             ANCHOR_PLANTED[ENTRY_ID] = false;
