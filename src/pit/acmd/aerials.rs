@@ -4,6 +4,7 @@ use super::*;
 
 // NAIR
 unsafe extern "C" fn pit_attackairn(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.9);
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
@@ -50,6 +51,14 @@ unsafe extern "C" fn pit_attackairn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
+    }
+}
+
+// NAIR LANDING
+unsafe extern "C" fn pit_landingairn(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
@@ -158,6 +167,8 @@ unsafe extern "C" fn pit_attackairlw(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("pit")
         .game_acmd("game_attackairn", pit_attackairn, Low)
+
+        .game_acmd("game_landingairn", pit_landingairn, Low)
 
         .game_acmd("game_attackairf", pit_attackairf, Low)
 
