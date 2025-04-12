@@ -64,7 +64,7 @@ unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -
     let mut boma_counter = 0;
     
     for _ in 0..entry_count_usize { 
-        let curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+        let mut curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
         if curr_boma != boma {
             opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
         }
