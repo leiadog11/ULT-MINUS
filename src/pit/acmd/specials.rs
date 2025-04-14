@@ -93,6 +93,51 @@ unsafe extern "C" fn pit_sound_specialnfirehi(agent: &mut L2CAgentBase) {
     }
 }
 
+// SPECIAL LW SHIELD INSTALL EFFECT
+unsafe extern "C" fn pit_effect_speciallw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pit_guardian_shield"), Hash40::new("virtualguardianf"), -2, 3, 4, 0, 240, 0, 1.5, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pit_guardian_shield"), Hash40::new("virtualguardianb"), -2, 3, -4, 0, 120, 0, 1.5, true);
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_landing_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.85, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
+// SPECIAL LW SHIELD INSTALL SOUND
+unsafe extern "C" fn pit_sound_speciallw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        // YELL SHIELD
+        macros::PLAY_SE(agent, Hash40::new("se_pit_special_l01"));
+        macros::PLAY_SEQUENCE(agent, Hash40::new("seq_pit_rnd_special_l"));
+    }
+}
+
+// SPECIAL LW SHIELD INSTALL EXPRESSION
+unsafe extern "C" fn pit_expression_speciallw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_awaken"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
+// --EDIT MOTION LIST FOR THE MOTION BELOW AND START--
+
+// SPECIAL LW END EFFECT
+unsafe extern "C" fn pit_effect_speciallwend(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("pit_guardian_shield_end"), Hash40::new("virtualguardianf"), -2, 3, 4, 0, 240, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT(agent, Hash40::new("pit_guardian_shield_end"), Hash40::new("virtualguardianb"), -2, 3, -4, 0, 120, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("pit_guardian_shield"), false, false);
+    }
+}
+
+// SPECIAL LW END EXPRESSION
+unsafe extern "C" fn pit_expression_speciallwend(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_beamss"), 0, true, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 pub fn install() {
     Agent::new("pit")
         .game_acmd("game_specialnstart", pit_specialnstart, Low)
@@ -102,6 +147,13 @@ pub fn install() {
         .game_acmd("game_specialnfirehi", pit_specialnfirehi, Low)
         .effect_acmd("effect_specialnfirehi", pit_effect_specialnfirehi, Low)
         .sound_acmd("sound_specialnfirehi", pit_sound_specialnfirehi, Low)
+
+        .effect_acmd("effect_speciallw", pit_effect_speciallw, Low)
+        .sound_acmd("sound_speciallw", pit_sound_speciallw, Low)
+        .expression_acmd("expression_speciallw", pit_expression_speciallw, Low)
+
+        .effect_acmd("effect_speciallwend", pit_effect_speciallwend, Low)
+        .expression_acmd("expression_speciallwend", pit_expression_speciallwend, Low)
 
         .install();
 }
