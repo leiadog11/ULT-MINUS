@@ -47,9 +47,9 @@ unsafe extern "C" fn pit_speciallw_main(fighter: &mut L2CFighterCommon) -> L2CVa
 // MAIN LOOP
 unsafe extern "C" fn pit_speciallw_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
-    let frame = MotionModule::frame(figther.module_accessor);
+    let frame = MotionModule::frame(fighter.module_accessor);
 
-    if frame == 1 {
+    if frame == 1.0 {
         if SPECIAL_LW_TIMER[ENTRY_ID] < 1200 {
             SPECIAL_LW_ACTIVE[ENTRY_ID] = false;
             fighter.change_status(FIGHTER_STATUS_KIND_THROWN.into(), false.into());
