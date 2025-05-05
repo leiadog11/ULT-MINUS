@@ -20,6 +20,11 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
             SHRUNK[ENTRY_ID] = false;
         }
 
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("block"), false);
+        }
+
         // SHIELD CANCEL FORWARD SMASH CHARGE
         if motion_kind == hash40("attack_s4_hold") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
@@ -147,6 +152,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn mario_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("box"), false);
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         SHRUNK[ENTRY_ID] = false;
         ICEBALL[ENTRY_ID] = false;

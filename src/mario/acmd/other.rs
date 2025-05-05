@@ -58,6 +58,79 @@ unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
     }
 }
 
+// SIDE TAUNT
+unsafe extern "C" fn mario_appeals(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("box"), true);
+        ItemModule::remove_item(agent.module_accessor, 0);
+    }
+    let rand = smash::app::sv_math::rand(hash40("agent"), 20) as u64;
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) { 
+        if rand == 1 {
+            ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_STARMAN), 0, 0, false, false);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 10.0, 0);
+        }
+        else if rand == 2 {
+            ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHROOM), 0, 0, false, false);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 10.0, 0);
+        }
+        else if rand == 3 {
+            ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHD), 0, 0, false, false);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 10.0, 0);
+        }
+        else if rand == 4 {
+            ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_KOOPAG), 0, 0, false, false);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 10.0, 0);
+        }
+        else {
+            // increase coin counter
+            macros::PLAY_SE(agent, Hash40::new("se_common_coin"));
+        }
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("box"), false);
+    }
+}
+
+// SIDE TAUNT EFFECT
+unsafe extern "C" fn mario_effect_appeals(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_jump_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, false);
+    }
+}
+
+// SIDE TAUNT SOUND
+unsafe extern "C" fn mario_sound_appeals(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_mario_jump01"));
+    }
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_stage_mario_pastx_block_hit"));
+    }
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_stage_mario_pastx_hatenablock_hit"));
+    }
+}
+
+// SIDE TAUNT EXPRESSION
+unsafe extern "C" fn mario_expression_appeals(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 12.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_L);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 5, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 pub fn install() {
     Agent::new("mario")
         .game_acmd("game_stepjump", mario_stepjump, Low)
@@ -65,6 +138,15 @@ pub fn install() {
         .game_acmd("game_shrink", mario_shrink, Low)
 
         .game_acmd("game_squat", mario_squat, Low)
+
+        .game_acmd("game_appealsl", mario_appeals, Low)
+        .game_acmd("game_appealsr", mario_appeals, Low)
+        .effect_acmd("effect_appealsl", mario_effect_appeals, Low)
+        .effect_acmd("effect_appealsr", mario_effect_appeals, Low)
+        .sound_acmd("sound_appealsl", mario_sound_appeals, Low)
+        .sound_acmd("sound_appealsr", mario_sound_appeals, Low)
+        .expression_acmd("expression_appealsl", mario_expression_appeals, Low)
+        .expression_acmd("expression_appealsr", mario_expression_appeals, Low)
 
         .install();
 }
