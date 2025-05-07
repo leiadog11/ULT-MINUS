@@ -4,6 +4,8 @@ pub mod acmd;
 pub mod frame;
 pub mod status;
 
+static mut STALL_TIMER: [i32; 8] = [0; 8];
+
 pub fn install() {
     acmd::install();
     frame::install();
