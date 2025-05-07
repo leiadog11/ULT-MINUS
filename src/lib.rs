@@ -50,7 +50,11 @@ mod mario;
 mod link;
 mod bayonetta;
 mod zelda;
+<<<<<<< HEAD
+mod metaknight;
+=======
 mod pit;
+>>>>>>> main
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
@@ -98,6 +102,7 @@ pub fn main() {
     link::install();
     bayonetta::install();
     zelda::install();
+    metaknight::install();
     pit::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
