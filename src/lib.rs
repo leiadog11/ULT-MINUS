@@ -50,11 +50,8 @@ mod mario;
 mod link;
 mod bayonetta;
 mod zelda;
-<<<<<<< HEAD
 mod metaknight;
-=======
 mod pit;
->>>>>>> main
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
