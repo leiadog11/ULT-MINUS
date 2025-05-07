@@ -152,7 +152,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn mario_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("box"), false);
+        ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("block"), false);
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         SHRUNK[ENTRY_ID] = false;
         ICEBALL[ENTRY_ID] = false;

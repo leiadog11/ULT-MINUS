@@ -177,7 +177,6 @@ unsafe extern "C" fn mario_sound_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
-
 pub fn install() {
     Agent::new("mario")
         .game_acmd("game_attackairf", mario_attackairf, Low)
