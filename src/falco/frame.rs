@@ -15,6 +15,11 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         let is_touch = GroundModule::is_touch(boma, (*GROUND_TOUCH_FLAG_RIGHT).try_into().unwrap());
         let sum_speed_x = KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
         // MOVE ON RAPID JAB
         if motion_kind == hash40("attack_100") {
             //RIGHT
@@ -100,6 +105,7 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        // BEAK BONK
         if motion_kind == hash40("attack_air_f") && is_touch {
             MotionModule::change_motion(boma, Hash40::new("attack_air_f_beak_bonk"), 0.0, 1.0, false, 0.0, false, false);
         }

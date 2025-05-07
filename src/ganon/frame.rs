@@ -25,27 +25,26 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let ENTRY_ID = get_entry_id(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // REMOVE SWORD
+            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+
+        // ON GROUND
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { // UP B 2 CHECK
+            GROUND_CHECK[ENTRY_ID] = true;
+        }
+
         // REMOVE SWORD IF IN BRAWLER SMASH ATTACKS
         if motion_kind == hash40("attack_s4_s2") || motion_kind == hash40("attack_s4_hold2") || 
         motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") {
             ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }   
-
-        // REMOVE SWORD IF HIT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
-        // GAIN PLAYER CURSOR BACK IF NOT IN UP B
-        if motion_kind != hash40("special_hi2_start") || motion_kind != hash40("special_hi2") {
-            VisibilityModule::set_whole(boma, true);
-            WorkModule::set_flag(boma, true, *FIGHTER_INSTANCE_WORK_ID_FLAG_NAME_CURSOR);
-        }
-
-        // GROUND CHECK FOR UP B 2
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
-            GROUND_CHECK[ENTRY_ID] = true;
-        }
 
         // FLOAT
         let stick_x = ControlModule::get_stick_x(boma) * PostureModule::lr(boma);

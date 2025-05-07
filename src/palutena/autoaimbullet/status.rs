@@ -24,7 +24,6 @@ unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("shot"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
-    //Snap to throw position
     let mut offset_add = Vector3f{x:0.0,y:4.0,z:0.0};
     let mut newPos = Vector3f{x:0.0,y:0.0,z:0.0};
 
@@ -48,18 +47,26 @@ unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2
 // MAIN LOOP
 unsafe extern "C" fn autoaimbullet_shot_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let ENTRY_ID = get_entry_id(owner_boma);
 
     if MotionModule::motion_kind(owner_boma) == hash40("special_lw_tp") {
         if MotionModule::frame(owner_boma) > 9.0 {
             autoaimbullet_remove(weapon);
-            return 0.into();
+            return 1.into();
         }
     }
 
-    if MotionModule::motion_kind(owner_boma) == hash40("attack_hi4") {
+    else if MotionModule::motion_kind(owner_boma) == hash40("special_lw") {
+        if MotionModule::frame(owner_boma) == 1.0 {
+            autoaimbullet_remove(weapon);
+            return 1.into();
+        }
+    }
+
+    else if MotionModule::motion_kind(owner_boma) == hash40("attack_hi4") {
         if MotionModule::frame(owner_boma) >= 15.0 {
             autoaimbullet_remove(weapon);
-            return 0.into();
+            return 1.into();
         }
     }
 

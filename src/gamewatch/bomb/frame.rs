@@ -28,7 +28,7 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
                 let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
                 let d = dSquared.sqrt();
     
-                if d < 21.0 && !exploded {
+                if d < 22.0 && !exploded {
                     exploded = true;
                     BOMB_OUT[ENTRY_ID] = false;
                     MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);

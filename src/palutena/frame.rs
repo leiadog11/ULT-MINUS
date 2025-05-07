@@ -11,21 +11,27 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         let stick_y = ControlModule::get_stick_y(boma);
         let frame = MotionModule::frame(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            GroundModule::set_collidable(boma, true);
+        }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL)); // CLEAR WINGS
+            CHARGE_MUL[ENTRY_ID] = 1.0; // RESET CHARGE MULT
+            UP_B_USED[ENTRY_ID] = false; // GET UP B BACK
+        }
+        
+        // ON GROUND
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
+            UP_B_USED[ENTRY_ID] = false; // GET UP B BACK
+        } 
+
         // NO SPECIAL FALL ON UP B + EXTRA JUMP
         if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             UP_B_USED[ENTRY_ID] = true;
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
-        }
-
-        // GET UP B BACK
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(boma, 0) > 1.0 { 
-            UP_B_USED[ENTRY_ID] = false;
-        } 
-
-        // CLEAR WINGS AND CHARGE MULT ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            CHARGE_MUL[ENTRY_ID] = 1.0;
         }
 
         // CHARGE DOWN SMASH MULT

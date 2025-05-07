@@ -56,7 +56,6 @@ unsafe extern "C" fn luigi_attackairb(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // FORWARD AIR
 unsafe extern "C" fn luigi_attackairf(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 2.0);
@@ -86,7 +85,6 @@ unsafe extern "C" fn luigi_attackairf(agent: &mut L2CAgentBase) {
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
 }
-
 
 // DOWN AIR
 unsafe extern "C" fn luigi_attackairlw(agent: &mut L2CAgentBase) {

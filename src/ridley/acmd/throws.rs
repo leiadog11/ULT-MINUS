@@ -2,6 +2,7 @@ use super::*;
 
 // GRAB
 unsafe extern "C" fn ridley_catch(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -22,6 +23,7 @@ unsafe extern "C" fn ridley_catch(agent: &mut L2CAgentBase) {
 
 // DASH GRAB
 unsafe extern "C" fn ridley_catchdash(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -42,6 +44,7 @@ unsafe extern "C" fn ridley_catchdash(agent: &mut L2CAgentBase) {
 
 // PIVOT GRAB
 unsafe extern "C" fn ridley_catchturn(agent: &mut L2CAgentBase) {
+    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
     frame(agent.lua_state_agent, 11.0);
     if macros::is_excute(agent) {
         GrabModule::set_rebound(agent.module_accessor, true);
@@ -60,6 +63,8 @@ unsafe extern "C" fn ridley_catchturn(agent: &mut L2CAgentBase) {
     }
 }
 
+/*
+
 // DOWN THROW
 unsafe extern "C" fn ridley_throwlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 18.0);
@@ -77,13 +82,19 @@ unsafe extern "C" fn ridley_throwlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 40.0);
     if macros::is_excute(agent) { 
         AttackModule::clear_all(agent.module_accessor);
+        GrabModule::set_rebound(agent.module_accessor, true);
     }
-    frame(agent.lua_state_agent, 49.0);
+    frame(agent.lua_state_agent, 41.0);
     if macros::is_excute(agent) { 
-        let target = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_OBJECT);
-        let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
-        let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
-        macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
+        macros::CATCH(agent, 0, Hash40::new("handl"), 15.0, 0.0, 0.0, 0.0, Some(0.0), Some(0.0), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+        macros::CATCH(agent, 1, Hash40::new("handl"), 12.5, 0.0, 0.0, 0.0, Some(0.0), Some(0.0), Some(0.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
+    }
+    macros::game_CaptureCutCommon(agent);
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
+        GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
 
@@ -158,6 +169,7 @@ unsafe extern "C" fn ridley_expression_throwlw(agent: &mut L2CAgentBase) {
     }
 }
 
+*/
 pub fn install() {
     Agent::new("ridley")
         .game_acmd("game_catch", ridley_catch, Low)
@@ -165,11 +177,12 @@ pub fn install() {
         .game_acmd("game_catchdash", ridley_catchdash, Low)
 
         .game_acmd("game_catchturn", ridley_catchturn, Low)
-
+        /*
         .game_acmd("game_throwlw", ridley_throwlw, Low)
         .effect_acmd("effect_throwlw", ridley_effect_throwlw, Low)
         .sound_acmd("sound_throwlw", ridley_sound_throwlw, Low)
         .expression_acmd("expression_throwlw", ridley_expression_throwlw, Low)
+        */
 
         .install();
 }
