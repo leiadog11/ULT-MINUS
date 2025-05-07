@@ -8,7 +8,6 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let currentsize = PostureModule::scale(boma);
         let entry_id = WorkModule::get_int(boma,*FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID);
-        let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
 
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_lw") {
             if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) {
@@ -18,8 +17,6 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
                 MotionModule::set_rate(fighter.module_accessor, 3.2);
             }
         }
-        if DamageModule::damage(boma, 0) >= 50.0 {
-            smash::app::lua_bind::FighterManager::set_final(fighter_manager,FighterEntryID(entry_id),smash::app::FighterAvailableFinal(*(smash::lib::lua_const::FighterAvailableFinal::DEFAULT)),0u32);        }
         
         //BAYO GROWS LARGER IF NAIR IS HELD
         if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_n_hold") {

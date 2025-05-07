@@ -28,7 +28,7 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::SET_SPEED_EX(agent, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 200.0,/*no*/ 0.0,/*zoom*/ 1.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 200.0,/*no*/ 0.0,/*zoom*/ 2.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
         KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
@@ -75,28 +75,28 @@ unsafe extern "C" fn mario_appeals(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) { 
         if rand == 1 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_SUPERSTAR), 0, 0, false, false);
-            ItemModule::throw_item(agent.module_accessor, 90.0, 0.5, 0.0, 0, true, 0.0);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
         else if rand == 2 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHROOM), 0, 0, false, false);
-            ItemModule::throw_item(agent.module_accessor, 90.0, 0.5, 0.0, 0, true, 0.0);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
         else if rand == 3 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHD), 0, 0, false, false);
-            ItemModule::throw_item(agent.module_accessor, 90.0, 0.5, 0.0, 0, true, 0.0);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
         else if rand == 4 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_GREENSHELL), 0, 0, false, false);
-            ItemModule::throw_item(agent.module_accessor, 90.0, 0.5, 0.0, 0, true, 0.0);
+            ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
         else {
             // increase coin counter
             macros::PLAY_SE(agent, Hash40::new("se_common_coin"));
-            macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+            macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 90, 1, 0, 0, 0, 0, 0, 0, true);
         }
     }
     frame(agent.lua_state_agent, 20.0);
