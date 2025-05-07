@@ -1,5 +1,9 @@
 use super::*;
 
-pub fn install() {
+mod checkattack;
+mod speciallw;
 
+pub fn install() {
+    checkattack::install();
+    speciallw::install();
 }

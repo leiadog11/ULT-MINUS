@@ -239,12 +239,12 @@ unsafe extern "C" fn palutena_specials_shoot_main(fighter: &mut L2CFighterCommon
 unsafe extern "C" fn palutena_specials_shoot_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     CameraModule::req_quake(fighter.module_accessor, *CAMERA_QUAKE_KIND_SMALL);
     if MotionModule::is_end(fighter.module_accessor) { 
-        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
-            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
             return 1.into();
         }
     }
