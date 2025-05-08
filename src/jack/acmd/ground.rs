@@ -31,6 +31,8 @@ unsafe extern "C" fn jack_attack11(agent: &mut L2CAgentBase) {
 
 //F TILT
 unsafe extern "C" fn jack_attacks3(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 3.0, 170, 100, 20, 0, 2.5, 0.0, 4.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
@@ -46,12 +48,22 @@ unsafe extern "C" fn jack_attacks3(agent: &mut L2CAgentBase) {
     }
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE) {
         if macros::is_excute(agent) {
-            AttackModule::set_size(agent.module_accessor, 2, 0.0);
-            macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
-            macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 2);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 2);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            if CURSE_TIMER[ENTRY_ID] > 0 && rand == 1 {
+                AttackModule::set_size(agent.module_accessor, 2, 0.0);
+                macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_bind"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+                macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_bind"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 2);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 2);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            }
+            else {
+                AttackModule::set_size(agent.module_accessor, 2, 0.0);
+                macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+                macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 35, 106, 0, 60, 4.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 2);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 2);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            }
         }
     }
     frame(agent.lua_state_agent, 16.0);
@@ -66,6 +78,8 @@ unsafe extern "C" fn jack_attacks3(agent: &mut L2CAgentBase) {
 
 //DOWN TILT
 unsafe extern "C" fn jack_attacklw3(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         JostleModule::set_status(agent.module_accessor, false);
@@ -81,7 +95,6 @@ unsafe extern "C" fn jack_attacklw3(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 1, 1, Hash40::new("top"), 7.0, 361, 95, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.5);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.5);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
         }
     }
     frame(agent.lua_state_agent, 10.0);
@@ -94,7 +107,6 @@ unsafe extern "C" fn jack_attacklw3(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 1, 1, Hash40::new("top"), 7.0, 361, 98, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.5);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.5);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
         }
     }
     frame(agent.lua_state_agent, 12.0);
@@ -103,11 +115,20 @@ unsafe extern "C" fn jack_attacklw3(agent: &mut L2CAgentBase) {
     }
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE) {
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 75, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-            macros::ATTACK(agent, 1, 1, Hash40::new("top"), 7.0, 361, 99, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.5);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.5);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            if CURSE_TIMER[ENTRY_ID] > 0 && rand == 1 {
+                macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 75, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bind"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+                macros::ATTACK(agent, 1, 1, Hash40::new("top"), 7.0, 361, 99, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bind"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.5);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.5);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);    
+            }
+            else {
+                macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 75, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+                macros::ATTACK(agent, 1, 1, Hash40::new("top"), 7.0, 361, 99, 0, 10, 3.5, 0.0, 3.2, 0.0, Some(0.0), Some(3.2), Some(8.5), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.8, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.5);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.5);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            }
         }
     }
     frame(agent.lua_state_agent, 15.0);
@@ -119,6 +140,8 @@ unsafe extern "C" fn jack_attacklw3(agent: &mut L2CAgentBase) {
 
 //DASH ATTACK
 unsafe extern "C" fn jack_attackdash(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
@@ -148,7 +171,6 @@ unsafe extern "C" fn jack_attackdash(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 1, 1, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 8.0, 7.0, Some(0.0), Some(8.0), Some(12.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.1);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.1);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
         }
     }
     frame(agent.lua_state_agent, 17.0);
@@ -163,13 +185,23 @@ unsafe extern "C" fn jack_attackdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 19.0);
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE) {
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
-            macros::ATTACK(agent, 1, 1, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.1);
-            macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.1);
+            if CURSE_TIMER[ENTRY_ID] > 0 && rand == 1 {
+                macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bind"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATTACK(agent, 1, 1, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bind"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.1);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.1);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            }
+            else {
+                macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATTACK(agent, 1, 1, Hash40::new("top"), 6.0, 361, 82, 0, 85, 5.0, 0.0, 11.0, 7.0, Some(0.0), Some(11.0), Some(11.0), 1.7, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 1.1);
+                macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 1.1);
+                AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
+            }
         }
     }
-    frame(agent.lua_state_agent, 22.0);
+    frame(agent.lua_state_agent, 25.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
         CancelModule::enable_cancel(agent.module_accessor);
