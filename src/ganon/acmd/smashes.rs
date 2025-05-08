@@ -297,6 +297,127 @@ unsafe extern "C" fn ganon_expression_attacklw42(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP SMASH CHARGE
+unsafe extern "C" fn ganon_attackhi4charge(agent: &mut L2CAgentBase) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_hi4_hold2"), 0.0, 1.0, false, 0.0, false, false);
+    }
+}
+
+// UP SMASH CHARGE 2
+unsafe extern "C" fn ganon_attackhi4charge2(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) { 
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    }
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 12, 0, 4, 0, 0, 0, false);
+    }
+}
+
+// UP SMASH
+unsafe extern "C" fn ganon_attackhi4(agent: &mut L2CAgentBase) {
+    if !SWORD[get_entry_id(agent.module_accessor)] {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        MotionModule::change_motion(agent.module_accessor, Hash40::new("attack_hi42"), 0.0, 1.0, false, 0.0, false, false);
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, false, -1);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
+    }
+    frame(agent.lua_state_agent, 20.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("haver"), 24.0, 85, 71, 0, 40, 5.0, 0.0, 6.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 1, 0, Hash40::new("haver"), 24.0, 78, 71, 0, 40, 4.5, 0.0, 14.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 2, 0, Hash40::new("armr"), 21.0, 75, 75, 0, 40, 4.0, 2.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+    }
+    wait(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
+// UP SMASH 2
+unsafe extern "C" fn ganon_attackhi42(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    }
+    frame(agent.lua_state_agent, 7.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        macros::HIT_NODE(agent, Hash40::new("shoulderr"), *HIT_STATUS_XLU);
+        macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_XLU);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 17.0, 83, 82, 0, 32, 5.3, 0.0, 9.0, 8.5, None, None, None, 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("armr"), 13.5, 83, 86, 0, 32, 4.3, -2.0, 0.0, 0.0, Some(2.0), Some(0.0), Some(0.0), 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+    }
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 13.5, 83, 86, 0, 32, 4.8, 0.0, 21.5, 5.0, Some(0.0), Some(17.0), Some(6.0), 1.5, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
+    }
+}
+
+// UP SMASH 2 EFFECT
+unsafe extern "C" fn ganon_effect_attackhi42(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("top"), 7, 10, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_v_smoke_a"), Hash40::new("top"), 3, 0, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
+// UP SMASH 2 SOUND
+unsafe extern "C" fn ganon_sound_attackhi42(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::STOP_SE(agent, Hash40::new("se_common_smash_start"));
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("vc_ganon_attack06"));
+    }
+}
+
+// UP SMASH 2 EXPRESSION
+unsafe extern "C" fn ganon_expression_attackhi42(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitl"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+        macros::AREA_WIND_2ND_arg10(agent, 0, 0.8, 110, 8, 0.8, 0, 4, 32, 8, 80);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
+    }
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        AreaModule::erase_wind(agent.module_accessor, 0);
+    }
+}
+
 pub fn install() {
     Agent::new("ganon")
         .game_acmd("game_attacks4charge", ganon_attacks4charge, Low)
@@ -320,6 +441,17 @@ pub fn install() {
         .effect_acmd("effect_attacklw42", ganon_effect_attacklw42, Low)
         .sound_acmd("sound_attacklw42", ganon_sound_attacklw42, Low)
         .expression_acmd("expression_attacklw42", ganon_expression_attacklw42, Low)
+
+        .game_acmd("game_attackhi4charge", ganon_attackhi4charge, Low)
+
+        .game_acmd("game_attackhi4charge2", ganon_attackhi4charge2, Low)
+
+        .game_acmd("game_attackhi4", ganon_attackhi4, Low)
+
+        .game_acmd("game_attackhi42", ganon_attackhi42, Low)
+        .effect_acmd("effect_attackhi42", ganon_effect_attackhi42, Low)
+        .sound_acmd("sound_attackhi42", ganon_sound_attackhi42, Low)
+        .expression_acmd("expression_attackhi42", ganon_expression_attackhi42, Low)
 
         .install();
 }
