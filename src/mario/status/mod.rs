@@ -1,5 +1,7 @@
 use super::*;
 
-pub fn install() {
+pub mod shrink;
 
+pub fn install() {
+    shrink::install();
 }

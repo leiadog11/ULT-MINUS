@@ -27,6 +27,8 @@ use {
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
+    skyline::hooks::InlineCtx,
+    skyline::libc::*,
     smash2::*,
     smash_script::*,
     smashline::*,

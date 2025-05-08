@@ -1,16 +1,9 @@
-use {
-    smash::{
-        lua2cpp::*,
-        phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
-        lib::lua_const::*,
-		hash40
-    },
-    smash_script::*,
-    smashline::*
-};
+use super::*;
 
 use skyline::hooks::{getRegionAddress, Region};
+use skyline::nn::ro::LookupSymbol;
+
+pub static mut FIGHTER_MANAGER: usize = 0;
 
 // PARRY REFLECTS
 #[skyline::hook(replace=smash::app::FighterUtil::is_valid_just_shield_reflector)]
@@ -34,8 +27,30 @@ unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::
     call_original!(vtable, weapon, log)
 }
 
+// GIVE FINAL SMASH
+#[skyline::hook(offset=0x8dc140)]
+pub unsafe fn give_final_smash(boma: *mut BattleObjectModuleAccessor) {
+    let ENTRY_ID = get_entry_id(boma);
+    let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
+    smash::app::lua_bind::FighterManager::set_final(
+        fighter_manager, 
+        FighterEntryID(ENTRY_ID.try_into().unwrap()), 
+        smash::app::FighterAvailableFinal { _address: *(smash::lib::lua_const::FighterAvailableFinal::DEFAULT) as u8 },
+        0u32
+    );
+}
+
 pub fn install() {
+    unsafe {
+        LookupSymbol(
+            &mut FIGHTER_MANAGER,
+            "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
+            .as_bytes()
+            .as_ptr(),
+        );
+    }
     skyline::install_hooks!(
+        give_final_smash,
         is_valid_just_shield_reflector,
         normal_weapon_hit_handler
     );

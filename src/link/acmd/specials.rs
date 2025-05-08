@@ -6,6 +6,7 @@ use super::*;
 unsafe extern "C" fn link_specialnstart(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_LINK_STATUS_BOW_FLAG_DOUBLE);
+        WorkModule::set_int(agent.module_accessor, 2, *WN_LINK_BOWARROW_INSTANCE_WORK_ID_INT_SHOOT_NUM);
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_LINK_GENERATE_ARTICLE_BOWARROW, false, -1);
     }
     macros::FT_MOTION_RATE(agent, 0.8);
@@ -13,6 +14,23 @@ unsafe extern "C" fn link_specialnstart(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_LINK_STATUS_BOW_FLAG_CHARGE);
+    }
+}
+
+// SIDE B
+unsafe extern "C" fn link_specials1(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.8);
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_LINK_GENERATE_ARTICLE_BOOMERANG, false, -1);
+    }
+    frame(agent.lua_state_agent, 27.0);
+    if macros::is_excute(agent) {
+        ArticleModule::shoot(agent.module_accessor, *FIGHTER_LINK_GENERATE_ARTICLE_BOOMERANG, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL), false);
+    }
+    frame(agent.lua_state_agent, 29.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
@@ -239,6 +257,8 @@ unsafe extern "C" fn link_specialairhilanding(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("link")
         .game_acmd("game_specialnstart", link_specialnstart, Low)
+
+        .game_acmd("game_specials1", link_specials1, Low)
 
         .game_acmd("game_specialhi", link_specialhi, Low)
 
