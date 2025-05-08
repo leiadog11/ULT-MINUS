@@ -29,6 +29,7 @@ use {
     },
     skyline::hooks::InlineCtx,
     skyline::libc::*,
+    skyline::nn::ro::LookupSymbol,
     smash2::*,
     smash_script::*,
     smashline::*,
@@ -58,6 +59,7 @@ mod pit;
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
 pub const PREV_SITUATION_KIND: i32 = 0x17;
+pub static mut FIGHTER_MANAGER: usize = 0;
 
 // THE GREAT OPPONENT BOMA LIST
 unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
@@ -80,6 +82,24 @@ unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -
 // GET ENTRY ID
 unsafe extern "C" fn get_entry_id(boma: *mut BattleObjectModuleAccessor) -> usize { 
     return WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
+}
+
+// GET FINAL SMASH
+unsafe extern "C" fn get_final_smash(boma: *mut BattleObjectModuleAccessor) {
+    let ENTRY_ID = get_entry_id(boma);
+    LookupSymbol(
+        &mut FIGHTER_MANAGER,
+        "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
+            .as_bytes()
+            .as_ptr(),
+    );
+    let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
+    smash::app::lua_bind::FighterManager::set_final(
+        fighter_manager, 
+        FighterEntryID(ENTRY_ID.try_into().unwrap()), 
+        smash::app::FighterAvailableFinal { _address: *(smash::lib::lua_const::FighterAvailableFinal::DEFAULT) as u8 },
+        0
+    );
 }
 
 #[skyline::main(name = "ult_minus")]
