@@ -16,33 +16,20 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 
 // SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
-    let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-    let y_vel = KineticModule::get_sum_speed_y(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let mut curr_scale = PostureModule::scale(agent.module_accessor);
-    macros::SET_SPEED_EX(agent, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-    KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
-    KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::SET_SPEED_EX(agent, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 200.0,/*no*/ 0.0,/*zoom*/ 2.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
-        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-        PostureModule::set_scale(agent.module_accessor, curr_scale - 0.4, false);
-    }
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
-        macros::SET_SPEED_EX(agent, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
-        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::enable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
         CameraModule::reset_all(agent.module_accessor);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 20.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        SlowModule::set_whole(agent.module_accessor, 120, 20);
+        macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
+        PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
+    }
+    frame(agent.lua_state_agent, 45.0);
+    if macros::is_excute(agent) {
+        SlowModule::clear_whole(agent.module_accessor);
+        CameraModule::reset_all(agent.module_accessor);
+        macros::SET_SPEED_EX(agent, 1.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         macros::CAM_ZOOM_OUT(agent);
     }
 }
@@ -94,8 +81,8 @@ unsafe extern "C" fn mario_appeals(agent: &mut L2CAgentBase) {
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
         else {
-            // increase coin counter
             macros::PLAY_SE(agent, Hash40::new("se_common_coin"));
+            COIN_COUNT[get_entry_id(agent.module_accessor)] += 1;
             macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 90, 1, 0, 0, 0, 0, 0, 0, true);
         }
     }
@@ -118,14 +105,6 @@ unsafe extern "C" fn mario_sound_appeals(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_mario_jump01"));
-    }
-    frame(agent.lua_state_agent, 12.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_stage_mario_pastx_block_hit"));
-    }
-    frame(agent.lua_state_agent, 14.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_stage_mario_pastx_hatenablock_hit"));
     }
 }
 

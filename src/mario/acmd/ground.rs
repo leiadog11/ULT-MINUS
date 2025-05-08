@@ -23,7 +23,7 @@ unsafe extern "C" fn mario_attack12(agent: &mut L2CAgentBase) {
 
 // FORWARD TILT
 unsafe extern "C" fn mario_attacks3(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 1.0);
+    macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("kneer"), 7.0, 100, 0, 0, 70, 3.8, 4.6, 0.0, 0.3, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -34,7 +34,7 @@ unsafe extern "C" fn mario_attacks3(agent: &mut L2CAgentBase) {
         AttackModule::set_add_reaction_frame(agent.module_accessor, 2, 6.0, false);
     }
     frame(agent.lua_state_agent, 8.0);
-    macros::FT_MOTION_RATE(agent, 0.8);
+    macros::FT_MOTION_RATE(agent, 0.6);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
@@ -71,6 +71,7 @@ unsafe extern "C" fn mario_attacks3lw(agent: &mut L2CAgentBase) {
 
 // DOWN TILT
 unsafe extern "C" fn mario_attacklw3(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.75);
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 7.0, 270, 85, 0, 50, 3.2, -1.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.4, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -192,7 +193,7 @@ unsafe extern "C" fn mario_expression_breakdance(agent: &mut L2CAgentBase) {
 
 // UP TILT
 unsafe extern "C" fn mario_attackhi3(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.85);
+    macros::FT_MOTION_RATE(agent, 0.65);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 1, 0, Hash40::new("arml"), 0.8, 125, 80, 100, 0, 5.0, -2.0, -4.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);

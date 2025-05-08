@@ -33,9 +33,9 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         }
         
         // SHRINK
-        if DamageModule::damage(boma, 0) > 110.0 && DamageModule::reaction(boma, 0) > 50.0 {
+        if DamageModule::damage(boma, 0) > 100.0 && DamageModule::reaction(boma, 0) > 40.0 {
             if !SHRUNK[ENTRY_ID] {
-                MotionModule::change_motion(boma, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
+                StatusModule::change_status_request_from_script(boma, FIGHTER_MARIO_STATUS_KIND_SHRINK, true);
                 SHRUNK[ENTRY_ID] = true;
             }
         }   
@@ -159,6 +159,8 @@ pub unsafe extern "C" fn mario_start(fighter: &mut L2CFighterCommon) {
         FORWARD_SMASH_CHARGE[ENTRY_ID] = 0.0;
         FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
         STALL_TIMER[ENTRY_ID] = 0;
+        COIN_COUNT[ENTRY_ID] = 0;
+        SHRINK_TIME[ENTRY_ID] = 45;
     }
 }
 

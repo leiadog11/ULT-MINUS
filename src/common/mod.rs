@@ -1,16 +1,9 @@
-use {
-    smash::{
-        lua2cpp::*,
-        phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
-        lib::lua_const::*,
-		hash40
-    },
-    smash_script::*,
-    smashline::*
-};
+use super::*;
 
 use skyline::hooks::{getRegionAddress, Region};
+use skyline::nn::ro::LookupSymbol;
+
+pub static mut FIGHTER_MANAGER: usize = 0;
 
 // PARRY REFLECTS
 #[skyline::hook(replace=smash::app::FighterUtil::is_valid_just_shield_reflector)]
