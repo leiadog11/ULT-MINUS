@@ -8,6 +8,16 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
+        let arsene_entry_id = WorkModule::get_int(fighter.module_accessor, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID);
+
+        // if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
+        //     ArticleModule::generate_article(boma, *FIGHTER_JACK_GENERATE_ARTICLE_DOYLE, false, 0);
+        //     WorkModule::on_flag(boma, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE);
+        //     WorkModule::on_flag(boma, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_RESERVE_SUMMON_DISPATCH);
+        //     WorkModule::on_flag(boma, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE_EXIST);
+        //     StatusModule::change_status_request_from_script(boma, *FIGHTER_JACK_STATUS_KIND_SUMMON, false);
+        //     FighterSpecializer_Jack::add_rebel_gauge(fighter.module_accessor, FighterEntryID(arsene_entry_id), 100.0);
+        // }
 
 
         if CURSE_TIMER[ENTRY_ID] > 0 {

@@ -9,7 +9,6 @@ pub mod fire2;
 pub mod wing;
 
 static mut CURSE_TIMER: [i32; 8] = [0; 8];
-static mut CRIT: [bool; 8] = [false; 8];
 
 
 pub fn install() {
