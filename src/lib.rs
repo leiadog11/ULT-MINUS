@@ -103,6 +103,23 @@ unsafe extern "C" fn get_final_smash(boma: *mut BattleObjectModuleAccessor) {
     );
 }
 
+// GET STOCK COUNT
+unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u32 {
+    let ENTRY_ID = get_entry_id(boma);
+    LookupSymbol(
+        &mut FIGHTER_MANAGER,
+        "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
+            .as_bytes()
+            .as_ptr(),
+    );
+    let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
+    let fighter_info = smash::app::lua_bind::FighterManager::get_fighter_information(fighter_manager, FighterEntryID(ENTRY_ID.try_into().unwrap())) as u64;
+    println!("FIGHTER INFO: {}", fighter_info);
+    let stock_ref = ((*((fighter_info + 8) as *const u64) + 0xd8) as *mut u32);
+    println!("STOCKS: {}", stock_ref);
+    return *stock_ref;
+}
+
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
     pacman::install();
