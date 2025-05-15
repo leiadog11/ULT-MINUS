@@ -43,7 +43,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
 
         // MIPHAS GRACE
         if MIPHAS_GRACE[ENTRY_ID] == true {
-            if damage >= 100.0 { 
+            if damage >= 120.0 { 
                 SoundModule::play_se(boma, Hash40::new("se_item_fairybottle_fairy"), true, false, false, false, enSEType(0));
                 SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
@@ -54,7 +54,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -15.0, 20.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 20.0, 25.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -20.0, 25.0, 0.0, 0, 0, 0, 0.8, false);
-                DamageModule::add_damage(boma, -damage, 0);
+                DamageModule::add_damage(boma, -50.0, 0);
                 MIPHAS_GRACE[ENTRY_ID] = false;
             }
         }

@@ -141,6 +141,7 @@ unsafe extern "C" fn pit_speciallw_end_end(fighter: &mut L2CFighterCommon) -> L2
 
 pub fn install() {
     Agent::new("pit")
+    /*
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_specicallw_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_end)
@@ -148,6 +149,6 @@ pub fn install() {
         .status(Pre, *FIGHTER_PIT_STATUS_KIND_SPECIAL_LW_END, pit_specicallw_end_pre)
         .status(Main, *FIGHTER_PIT_STATUS_KIND_SPECIAL_LW_END, pit_speciallw_end_main)
         .status(End, *FIGHTER_PIT_STATUS_KIND_SPECIAL_LW_END, pit_speciallw_end_end)
-        
+    */
         .install();
 }

@@ -50,7 +50,7 @@ unsafe extern "C" fn captain_speciallw2_main(fighter: &mut L2CFighterCommon) -> 
 unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let frame = MotionModule::frame(fighter.module_accessor);
     let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
-    if frame >= 4.0 && frame <= 24.0 {
+    if frame >= 4.0 && frame <= 14.0 {
         for opponent_boma in opponent_bomas.iter() { 
             if AttackModule::is_infliction_status(*opponent_boma, *COLLISION_KIND_MASK_HIT) {
                 macros::EFFECT(fighter, Hash40::new("sys_passive"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
@@ -68,7 +68,7 @@ unsafe extern "C" fn captain_speciallw2_main_loop(fighter: &mut L2CFighterCommon
         }
         return 0.into();
     }
-    if frame > 24.0 {
+    if frame > 14.0 {
         HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_NORMAL), 0);
     }
     if MotionModule::is_end(fighter.module_accessor) {

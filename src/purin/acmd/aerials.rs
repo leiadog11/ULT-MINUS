@@ -30,13 +30,14 @@ unsafe extern "C" fn purin_attackairf(agent: &mut L2CAgentBase) {
 
 // NEUTRAL AIR - NAIR
 unsafe extern "C" fn purin_attackairn(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 1.3);
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 88, 100, 0, 30, 7.0, 0.0, 1.0, 0.0, None, None, None, 1.0, 4.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 88, 100, 0, 34, 7.0, 0.0, 1.0, 0.0, None, None, None, 1.0, 4.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_PUNCH);
     }
     wait(agent.lua_state_agent,10.0);
     if macros::is_excute(agent) {
@@ -66,7 +67,7 @@ unsafe extern "C" fn purin_effect_attackairn(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn purin_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     macros::SET_SPEED_EX(agent, 0.0, 1.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-    macros::FT_MOTION_RATE(agent, 0.7);
+    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
     }

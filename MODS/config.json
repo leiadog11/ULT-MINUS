@@ -734,6 +734,30 @@
             "fighter/mario/motion/body/c07/c01breakdance.nuanmb",
             "fighter/mario/model/body/c07/blockquestion_alb.png.nutexb"
         ],
+        "fighter/bayonetta/c01": [
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_prm.nutexb"
+        ],
+        "fighter/bayonetta/c03": [
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_prm.nutexb"
+        ],
+        "fighter/bayonetta/c05": [
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_prm.nutexb"
+        ],
+        "fighter/bayonetta/c07": [
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_prm.nutexb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"
