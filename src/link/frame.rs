@@ -43,7 +43,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
 
         // MIPHAS GRACE
         if MIPHAS_GRACE[ENTRY_ID] == true {
-            if damage >= 100.0 { 
+            if damage >= 120.0 { 
                 SoundModule::play_se(boma, Hash40::new("se_item_fairybottle_fairy"), true, false, false, false, enSEType(0));
                 SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
@@ -54,7 +54,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -15.0, 20.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 20.0, 25.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -20.0, 25.0, 0.0, 0, 0, 0, 0.8, false);
-                DamageModule::add_damage(boma, -damage, 0);
+                DamageModule::add_damage(boma, -50.0, 0);
                 MIPHAS_GRACE[ENTRY_ID] = false;
             }
         }
@@ -100,16 +100,16 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
 
         // UP AIR AND DOWN AIR STALL
         if motion_kind == hash40("attack_air_hi") || motion_kind == hash40("attack_air_lw") { 
-            if frame >= 14.0 && frame <= 55.0 {
+            if frame >= 20.0 && frame <= 55.0 {
                 if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
                     if FLOAT_TIMER[ENTRY_ID] > 0 {
                         MotionModule::set_rate(boma, 0.0);
                         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
                         if xpos > 0.0  {
-                            PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.2, y: PostureModule::pos_y(boma)});
+                            PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.0, y: PostureModule::pos_y(boma)});
                         }        
                         else if xpos < 0.0  {
-                            PostureModule::set_pos_2d(boma, &Vector2f {x: posx - 1.2, y: PostureModule::pos_y(boma)});
+                            PostureModule::set_pos_2d(boma, &Vector2f {x: posx - 1.0, y: PostureModule::pos_y(boma)});
                         }
                         else {
                             PostureModule::set_pos_2d(boma, &Vector2f {x: posx, y: PostureModule::pos_y(boma)});

@@ -24,11 +24,11 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         if motion_kind == hash40("attack_100") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.5, y: PostureModule::pos_y(boma)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.8, y: PostureModule::pos_y(boma)});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 0.5, y: PostureModule::pos_y(boma)});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 0.8, y: PostureModule::pos_y(boma)});
             }
         }
 

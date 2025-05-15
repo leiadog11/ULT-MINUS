@@ -42,7 +42,8 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
 
         // REMOVE SWORD IF IN BRAWLER SMASH ATTACKS
         if motion_kind == hash40("attack_s4_s2") || motion_kind == hash40("attack_s4_hold2") || 
-        motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") {
+        motion_kind == hash40("attack_lw42") || motion_kind == hash40("attack_lw4_hold2") ||
+        motion_kind == hash40("attack_hi42") || motion_kind == hash40("attack_hi4_hold2") {
             ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }   
 

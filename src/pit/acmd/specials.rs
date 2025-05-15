@@ -148,12 +148,14 @@ pub fn install() {
         .effect_acmd("effect_specialnfirehi", pit_effect_specialnfirehi, Low)
         .sound_acmd("sound_specialnfirehi", pit_sound_specialnfirehi, Low)
 
+        /*
         .effect_acmd("effect_speciallw", pit_effect_speciallw, Low)
         .sound_acmd("sound_speciallw", pit_sound_speciallw, Low)
         .expression_acmd("expression_speciallw", pit_expression_speciallw, Low)
 
         .effect_acmd("effect_speciallwend", pit_effect_speciallwend, Low)
         .expression_acmd("expression_speciallwend", pit_expression_speciallwend, Low)
+        */
 
         .install();
 }
