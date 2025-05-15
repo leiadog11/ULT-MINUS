@@ -20,7 +20,7 @@ Current Version: Alpha 0.2.2
 - MINUS ZONE (SBF)
 
 ## Character Change Log
-Current Character Amount: 16
+Current Character Amount: 18
 
 Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
