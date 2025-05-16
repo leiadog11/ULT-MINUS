@@ -10,10 +10,11 @@ unsafe extern "C" fn bayonetta_attack11(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 3.0, 361, 50, 0, 10, 1.8, 0.0, 1.5, 4.7, Some(0.0), Some(1.5), Some(6.8), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G_d, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("kneel"), 3.0, 361, 50, 0, 10, 1.8, -3.0, 1.5, 6.8, Some(3.0), Some(1.5), Some(11.8), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G_d, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 2, 0, Hash40::new("kneel"), 3.0, 45, 95, 0, 50, 6.0, 0.0, 5.0, -6.0, Some(0.0), Some(0.0), Some(16.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("kneel"), 6.0, 361, 50, 0, 10, 3.8, 0.0, 1.5, 6.7, Some(0.0), Some(1.5), Some(6.8), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G_d, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("kneel"), 6.0, 361, 50, 0, 10, 3.8, -3.0, 1.5, 8.8, Some(3.0), Some(1.5), Some(11.8), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G_d, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 2, 0, Hash40::new("kneel"), 6.0, 45, 95, 0, 50, 8.0, 0.0, 5.0, 6.0, Some(0.0), Some(0.0), Some(16.0), 2.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bury"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
+    macros::FT_MOTION_RATE(agent, 0.7);
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
@@ -34,11 +35,11 @@ unsafe extern "C" fn bayonetta_effect_attack11(agent: &mut L2CAgentBase) {
 
 // F TILT
 unsafe extern "C" fn bayonetta_attacks3(agent: &mut L2CAgentBase) {
+    macros::FT_MOTION_RATE(agent, 0.6);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         notify_event_msc_cmd!(agent, Hash40::new_raw(0x2d51fcdb09), *FIGHTER_BAYONETTA_SHOOTING_SLOT_R_LEG, true, false, false, 10, 3, 10, 5, true);
     }
-    macros::FT_MOTION_RATE(agent, 0.6);
     frame(agent.lua_state_agent, 22.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 81, 138, 0, 80, 8.0, 0.0, 16.0, 6.3, Some(0.0), Some(8.0), Some(5.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -57,6 +58,59 @@ unsafe extern "C" fn bayonetta_attacks3(agent: &mut L2CAgentBase) {
     }
 }
 
+// F TILT EFFECT
+unsafe extern "C" fn bayonetta_effect_attacks3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 21.0);
+    if macros::is_excute(agent) {
+        macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+        macros::EFFECT(agent, Hash40::new("bayonetta_butterfly_walk"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW_WORK(agent, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_LINE2, Hash40::new("top"), 0, 16, 4, -80, 0, 0, 1.1, true);
+        sv_animcmd::EFFECT_WORK(agent.lua_state_agent);
+    }
+}
+
+// F TILT SOUND
+unsafe extern "C" fn bayonetta_sound_attacks3(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_bayonetta_attackhard_s03"));
+    }
+    frame(agent.lua_state_agent, 41.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_STEP(agent, Hash40::new("se_bayonetta_step_right_s"));
+    }
+}
+
+// F TILT EXPRESSION
+unsafe extern "C" fn bayonetta_expression_attacks3(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_R);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 3);
+    }
+    frame(agent.lua_state_agent, 16.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_L, 3);
+    }
+    frame(agent.lua_state_agent, 19.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 22.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+    frame(agent.lua_state_agent, 36.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 3);
+    }
+}
+
 // DOWN TILT
 unsafe extern "C" fn bayonetta_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
@@ -68,7 +122,6 @@ unsafe extern "C" fn bayonetta_attacklw3(agent: &mut L2CAgentBase) {
     }
     macros::FT_MOTION_RATE(agent, 0.5);
     frame(agent.lua_state_agent, 12.0);
-    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 68, 0, 0, 120, 2.8, 0.0, 4.5, 1.0, Some(0.0), Some(4.0), Some(3.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.3, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 6.0, 68, 0, 0, 120, 2.8, 0.0, 4.5, 1.0, Some(0.0), Some(3.0), Some(11.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.3, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
@@ -164,6 +217,9 @@ pub fn install() {
         .effect_acmd("effect_attack11", bayonetta_effect_attack11, Low)
 
         .game_acmd("game_attacks3", bayonetta_attacks3, Low)
+        .effect_acmd("effect_attacks3", bayonetta_effect_attacks3, Low)
+        .sound_acmd("sound_attacks3", bayonetta_sound_attacks3, Low)
+        .expression_acmd("expression_attacks3", bayonetta_expression_attacks3, Low)
 
         .game_acmd("game_attacklw3", bayonetta_attacklw3, Low)
 
