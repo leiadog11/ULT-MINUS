@@ -5,6 +5,7 @@ pub mod frame;
 pub mod status;
 
 static mut STALL_TIMER: [i32; 8] = [0; 8];
+static mut RECEIVED_FINAL_SMASH: [bool; 8] = [false; 8];
 
 pub fn install() {
     acmd::install();

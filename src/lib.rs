@@ -114,9 +114,7 @@ unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u
     );
     let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
     let fighter_info = smash::app::lua_bind::FighterManager::get_fighter_information(fighter_manager, FighterEntryID(ENTRY_ID.try_into().unwrap())) as u64;
-    println!("FIGHTER INFO: {}", fighter_info);
     let stock_ref = ((*((fighter_info + 8) as *const u64) + 0xd8) as *mut u32);
-    println!("STOCKS: {}", stock_ref);
     return *stock_ref;
 }
 

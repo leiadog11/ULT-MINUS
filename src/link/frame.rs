@@ -16,6 +16,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
+            GroundModule::set_collidable(boma, true);
             MIPHAS_GRACE[ENTRY_ID] = true;
             DARUKS_PROTECTION[ENTRY_ID] = true;
             REVALIS_GALE[ENTRY_ID] = true;
