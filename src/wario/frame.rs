@@ -68,32 +68,29 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // WECTORING
-        if damage > 10.0 && damage < 30.0 {
-            max_speed = 3.0
-        }
         if damage > 30.0 && damage < 60.0 {
-            max_speed = 6.0
+            max_speed = 4.0
         }
         if damage > 60.0 && damage < 90.0 {
-            max_speed = 8.0
+            max_speed = 6.0
         }
         if damage > 90.0 {
-            max_speed = 10.0
+            max_speed = 8.0
         }     
-        if damage >= 150.0 {
+        if damage >= 125.0 {
             max_speed = 0.0
         }   
 
         if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
             if xpos < -0.5 && lr == -1.0 { //left if facing left
                 if WECTOR[ENTRY_ID] < max_speed {
-                    WECTOR[ENTRY_ID] += 0.15;
+                    WECTOR[ENTRY_ID] += 0.10;
                     PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - WECTOR[ENTRY_ID], y: pos_y});
                 }
             }
             else if xpos > 0.5 && lr == 1.0 { //right if facing right
                 if WECTOR[ENTRY_ID] < max_speed {
-                    WECTOR[ENTRY_ID] += 0.15;
+                    WECTOR[ENTRY_ID] += 0.10;
                     PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + WECTOR[ENTRY_ID], y: pos_y});
                 }
             }
