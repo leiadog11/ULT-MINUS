@@ -1,5 +1,7 @@
 use super::*;
 
+//-----------------OTHER----------------
+
 // FOOTSTOOL
 unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);

@@ -4,8 +4,11 @@ pub mod acmd;
 pub mod frame;
 pub mod status;
 pub mod fireball;
+pub mod pump;
 
 const FIGHTER_MARIO_STATUS_KIND_SHRINK: i32 = 0x1EC;
+
+const WEAPON_MARIO_PUMP_STATUS_KIND_BOOST: i32 = 0x5;
 
 static mut SHRUNK: [bool; 8] = [false; 8];
 static mut ICEBALL: [bool; 8] = [false; 8];
@@ -20,4 +23,5 @@ pub fn install() {
     frame::install();
     status::install();
     fireball::install();
+    pump::install();
 }

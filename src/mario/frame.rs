@@ -23,6 +23,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { 
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("block"), false);
+            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
 
         // SHIELD CANCEL FORWARD SMASH CHARGE

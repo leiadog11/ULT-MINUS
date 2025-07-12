@@ -163,12 +163,44 @@ unsafe extern "C" fn mario_specialhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// AERIAL DOWN SPECIAL 
+unsafe extern "C" fn mario_specialairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        let lr = PostureModule::lr(agent.module_accessor);
+        let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        macros::SET_SPEED_EX(agent, (x_vel * lr), 2.75, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        //KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    }
+}
+
+// AERIAL DOWN SPECIAL SOUND
+unsafe extern "C" fn mario_sound_specialairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_mario_special_l02"));
+    }
+}
+
+// AERIAL DOWN SPECIAL EXPRESSION
+unsafe extern "C" fn mario_expression_specialairlw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_waterjetl"), 40, true, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+}
+
 pub fn install() {
     Agent::new("mario")
         .effect_acmd("effect_specialn", mario_effect_specialn, Low)
         .sound_acmd("sound_specialn", mario_sound_specialn, Low)
 
         .game_acmd("game_specialhi", mario_specialhi, Low)
+
+        .game_acmd("game_specialairlw", mario_specialairlw, Low)
+        .sound_acmd("sound_specialairlw", mario_sound_specialairlw, Low)
+        .expression_acmd("expression_specialairlw", mario_expression_specialairlw, Low)
 
         .install();
 }
