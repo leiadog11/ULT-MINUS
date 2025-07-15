@@ -79,8 +79,8 @@ unsafe extern "C" fn mario_sound_specialn(agent: &mut L2CAgentBase) {
     }
 }
 
-// UP B
-unsafe extern "C" fn mario_specialhi(agent: &mut L2CAgentBase) {
+// AERIAL UP B
+unsafe extern "C" fn mario_specialairhi(agent: &mut L2CAgentBase) {
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_MARIO_STATUS_SPECIAL_HI_FLAG_CAPPY) {
         frame(agent.lua_state_agent, 3.0);
         if macros::is_excute(agent) {
@@ -115,11 +115,12 @@ unsafe extern "C" fn mario_specialhi(agent: &mut L2CAgentBase) {
         frame(agent.lua_state_agent, 17.0);
         if macros::is_excute(agent) {
             AttackModule::clear_all(agent.module_accessor);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 60, 105, 0, 105, 9.0, 0.0, 11.5, 8.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_mario_local_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_LOCAL_COIN_LAST, *ATTACK_REGION_PUNCH);
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.0, 60, 105, 0, 105, 9.0, 0.0, 11.5, 2.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_mario_local_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_LOCAL_COIN_LAST, *ATTACK_REGION_PUNCH);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 60, 135, 0, 95, 9.0, 0.0, 11.5, 8.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_mario_local_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_LOCAL_COIN_LAST, *ATTACK_REGION_PUNCH);
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.0, 60, 135, 0, 95, 9.0, 0.0, 11.5, 2.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_mario_local_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_LOCAL_COIN_LAST, *ATTACK_REGION_PUNCH);
         }
+        wait(agent.lua_state_agent, 2.0);
     }
-    else{
+    else {
         frame(agent.lua_state_agent, 1.0);
         if macros::is_excute(agent) {
             macros::SA_SET(agent, *SITUATION_KIND_AIR);
@@ -153,8 +154,8 @@ unsafe extern "C" fn mario_specialhi(agent: &mut L2CAgentBase) {
         frame(agent.lua_state_agent, 17.0);
         if macros::is_excute(agent) {
             AttackModule::clear_all(agent.module_accessor);
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 60, 105, 0, 90, 9.0, 0.0, 11.5, 8.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_COIN_LAST, *ATTACK_REGION_PUNCH);
-            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.0, 60, 105, 0, 90, 9.0, 0.0, 11.5, 2.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_COIN_LAST, *ATTACK_REGION_PUNCH);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 60, 135, 0, 75, 9.0, 0.0, 11.5, 8.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_COIN_LAST, *ATTACK_REGION_PUNCH);
+            macros::ATTACK(agent, 1, 0, Hash40::new("top"), 4.0, 60, 135, 0, 75, 9.0, 0.0, 11.5, 2.5, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MARIO_COIN_LAST, *ATTACK_REGION_PUNCH);
         }
     }
     wait(agent.lua_state_agent, 2.0);
@@ -165,6 +166,7 @@ unsafe extern "C" fn mario_specialhi(agent: &mut L2CAgentBase) {
 
 // AERIAL DOWN SPECIAL 
 unsafe extern "C" fn mario_specialairlw(agent: &mut L2CAgentBase) {
+    //macros::FT_MOTION_RATE(agent, 1.2);
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
         let lr = PostureModule::lr(agent.module_accessor);
@@ -196,7 +198,7 @@ pub fn install() {
         .effect_acmd("effect_specialn", mario_effect_specialn, Low)
         .sound_acmd("sound_specialn", mario_sound_specialn, Low)
 
-        .game_acmd("game_specialhi", mario_specialhi, Low)
+        .game_acmd("game_specialairhi", mario_specialairhi, Low)
 
         .game_acmd("game_specialairlw", mario_specialairlw, Low)
         .sound_acmd("sound_specialairlw", mario_sound_specialairlw, Low)

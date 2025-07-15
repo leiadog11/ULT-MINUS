@@ -67,9 +67,9 @@ unsafe extern "C" fn mario_speciallw_main_loop(fighter: &mut L2CFighterCommon) -
         ArticleModule::change_status(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, WEAPON_MARIO_PUMP_STATUS_KIND_BOOST, ArticleOperationTarget(0));
     }
 
-    // DESPAWN FLUDD
-    if MotionModule::frame(fighter.module_accessor) == 30.0 { 
-        ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+    // CHANGE FLUDD TO END
+    if MotionModule::frame(fighter.module_accessor) == 29.0 { 
+        ArticleModule::change_status(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, *WEAPON_MARIO_PUMP_STATUS_KIND_END, ArticleOperationTarget(0));
     }
 
     if MotionModule::is_end(fighter.module_accessor) {
