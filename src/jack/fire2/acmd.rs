@@ -1,7 +1,7 @@
 use super::*;
 
 
-//EIGAON
+// EIGAON
 unsafe extern "C" fn jack_hit(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
@@ -30,7 +30,7 @@ unsafe extern "C" fn jack_hit(agent: &mut L2CAgentBase) {
     }
 }
 
-//EIGAON SPLASH HITBOX
+// EIGAON SPLASH HITBOX
 unsafe extern "C" fn jack_hitground(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 75, 210, 0, 20, 8.5, -7.0, 0.0, 0.0, Some(7.0), Some(0.0), Some(0.0), 0.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, true, true, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_MAGIC);

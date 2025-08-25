@@ -2,7 +2,7 @@ use super::*;
 
 //-------------------SPECIALS------------------
 
-// NEUTRAL B
+// NEUTRAL B START
 unsafe extern "C" fn link_specialnstart(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_LINK_STATUS_BOW_FLAG_DOUBLE);
@@ -258,6 +258,7 @@ unsafe extern "C" fn link_specialairhilanding(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("link")
         .game_acmd("game_specialnstart", link_specialnstart, Low)
+        .game_acmd("game_specialairnstart", link_specialnstart, Low)
 
         .game_acmd("game_specials1", link_specials1, Low)
 

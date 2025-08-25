@@ -10,14 +10,11 @@ unsafe fn get_table_value(table: *mut smash2::lib::L2CTable, key: &str) -> smash
     (*table).get_map(hash).unwrap().clone()
 }
 
-
-
 // FORWARD TILT CURSE_TIMER
 unsafe extern "C" fn jack_attack_s3_curse_timer_check_attack_status(fighter: &mut L2CFighterCommon, param_2: &L2CValue, param_3: &L2CValue) -> L2CValue {
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let frame = MotionModule::frame(fighter.module_accessor);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
@@ -31,6 +28,7 @@ unsafe extern "C" fn jack_attack_s3_curse_timer_check_attack_status(fighter: &mu
                 }
                 else {
                     if StatusModule::situation_kind(opponent_boma) == *SITUATION_KIND_GROUND {
+                        let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                         if rand == 1 {
                             StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BIND, false);
                             SlowModule::set_whole(fighter.module_accessor, 8, 20);
@@ -52,7 +50,6 @@ unsafe extern "C" fn jack_attack_lw3_curse_timer_check_attack_status(fighter: &m
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
         if collision_kind == *COLLISION_KIND_HIT {
@@ -63,6 +60,7 @@ unsafe extern "C" fn jack_attack_lw3_curse_timer_check_attack_status(fighter: &m
             }
             else {
                 if StatusModule::situation_kind(opponent_boma) == *SITUATION_KIND_GROUND {
+                    let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                     if rand == 1 {
                         StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BIND, false);
                         SlowModule::set_whole(fighter.module_accessor, 8, 20);
@@ -83,7 +81,6 @@ unsafe extern "C" fn jack_attack_dash_curse_timer_check_attack_status(fighter: &
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let frame = MotionModule::frame(fighter.module_accessor);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
@@ -96,6 +93,7 @@ unsafe extern "C" fn jack_attack_dash_curse_timer_check_attack_status(fighter: &
                 }
                 else {
                     if StatusModule::situation_kind(opponent_boma) == *SITUATION_KIND_GROUND {
+                        let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                         if rand == 1 {
                             StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BIND, false);
                             SlowModule::set_whole(fighter.module_accessor, 8, 20);
@@ -117,7 +115,6 @@ unsafe extern "C" fn jack_attack_lw4_curse_timer_check_attack_status(fighter: &m
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
         if collision_kind == *COLLISION_KIND_HIT {
@@ -128,6 +125,7 @@ unsafe extern "C" fn jack_attack_lw4_curse_timer_check_attack_status(fighter: &m
             }
             else {
                 if StatusModule::situation_kind(opponent_boma) == *SITUATION_KIND_GROUND {
+                    let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                     if rand == 1 {
                         StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BIND, false);
                         SlowModule::set_whole(fighter.module_accessor, 8, 20);
@@ -148,7 +146,6 @@ unsafe extern "C" fn jack_attack_air_lw_curse_timer_check_attack_status(fighter:
     let table = param_3.get_table() as *mut smash2::lib::L2CTable;
     let category = get_table_value(table, "object_category_").try_integer().unwrap() as i32;
     let collision_kind = get_table_value(table, "kind_").try_integer().unwrap() as i32;
-    let rand = smash::app::sv_math::rand(hash40("fighter"), 5) as u64;
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     let frame = MotionModule::frame(fighter.module_accessor);
     if category == *BATTLE_OBJECT_CATEGORY_FIGHTER {
@@ -161,6 +158,7 @@ unsafe extern "C" fn jack_attack_air_lw_curse_timer_check_attack_status(fighter:
                 }
                 else {
                     if StatusModule::situation_kind(opponent_boma) == *SITUATION_KIND_GROUND {
+                        let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                         if rand == 1 {
                             StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_BIND, false);
                             SlowModule::set_whole(fighter.module_accessor, 8, 20);
@@ -176,8 +174,6 @@ unsafe extern "C" fn jack_attack_air_lw_curse_timer_check_attack_status(fighter:
     }
     0.into()
 }
-
-
 
 pub fn install() {
     Agent::new("jack")

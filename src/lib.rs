@@ -103,6 +103,21 @@ unsafe extern "C" fn get_final_smash(boma: *mut BattleObjectModuleAccessor) {
     );
 }
 
+// REMOVE FINAL SMASH
+unsafe extern "C" fn remove_final_smash(boma: *mut BattleObjectModuleAccessor) {
+    LookupSymbol(
+        &mut FIGHTER_MANAGER,
+        "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
+            .as_bytes()
+            .as_ptr(),
+    );
+    let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
+    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL);
+    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL_STATUS);
+    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL_AVAILABLE);
+    smash::app::lua_bind::FighterManager::set_visible_finalbg(fighter_manager, false);
+}
+
 // GET STOCK COUNT
 unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u32 {
     let ENTRY_ID = get_entry_id(boma);
@@ -116,6 +131,24 @@ unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u
     let fighter_info = smash::app::lua_bind::FighterManager::get_fighter_information(fighter_manager, FighterEntryID(ENTRY_ID.try_into().unwrap())) as u64;
     let stock_ref = ((*((fighter_info + 8) as *const u64) + 0xd8) as *mut u32);
     return *stock_ref;
+}
+
+// ALL ATTACKS CHECK
+unsafe extern "C" fn is_attacking(boma: *mut BattleObjectModuleAccessor) -> bool {
+    let motion_kind = MotionModule::motion_kind(boma);
+
+    if motion_kind == hash40("attack_air_b") || motion_kind == hash40("attack_air_f") || motion_kind == hash40("attack_air_n") ||  motion_kind == hash40("attack_air_lw") || 
+        motion_kind == hash40("attack_air_hi") || motion_kind == hash40("attack_11") || motion_kind == hash40("attack_12") || motion_kind == hash40("attack_13") ||
+        motion_kind == hash40("attack_dash") || motion_kind == hash40("catch_attack") || motion_kind == hash40("cliff_attack") || motion_kind == hash40("slip_attack") ||
+        motion_kind == hash40("throw_b") || motion_kind == hash40("throw_hi") || motion_kind == hash40("throw_f") || motion_kind == hash40("throw_lw") ||
+        motion_kind == hash40("attack_s3_s") || motion_kind == hash40("attack_s3_hi") || motion_kind == hash40("attack_s3_lw") || motion_kind == hash40("attack_lw3") || 
+        motion_kind == hash40("attack_hi3") || motion_kind == hash40("attack_s4_s") || motion_kind == hash40("attack_s4_hi") || motion_kind == hash40("attack_s4_lw") || 
+        motion_kind == hash40("attack_lw4") || motion_kind == hash40("attack_hi4") || motion_kind == hash40("special_s") || motion_kind == hash40("special_n") {
+            return true;
+        }
+    else {
+        return false;
+    }
 }
 
 #[skyline::main(name = "ult_minus")]
@@ -145,4 +178,5 @@ pub fn main() {
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
     smashline::update_weapon_count(*WEAPON_KIND_LINK_SWORD_BEAM, 3);
     smashline::update_weapon_count(*WEAPON_KIND_GAMEWATCH_FOOD, 15);
+    smashline::update_weapon_count(*WEAPON_KIND_BAYONETTA_WICKEDWEAVELEG, 2);
 }
