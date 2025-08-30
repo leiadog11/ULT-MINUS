@@ -49,21 +49,17 @@ unsafe extern "C" fn captain_specialhi_main(fighter: &mut L2CFighterCommon) -> L
     fighter.set_situation(SITUATION_KIND_AIR.into());
     GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
-    HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_XLU), 0);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(captain_specialhi_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if MotionModule::frame(fighter.module_accessor) == 2.0 {
+    if MotionModule::frame(fighter.module_accessor) == 5.0 {
         macros::SET_SPEED_EX(fighter, -0.55, 0.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         return 0.into();
     }
-    if MotionModule::frame(fighter.module_accessor) >= 3.0 {
-        if MotionModule::frame(fighter.module_accessor) == 12.0 { 
-            HitModule::set_whole(fighter.module_accessor, smash::app::HitStatus(*HIT_STATUS_NORMAL), 0);
-        }
+    if MotionModule::frame(fighter.module_accessor) >= 6.0 {
         if MotionModule::is_end(fighter.module_accessor) {
             if UP_B_AMOUNT[get_entry_id(fighter.module_accessor)] <= 0 {
                 fighter.change_status(FIGHTER_STATUS_KIND_FALL_SPECIAL.into(), false.into());

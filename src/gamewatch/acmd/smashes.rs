@@ -16,8 +16,8 @@ unsafe extern "C" fn gamewatch_attacks4(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, false, -1);
-        ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        //ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, false, -1);
+        //ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_PARACHUTE, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {

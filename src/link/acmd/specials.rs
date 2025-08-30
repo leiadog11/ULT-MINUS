@@ -2,11 +2,12 @@ use super::*;
 
 //-------------------SPECIALS------------------
 
-// NEUTRAL B
+// NEUTRAL B START
 unsafe extern "C" fn link_specialnstart(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_LINK_STATUS_BOW_FLAG_DOUBLE);
         WorkModule::set_int(agent.module_accessor, 2, *WN_LINK_BOWARROW_INSTANCE_WORK_ID_INT_SHOOT_NUM);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_LINK_GENERATE_ARTICLE_BOWARROW, false, -1);
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_LINK_GENERATE_ARTICLE_BOWARROW, false, -1);
     }
     macros::FT_MOTION_RATE(agent, 0.8);
@@ -257,6 +258,7 @@ unsafe extern "C" fn link_specialairhilanding(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("link")
         .game_acmd("game_specialnstart", link_specialnstart, Low)
+        .game_acmd("game_specialairnstart", link_specialnstart, Low)
 
         .game_acmd("game_specials1", link_specials1, Low)
 

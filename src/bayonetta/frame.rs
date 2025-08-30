@@ -18,7 +18,20 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
             stock_count = get_stock_count(boma);
         }
 
-        // DOWN AIR MOVES REALLY SLOW IF ATTACK IS HELD, FAST IF NOT
+        // UP TILT
+        if MotionModule::motion_kind(boma) == hash40("attack_hi3") {
+            if frame >= 8.0 {
+                //StatusModule::set_situation_kind(boma, smash::app::SituationKind(*SITUATION_KIND_AIR), true);
+                let pos_y = PostureModule::pos_y(boma);
+                let pos_x = PostureModule::pos_x(boma);
+                let pos_z = PostureModule::pos_z(boma);
+
+                let mut newPos = Vector3f{x: pos_x, y: pos_y + 0.2, z: pos_z};
+                PostureModule::set_pos(boma, &newPos);
+            }
+        }
+
+        // 
         if MotionModule::motion_kind(boma) == hash40("attack_air_lw") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
                 MotionModule::set_rate(boma, 0.2);            

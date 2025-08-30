@@ -44,9 +44,19 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // MOVE ON DOWN B IN THE AIR
-        if motion_kind == smash::hash40("special_lw") {
+        if motion_kind == smash::hash40("special_lw") || motion_kind == smash::hash40("special_lw_start")
+        || motion_kind == smash::hash40("special_lw_end") || motion_kind == smash::hash40("special_lw_catch") {
             if situation_kind == *SITUATION_KIND_AIR {
                 PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(boma)});
+            }
+            else {
+                if xpos > 0.5 {
+                    CancelModule::enable_cancel(boma);
+                }
+                if xpos < -0.5 {
+                    CancelModule::enable_cancel(boma);
+                    
+                }
             }
         }
     }

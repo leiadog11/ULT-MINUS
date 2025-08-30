@@ -14,6 +14,7 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
+            CURSE_TIMER[ENTRY_ID] = 0;
             GroundModule::set_collidable(boma, true);
         }
 
