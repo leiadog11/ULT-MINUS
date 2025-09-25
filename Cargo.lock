@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "_ULT_MINUS"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "param_config",
  "skyline",
