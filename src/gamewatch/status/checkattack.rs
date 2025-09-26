@@ -26,8 +26,6 @@ unsafe extern "C" fn gamewatch_attack_dash_check_attack_status(fighter: &mut L2C
     0.into()
 }
 
-
-
 pub fn install() {
     Agent::new("gamewatch")
         .status(CheckAttack, *FIGHTER_STATUS_KIND_ATTACK_DASH, gamewatch_attack_dash_check_attack_status)

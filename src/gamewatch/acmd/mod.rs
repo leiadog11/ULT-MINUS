@@ -7,8 +7,6 @@ mod smashes;
 mod specials;
 mod throws;
 
-
-
 pub fn install() {
     aerials::install();
     ground::install();

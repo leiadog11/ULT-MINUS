@@ -8,7 +8,7 @@ pub unsafe extern "C" fn gamewatch_parachute_attacks4_init(weapon: &mut smashlin
     //Snap to throw position
     let mut owner_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
-    let mut offset_add = Vector3f{x:0.0,y:0.0,z:0.0};
+    let mut offset_add = Vector3f{x:0.0,y:10.0,z:0.0};
 
     let lr = PostureModule::lr(owner_boma);
     let owner_offset = ModelModule::joint_global_offset_from_top(owner_boma, Hash40{hash: hash40("throw")}, &mut owner_pos);  
@@ -111,7 +111,7 @@ unsafe extern "C" fn gamewatch_parachute_attacks4_end(weapon: &mut L2CWeaponComm
 }
 
 pub fn install() {
-    Agent::new("gamewatch_rescue")
+    Agent::new("gamewatch_parachute")
         .status(Init, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, gamewatch_parachute_attacks4_init)
         .status(Pre, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, gamewatch_parachute_attacks4_pre)
         .status(Main, WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4, gamewatch_parachute_attacks4_main)
