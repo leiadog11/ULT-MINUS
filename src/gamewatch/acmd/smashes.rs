@@ -25,7 +25,7 @@ unsafe extern "C" fn gamewatch_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN SMASH
+// DOWN SMASH
 unsafe extern "C" fn gamewatch_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 0.785);
@@ -49,7 +49,7 @@ unsafe extern "C" fn gamewatch_attacklw4(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.5);
 }
 
-//DOWN SMASH EXPRESSION
+// DOWN SMASH EXPRESSION
 unsafe extern "C" fn gamewatch_expression_attacklw4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         //ItemModule::set_attach_item_visibility(agent.module_accessor, false);

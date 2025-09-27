@@ -101,7 +101,7 @@ unsafe extern "C" fn gamewatch_specialhi_start_main_loop(fighter: &mut L2CFighte
             x_control = 0.125;
         }
             // rise in air
-        macros::SET_SPEED_EX(fighter, (x_vel + x_control) * lr, 3.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        macros::SET_SPEED_EX(fighter, (x_vel + x_control) * lr, 4.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
 
     return 0.into();
@@ -153,19 +153,23 @@ unsafe extern "C" fn gamewatch_specialhi_fall_main(fighter: &mut L2CFighterCommo
 
 // MAIN LOOP
 unsafe extern "C" fn gamewatch_specialhi_fall_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+
     // FALL UNTIL TOUCHING GROUND
     if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND { 
-        MotionModule::set_rate(fighter.module_accessor, 1.0);
+        MotionModule::set_rate(fighter.module_accessor, 1.5);
     } 
     else {
         MotionModule::set_rate(fighter.module_accessor, 0.0);
-        macros::SET_SPEED_EX(fighter, 0.0, -5.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        macros::SET_SPEED_EX(fighter, 0.0, y_vel - 15.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
 
     if MotionModule::is_end(fighter.module_accessor) { 
         fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
         return 1.into();
     }
+
+    fighter.sub_transition_group_check_air_cliff();
     
     return 0.into();
 }

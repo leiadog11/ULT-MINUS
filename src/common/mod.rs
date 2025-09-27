@@ -12,7 +12,7 @@ unsafe fn is_valid_just_shield_reflector(_module_accessor: &mut BattleObjectModu
 }
 
 // HIT HANDLER HOOK
-#[skyline::hook(offset = 0x33bdc30)]
+#[skyline::hook(offset = 0x33bd9c0)]
 unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::app::Weapon, log: u32) {
     let boma = (*weapon).battle_object.module_accessor;
     let owner_object_id = WorkModule::get_int(boma, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER);

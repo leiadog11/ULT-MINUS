@@ -825,6 +825,9 @@
         ],
         "stage/battlefield_s/normal/model/bg_ground_set": [
             "stage/battlefield_s/normal/model/bg_ground_set/rock_front_col.nutexb"
+        ],
+        "stage/poke_stadium2/normal/model/stc_auroravision_set": [
+            "stage/poke_stadium2/normal/model/stc_auroravision_set/salt_dance.nutexb"
         ]
     }
 }
