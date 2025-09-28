@@ -8,12 +8,12 @@ pub unsafe extern "C" fn gamewatch_parachute_attacks4_init(weapon: &mut smashlin
     //Snap to throw position
     let mut owner_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
-    let mut offset_add = Vector3f{x:0.0,y:10.0,z:0.0};
+    let mut offset_add = Vector3f{x:10.0,y:30.0,z:0.0};
 
     let lr = PostureModule::lr(owner_boma);
     let owner_offset = ModelModule::joint_global_offset_from_top(owner_boma, Hash40{hash: hash40("throw")}, &mut owner_pos);  
     let cap_offset = ModelModule::joint_global_offset_from_top(weapon.module_accessor, Hash40{hash: hash40("have")}, &mut article_pos);       
-    let newPos = Vector3f{x: PostureModule::pos_x(owner_boma) + owner_pos.x - article_pos.x + (offset_add.x*lr), y: PostureModule::pos_y(owner_boma) + owner_pos.y - (article_pos.y)+ offset_add.y, z: PostureModule::pos_z(owner_boma) + owner_pos.z - article_pos.z};
+    let newPos = offset_add;
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     0.into()
@@ -23,14 +23,14 @@ pub unsafe extern "C" fn gamewatch_parachute_attacks4_init(weapon: &mut smashlin
 unsafe extern "C" fn gamewatch_parachute_attacks4_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_NONE), 
-        *WEAPON_KINETIC_TYPE_NONE, 
+        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
         GROUND_CORRECT_KIND_AIR.into(), 
         smash::app::GroundCliffCheckKind(0), 
         false, 
-        *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
-        *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_INT,
-        *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_FLOAT, 
+        0, 
+        0, 
+        0, 
         0
     );
     return 0.into();

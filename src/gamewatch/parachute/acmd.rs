@@ -8,9 +8,18 @@ unsafe extern "C" fn parachute_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
+// FIREBALL ATTACK S4 EFFECT
+unsafe extern "C" fn parachute_effect_attacks4(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        macros::EFFECT(agent, Hash40::new("sys_damage_fire"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.5, 4, 4, 4, 0, 0, 0, true);
+    }
+}
+
 pub fn install() {
     Agent::new("gamewatch_parachute")
         .game_acmd("game_attacks4", parachute_attacks4, Low)
+        .effect_acmd("effect_attacks4", parachute_effect_attacks4, Low)
 
         .install();
 }

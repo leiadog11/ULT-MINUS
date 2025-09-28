@@ -2,7 +2,7 @@ use super::*;
 
 //-----------------SMASH ATTACKS----------------
 
-//FORWARD SMASH
+// FORWARD SMASH
 unsafe extern "C" fn gamewatch_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {

@@ -12,6 +12,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         let xpos = ControlModule::get_stick_x(boma);
         let ypos = ControlModule::get_stick_y(boma);
         let posx = PostureModule::pos_x(boma);
+        let y_vel = KineticModule::get_sum_speed_y(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 

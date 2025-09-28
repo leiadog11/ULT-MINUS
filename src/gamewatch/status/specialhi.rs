@@ -10,7 +10,7 @@ unsafe extern "C" fn gamewatch_specialhi_start_pre(fighter: &mut L2CFighterCommo
         smash::app::SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         (*GROUND_CORRECT_KIND_AIR).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
@@ -48,10 +48,9 @@ unsafe extern "C" fn gamewatch_specialhi_start_main(fighter: &mut L2CFighterComm
 
 // MAIN LOOP
 unsafe extern "C" fn gamewatch_specialhi_start_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-    let lr = PostureModule::lr(fighter.module_accessor);
     let stick_x = ControlModule::get_stick_x(fighter.module_accessor);
 	let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
+    let lr = PostureModule::lr(fighter.module_accessor);
     let mut x_control = 0.0;
 
     if MotionModule::is_end(fighter.module_accessor) { 
@@ -60,48 +59,7 @@ unsafe extern "C" fn gamewatch_specialhi_start_main_loop(fighter: &mut L2CFighte
     }
     else {
         fighter.sub_transition_group_check_air_cliff();
-
-        //up
-        if stick_x == 0.0 && stick_y > 0.5 {
-            x_control = 0.0;
-        }
-
-        //right
-        if stick_x > 0.5 && stick_y == 0.0 {
-            x_control = 0.25;
-        }
-
-        //up right
-        if stick_x > 0.3 && stick_y > 0.3 {
-            x_control = 0.125;
-        }
-
-        //up left
-        if stick_x < -0.3 && stick_y > 0.3 {
-            x_control = 0.125;
-        }
-
-        //left
-        if stick_x < -0.5 && stick_y == 0.0 {
-            x_control = 0.25;
-        }
-
-        //down left
-        if stick_x < -0.3 && stick_y < -0.3 {
-            x_control = 0.125;
-        }
-
-        //down
-        if stick_x == 0.0 && stick_y < -0.5 {
-            x_control = 0.0;
-        }
-
-        //down right
-        if stick_x > 0.3 && stick_y < -0.3 {
-            x_control = 0.125;
-        }
-            // rise in air
-        macros::SET_SPEED_EX(fighter, (x_vel + x_control) * lr, 4.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        macros::SET_SPEED_EX(fighter, 0.75, 2.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
 
     return 0.into();
@@ -121,7 +79,7 @@ unsafe extern "C" fn gamewatch_specialhi_fall_pre(fighter: &mut L2CFighterCommon
         smash::app::SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         (*GROUND_CORRECT_KIND_AIR).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
@@ -147,6 +105,9 @@ unsafe extern "C" fn gamewatch_specialhi_fall_pre(fighter: &mut L2CFighterCommon
 
 // MAIN
 unsafe extern "C" fn gamewatch_specialhi_fall_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
     fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_specialhi_fall_main_loop as *const () as _))
 }
@@ -154,14 +115,16 @@ unsafe extern "C" fn gamewatch_specialhi_fall_main(fighter: &mut L2CFighterCommo
 // MAIN LOOP
 unsafe extern "C" fn gamewatch_specialhi_fall_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let posx = PostureModule::pos_x(fighter.module_accessor);
+    let posy = PostureModule::pos_y(fighter.module_accessor);
 
     // FALL UNTIL TOUCHING GROUND
     if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND { 
         MotionModule::set_rate(fighter.module_accessor, 1.5);
     } 
     else {
-        MotionModule::set_rate(fighter.module_accessor, 0.0);
-        macros::SET_SPEED_EX(fighter, 0.0, y_vel - 15.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        let mut new_pos = Vector3f{x: posx, y: (posy - 5.0), z: 0.0};
+        PostureModule::set_pos(fighter.module_accessor, &new_pos);
     }
 
     if MotionModule::is_end(fighter.module_accessor) { 
@@ -176,6 +139,9 @@ unsafe extern "C" fn gamewatch_specialhi_fall_main_loop(fighter: &mut L2CFighter
 
 // END
 unsafe extern "C" fn gamewatch_specialhi_fall_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
     fighter.set_situation(SITUATION_KIND_GROUND.into());
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));

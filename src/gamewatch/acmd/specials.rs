@@ -6,15 +6,25 @@ use super::*;
 unsafe extern "C" fn gamewatch_speciallwstart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 10, 32, 0, 66, 7.5, 0.0, 6.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_OBJECT);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 24, 45, 0, 66, 7.5, 0.0, 6.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 10, 32, 0, 66, 9.5, 0.0, 6.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 2.0, 24, 45, 0, 66, 9.5, 0.0, 6.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_OBJECT);
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
 // DOWN SPECIAL
 unsafe extern "C" fn gamewatch_speciallw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_GAMEWATCH_STATUS_SPECIAL_LW_FLAG_ABSORB_ENABLE);
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
+
+// DOWN SPECIAL END
+unsafe extern "C" fn gamewatch_speciallwend(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
         CancelModule::enable_cancel(agent.module_accessor);
     }
 }
@@ -22,7 +32,7 @@ unsafe extern "C" fn gamewatch_speciallw(agent: &mut L2CAgentBase) {
 // UP SPECIAL START
 unsafe extern "C" fn gamewatch_specialhistart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
-    macros::FT_MOTION_RATE(agent, 1.5);
+    macros::FT_MOTION_RATE(agent, 2.0);
     if macros::is_excute(agent) {
         
     }
@@ -60,12 +70,33 @@ unsafe extern "C" fn gamewatch_expression_specialhistart(agent: &mut L2CAgentBas
 
 // UP SPECIAL
 unsafe extern "C" fn gamewatch_specialhi(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        MotionModule::set_rate(agent.module_accessor, 0.0);
+    }
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
+        MotionModule::set_rate(agent.module_accessor, 1.5);
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OIL, false, -1); 
         ArticleModule::change_motion(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OIL, Hash40::new("special_lw_shoot"), false, 0.0);
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 55, 100, 0, 60, 4.5, 0.0, 4.0, 2.0, Some(0.0), Some(4.0), Some(8.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, -1.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_SWORD);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 5.0, 70, 100, 0, 65, 5.0, 0.0, -4.0, 6.0, Some(0.0), Some(-8.0), Some(6.0), 0.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, -1.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 15.0, 361, 80, 0, 25, 3.4, 0.0, 7.7, 11.7, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+        AttackModule::set_special_paint(agent.module_accessor, 2, SpecialPaintKind{_address:*SPECIAL_PAINT_OIL as u8});
+    }
+    frame(agent.lua_state_agent, 8.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 361, 78, 0, 25, 4.5, 0.0, 9.5, 20.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+        AttackModule::set_special_paint(agent.module_accessor, 0, SpecialPaintKind{_address:*SPECIAL_PAINT_OIL as u8});
+    }
+    frame(agent.lua_state_agent, 15.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 15.0, 361, 76, 0, 25, 8.0, 0.0, 7.0, 32.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_THRU, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_NONE);
+        AttackModule::set_special_paint(agent.module_accessor, 0, SpecialPaintKind{_address:*SPECIAL_PAINT_OIL as u8});
+    }
+    frame(agent.lua_state_agent, 27.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
     }
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
@@ -112,6 +143,9 @@ pub fn install() {
 
         .game_acmd("game_speciallw", gamewatch_speciallw, Low)
         .game_acmd("game_specialairlw", gamewatch_speciallw, Low)
+
+        .game_acmd("game_speciallwend", gamewatch_speciallwend, Low)
+        .game_acmd("game_specialairlwend", gamewatch_speciallwend, Low)
 
         .game_acmd("game_specialhistart", gamewatch_specialhistart, Low)
         .effect_acmd("effect_specialhistart", gamewatch_effect_specialhistart, Low)
