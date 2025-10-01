@@ -836,6 +836,9 @@
         ],
         "stage/poke_stadium2/normal/model/stc_auroravision_set": [
             "stage/poke_stadium2/normal/model/stc_auroravision_set/salt_dance.nutexb"
+        ],
+        "stage/poke_stadium2/normal/model/stc_st_ashibar_set": [
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/referee.nutexb"
         ]
     }
 }
