@@ -4,7 +4,9 @@ use super::*;
 
 // JAB 1
 unsafe extern "C" fn ridley_attack11(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 2.0, 361, 20, 0, 30, 5.5, 0.0, 7.0, 9.5, None, None, None, 1.6, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PUNCH);
@@ -25,7 +27,9 @@ unsafe extern "C" fn ridley_attack11(agent: &mut L2CAgentBase) {
 
 // JAB 2
 unsafe extern "C" fn ridley_attack12(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.5, 361, 20, 0, 30, 6.2, 0.0, 7.0, 9.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PUNCH);
@@ -53,7 +57,9 @@ unsafe extern "C" fn ridley_attack12(agent: &mut L2CAgentBase) {
 
 // JAB 3
 unsafe extern "C" fn ridley_attack13(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         if AURA[get_entry_id(agent.module_accessor)] {
@@ -98,7 +104,9 @@ unsafe extern "C" fn ridley_attack100(agent: &mut L2CAgentBase) {
 
 #[inline(always)]
 unsafe extern "C" fn ridley_attack100_internal(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.7, 361, 10, 0, 14, 9.0, 0.0, 7.5, 11.0, None, None, None, 0.5, 1.7, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_TAIL);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.7, 361, 10, 0, 12, 9.0, 0.0, 7.5, 18.0, None, None, None, 0.5, 1.7, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_TAIL);
@@ -117,7 +125,9 @@ unsafe extern "C" fn ridley_attack100_internal(agent: &mut L2CAgentBase) {
 
 // FORWARD TILT - FTILT
 unsafe extern "C" fn ridley_attacks3(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 5.0);
@@ -137,7 +147,9 @@ unsafe extern "C" fn ridley_attacks3(agent: &mut L2CAgentBase) {
 
 // DAFT
 unsafe extern "C" fn ridley_attacks3lw(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 5.0);
@@ -157,7 +169,9 @@ unsafe extern "C" fn ridley_attacks3lw(agent: &mut L2CAgentBase) {
 
 // DOWN TILT
 unsafe extern "C" fn ridley_attacklw3(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 6.0, 78, 70, 0, 65, 4.5, 0.0, 3.8, 22.0, Some(0.0), Some(3.8), Some(5.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_TAIL);
@@ -175,7 +189,9 @@ unsafe extern "C" fn ridley_attacklw3(agent: &mut L2CAgentBase) {
 
 // UP TILT
 unsafe extern "C" fn ridley_attackhi3(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     macros::FT_MOTION_RATE(agent, 0.9);
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
@@ -208,7 +224,9 @@ unsafe extern "C" fn ridley_attackhi3(agent: &mut L2CAgentBase) {
 
 // DASH ATTACK
 unsafe extern "C" fn ridley_attackdash(agent: &mut L2CAgentBase) {
-    damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 8.0);
+    if AURA[get_entry_id(agent.module_accessor)] { 
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+    }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
         if AURA[get_entry_id(agent.module_accessor)] {

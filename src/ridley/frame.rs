@@ -26,7 +26,7 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // ACTIVATE AURA
-        if DamageModule::damage(boma, 0) >= 100.0 && !AURA[ENTRY_ID] { 
+        if DamageModule::damage(boma, 0) >= 70.0 && !AURA[ENTRY_ID] { 
             let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
             SoundModule::play_se(boma, Hash40::new("se_common_boss_core_hit"), true, false, false, false, enSEType(0));
             SoundModule::play_se(boma, Hash40::new("se_common_fire_m"), true, false, false, false, enSEType(0));

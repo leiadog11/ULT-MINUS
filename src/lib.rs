@@ -177,6 +177,7 @@ pub fn main() {
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
     smashline::update_weapon_count(*WEAPON_KIND_LINK_SWORD_BEAM, 3);
+    smashline::update_weapon_count(*WEAPON_KIND_LINK_BOOMERANG, 2);
     smashline::update_weapon_count(*WEAPON_KIND_GAMEWATCH_FOOD, 15);
     smashline::update_weapon_count(*WEAPON_KIND_BAYONETTA_WICKEDWEAVELEG, 2);
 }
