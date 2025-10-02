@@ -153,8 +153,7 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
         let dumb = Vector3f{x:0.0,y:5.0,z:0.0};
         EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
         SoundModule::play_se(fighter.module_accessor, Hash40::new("se_gohoubi_icon_money"), true, false, false, false, enSEType(0));
-        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_falling_smoke"), Hash40::new("top"), &dumb, &dumb, 2.0, true, 0, 0, 0, 0, 0, true, true) as u32;
-        EffectModule::set_rgb(fighter.module_accessor, effect, 1.0, 1.0, 1.0);
+        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &dumb, &dumb, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
         EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
         if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
             fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
@@ -220,7 +219,7 @@ unsafe extern "C" fn palutena_specialn_shoot_main(fighter: &mut L2CFighterCommon
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_falling_smoke"), false, true);
+    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_mball_flash"), false, true);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(palutena_specialn_shoot_main_loop as *const () as _))
 }

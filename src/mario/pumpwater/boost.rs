@@ -23,8 +23,6 @@ unsafe extern "C" fn mario_pumpwater_boost_pre(weapon: &mut L2CWeaponCommon) -> 
 unsafe extern "C" fn mario_pumpwater_boost_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("boost"), 0.0, 1.0, false, 0.0, false, false);
 
-    println!("WATER BOOST!");
-
     weapon.fastshift(L2CValue::Ptr(mario_pumpwater_boost_main_loop as *const () as _))
 }
 
