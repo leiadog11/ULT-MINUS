@@ -41,6 +41,7 @@ unsafe extern "C" fn captain_specialsstart(agent: &mut L2CAgentBase) {
         JostleModule::set_status(agent.module_accessor, false);
     }
     frame(agent.lua_state_agent, 12.0);
+    shield!(agent, *MA_MSC_CMD_REFLECTOR, *COLLISION_KIND_REFLECTOR, 0, Hash40::new("top"), 6.4, 0, 12, 19, 0, 0, 0, 1.35, 1.5, 135, false, 5.0, *FIGHTER_REFLECTOR_GROUP_HOMERUNBAT);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.0, 361, 0, 0, 0, 4.0, 0.0, 9.0, 8.8, Some(0.0), Some(5.0), Some(8.8), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_NO_FLOOR, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_search"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.0, 361, 0, 0, 0, 4.0, 0.0, 12.0, 8.8, Some(0.0), Some(5.0), Some(8.8), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_NO_FLOOR, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_search"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
@@ -66,6 +67,7 @@ unsafe extern "C" fn captain_specialairsstart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 14.0);
     macros::FT_MOTION_RATE(agent, 1.0);
     frame(agent.lua_state_agent, 19.0);
+    shield!(agent, *MA_MSC_CMD_REFLECTOR, *COLLISION_KIND_REFLECTOR, 0, Hash40::new("top"), 6.4, 0, 12, 19, 0, 0, 0, 1.35, 1.5, 135, false, 5.0, *FIGHTER_REFLECTOR_GROUP_HOMERUNBAT);
     if macros::is_excute(agent) {
         notify_event_msc_cmd!(agent, Hash40::new_raw(0x2127e37c07), *GROUND_CLIFF_CHECK_KIND_ALWAYS_BACK);
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.0, 361, 0, 0, 0, 4.1, 0.0, 12.0, 11.0, Some(0.0), Some(3.0), Some(11.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_NO_FLOOR, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_search"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
@@ -89,13 +91,13 @@ unsafe extern "C" fn captain_specialairsstart(agent: &mut L2CAgentBase) {
 
 // UP SPECIAL
 unsafe extern "C" fn captain_specialhi(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.8);
-    frame(agent.lua_state_agent, 5.0);
+    frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("rot"), 13.0, 361, 75, 0, 65, 11.0, -8.0, 2.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 0, Hash40::new("rot"), 11.0, 361, 75, 0, 65, 11.5, 10.0, 2.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
         AttackModule::set_catch_only_all(agent.module_accessor, true, false);
     }
     wait(agent.lua_state_agent, 5.0);
+    macros::FT_MOTION_RATE(agent, 0.8);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
@@ -106,13 +108,10 @@ unsafe extern "C" fn captain_specialhi(agent: &mut L2CAgentBase) {
 
 // UP SPECIAL EFFECT
 unsafe extern "C" fn captain_effect_specialhi(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::EFFECT(agent, Hash40::new("sys_crown"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-        macros::EFFECT(agent, Hash40::new("sys_bomb_a"), Hash40::new("top"), 7.5, 12, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-    }
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_fire"), Hash40::new("havel"), 0, 0, 0, 0, 0, 0, 1, true);
+        macros::EFFECT(agent, Hash40::new("sys_crown"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
+        macros::EFFECT(agent, Hash40::new("sys_bomb_a"), Hash40::new("top"), 7.5, 12, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
@@ -126,7 +125,7 @@ unsafe extern "C" fn captain_effect_specialhi(agent: &mut L2CAgentBase) {
 
 // UP SPECIAL SOUND
 unsafe extern "C" fn captain_sound_specialhi(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_captain_special_h03"));
         macros::PLAY_SE(agent, Hash40::new("vc_captain_appeal03"));
@@ -139,6 +138,7 @@ unsafe extern "C" fn captain_sound_specialhi(agent: &mut L2CAgentBase) {
 
 // UP SPECIAL EXPRESSION
 unsafe extern "C" fn captain_expression_specialhi(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::QUAKE(agent, *CAMERA_QUAKE_KIND_M);
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_explosionm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
@@ -147,11 +147,20 @@ unsafe extern "C" fn captain_expression_specialhi(agent: &mut L2CAgentBase) {
 
 // DOWN SPECIAL
 unsafe extern "C" fn captain_speciallw(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
-    KICK[get_entry_id(agent.module_accessor)] = false;
+    KICK_SPEED[ENTRY_ID] = smash::app::sv_math::rand(hash40("agent"), 4) as u64;
     macros::FT_MOTION_RATE(agent, 0.857);
     frame(agent.lua_state_agent, 15.0);
-    macros::FT_MOTION_RATE(agent, 1.0);
+    if KICK_SPEED[ENTRY_ID] == 0 {
+        macros::FT_MOTION_RATE(agent, 1.75);
+    }
+    else if KICK_SPEED[ENTRY_ID] == 1 {
+        macros::FT_MOTION_RATE(agent, 1.0);
+    }
+    else if KICK_SPEED[ENTRY_ID] == 2 {
+        macros::FT_MOTION_RATE(agent, 0.55);
+    }
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("legr"), 15.0, 52, 88, 0, 60, 3.8, 10.0, 0.0, 0.0, Some(2.0), Some(0.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
         JostleModule::set_status(agent.module_accessor, false);
@@ -175,10 +184,28 @@ unsafe extern "C" fn captain_speciallw(agent: &mut L2CAgentBase) {
     }
 }
 
+// DOWN SPECIAL SOUND
+unsafe extern "C" fn captain_sound_speciallw(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        SoundModule::play_se(agent.module_accessor, Hash40::new("vc_captain_003"), true, false, false, false, enSEType(0));
+        if KICK_SPEED[ENTRY_ID] == 0 { 
+            SoundModule::set_se_pitch_ratio(agent.module_accessor, Hash40::new("vc_captain_003"), 0.65);
+        }
+        else if KICK_SPEED[ENTRY_ID] == 2 { 
+            SoundModule::set_se_pitch_ratio(agent.module_accessor, Hash40::new("vc_captain_003"), 1.35);
+        }
+    }
+    wait(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_captain_special_l01"));
+    }
+}
+
 // AERIAL DOWN SPECIAL
 unsafe extern "C" fn captain_specialairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
-    KICK[get_entry_id(agent.module_accessor)] = false;
     macros::FT_MOTION_RATE(agent, 0.867);
     frame(agent.lua_state_agent, 16.0);
     macros::FT_MOTION_RATE(agent, 1.0);
@@ -269,6 +296,7 @@ pub fn install() {
         .expression_acmd("expression_specialhi", captain_expression_specialhi, Low)
 
         .game_acmd("game_speciallw", captain_speciallw, Low)
+        .sound_acmd("sound_speciallw", captain_sound_speciallw, Low)
         .game_acmd("game_specialairlw", captain_specialairlw, Low)
 
         .game_acmd("game_speciallw2", captain_speciallw2, Low)

@@ -55,11 +55,11 @@ unsafe extern "C" fn captain_specialhi_main(fighter: &mut L2CFighterCommon) -> L
 
 // MAIN LOOP
 unsafe extern "C" fn captain_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if MotionModule::frame(fighter.module_accessor) == 5.0 {
+    if MotionModule::frame(fighter.module_accessor) == 10.0 {
         macros::SET_SPEED_EX(fighter, -0.55, 0.35, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         return 0.into();
     }
-    if MotionModule::frame(fighter.module_accessor) >= 6.0 {
+    if MotionModule::frame(fighter.module_accessor) >= 12.0 {
         if MotionModule::is_end(fighter.module_accessor) {
             if UP_B_AMOUNT[get_entry_id(fighter.module_accessor)] <= 0 {
                 fighter.change_status(FIGHTER_STATUS_KIND_FALL_SPECIAL.into(), false.into());

@@ -2,7 +2,7 @@ use super::*;
 
 //----------------AERIALS------------------
 
-//FORWARD AIR - FAIR
+// FORWARD AIR - FAIR
 unsafe extern "C" fn captain_attackairf(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.9);
     frame(agent.lua_state_agent, 5.0);
@@ -32,7 +32,7 @@ unsafe extern "C" fn captain_attackairf(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN AIR - DAIR
+// DOWN AIR - DAIR
 unsafe extern "C" fn captain_attackairlw(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {

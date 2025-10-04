@@ -9,6 +9,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
+        let ypos = ControlModule::get_stick_y(boma);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { // COLLISION FIX
@@ -77,6 +78,13 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         if GUN_COOLDOWN[ENTRY_ID] > 0 {
             GUN_COOLDOWN[ENTRY_ID] -= 1;
         }
+
+        // CANCEL FALCON KICK INTO FALCON KICK
+        if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_LW && frame >= 12.0 {
+            if ControlModule::check_button_trigger(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos < 0.5 {
+                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_LW, true);
+            } 
+        }
     }
 }
 
@@ -85,6 +93,7 @@ pub unsafe extern "C" fn captain_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         KICK[ENTRY_ID] = false;
+        KICK_SPEED[ENTRY_ID] = 0;
         GUN_COOLDOWN[ENTRY_ID] = 0;
         UP_B_AMOUNT[ENTRY_ID] = 2;
     }
