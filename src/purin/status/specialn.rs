@@ -34,7 +34,7 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 // SPECIAL N - MAIN
 unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
   MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
-  METRONOME[get_entry_id(fighter.module_accessor)] = smash::app::sv_math::rand(hash40("fighter"), 4) as u64;
+  METRONOME[get_entry_id(fighter.module_accessor)] = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
   fighter.sub_shift_status_main(L2CValue::Ptr(purin_specialn_main_loop as *const () as _))
 }
 
@@ -59,6 +59,34 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
       DamageModule::add_damage(fighter.module_accessor, -8.0, 0);
       SoundModule::play_se(fighter.module_accessor, Hash40::new("se_common_lifeup"), true, false, false, false, enSEType(0));
       macros::EFFECT(fighter, Hash40::new("sys_recovery"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
+    }
+    // SLEEP
+    if METRONOME[ENTRY_ID] == 4 {
+      StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_SLEEP_START, false.into());
+    }
+    // SWAP PLACES
+    if METRONOME[ENTRY_ID] == 5 {
+      let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
+
+      // GET PUFF POS
+      let puff_x = PostureModule::pos_x(fighter.module_accessor);
+      let puff_y = PostureModule::pos_y(fighter.module_accessor);
+      let puff_z = PostureModule::pos_z(fighter.module_accessor);
+
+      // GET OPP POS
+      let opp_x = PostureModule::pos_x(opponent_bomas[0]);
+      let opp_y = PostureModule::pos_y(opponent_bomas[0]);
+      let opp_z = PostureModule::pos_z(opponent_bomas[0]);
+
+      // SET PUFF POS
+      PostureModule::set_pos(opponent_bomas[0], &Vector3f{ x: puff_x, y: puff_y, z: puff_z});
+
+      // SET PUFF POS
+      PostureModule::set_pos(fighter.module_accessor, &Vector3f{ x: opp_x, y: opp_y, z: opp_z});
+    }
+    // ROLLOUT?
+    if METRONOME[ENTRY_ID] == 6{
+      StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PURIN_STATUS_KIND_SPECIAL_N_ROLL_AIR, false.into());
     }
   }
 
