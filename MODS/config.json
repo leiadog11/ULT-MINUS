@@ -835,14 +835,21 @@
             "stage/battlefield_s/normal/model/bg_ground_set/rock_front_col.nutexb"
         ],
         "stage/poke_stadium2/normal/model/stc_auroravision_set": [
-            "stage/poke_stadium2/normal/model/stc_auroravision_set/salt_dance.nutexb"
+            "stage/poke_stadium2/normal/model/stc_auroravision_set/salt_dance.nutexb",
+            "stage/poke_stadium2/normal/model/stc_auroravision_set/saltybet.nutexb",
+            "stage/poke_stadium2/normal/model/stc_auroravision_set/saltybet-video.nutexb",
+            "stage/poke_stadium2/normal/model/stc_auroravision_set/fraud.nutexb"
         ],
         "stage/poke_stadium2/normal/model/stc_st_ashibar_set": [
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/referee.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/cheergirl.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/samurai.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/redguy.nutexb",
-            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/witch.nutexb"
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/witch.nutexb",
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/crowd.nutexb",
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Bet.nutexb",
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/saltshaker.nutexb",
+            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Salty.nutexb"
         ]
     }
 }
