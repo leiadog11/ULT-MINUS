@@ -32,12 +32,12 @@ unsafe extern "C" fn mario_shrink_main_loop(fighter: &mut L2CFighterCommon) -> L
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     SHRINK_TIME[ENTRY_ID] -= 1;
 
-    if SHRINK_TIME[ENTRY_ID] <= 25 {
+    if SHRINK_TIME[ENTRY_ID] <= 43 {
+        fighter.clear_lua_stack();
+        lua_args!(fighter, FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.0);
+        sv_kinetic_energy::set_accel_x_add(fighter.lua_state_agent);
+        sv_kinetic_energy::clear_speed(fighter.lua_state_agent);
         KineticModule::clear_speed_all(fighter.module_accessor);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     }
 
     if SHRINK_TIME[ENTRY_ID] <= 0 {

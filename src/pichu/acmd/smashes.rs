@@ -10,7 +10,7 @@ unsafe extern "C" fn pichu_attacks4(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, 1.0);
+        macros::FT_ADD_DAMAGE(agent, 2.5);
     }
     for _ in 0..5 {
         if macros::is_excute(agent) {
@@ -43,7 +43,7 @@ unsafe extern "C" fn pichu_attacklw4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         FighterAreaModuleImpl::enable_fix_jostle_area(agent.module_accessor, 4.0, 2.0);
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.5, 173, 30, 0, 65, 4.5, 0.0, 4.0, 9.0, Some(0.0), Some(4.0), Some(-5.5), 1.0, 2.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_BODY);
-        macros::FT_ADD_DAMAGE(agent, 1.2);
+        macros::FT_ADD_DAMAGE(agent, 2.2);
     }
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) { 
@@ -82,7 +82,7 @@ unsafe extern "C" fn pichu_attackhi4(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, 1.0);
+        macros::FT_ADD_DAMAGE(agent, 2.0);
         macros::ATTACK(agent, 0, 0, Hash40::new("neck"), 14.0, 95, 85, 0, 40, 5.4, 4.7, 0.5, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
         macros::ATTACK(agent, 1, 0, Hash40::new("hip"), 14.0, 95, 85, 0, 15, 3.2, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_elec"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_ELEC, *ATTACK_REGION_HEAD);
         macros::HIT_NODE(agent, Hash40::new("mimir1"), *HIT_STATUS_XLU);

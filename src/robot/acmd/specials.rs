@@ -15,7 +15,6 @@ unsafe extern "C" fn rob_speciallw(agent: &mut L2CAgentBase) {
 // UP B
 unsafe extern "C" fn rob_specialhi(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.8);
-    macros::SET_SPEED_EX(agent, 0.0, 1.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         CancelModule::enable_cancel(agent.module_accessor);
@@ -29,6 +28,8 @@ unsafe extern "C" fn rob_specialhi(agent: &mut L2CAgentBase) {
 //UP B EFFECT
 unsafe extern "C" fn rob_effect_specialhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("robot_roboburner_start"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 2.5, 0, 0, 0, 0, 0, 0, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.75);
         macros::EFFECT(agent, Hash40::new("robot_roboburner_ring"), Hash40::new("top"), 0, 0, 0, 0, 90, -90, 1, 0, 0, 0, 0, 0, 0, true);
         macros::EFFECT_FOLLOW(agent, Hash40::new("robot_roboburner"), Hash40::new("knee"), 0, 0, 0, 0, 90, -90, 1, false);
         macros::LAST_EFFECT_SET_RATE(agent, 0.75);

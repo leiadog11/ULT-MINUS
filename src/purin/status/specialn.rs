@@ -1,5 +1,13 @@
 use super::*;
 
+static mut PUFF_X: [f32; 8] = [0.0; 8];
+static mut PUFF_Y: [f32; 8] = [0.0; 8];
+static mut PUFF_Z: [f32; 8] = [0.0; 8];
+
+static mut OPP_X: [f32; 8] = [0.0; 8];
+static mut OPP_Y: [f32; 8] = [0.0; 8];
+static mut OPP_Z: [f32; 8] = [0.0; 8];
+
 // SPECIAL N - PRE
 unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
   StatusModule::init_settings(
@@ -35,6 +43,19 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
   MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
   METRONOME[get_entry_id(fighter.module_accessor)] = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
+  let ENTRY_ID = get_entry_id(fighter.module_accessor);
+  let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
+
+  // GET PUFF POS
+  PUFF_X[ENTRY_ID] = PostureModule::pos_x(fighter.module_accessor);
+  PUFF_Y[ENTRY_ID]= PostureModule::pos_y(fighter.module_accessor);
+  PUFF_Z[ENTRY_ID] = PostureModule::pos_z(fighter.module_accessor);
+
+  // GET OPP POS
+  OPP_X[ENTRY_ID] = PostureModule::pos_x(opponent_bomas[0]);
+  OPP_Y[ENTRY_ID] = PostureModule::pos_y(opponent_bomas[0]);
+  OPP_Z[ENTRY_ID] = PostureModule::pos_z(opponent_bomas[0]);
+
   fighter.sub_shift_status_main(L2CValue::Ptr(purin_specialn_main_loop as *const () as _))
 }
 
@@ -68,21 +89,11 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
     if METRONOME[ENTRY_ID] == 5 {
       let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
 
-      // GET PUFF POS
-      let puff_x = PostureModule::pos_x(fighter.module_accessor);
-      let puff_y = PostureModule::pos_y(fighter.module_accessor);
-      let puff_z = PostureModule::pos_z(fighter.module_accessor);
-
-      // GET OPP POS
-      let opp_x = PostureModule::pos_x(opponent_bomas[0]);
-      let opp_y = PostureModule::pos_y(opponent_bomas[0]);
-      let opp_z = PostureModule::pos_z(opponent_bomas[0]);
+      // SET PUFF POS
+      PostureModule::set_pos(opponent_bomas[0], &Vector3f{ x: PUFF_X[ENTRY_ID], y: PUFF_Y[ENTRY_ID], z: PUFF_Z[ENTRY_ID]});
 
       // SET PUFF POS
-      PostureModule::set_pos(opponent_bomas[0], &Vector3f{ x: puff_x, y: puff_y, z: puff_z});
-
-      // SET PUFF POS
-      PostureModule::set_pos(fighter.module_accessor, &Vector3f{ x: opp_x, y: opp_y, z: opp_z});
+      PostureModule::set_pos(fighter.module_accessor, &Vector3f{ x: OPP_X[ENTRY_ID], y: OPP_Y[ENTRY_ID], z: OPP_Z[ENTRY_ID]});
     }
     // ROLLOUT?
     if METRONOME[ENTRY_ID] == 6{

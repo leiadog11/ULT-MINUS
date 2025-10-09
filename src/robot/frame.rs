@@ -8,10 +8,18 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
+        let ypos = ControlModule::get_stick_y(boma);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             GroundModule::set_collidable(boma, true);
+        }
+
+        // CANCEL SIDE B INTO UP B
+        if motion_kind == hash40("attack_air_b") {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos > 0.5 {
+                CancelModule::enable_cancel(boma);
+            }
         }
 
         // GYRO

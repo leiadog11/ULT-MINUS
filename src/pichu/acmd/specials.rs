@@ -4,13 +4,13 @@ use super::*;
 
 // NEUTRAL B
 unsafe extern "C" fn pichu_specialn(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.8);
+    macros::FT_MOTION_RATE(agent, 1.0);
     frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PICHU_GENERATE_ARTICLE_DENGEKIDAMA, false, -1);
     }
     if macros::is_excute(agent) {
-        macros::FT_ADD_DAMAGE(agent, 0.8);
+        macros::FT_ADD_DAMAGE(agent, 1.0);
     }
     frame(agent.lua_state_agent, 19.0); {
         CancelModule::enable_cancel(agent.module_accessor);
@@ -161,6 +161,7 @@ unsafe extern "C" fn pichu_expression_specialsend(agent: &mut L2CAgentBase) {
 // DOWN B
 unsafe extern "C" fn pichu_speciallw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
+        macros::FT_ADD_DAMAGE(agent, 1.5);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_PIKACHU_STATUS_WORK_ID_FLAG_KAMINARI_GENERATE);
     }
     frame(agent.lua_state_agent, 8.0);

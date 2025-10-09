@@ -9,7 +9,7 @@ unsafe extern "C" fn rob_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2CVal
         SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         *GROUND_CORRECT_KIND_KEEP as u32,
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -44,20 +44,27 @@ unsafe extern "C" fn rob_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CVa
 unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-    fighter.set_situation(SITUATION_KIND_AIR.into());
-    GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let lr = PostureModule::lr(fighter.module_accessor);
+
+    //KineticModule::add_speed(fighter.module_accessor, &Vector3f{ x: 0.5 * lr, y: 2.5, z: 0.0 });
+
+    // USE KINETICS - CAPJUMP
+
     fighter.sub_shift_status_main(L2CValue::Ptr(rob_specialhi_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn rob_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::frame(fighter.module_accessor) > 2.0 {
-        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
+        if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
+            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
             return 1.into();
         }   
     }

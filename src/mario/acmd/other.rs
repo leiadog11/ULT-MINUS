@@ -22,8 +22,8 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 20.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        SlowModule::set_whole(agent.module_accessor, 120, 20);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 10.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        SlowModule::set_whole(agent.module_accessor, 100, 10);
         macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
         PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
     }
@@ -40,16 +40,19 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
     let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(agent.module_accessor);
-    frame(agent.lua_state_agent, 7.0);
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
+        agent.clear_lua_stack();
+        sv_kinetic_energy::friction_off(agent.lua_state_agent);
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
-        if x_vel > 0.0 {
-            macros::SET_SPEED_EX(agent, (x_vel * lr) + 0.2, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        if x_vel > 0.0 || x_vel < 0.0 {
+            macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+            KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel * 1.1) * lr, y: 0.0, z: 0.0 });
         }
-        else {
-            macros::SET_SPEED_EX(agent, (x_vel * lr), 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        }
-        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) { 
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
