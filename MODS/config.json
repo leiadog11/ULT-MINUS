@@ -848,8 +848,21 @@
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/witch.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/crowd.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Bet.nutexb",
-            "stage/poke_stadium2/normal/model/stc_st_ashibar_set/saltshaker.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Salty.nutexb"
+        ],
+        "stage/poke_stadium2/normal/model/stc_saltshaker_set": [
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nuhlpb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numatb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numdlb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numshb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numshexb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nusktb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nusrcmdlb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.xmb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/saltshaker.nutexb"
+        ],
+        "stage/poke_stadium2/normal/motion/stc_saltshaker_set": [
+            "stage/poke_stadium2/normal/motion/stc_saltshaker_set/stc_saltshaker_set_00.nuanmb"
         ]
     }
 }
