@@ -31,7 +31,7 @@ unsafe extern "C" fn roy_attacks3(agent: &mut L2CAgentBase) {
         AttackModule::clear_all(agent.module_accessor);
     }
     {
-    frame(agent.lua_state_agent, 26.0);
+    frame(agent.lua_state_agent, 30.0);
         CancelModule::enable_cancel(agent.module_accessor);
     }
 }
@@ -95,7 +95,7 @@ unsafe extern "C" fn roy_attackhi3(agent: &mut L2CAgentBase) {
         AttackModule::clear_all(agent.module_accessor);
     }
     {
-    frame(agent.lua_state_agent, 23.0);
+    frame(agent.lua_state_agent, 27.0);
         CancelModule::enable_cancel(agent.module_accessor);
     }
 }

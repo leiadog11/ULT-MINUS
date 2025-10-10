@@ -1,6 +1,4 @@
-#![deny(deprecated)]
-#![allow(unused)]
-#![allow(non_snake_case)]
+use super::*;
 
 pub mod acmd;
 pub mod frame;

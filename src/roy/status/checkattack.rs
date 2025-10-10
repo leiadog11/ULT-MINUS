@@ -21,7 +21,7 @@ unsafe extern "C" fn roy_attack_airn_check_attack_status(fighter: &mut L2CFighte
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
 	        if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_air_n") {
-		        if MotionModule::frame(fighter.module_accessor) >= 15.0{
+		        if MotionModule::frame(fighter.module_accessor) >= 14.0{
                     macros::SET_SPEED_EX(fighter, 0.0, 3.25, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
                     KineticModule::resume_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
                 }
@@ -41,7 +41,7 @@ unsafe extern "C" fn roy_attack_lw4_check_attack_status(fighter: &mut L2CFighter
             let object_id = get_table_value(table, "object_id_").try_integer().unwrap() as u32;
             let opponent_boma = sv_battle_object::module_accessor(object_id);
 	        if MotionModule::motion_kind(fighter.module_accessor) == hash40("attack_lw4") {
-                cancel_with_dash(fighter.module_accessor);
+                cancel_with_dash(fighter.module_accessor, 19.0);
 	        }
 	    }
     }
