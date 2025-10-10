@@ -1,6 +1,6 @@
 use super::*;
 
-//////////// DOWN B
+// -------- DOWN B --------
 
 // PRE
 unsafe extern "C" fn pit_specicallw_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
