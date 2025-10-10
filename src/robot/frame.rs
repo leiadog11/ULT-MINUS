@@ -17,9 +17,7 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
 
         // CANCEL SIDE B INTO UP B
         if motion_kind == hash40("attack_air_b") {
-            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos > 0.5 {
-                CancelModule::enable_cancel(boma);
-            }
+            cancel_with_specialhi(boma, 19.0); 
         }
 
         // GYRO

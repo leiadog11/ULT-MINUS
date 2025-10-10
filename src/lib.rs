@@ -151,6 +151,115 @@ unsafe extern "C" fn is_attacking(boma: *mut BattleObjectModuleAccessor) -> bool
     }
 }
 
+// --------- CANCEL FUNCTIONS --------
+
+// CANCEL WITH JUMP
+unsafe extern "C" fn cancel_with_jump(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH DASH
+unsafe extern "C" fn cancel_with_dash(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let xpos = ControlModule::get_stick_x(boma);
+    if (xpos > 0.5 || xpos < -0.5) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH SHIELD
+unsafe extern "C" fn cancel_with_shield(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH GRAB
+unsafe extern "C" fn cancel_with_grab(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_CATCH) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH JAB
+unsafe extern "C" fn cancel_with_jab(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    let xpos = ControlModule::get_stick_x(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) && ypos == 0.0 && xpos == 0.0 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH ATTACK S3
+unsafe extern "C" fn cancel_with_attacks3(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let xpos = ControlModule::get_stick_x(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) && (xpos > 0.5 || xpos < -0.5) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH ATTACK LW3
+unsafe extern "C" fn cancel_with_attacklw3(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) && ypos < -0.5 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH ATTACK HI3
+unsafe extern "C" fn cancel_with_attackhi3(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) && ypos > 0.5 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH SPECIAL N
+unsafe extern "C" fn cancel_with_specialn(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    let xpos = ControlModule::get_stick_x(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos == 0.0 && xpos == 0.0 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH SPECIAL S
+unsafe extern "C" fn cancel_with_specials(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let xpos = ControlModule::get_stick_x(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && (xpos > 0.5 || xpos < -0.5) && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH SPECIAL HI
+unsafe extern "C" fn cancel_with_specialhi(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos > 0.5 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
+// CANCEL WITH SPECIAL LW
+unsafe extern "C" fn cancel_with_speciallw(boma: *mut BattleObjectModuleAccessor, cancel_frame: f32) {
+    let frame = MotionModule::frame(boma);
+    let ypos = ControlModule::get_stick_y(boma);
+    if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos < -0.5 && frame >= cancel_frame {
+        CancelModule::enable_cancel(boma);
+    }
+}
+
 #[skyline::main(name = "ult_minus")]
 pub fn main() {
     pacman::install();

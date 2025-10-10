@@ -1,6 +1,6 @@
 use super::*;
 
-//////////// SPECIAL HI
+// -------- SPECIAL HI --------
 
 // PRE
 unsafe extern "C" fn rob_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -49,9 +49,67 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
     let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(fighter.module_accessor);
 
-    //KineticModule::add_speed(fighter.module_accessor, &Vector3f{ x: 0.5 * lr, y: 2.5, z: 0.0 });
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
 
-    // USE KINETICS - CAPJUMP
+    KineticModule::clear_speed_all(fighter.module_accessor);
+    KineticModule::mul_speed(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+
+    let accel = 0.18;
+    let jump_speed = 1.55;
+    let forward_speed = 3.5;
+
+    sv_kinetic_energy!(
+        reset_energy,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        ENERGY_GRAVITY_RESET_TYPE_GRAVITY,
+        0.0, 0.0, 0.0, 0.0, 0.0
+    );
+    sv_kinetic_energy!(
+        reset_energy,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
+        ENERGY_STOP_RESET_TYPE_AIR,
+        0.0, 0.0, 0.0, 0.0, 0.0
+    );
+    sv_kinetic_energy!(
+        reset_energy,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_CONTROL,
+        ENERGY_CONTROLLER_RESET_TYPE_MOVE_AIR,
+        0.0, 0.0, 0.0, 0.0, 0.0
+    );
+
+    sv_kinetic_energy!(
+        set_speed,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        jump_speed
+    );
+    let air_accel_y = WorkModule::get_param_float(fighter.module_accessor, hash40("air_accel_y"), 0);
+    let air_accel_y_stable = WorkModule::get_param_float(fighter.module_accessor, hash40("air_accel_y_stable"), 0);
+    sv_kinetic_energy!(
+        set_accel,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        -air_accel_y
+    );
+    sv_kinetic_energy!(
+        set_limit_speed,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        air_accel_y_stable
+    );
+
+    sv_kinetic_energy!(
+        set_speed,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
+        forward_speed * lr,
+        0.0
+    );
 
     fighter.sub_shift_status_main(L2CValue::Ptr(rob_specialhi_main_loop as *const () as _))
 }
