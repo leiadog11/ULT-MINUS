@@ -3,6 +3,6 @@ use super::*;
 //-------------------SPECIALS------------------
 
 pub fn install() {
-    Agent::new("agent")
+    Agent::new("roy")
         .install();
 }
