@@ -56,6 +56,7 @@ mod zelda;
 mod metaknight;
 mod pit;
 mod jack;
+mod roy;
 
 // GLOBAL VARIABLES
 pub const SITUATION_KIND: i32 = 0x16;
@@ -282,6 +283,7 @@ pub fn main() {
     metaknight::install();
     pit::install();
     jack::install();
+    roy::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_RIDLEY_BREATH, 30);
