@@ -4,6 +4,10 @@ use super::*;
 
 //DOWN SMASH
 unsafe extern "C" fn roy_attacklw4(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
+    }
     frame(agent.lua_state_agent, 7.0);
     for _ in 0..4 {
         if macros::is_excute(agent) {
