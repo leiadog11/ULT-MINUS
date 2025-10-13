@@ -35,6 +35,9 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             EffectModule::enable_sync_init_pos_last(boma);
             AURA[ENTRY_ID] = true;
         }
+        else {
+            AURA[ENTRY_ID] = false;
+        }
 
         // TAUNT IDLE
         if motion == hash40("appeal_lw_r") || motion == hash40("appeal_lw_l") {

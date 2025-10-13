@@ -9,29 +9,26 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
+        let xpos = ControlModule::get_stick_x(boma);
+        let ypos = ControlModule::get_stick_y(boma);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             GroundModule::set_collidable(boma, true);
         }
 
-        // SHIELD INSTALL
-        if SPECIAL_LW_ACTIVE[ENTRY_ID] {
-            SPECIAL_LW_TIMER[ENTRY_ID] -= 1;
-            // this prolly aint gonna work
-            //shield!(fighter, *MA_MSC_CMD_SHIELD_ON, *COLLISION_KIND_SHIELD, 0, *FIGHTER_PIT_SHIELD_GROUP_KIND_SPECIAL_LW);
-            //shield!(fighter, *MA_MSC_CMD_SHIELD_ON, *COLLISION_KIND_SHIELD, 1, *FIGHTER_PIT_SHIELD_GROUP_KIND_SPECIAL_LW);
-            //shield!(fighter, *MA_MSC_CMD_SHIELD_ON, *COLLISION_KIND_REFLECTOR, 0, *FIGHTER_PIT_REFLECTOR_GROUP_SPECIAL_LW);
-            //shield!(fighter, *MA_MSC_CMD_SHIELD_ON, *COLLISION_KIND_REFLECTOR, 1, *FIGHTER_PIT_REFLECTOR_GROUP_SPECIAL_LW);
-            //macros::ATTACK(fighter, 0, 0, Hash40::new("virtualguardianf"), 0.0, 50, 100, 50, 0, 2.7, 0.0, -2.0, 1.0, Some(0.0), Some(3.0), Some(1.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, f32::NAN, 0.0, 4, false, false, true, true, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-            //macros::ATTACK(fighter, 1, 0, Hash40::new("virtualguardianb"), 0.0, 50, 100, 50, 0, 2.7, 0.0, -2.0, -1.0, Some(0.0), Some(3.0), Some(-1.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, f32::NAN, 0.0, 4, false, false, true, true, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-            if SPECIAL_LW_TIMER[ENTRY_ID] == 0 {
-                SPECIAL_LW_ACTIVE[ENTRY_ID] = false;
-                StatusModule::change_status_request_from_script(boma, *FIGHTER_PIT_STATUS_KIND_SPECIAL_LW_END, true);
-            }
+        // FLIGHT
+        if IS_FLIGHT[ENTRY_ID] {
+            KineticModule::suspend_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+            macros::SET_SPEED_EX(fighter, 0.0 + xpos, 0.0 + ypos, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+            macros::EFFECT_FOLLOW(fighter, Hash40::new("pit_fly_miracle_b"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
+            EffectModule::enable_sync_init_pos_last(boma);
         }
-        else if SPECIAL_LW_TIMER[ENTRY_ID] < 1200 {
-            SPECIAL_LW_TIMER[ENTRY_ID] += 1
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FLIGHT
+            IS_FLIGHT[ENTRY_ID] = false;
+            KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         }
 
         // DANGER
@@ -73,8 +70,7 @@ pub unsafe extern "C" fn pit_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         STALL_TIMER[ENTRY_ID] = 0;
-        SPECIAL_LW_TIMER[ENTRY_ID] = 1200;
-        SPECIAL_LW_ACTIVE[ENTRY_ID] = false;
+        IS_FLIGHT[ENTRY_ID] = false;
     }
 }
 
