@@ -814,6 +814,30 @@
             "fighter/bayonetta/motion/wickedweaveleg/c07/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c07/c04attackhi4.nuanmb"
         ],
+        "fighter/pit/c00": [
+            "fighter/pit/motion/body/c00/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c01": [
+            "fighter/pit/motion/body/c01/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c02": [
+            "fighter/pit/motion/body/c02/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c03": [
+            "fighter/pit/motion/body/c03/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c04": [
+            "fighter/pit/motion/body/c04/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c05": [
+            "fighter/pit/motion/body/c05/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c06": [
+            "fighter/pit/motion/body/c06/d02specialhiflight.nuanmb"
+        ],
+        "fighter/pit/c07": [
+            "fighter/pit/motion/body/c07/d02specialhiflight.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"

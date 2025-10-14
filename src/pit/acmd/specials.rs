@@ -91,7 +91,22 @@ unsafe extern "C" fn pit_sound_specialnfirehi(agent: &mut L2CAgentBase) {
     }
 }
 
-// DOWN B SPAWN CHARIOTSIGHT, MAKE MESH INVISILBE AND PUT SHIELD EFFECT ON IT?
+// DOWN B
+unsafe extern "C" fn pit_speciallwstart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOTSIGHT, false, -1);   
+    }
+}
+
+// UP B FLIGHT
+unsafe extern "C" fn pit_effect_specialhiflight(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) { 
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pit_fly_miracle_b"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
+        EffectModule::enable_sync_init_pos_last(agent.module_accessor);
+    }
+}   
 
 pub fn install() {
     Agent::new("pit")
@@ -102,6 +117,11 @@ pub fn install() {
         .game_acmd("game_specialnfirehi", pit_specialnfirehi, Low)
         .effect_acmd("effect_specialnfirehi", pit_effect_specialnfirehi, Low)
         .sound_acmd("sound_specialnfirehi", pit_sound_specialnfirehi, Low)
+
+        .game_acmd("game_speciallwstartr", pit_speciallwstart, Low)
+        .game_acmd("game_speciallwstartl", pit_speciallwstart, Low)
+
+        .effect_acmd("effect_specialhiflight", pit_effect_specialhiflight, Low)
 
         .install();
 }

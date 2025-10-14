@@ -84,11 +84,8 @@ unsafe extern "C" fn captain_specialhi_end(fighter: &mut L2CFighterCommon) -> L2
 pub fn install() {
     Agent::new("captain")
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_pre)
-
         .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_init)
-
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_main)
-
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, captain_specialhi_end)
 
         .install();

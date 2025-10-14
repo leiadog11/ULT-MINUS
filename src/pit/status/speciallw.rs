@@ -35,7 +35,7 @@ unsafe extern "C" fn pit_specicallw_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // MAIN
 unsafe extern "C" fn pit_speciallw_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw"), 0.0, 1.0, false, 0.0, false, false);
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_start_r"), 0.0, 1.0, false, 0.0, false, false);
 
     fighter.fastshift(L2CValue::Ptr(pit_speciallw_main_loop as *const () as _))
 }
@@ -63,10 +63,9 @@ unsafe extern "C" fn pit_speciallw_end(fighter: &mut L2CFighterCommon) -> L2CVal
 
 pub fn install() {
     Agent::new("pit")
-    /*
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_specicallw_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_end)
-    */
+
         .install();
 }

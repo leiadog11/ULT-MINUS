@@ -21,14 +21,12 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
         if IS_FLIGHT[ENTRY_ID] {
             KineticModule::suspend_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
             macros::SET_SPEED_EX(fighter, 0.0 + xpos, 0.0 + ypos, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-            macros::EFFECT_FOLLOW(fighter, Hash40::new("pit_fly_miracle_b"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
-            EffectModule::enable_sync_init_pos_last(boma);
         }
 
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FLIGHT
             IS_FLIGHT[ENTRY_ID] = false;
-            KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+            KineticModule::resume_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         }
 
         // DANGER
