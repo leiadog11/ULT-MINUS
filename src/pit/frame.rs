@@ -17,16 +17,9 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true);
         }
 
-        // FLIGHT
-        if IS_FLIGHT[ENTRY_ID] {
-            KineticModule::suspend_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-            macros::SET_SPEED_EX(fighter, 0.0 + xpos, 0.0 + ypos, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        }
-
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FLIGHT
-            IS_FLIGHT[ENTRY_ID] = false;
-            KineticModule::resume_energy(boma, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        // REGENERATE SHIELD
+        if SHIELD_ON[ENTRY_ID] && SHIELD_LIFE[ENTRY_ID] < 600 {
+            SHIELD_LIFE[ENTRY_ID] += 1;
         }
 
         // DANGER
@@ -68,7 +61,9 @@ pub unsafe extern "C" fn pit_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         STALL_TIMER[ENTRY_ID] = 0;
-        IS_FLIGHT[ENTRY_ID] = false;
+        SHIELD_LIFE[ENTRY_ID] = 600;
+        BREAK_WAIT_TIME[ENTRY_ID] = 120;
+        SHIELD_ON[ENTRY_ID] = false;
     }
 }
 

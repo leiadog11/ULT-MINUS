@@ -22,8 +22,8 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 10.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        SlowModule::set_whole(agent.module_accessor, 100, 10);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 5.0,/*no*/ 0.0,/*zoom*/ 3.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        SlowModule::set_whole(agent.module_accessor, 100, 5);
         macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
         PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
     }

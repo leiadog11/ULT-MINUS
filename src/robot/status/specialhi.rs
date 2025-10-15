@@ -60,34 +60,6 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
     let jump_speed = 1.55;
     let forward_speed = 3.5;
 
-    sv_kinetic_energy!(
-        reset_energy,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        ENERGY_GRAVITY_RESET_TYPE_GRAVITY,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    );
-    sv_kinetic_energy!(
-        reset_energy,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_STOP,
-        ENERGY_STOP_RESET_TYPE_AIR,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    );
-    sv_kinetic_energy!(
-        reset_energy,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_CONTROL,
-        ENERGY_CONTROLLER_RESET_TYPE_MOVE_AIR,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    );
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        jump_speed
-    );
     let air_accel_y = WorkModule::get_param_float(fighter.module_accessor, hash40("air_accel_y"), 0);
     let air_accel_y_stable = WorkModule::get_param_float(fighter.module_accessor, hash40("air_accel_y_stable"), 0);
     sv_kinetic_energy!(
@@ -108,7 +80,7 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
         fighter,
         FIGHTER_KINETIC_ENERGY_ID_STOP,
         forward_speed * lr,
-        0.0
+        jump_speed
     );
 
     fighter.sub_shift_status_main(L2CValue::Ptr(rob_specialhi_main_loop as *const () as _))
