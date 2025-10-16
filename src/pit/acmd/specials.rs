@@ -1,5 +1,9 @@
 use super::*;
 
+static mut OPP_X: [f32; 8] = [0.0; 8];
+static mut OPP_Y: [f32; 8] = [0.0; 8];
+static mut OPP_Z: [f32; 8] = [0.0; 8];
+
 //-------------------SPECIALS------------------
 
 // NEUTRAL B START
@@ -22,20 +26,21 @@ unsafe extern "C" fn pit_specialnfires(agent: &mut L2CAgentBase) {
 
 // NEUTRAL B FIRE HI
 unsafe extern "C" fn pit_specialnfirehi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         ArticleModule::shoot(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_BOWARROW, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL), false);
         let opponent_bomas = get_opponent_bomas(agent.module_accessor);
-        let the_one_x = PostureModule::pos_x(opponent_bomas[0]);
-        let the_one_y = PostureModule::pos_y(opponent_bomas[0]);
-        let the_one_z = PostureModule::pos_z(opponent_bomas[0]);
+        OPP_X[ENTRY_ID] = PostureModule::pos_x(opponent_bomas[0]);
+        OPP_Y[ENTRY_ID] = PostureModule::pos_y(opponent_bomas[0]);
+        OPP_Z[ENTRY_ID] = PostureModule::pos_z(opponent_bomas[0]);
     }
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_PIT_STATUS_SPECIAL_N_CHARGE_FLAG_CHARGE_MAX) {
         frame(agent.lua_state_agent, 6.0);
         if macros::is_excute(agent) {
             ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_BOWARROW, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, the_one_x, the_one_y, the_one_z, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), the_one_x, the_one_y, the_one_z, 90, 0, 0, 100, true);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, OPP_Z[ENTRY_ID], OPP_Y[ENTRY_ID], OPP_X[ENTRY_ID], None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), OPP_Z[ENTRY_ID], OPP_Y[ENTRY_ID], OPP_X[ENTRY_ID], 90, 0, 0, 100, true);
         }
         wait(agent.lua_state_agent, 4.0);
         if macros::is_excute(agent) { 

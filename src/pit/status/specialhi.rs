@@ -100,8 +100,8 @@ unsafe extern "C" fn pit_specialhi_flight_main(fighter: &mut L2CFighterCommon) -
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
 
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
 
     fighter.fastshift(L2CValue::Ptr(pit_specialhi_flight_main_loop as *const () as _))
 }
@@ -115,9 +115,17 @@ unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterComm
     sv_kinetic_energy!(
         set_speed,
         fighter,
-        FIGHTER_KINETIC_ENERGY_ID_CONTROL,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
         stick_x * flight_speed_mul,
-        stick_y * flight_speed_mul
+        0.0
+    );
+
+    sv_kinetic_energy!(
+        set_speed,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        stick_y * flight_speed_mul,
+        0.0
     );
     
     // CANCEL WITH ATTACK OR AIR DODGE
@@ -138,7 +146,6 @@ unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterComm
 
 // END
 unsafe extern "C" fn pit_specialhi_flight_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
     return 0.into();
 }
 

@@ -873,6 +873,9 @@
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/crowd.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Bet.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Salty.nutexb"
+        ],
+        "stage/poke_stadium2/normal/model/dys_dugtrio_set": [ 
+            "stage/poke_stadium2/normal/model/dys_dugtrio_set/saltshaker.nutexb"
         ]
     }
 }

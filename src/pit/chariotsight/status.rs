@@ -21,7 +21,7 @@ unsafe extern "C" fn chariotsight_shield_pre(weapon: &mut L2CWeaponCommon) -> L2
 
 // MAIN
 unsafe extern "C" fn chariotsight_shield_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    MotionModule::change_motion(weapon.module_accessor, Hash40::new("shield"), 0.0, 1.0, false, 0.0, false, false); // add to motion list
+    MotionModule::change_motion(weapon.module_accessor, Hash40::new("shield"), 0.0, 1.0, false, 0.0, false, false); 
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
@@ -97,7 +97,7 @@ unsafe extern "C" fn chariotsight_break_pre(weapon: &mut L2CWeaponCommon) -> L2C
 
 // MAIN
 unsafe extern "C" fn chariotsight_break_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    MotionModule::change_motion(weapon.module_accessor, Hash40::new("break"), 0.0, 1.0, false, 0.0, false, false); // add to motion list
+    MotionModule::change_motion(weapon.module_accessor, Hash40::new("break"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
