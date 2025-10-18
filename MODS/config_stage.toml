@@ -2,3 +2,5 @@ discard_stage_code = ["Poke_Stadium2"]
 
 [gimmick_param]
 Animal_Village = { is_gimmick = true }
+Animal_City = { is_gimmick = true }
+Trail_Castle = { is_gimmick = true }
