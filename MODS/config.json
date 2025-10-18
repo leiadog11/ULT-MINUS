@@ -1,4 +1,8 @@
 {
+    "new-dir-infos": [
+        "stage/poke_stadium2/normal/model/stc_saltshaker_set",
+        "stage/poke_stadium2/normal/motion/stc_saltshaker_set"
+    ],
     "new-dir-files": {
         "fighter/pacman/c00": [
             "fighter/pacman/model/body/c00/apple.nutexb",
@@ -747,7 +751,6 @@
             "fighter/bayonetta/model/body/c00/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c00/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c00/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c00/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c00/c04attackhi4.nuanmb"
         ],
@@ -756,7 +759,6 @@
             "fighter/bayonetta/model/body/c01/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c01/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c01/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c01/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c01/c04attackhi4.nuanmb"
         ],
@@ -765,7 +767,6 @@
             "fighter/bayonetta/model/body/c02/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c02/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c02/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c02/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c02/c04attackhi4.nuanmb"
         ],
@@ -774,7 +775,6 @@
             "fighter/bayonetta/model/body/c03/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c03/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c03/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c03/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c03/c04attackhi4.nuanmb"
         ],
@@ -783,7 +783,6 @@
             "fighter/bayonetta/model/body/c04/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c04/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c04/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c04/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c04/c04attackhi4.nuanmb"
         ],
@@ -792,7 +791,6 @@
             "fighter/bayonetta/model/body/c05/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c05/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c05/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c05/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c05/c04attackhi4.nuanmb"
         ],
@@ -801,7 +799,6 @@
             "fighter/bayonetta/model/body/c06/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c06/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c06/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c06/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c06/c04attackhi4.nuanmb"
         ],
@@ -810,33 +807,48 @@
             "fighter/bayonetta/model/body/c07/def_bayonetta_001_emi.nutexb",
             "fighter/bayonetta/model/body/c07/def_bayonetta_001_nor.nutexb",
             "fighter/bayonetta/model/body/c07/def_bayonetta_001_prm.nutexb",
-
             "fighter/bayonetta/motion/wickedweaveleg/c07/c03attacks4s.nuanmb",
             "fighter/bayonetta/motion/wickedweaveleg/c07/c04attackhi4.nuanmb"
         ],
         "fighter/pit/c00": [
-            "fighter/pit/motion/body/c00/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c00/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c00/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c00/d04break.nuanmb"
         ],
         "fighter/pit/c01": [
-            "fighter/pit/motion/body/c01/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c01/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c01/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c01/d04break.nuanmb"
         ],
         "fighter/pit/c02": [
-            "fighter/pit/motion/body/c02/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c02/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c02/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c02/d04break.nuanmb"
         ],
         "fighter/pit/c03": [
-            "fighter/pit/motion/body/c03/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c03/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c03/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c03/d04break.nuanmb"
         ],
         "fighter/pit/c04": [
-            "fighter/pit/motion/body/c04/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c04/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c04/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c04/d04break.nuanmb"
         ],
         "fighter/pit/c05": [
-            "fighter/pit/motion/body/c05/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c05/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c05/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c05/d04break.nuanmb"
         ],
         "fighter/pit/c06": [
-            "fighter/pit/motion/body/c06/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c06/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c06/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c06/d04break.nuanmb"
         ],
         "fighter/pit/c07": [
-            "fighter/pit/motion/body/c07/d02specialhiflight.nuanmb"
+            "fighter/pit/motion/body/c07/d02specialhiflight.nuanmb",
+            "fighter/pit/motion/chariot/c07/d04shield.nuanmb",
+            "fighter/pit/motion/chariot/c07/d04break.nuanmb"
         ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
@@ -874,8 +886,19 @@
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Bet.nutexb",
             "stage/poke_stadium2/normal/model/stc_st_ashibar_set/Salty.nutexb"
         ],
-        "stage/poke_stadium2/normal/model/dys_dugtrio_set": [ 
-            "stage/poke_stadium2/normal/model/dys_dugtrio_set/saltshaker.nutexb"
+        "stage/poke_stadium2/normal/model/stc_saltshaker_set": [
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nuhlpb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numatb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numdlb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numshb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.numshexb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nusktb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.nusrcmdlb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/model.xmb",
+            "stage/poke_stadium2/normal/model/stc_saltshaker_set/saltshaker.nutexb"
+        ],
+        "stage/poke_stadium2/normal/motion/stc_saltshaker_set": [
+            "stage/poke_stadium2/normal/motion/stc_saltshaker_set/stc_saltshaker_set_0.nuanmb"
         ]
     }
 }

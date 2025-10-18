@@ -100,9 +100,6 @@ unsafe extern "C" fn pit_specialhi_flight_main(fighter: &mut L2CFighterCommon) -
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
 
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-
     fighter.fastshift(L2CValue::Ptr(pit_specialhi_flight_main_loop as *const () as _))
 }
 
@@ -112,6 +109,12 @@ unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterComm
 	let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
     let flight_speed_mul = 2.25;
 
+    KineticModule::clear_speed_all(fighter.module_accessor);
+    KineticModule::unable_energy_all(fighter.module_accessor);
+
+    macros::SET_SPEED_EX(fighter, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+
+    /*
     sv_kinetic_energy!(
         set_speed,
         fighter,
@@ -119,26 +122,13 @@ unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterComm
         stick_x * flight_speed_mul,
         0.0
     );
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        stick_y * flight_speed_mul,
-        0.0
-    );
+    */
     
-    // CANCEL WITH ATTACK OR AIR DODGE
+    // CANCEL WITH ATTACK OR AIR DODGE SPECIAL
     if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
     ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_CATCH) ||
     ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
-        CancelModule::enable_cancel(fighter.module_accessor);
-    }
-
-    // END
-    if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
         fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
-        return 1.into();
     }
 
     return 0.into();

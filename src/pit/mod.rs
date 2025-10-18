@@ -4,7 +4,7 @@ pub mod acmd;
 pub mod frame;
 pub mod status;
 pub mod bowarrow;
-pub mod chariotsight;
+pub mod chariot;
 
 static mut STALL_TIMER: [i32; 8] = [0; 8];
 static mut SHIELD_LIFE: [i32; 8] = [0; 8];
@@ -16,5 +16,5 @@ pub fn install() {
     frame::install();
     status::install();
     bowarrow::install();
-    chariotsight::install();
+    chariot::install();
 }

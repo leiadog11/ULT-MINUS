@@ -27,6 +27,8 @@ unsafe extern "C" fn pit_specialnfires(agent: &mut L2CAgentBase) {
 // NEUTRAL B FIRE HI
 unsafe extern "C" fn pit_specialnfirehi(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let mut dist_x = 0.0;
+    let mut dist_y = 0.0;
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         ArticleModule::shoot(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_BOWARROW, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL), false);
@@ -34,13 +36,20 @@ unsafe extern "C" fn pit_specialnfirehi(agent: &mut L2CAgentBase) {
         OPP_X[ENTRY_ID] = PostureModule::pos_x(opponent_bomas[0]);
         OPP_Y[ENTRY_ID] = PostureModule::pos_y(opponent_bomas[0]);
         OPP_Z[ENTRY_ID] = PostureModule::pos_z(opponent_bomas[0]);
+
+        let PLAYER_X = PostureModule::pos_x(agent.module_accessor);
+        let PLAYER_Y = PostureModule::pos_x(agent.module_accessor);
+
+        dist_x = (OPP_X[ENTRY_ID] - PLAYER_X).abs();
+        dist_y = (OPP_Y[ENTRY_ID] - PLAYER_Y).abs();
     }
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_PIT_STATUS_SPECIAL_N_CHARGE_FLAG_CHARGE_MAX) {
+        let lr = PostureModule::lr(agent.module_accessor);
         frame(agent.lua_state_agent, 6.0);
         if macros::is_excute(agent) {
             ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_BOWARROW, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, OPP_Z[ENTRY_ID], OPP_Y[ENTRY_ID], OPP_X[ENTRY_ID], None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), OPP_Z[ENTRY_ID], OPP_Y[ENTRY_ID], OPP_X[ENTRY_ID], 90, 0, 0, 100, true);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, 0.0, dist_y - 10.0, dist_x * lr, None, Some(dist_y + 10.0), None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), 10, dist_y, dist_x * lr, 90, 0, 0, 80, true);
         }
         wait(agent.lua_state_agent, 4.0);
         if macros::is_excute(agent) { 
@@ -100,7 +109,30 @@ unsafe extern "C" fn pit_sound_specialnfirehi(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pit_speciallwstart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOTSIGHT, false, -1);
+        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOT, false, -1);
+    }
+}
+
+// DOWN B EFFECT
+unsafe extern "C" fn pit_effect_speciallwstart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+
+    }
+}
+
+// DOWN B SOUND
+unsafe extern "C" fn pit_sound_speciallwstart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+
+    }
+}
+
+// DOWN B EXPRESSION
+unsafe extern "C" fn pit_expression_speciallwstart(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+
     }
 }
 
@@ -133,6 +165,12 @@ pub fn install() {
 
         .game_acmd("game_speciallwstartr", pit_speciallwstart, Low)
         .game_acmd("game_speciallwstartl", pit_speciallwstart, Low)
+        .effect_acmd("effect_speciallwstartr", pit_effect_speciallwstart, Low)
+        .effect_acmd("effect_speciallwstartl", pit_effect_speciallwstart, Low)
+        .sound_acmd("sound_speciallwstartr", pit_sound_speciallwstart, Low)
+        .sound_acmd("sound_speciallwstartl", pit_sound_speciallwstart, Low)
+        .expression_acmd("expression_speciallwstartr", pit_expression_speciallwstart, Low)
+        .expression_acmd("expression_speciallwstartl", pit_expression_speciallwstart, Low)
 
         .game_acmd("game_specialhi", pit_specialhi, Low)
 

@@ -35,7 +35,7 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             EffectModule::enable_sync_init_pos_last(boma);
             AURA[ENTRY_ID] = true;
         }
-        else {
+        if DamageModule::damage(boma, 0) == 0.0 {
             AURA[ENTRY_ID] = false;
         }
 
