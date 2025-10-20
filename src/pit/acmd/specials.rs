@@ -35,21 +35,20 @@ unsafe extern "C" fn pit_specialnfirehi(agent: &mut L2CAgentBase) {
         let opponent_bomas = get_opponent_bomas(agent.module_accessor);
         OPP_X[ENTRY_ID] = PostureModule::pos_x(opponent_bomas[0]);
         OPP_Y[ENTRY_ID] = PostureModule::pos_y(opponent_bomas[0]);
-        OPP_Z[ENTRY_ID] = PostureModule::pos_z(opponent_bomas[0]);
 
         let PLAYER_X = PostureModule::pos_x(agent.module_accessor);
-        let PLAYER_Y = PostureModule::pos_x(agent.module_accessor);
+        let PLAYER_Y = PostureModule::pos_y(agent.module_accessor);
 
-        dist_x = (OPP_X[ENTRY_ID] - PLAYER_X).abs();
-        dist_y = (OPP_Y[ENTRY_ID] - PLAYER_Y).abs();
+        dist_x = OPP_X[ENTRY_ID] - PLAYER_X;
+        dist_y = OPP_Y[ENTRY_ID] - PLAYER_Y;
     }
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_PIT_STATUS_SPECIAL_N_CHARGE_FLAG_CHARGE_MAX) {
         let lr = PostureModule::lr(agent.module_accessor);
         frame(agent.lua_state_agent, 6.0);
         if macros::is_excute(agent) {
             ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_BOWARROW, smash::app::ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, 0.0, dist_y - 10.0, dist_x * lr, None, Some(dist_y + 10.0), None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), 10, dist_y, dist_x * lr, 90, 0, 0, 80, true);
+            macros::ATTACK(agent, 0, 0, Hash40::new("top"), 14.0, 88, 84, 0, 53, 10.0, 0.0, dist_y + 4.0, dist_x * lr, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_pa_fly_arrow"), Hash40::new("top"), 10, dist_y, dist_x * lr, 90, 0, 0, 60, true);
         }
         wait(agent.lua_state_agent, 4.0);
         if macros::is_excute(agent) { 
@@ -107,9 +106,12 @@ unsafe extern "C" fn pit_sound_specialnfirehi(agent: &mut L2CAgentBase) {
 
 // DOWN B
 unsafe extern "C" fn pit_speciallwstart(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 6.0);
-    if macros::is_excute(agent) {
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOT, false, -1);
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    if !SHIELD_ON[ENTRY_ID] {
+        frame(agent.lua_state_agent, 6.0);
+        if macros::is_excute(agent) {
+            ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOT, false, -1);
+        }
     }
 }
 
@@ -136,20 +138,60 @@ unsafe extern "C" fn pit_expression_speciallwstart(agent: &mut L2CAgentBase) {
     }
 }
 
-// UP B
-unsafe extern "C" fn pit_specialhi(agent: &mut L2CAgentBase) { 
+// UP B START
+unsafe extern "C" fn pit_specialhistart(agent: &mut L2CAgentBase) { 
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) { 
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.2, 75, 100, 50, 0, 10.0, 0.0, 0.0, 0.0, None, None, None, 0.5, 2.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.2, 75, 100, 100, 0, 10.0, 0.0, 0.0, 0.0, None, None, None, 0.5, 2.8, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_BODY);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 8.0, false);
     }
 }
 
-// UP B FLIGHT
+// UP B START EFFECT
+unsafe extern "C" fn pit_effect_specialhistart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("pit_fly_miracle_start"), Hash40::new("top"), 0, 7, 0, 0, 0, 0, 1, true);
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
+// UP B START SOUND
+unsafe extern "C" fn pit_sound_specialhistart(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_pit_flight_start"));
+    }
+}
+
+// UP B FLIGHT EFFECT
 unsafe extern "C" fn pit_effect_specialhiflight(agent: &mut L2CAgentBase) { 
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) { 
         macros::EFFECT_FOLLOW(agent, Hash40::new("pit_fly_miracle_b"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, true);
-        EffectModule::enable_sync_init_pos_last(agent.module_accessor);
+    }
+    for _ in 0..100 { 
+        if macros::is_excute(agent) { 
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_ikaros_wing_flare"), Hash40::new("s_wingl1"), -3, 0, 1, 0, 0, 0, 1, false);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("pit_ikaros_wing_flare"), Hash40::new("s_wingr1"), -3, 0, -1, 0, 0, 0, 1, false);
+        }
+        wait(agent.lua_state_agent, 50.0);
+        if macros::is_excute(agent) { 
+            macros::EFFECT_OFF_KIND(agent, Hash40::new("pit_ikaros_wing_flare"), true, true);
+        }
+    }
+} 
+
+// UP B FLIGHT SOUND
+unsafe extern "C" fn pit_sound_specialhiflight(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 2.0);
+    for _ in 0..100 { 
+        if macros::is_excute(agent) { 
+            if !SoundModule::is_playing(agent.module_accessor, Hash40::new("se_pit_flight_wings")) { 
+                macros::PLAY_SE(agent, Hash40::new("se_pit_flight_wings"));
+            }
+        }
+        wait(agent.lua_state_agent, 1.0);
     }
 }   
 
@@ -172,9 +214,12 @@ pub fn install() {
         .expression_acmd("expression_speciallwstartr", pit_expression_speciallwstart, Low)
         .expression_acmd("expression_speciallwstartl", pit_expression_speciallwstart, Low)
 
-        .game_acmd("game_specialhi", pit_specialhi, Low)
+        .game_acmd("game_specialhistart", pit_specialhistart, Low)
+        .effect_acmd("effect_specialhistart", pit_effect_specialhistart, Low)
+        .sound_acmd("sound_specialhistart", pit_sound_specialhistart, Low)
 
         .effect_acmd("effect_specialhiflight", pit_effect_specialhiflight, Low)
+        .sound_acmd("sound_specialhiflight", pit_sound_specialhiflight, Low)
 
         .install();
 }

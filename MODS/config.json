@@ -813,42 +813,50 @@
         "fighter/pit/c00": [
             "fighter/pit/motion/body/c00/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c00/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c00/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c00/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c00/d04end.nuanmb"
         ],
         "fighter/pit/c01": [
             "fighter/pit/motion/body/c01/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c01/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c01/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c01/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c01/d04end.nuanmb"
         ],
         "fighter/pit/c02": [
             "fighter/pit/motion/body/c02/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c02/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c02/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c02/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c02/d04end.nuanmb"
         ],
         "fighter/pit/c03": [
             "fighter/pit/motion/body/c03/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c03/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c03/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c03/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c03/d04end.nuanmb"
         ],
         "fighter/pit/c04": [
             "fighter/pit/motion/body/c04/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c04/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c04/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c04/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c04/d04end.nuanmb"
         ],
         "fighter/pit/c05": [
             "fighter/pit/motion/body/c05/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c05/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c05/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c05/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c05/d04end.nuanmb"
         ],
         "fighter/pit/c06": [
             "fighter/pit/motion/body/c06/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c06/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c06/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c06/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c06/d04end.nuanmb"
         ],
         "fighter/pit/c07": [
             "fighter/pit/motion/body/c07/d02specialhiflight.nuanmb",
             "fighter/pit/motion/chariot/c07/d04shield.nuanmb",
-            "fighter/pit/motion/chariot/c07/d04break.nuanmb"
+            "fighter/pit/motion/chariot/c07/d04break.nuanmb",
+            "fighter/pit/motion/chariot/c07/d04end.nuanmb"
         ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",

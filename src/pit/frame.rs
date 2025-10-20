@@ -17,8 +17,15 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true);
         }
 
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_ikaros_wing_flare"), true, true);
+            macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_fly_miracle_b"), true, true);
+            macros::STOP_SE(fighter, Hash40::new("se_pit_flight_wings"));
+        }
+
         // REGENERATE SHIELD
-        if SHIELD_ON[ENTRY_ID] && SHIELD_LIFE[ENTRY_ID] < 600 {
+        if !SHIELD_ON[ENTRY_ID] && SHIELD_LIFE[ENTRY_ID] < 600 {
             SHIELD_LIFE[ENTRY_ID] += 1;
         }
 

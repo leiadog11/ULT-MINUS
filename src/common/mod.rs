@@ -24,6 +24,12 @@ unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::
     if (*weapon).battle_object.kind == *WEAPON_KIND_GAMEWATCH_RESCUE as u32 && owner_kind == *FIGHTER_KIND_GAMEWATCH {
         *(weapon as *mut bool).add(0x90) = true;
     }
+
+    // PIT SHIELD (CHARIOT)
+    if (*weapon).battle_object.kind == *WEAPON_KIND_PIT_CHARIOT as u32 && owner_kind == *FIGHTER_KIND_PIT {
+        *(weapon as *mut bool).add(0x90) = true;
+    }
+
     call_original!(vtable, weapon, log)
 }
 
