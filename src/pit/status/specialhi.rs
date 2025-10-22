@@ -33,6 +33,16 @@ unsafe extern "C" fn pit_specicalhi_pre(fighter: &mut L2CFighterCommon) -> L2CVa
     return 0.into();
 }
 
+// INIT
+unsafe extern "C" fn pit_specicalhi_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    return 0.into();
+}
+
+// EXEC
+unsafe extern "C" fn pit_specicalhi_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    return 0.into();
+}
+
 // MAIN
 unsafe extern "C" fn pit_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi_start"), 0.0, 1.0, false, 0.0, false, false);
@@ -91,6 +101,16 @@ unsafe extern "C" fn pit_specicalhi_flight_pre(fighter: &mut L2CFighterCommon) -
         0
       );
       
+    return 0.into();
+}
+
+// INIT
+unsafe extern "C" fn pit_specicalhi_flight_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    return 0.into();
+}
+
+// EXEC
+unsafe extern "C" fn pit_specicalhi_flight_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
     return 0.into();
 }
 
@@ -166,10 +186,14 @@ unsafe extern "C" fn pit_specialhi_flight_end(fighter: &mut L2CFighterCommon) ->
 pub fn install() {
     Agent::new("pit")
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_pre)
+        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_init)
+        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_exec)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_end)
         
         .status(Pre, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_pre)
+        .status(Init, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_init)
+        .status(Exec, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_exec)
         .status(Main, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_main)
         .status(End, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_end)
     

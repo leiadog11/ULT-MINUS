@@ -85,15 +85,19 @@ unsafe extern "C" fn luigi_sound_guardoff(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn luigi_squat(agent: &mut L2CAgentBase) {
     let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(agent.module_accessor);
-    frame(agent.lua_state_agent, 7.0);
+    frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
-        //WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_WORK_ID_FLAG_RESERVE_CHANGE_STATUS_DLAY_MOTION);
-        GroundModule::set_ignore_friction(agent.module_accessor, true);
-        if lr == 1.0 {macros::SET_SPEED_EX(agent, x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);} else {macros::SET_SPEED_EX(agent, -x_vel, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);}
+        agent.clear_lua_stack();
+        sv_kinetic_energy::friction_off(agent.lua_state_agent);
+        AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+        if x_vel > 0.0 || x_vel < 0.0 {
+            macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+            KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel + 2.5) * lr, y: 0.0, z: 0.0 });
+        }
     }
-    frame(agent.lua_state_agent, 13.0);
+    frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) { 
-        GroundModule::set_ignore_friction(agent.module_accessor, false);
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
