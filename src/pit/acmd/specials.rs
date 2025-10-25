@@ -108,7 +108,7 @@ unsafe extern "C" fn pit_sound_specialnfirehi(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pit_speciallwstart(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
     if !SHIELD_ON[ENTRY_ID] {
-        frame(agent.lua_state_agent, 6.0);
+        frame(agent.lua_state_agent, 1.0);
         if macros::is_excute(agent) {
             ArticleModule::generate_article(agent.module_accessor, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOT, false, -1);
         }
@@ -117,7 +117,7 @@ unsafe extern "C" fn pit_speciallwstart(agent: &mut L2CAgentBase) {
 
 // DOWN B EFFECT
 unsafe extern "C" fn pit_effect_speciallwstart(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 6.0);
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
 
     }
@@ -125,7 +125,7 @@ unsafe extern "C" fn pit_effect_speciallwstart(agent: &mut L2CAgentBase) {
 
 // DOWN B SOUND
 unsafe extern "C" fn pit_sound_speciallwstart(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
 
     }

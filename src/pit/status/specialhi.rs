@@ -135,7 +135,7 @@ unsafe extern "C" fn pit_specialhi_flight_main(fighter: &mut L2CFighterCommon) -
 unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
     let stick_x = ControlModule::get_stick_x(fighter.module_accessor);
 	let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
-    let flight_speed_mul = 2.0;
+    let flight_speed_mul = 1.75;
 
     fighter.sub_transition_group_check_air_cliff();
 

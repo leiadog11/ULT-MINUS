@@ -47,7 +47,7 @@ unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
         if x_vel > 0.0 || x_vel < 0.0 {
             macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-            KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel + 2.5) * lr, y: 0.0, z: 0.0 });
+            KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel * 1.1) * lr, y: 0.0, z: 0.0 });
         }
     }
     frame(agent.lua_state_agent, 6.0);
