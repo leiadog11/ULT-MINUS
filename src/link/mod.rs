@@ -22,6 +22,8 @@ static mut REVALIS_GALE: [bool; 8] = [true; 8];
 static mut URBOSAS_FURY: [bool; 8] = [true; 8];
 static mut DOWN_TILT_COUNT: [i32; 8] = [0; 8];
 static mut FLOAT_TIMER: [i32; 8] = [0; 8];
+static mut STALL_TIMER: [i32; 8] = [0; 8];
+static mut EFFECT_ON: [bool; 8] = [false; 8];
 
 pub fn install() {
     acmd::install();

@@ -17,36 +17,52 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             GroundModule::set_collidable(boma, true);
+            DOWN_TILT_COUNT[ENTRY_ID] = 0;
             MIPHAS_GRACE[ENTRY_ID] = true;
             DARUKS_PROTECTION[ENTRY_ID] = true;
             REVALIS_GALE[ENTRY_ID] = true;
             URBOSAS_FURY[ENTRY_ID] = true;
             // PLAY A RANDOM SPIRIT VOICE
-            let rand = smash::app::sv_math::rand(hash40("agent"), 3) as u64;
+            let rand = smash::app::sv_math::rand(hash40("agent"), 4) as u64;
             if !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready01")) &&
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready02")) && 
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready03")) &&
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready04")) { 
+                
                 if rand == 0 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready01"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready01"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 3.5, 0);
                 }
-                else if rand == 1 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready02"), true, false, false, false, enSEType(0));
+                if rand == 1 {
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready02"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 3.5, 0);
                 }
                 else if rand == 2 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready03"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready03"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 3.5, 0);
                 }
                 else if rand == 3 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready04"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready04"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 3.5, 0);
                 }
             }
+        }
+
+        // GLOW ON DOWN TILT AMOUNT
+        if DOWN_TILT_COUNT[ENTRY_ID] == 2 && !EFFECT_ON[ENTRY_ID] { 
+            macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
+            EFFECT_ON[ENTRY_ID] = true;
+        }
+        else {
+            EFFECT_ON[ENTRY_ID] = false;
         }
 
         // MIPHAS GRACE
         if MIPHAS_GRACE[ENTRY_ID] == true {
             if damage >= 120.0 { 
                 SoundModule::play_se(boma, Hash40::new("se_item_fairybottle_fairy"), true, false, false, false, enSEType(0));
-                SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                SoundModule::set_se_vol(boma, se as i32, 3.0, 0);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 10.0, 15.0, 0.0, 0, 0, 0, 0.8, false);
@@ -67,7 +83,8 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
                     if REVALIS_GALE[ENTRY_ID] { 
                         if !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_activate")) {
                             REVALIS_GALE[ENTRY_ID] = false;
-                            SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                            let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                            SoundModule::set_se_vol(boma, se as i32, 3.0, 0);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 10.0, 15.0, 0.0, 0, 0, 0, 0.8, false);
@@ -131,6 +148,38 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
         else {
             FLOAT_TIMER[ENTRY_ID] = 60;
         }
+
+        // DANGER
+        if situation_kind == *SITUATION_KIND_AIR {
+            if STALL_TIMER[ENTRY_ID] == 720 {
+                let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
+                EffectModule::req_follow(boma, Hash40::new("sys_flies_up"), Hash40::new("top"), &dumb, &dumb, 2.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+                SoundModule::play_se(boma, Hash40::new("se_common_spirits_machstamp_landing"), true, false, false, false, enSEType(0));
+                STALL_TIMER[ENTRY_ID] = 721;
+            }
+            else if STALL_TIMER[ENTRY_ID] == 721 {
+                DamageModule::add_damage(boma, 0.5, 0);
+                if DamageModule::damage(boma, 0) >= 200.0 {
+                    STALL_TIMER[ENTRY_ID] = 0;
+                    StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_DEAD, true);
+                }
+            }
+            else {
+                STALL_TIMER[ENTRY_ID] += 1;
+            }
+        }
+        else {
+            STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
+        if DamageModule::reaction(boma, 0) > 1.0 { 
+            STALL_TIMER[ENTRY_ID] = 0;
+            EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+        }
     }
 }
 
@@ -146,6 +195,8 @@ pub unsafe extern "C" fn link_start(fighter: &mut L2CFighterCommon) {
         URBOSAS_FURY[ENTRY_ID] = true;
         DOWN_TILT_COUNT[ENTRY_ID] = 0;
         FLOAT_TIMER[ENTRY_ID] = 60;
+        STALL_TIMER[ENTRY_ID] = 0;
+        EFFECT_ON[ENTRY_ID] = false;
     }
 }
 

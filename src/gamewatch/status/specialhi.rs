@@ -26,7 +26,7 @@ unsafe extern "C" fn gamewatch_specialhi_start_pre(fighter: &mut L2CFighterCommo
         false,
         false,
         (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI  | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK).try_into().unwrap(),
-        0,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
         (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
         0
     );
@@ -44,7 +44,6 @@ unsafe extern "C" fn gamewatch_specialhi_start_main(fighter: &mut L2CFighterComm
     fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_specialhi_start_main_loop as *const () as _));
     return 0.into();
 }
-
 
 // MAIN LOOP
 unsafe extern "C" fn gamewatch_specialhi_start_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 

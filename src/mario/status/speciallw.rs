@@ -9,7 +9,7 @@ unsafe extern "C" fn mario_speciallw_pre(fighter: &mut L2CFighterCommon) -> L2CV
         SituationKind(*SITUATION_KIND_NONE), 
         *FIGHTER_KINETIC_TYPE_UNIQ, 
         *GROUND_CORRECT_KIND_KEEP as u32, 
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true, 
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG, 
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT, 
@@ -62,6 +62,8 @@ unsafe extern "C" fn mario_speciallw_main_loop(fighter: &mut L2CFighterCommon) -
     if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND { 
         StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_MARIO_STATUS_KIND_SPECIAL_LW_SHOOT, true);
     }
+
+    fighter.sub_transition_group_check_air_cliff();
 
     if MotionModule::frame(fighter.module_accessor) == 1.0 { 
         ArticleModule::change_status(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, WEAPON_MARIO_PUMP_STATUS_KIND_BOOST, ArticleOperationTarget(0));

@@ -62,10 +62,12 @@ unsafe extern "C" fn chariot_shield_main_loop(weapon: &mut L2CWeaponCommon) -> L
 
     // CREATE A SOUND EFFECT ON 8 SECONDS AND 9 SECONDS BEFORE BREAKING
     if SHIELD_LIFE[ENTRY_ID] == 120 { 
-        SoundModule::play_se(owner_boma, Hash40::new("se_item_killsword_flash"), true, false, false, false, enSEType(0));
+        let se = SoundModule::play_se(owner_boma, Hash40::new("se_item_killsword_flash"), true, false, false, false, enSEType(0));
+        SoundModule::set_se_vol(owner_boma, se as i32, 4.5, 0);
     }
     if SHIELD_LIFE[ENTRY_ID] == 60 { 
-        SoundModule::play_se(owner_boma, Hash40::new("se_item_killsword_flash"), true, false, false, false, enSEType(0));
+        let se = SoundModule::play_se(owner_boma, Hash40::new("se_item_killsword_flash"), true, false, false, false, enSEType(0));
+        SoundModule::set_se_vol(owner_boma, se as i32, 4.5, 0);
     }
 
     // BREAK IF OUT OF LIFE

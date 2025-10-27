@@ -15,10 +15,24 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             GroundModule::set_collidable(boma, true);
+            ArticleModule::remove_exist(boma, *FIGHTER_PIT_GENERATE_ARTICLE_CHARIOT, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+            SHIELD_ON[ENTRY_ID] = false;
+        }
+
+        // CANCEL NAIR WITH JUMP
+        if motion_kind == hash40("attack_air_n") {
+            cancel_with_jump(boma, 6.0);
         }
 
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
+            macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_ikaros_wing_flare"), true, true);
+            macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_fly_miracle_b"), true, true);
+            macros::STOP_SE(fighter, Hash40::new("se_pit_flight_wings"));
+        }
+
+        // GRAB CLIFF
+        if situation_kind == *SITUATION_KIND_CLIFF {
             macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_ikaros_wing_flare"), true, true);
             macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_fly_miracle_b"), true, true);
             macros::STOP_SE(fighter, Hash40::new("se_pit_flight_wings"));

@@ -119,7 +119,8 @@ unsafe extern "C" fn link_attacklw3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
         if DOWN_TILT_COUNT[ENTRY_ID] == 2 {
-            macros::PLAY_SE(agent, Hash40::new("se_link_special_n04"));
+            let se = SoundModule::play_se(agent.module_accessor, Hash40::new("se_link_special_n04"), true, false, false, false, enSEType(0));
+            SoundModule::set_se_vol(agent.module_accessor, se as i32, 4.0, 0);
         }
     }
 }
