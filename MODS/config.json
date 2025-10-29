@@ -858,6 +858,46 @@
             "fighter/pit/motion/chariot/c07/d04break.nuanmb",
             "fighter/pit/motion/chariot/c07/d04end.nuanmb"
         ],
+        "fighter/roy/c00": [
+            "fighter/roy/motion/body/c00/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c00/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c00/d01specials.nuanmb"
+        ],
+        "fighter/roy/c01": [
+            "fighter/roy/motion/body/c01/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c01/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c01/d01specials.nuanmb"
+        ],
+        "fighter/roy/c02": [
+            "fighter/roy/motion/body/c02/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c02/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c02/d01specials.nuanmb"
+        ],
+        "fighter/roy/c03": [
+            "fighter/roy/motion/body/c03/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c03/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c03/d01specials.nuanmb"
+        ],
+        "fighter/roy/c04": [
+            "fighter/roy/motion/body/c04/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c04/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c04/d01specials.nuanmb"
+        ],
+        "fighter/roy/c05": [
+            "fighter/roy/motion/body/c05/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c05/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c05/d01specials.nuanmb"
+        ],
+        "fighter/roy/c06": [
+            "fighter/roy/motion/body/c06/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c06/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c06/d01specials.nuanmb"
+        ],
+        "fighter/roy/c07": [
+            "fighter/roy/motion/body/c07/d03speciallwroll.nuanmb",
+            "fighter/roy/motion/body/c07/d03speciallwdive.nuanmb",
+            "fighter/roy/motion/body/c07/d01specials.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"
