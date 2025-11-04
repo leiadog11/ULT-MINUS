@@ -701,49 +701,49 @@
         "fighter/mario/c00": [
             "fighter/mario/motion/body/c00/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c00/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c00/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c00/question_block.nutexb",
             "fighter/mario/motion/pump/c00/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c01": [
             "fighter/mario/motion/body/c01/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c01/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c01/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c01/question_block.nutexb",
             "fighter/mario/motion/pump/c01/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c02": [
             "fighter/mario/motion/body/c02/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c02/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c02/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c02/question_block.nutexb",
             "fighter/mario/motion/pump/c02/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c03": [
             "fighter/mario/motion/body/c03/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c03/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c03/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c03/question_block.nutexb",
             "fighter/mario/motion/pump/c03/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c04": [
             "fighter/mario/motion/body/c04/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c04/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c04/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c04/question_block.nutexb",
             "fighter/mario/motion/pump/c04/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c05": [
             "fighter/mario/motion/body/c05/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c05/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c05/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c05/question_block.nutexb",
             "fighter/mario/motion/pump/c05/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c06": [
             "fighter/mario/motion/body/c06/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c06/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c06/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c06/question_block.nutexb",
             "fighter/mario/motion/pump/c06/d03specialairlw.nuanmb"
         ],
         "fighter/mario/c07": [
             "fighter/mario/motion/body/c07/c01breakdance.nuanmb",
             "fighter/mario/motion/body/c07/d03specialairlw.nuanmb",
-            "fighter/mario/model/body/c07/blockquestion_alb.png.nutexb",
+            "fighter/mario/model/body/c07/question_block.nutexb",
             "fighter/mario/motion/pump/c07/d03specialairlw.nuanmb"
         ],
         "fighter/bayonetta/c00": [
