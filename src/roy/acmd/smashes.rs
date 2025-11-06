@@ -2,7 +2,7 @@ use super::*;
 
 //-----------------SMASH ATTACKS----------------
 
-//DOWN SMASH
+// DOWN SMASH
 unsafe extern "C" fn roy_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {

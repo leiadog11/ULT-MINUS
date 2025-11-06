@@ -26,6 +26,11 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
             ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
 
+        // ON CLIFF 
+        if situation_kind == *SITUATION_KIND_CLIFF {
+            ArticleModule::remove_exist(fighter.module_accessor, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+
         // SHIELD CANCEL FORWARD SMASH CHARGE
         if motion_kind == hash40("attack_s4_hold") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {

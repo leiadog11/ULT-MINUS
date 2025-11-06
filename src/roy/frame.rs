@@ -30,6 +30,12 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
         if (motion_kind != hash40("appeal_hi_r") && motion_kind != hash40("appeal_hi_l")) && !PYRA_REMOVED[ENTRY_ID] {
             remove_pyra(boma);
         }
+
+        // CANCEL DOWN SMASH
+        if motion_kind == hash40("attack_lw4") {
+            cancel_with_dash(fighter.module_accessor, 7.0);
+        }
+        
     }
 }
 
