@@ -1,6 +1,6 @@
 [package]
 name = "_ULT_MINUS"
-version = "0.4.1"
+version = "0.5.0"
 authors = ["leiadog, Jmuze, OpZ"]
 edition = "2021"
 

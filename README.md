@@ -10,17 +10,19 @@ This is a full modpack with changes to the SSS, game music, and characters. Ther
 
 Here is a link to the music mod that goes with it: [LEIADOG'S MUSIC MOD](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD/releases/tag/v1.0)
 
-Current Version: Alpha 0.2.2
+Current Version: Alpha 0.5.0
 
 ## Skins
 - Super Pac-Man (Pac-Man c01)
 - ROBLGS (R.O.B. c01)
+- Mold Mario (Mario c03)
 
 ## Stages
 - MINUS ZONE (SBF)
+- SaltyBet Stadium (PS2)
 
 ## Character Change Log
-Current Character Amount: 18
+Current Character Amount: 19
 
 Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
