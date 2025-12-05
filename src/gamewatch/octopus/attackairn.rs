@@ -42,9 +42,6 @@ unsafe extern "C" fn gamewatch_octopus_attackairn_end(weapon: &mut L2CWeaponComm
     return 0.into();
 }
 
-
-
-
 pub fn install() {
     Agent::new("gamewatch_octopus")
         .status(Pre, WEAPON_GAMEWATCH_OCTOPUS_STATUS_KIND_ATTACKAIRN, gamewatch_octopus_attackairn_pre)
