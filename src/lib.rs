@@ -285,6 +285,7 @@ pub fn main() {
     jack::install();
     roy::install();
     smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
+    smashline::clone_weapon("eflame", *WEAPON_KIND_EFLAME_ESWORD, "roy", "roysword", true);
     smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
     smashline::update_weapon_count(*WEAPON_KIND_RIDLEY_BREATH, 30);
     smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
