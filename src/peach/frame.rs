@@ -13,6 +13,32 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true); // COLLISION FIX
         }
 
+        // FORWARD AIR CHARGE
+        if motion_kind == hash40("attack_air_f") { 
+            if frame >= 6.0 && frame <= 13.0 {
+                if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
+                    MotionModule::set_rate(boma, 0.0);
+                    if FORWARD_AIR_CHARGE[ENTRY_ID] < 20.0 {
+                        macros::EFFECT(fighter, Hash40::new("sys_smash_flash_s"), Hash40::new("arml"), 0, 0, 0, 0, 0, 0, 1.5, 4, 4, 4, 0, 0, 0, true);
+                        FORWARD_AIR_CHARGE[ENTRY_ID] += 1.0;
+                    }
+                    else if FORWARD_AIR_CHARGE[ENTRY_ID] == 20.0 {
+                        macros::EFFECT(fighter, Hash40::new("sys_sp_flash"), Hash40::new("arml"), 0.0, 0.0, 0.0, 0, 0, 0, 0.25, 0, 0, 0, 0, 0, 0, true);
+                        if !SoundModule::is_playing(boma, Hash40::new("se_gohoubi_bounus_add")) {
+                            SoundModule::play_se(boma, Hash40::new("se_gohoubi_bounus_add"), true, false, false, false, enSEType(0));
+                            FORWARD_AIR_CHARGE[ENTRY_ID] += 1.0;
+                        }
+                    }
+                }
+                else {
+                    MotionModule::set_rate(boma, 1.0);
+                }
+            }
+        }
+        else {
+            FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
+        }
+
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
             if STALL_TIMER[ENTRY_ID] == 720 {
@@ -52,6 +78,7 @@ pub unsafe extern "C" fn peach_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         STALL_TIMER[ENTRY_ID] = 0;
+        FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
     }
 }
 

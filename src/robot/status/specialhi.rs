@@ -79,7 +79,7 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
         set_speed,
         fighter,
         FIGHTER_KINETIC_ENERGY_ID_MOTION,
-        forward_speed,
+        forward_speed * lr,
         0.0
     );
 
