@@ -50,8 +50,9 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
     let lr = PostureModule::lr(fighter.module_accessor);
 
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
 
     KineticModule::clear_speed_all(fighter.module_accessor);
     KineticModule::mul_speed(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
@@ -96,6 +97,7 @@ unsafe extern "C" fn rob_specialhi_main(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // MAIN LOOP
 unsafe extern "C" fn rob_specialhi_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    fighter.sub_transition_group_check_air_cliff();
     if MotionModule::frame(fighter.module_accessor) > 2.0 {
         if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
             fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());

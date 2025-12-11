@@ -16,6 +16,7 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            UP_B_USED[ENTRY_ID] = false;
             GroundModule::set_collidable(boma, true);
             remove_pyra(boma);
         }
@@ -24,6 +25,17 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
         if DamageModule::reaction(boma, 0) > 1.0 { // REMOVE SWORD
             ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
             remove_pyra(boma);
+        }
+
+        // ON GROUND
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
+            UP_B_USED[ENTRY_ID] = false;
+        } 
+
+        // SPECIAL FALL CHECK
+        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL && !UP_B_USED[ENTRY_ID] {
+            UP_B_USED[ENTRY_ID] = true;
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         }
 
         // REMOVE PYRA
@@ -44,6 +56,7 @@ pub unsafe extern "C" fn roy_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         PYRA_REMOVED[ENTRY_ID] = true;
+        UP_B_USED[ENTRY_ID] = false;
         remove_pyra(fighter.module_accessor);
     }
 }

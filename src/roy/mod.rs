@@ -13,6 +13,7 @@ const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_DIVE: i32 = 0x1EB;
 const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_LANDING: i32 = 0x1EC;
 
 static mut PYRA_REMOVED: [bool; 8] = [true; 8];
+static mut UP_B_USED: [bool; 8] = [false; 8];
 
 // REMOVE PYRA
 unsafe extern "C" fn remove_pyra(boma: *mut BattleObjectModuleAccessor) { 
