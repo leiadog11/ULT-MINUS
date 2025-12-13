@@ -97,21 +97,20 @@ unsafe extern "C" fn roy_speciallw_roll_main(fighter: &mut L2CFighterCommon) -> 
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_roll"), 0.0, 1.0, false, 0.0, false, false);
 
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
-    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_GROUND);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     KineticModule::clear_speed_all(fighter.module_accessor);
     KineticModule::mul_speed(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
     let lr = PostureModule::lr(fighter.module_accessor);
-    let roll_speed = -3.75;
+    let roll_speed = -2.75;
 
     sv_kinetic_energy!(
         set_speed,
         fighter,
-        FIGHTER_KINETIC_ENERGY_ID_MOTION,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
         roll_speed * lr,
         0.0
     );
@@ -175,17 +174,18 @@ unsafe extern "C" fn roy_speciallw_dive_main(fighter: &mut L2CFighterCommon) -> 
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
 
+    let lr = PostureModule::lr(fighter.module_accessor);
     let dive_speed = -0.7;
     let forward_speed = 2.75;
 
     sv_kinetic_energy!(
         set_speed,
         fighter,
-        FIGHTER_KINETIC_ENERGY_ID_MOTION,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
         forward_speed * lr,
         0.0
     );

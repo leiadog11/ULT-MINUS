@@ -76,17 +76,22 @@ unsafe extern "C" fn roy_expression_specials(agent: &mut L2CAgentBase) {
 
 // DOWN B ROLL
 unsafe extern "C" fn roy_speciallwroll(agent: &mut L2CAgentBase) { 
+    macros::FT_MOTION_RATE(agent, 0.85);
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 12.0, 90, 72, 0, 74, 5.2, 0.0, 5.8, 3.6, None, None, None, 1.25, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 7.0, 90, 72, 0, 54, 7.2, -7.0, 5.8, 3.6, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
     }
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 8.0, 90, 42, 0, 58, 4.8, 0.0, 5.8, 3.6, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.0, 90, 42, 0, 38, 6.8, -7.0, 5.8, 3.6, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_BODY);
     }
-    wait(agent.lua_state_agent, 8.0);
+    wait(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+    }
+    wait(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) { 
+        CancelModule::enable_cancel(agent.module_accessor);
     }
 }
 
@@ -102,19 +107,9 @@ unsafe extern "C" fn roy_effect_speciallwroll(agent: &mut L2CAgentBase) {
         macros::EFFECT_FOLLOW_ALPHA(agent, Hash40::new("sys_spin_wind_s"), Hash40::new("top"), 0, 6, 0, 0, 0, -90, 0.9, false, 0.2);
         macros::LAST_EFFECT_SET_RATE(agent, 1.6);
     }
-    frame(agent.lua_state_agent, 10.0);
-    if macros::is_excute(agent) {
-        macros::LANDING_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 9, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, false);
-        macros::LAST_EFFECT_SET_RATE(agent, 0.7);
-    }
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW_ALPHA(agent, Hash40::new("sys_spin_wind_s"), Hash40::new("top"), 0, 5, 0, 0, 0, -90, 0.9, false, 0.5);
-        macros::LAST_EFFECT_SET_RATE(agent, 1.6);
-    }
-    frame(agent.lua_state_agent, 18.0);
-    if macros::is_excute(agent) {
-        macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.7, 0, 0, 0, 0, 0, 0, false);
         macros::LAST_EFFECT_SET_RATE(agent, 1.6);
     }
     frame(agent.lua_state_agent, 24.0);
@@ -125,17 +120,24 @@ unsafe extern "C" fn roy_effect_speciallwroll(agent: &mut L2CAgentBase) {
 
 // DOWN B ROLL SOUND
 unsafe extern "C" fn roy_sound_speciallwroll(agent: &mut L2CAgentBase) { 
-    frame(agent.lua_state_agent, 1.0);
+    frame(agent.lua_state_agent, 10.0);
+    let rand = smash::app::sv_math::rand(hash40("agent"), 10) as u64;
+    if rand < 6 {
+        if macros::is_excute(agent) { 
+            macros::PLAY_SE(agent, Hash40::new("vc_roy_attack01"));
+        }
+    }
     if macros::is_excute(agent) { 
-
+        macros::PLAY_SE(agent, Hash40::new("se_roy_escape"));
     }
 }
 
 // DOWN B ROLL EXPRESSION
 unsafe extern "C" fn roy_expression_speciallwroll(agent: &mut L2CAgentBase) { 
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) { 
-
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
     }
 }
 
@@ -165,6 +167,15 @@ unsafe extern "C" fn roy_sound_speciallwdive(agent: &mut L2CAgentBase) {
 
 // DOWN B DIVE EXPRESSION
 unsafe extern "C" fn roy_expression_speciallwdive(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+
+    }
+}
+
+// DOWN B LANDING
+unsafe extern "C" fn roy_speciallwlanding(agent: &mut L2CAgentBase) { 
+    macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
 
@@ -237,6 +248,9 @@ pub fn install() {
         .effect_acmd("effect_speciallwdive", roy_effect_speciallwdive, Low)
         .sound_acmd("sound_speciallwdive", roy_sound_speciallwdive, Low)
         .expression_acmd("expression_speciallwdive", roy_expression_speciallwdive, Low)
+
+        .game_acmd("game_specialhi", roy_specialhi, Low)
+        .game_acmd("game_specialairhi", roy_specialhi, Low)
 
         .install();
 }

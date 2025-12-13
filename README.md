@@ -10,7 +10,7 @@ This is a full modpack with changes to the SSS, game music, and characters. Ther
 
 Here is a link to the music mod that goes with it: [LEIADOG'S MUSIC MOD](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD/releases/tag/v1.0)
 
-Current Version: Alpha 0.5.0
+Current Version: Alpha 0.5.1
 
 ## Skins
 - Super Pac-Man (Pac-Man c01)
