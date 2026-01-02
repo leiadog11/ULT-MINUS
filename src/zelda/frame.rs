@@ -15,11 +15,6 @@ pub unsafe extern "C" fn zelda_frame(fighter: &mut L2CFighterCommon) {
             GroundModule::set_collidable(boma, true);
         }
 
-        // ON GROUND
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(boma, 0) > 1.0 { 
-            UP_B_USED[ENTRY_ID] = false; // GET UP B BACK
-        } 
-
         // DANGER
         if situation_kind == *SITUATION_KIND_AIR {
             if STALL_TIMER[ENTRY_ID] == 720 {
@@ -59,7 +54,6 @@ pub unsafe extern "C" fn zelda_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         STALL_TIMER[ENTRY_ID] = 0;
-        UP_B_USED[ENTRY_ID] = false;
     }
 }
 

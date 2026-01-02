@@ -97,29 +97,19 @@ unsafe extern "C" fn roy_speciallw_roll_main(fighter: &mut L2CFighterCommon) -> 
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_roll"), 0.0, 1.0, false, 0.0, false, false);
 
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    KineticModule::clear_speed_all(fighter.module_accessor);
-    KineticModule::mul_speed(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-
-    let lr = PostureModule::lr(fighter.module_accessor);
-    let roll_speed = -2.75;
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_STOP,
-        roll_speed * lr,
-        0.0
-    );
 
     fighter.fastshift(L2CValue::Ptr(roy_speciallw_roll_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn roy_speciallw_roll_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
+
+    // AIR CHECK
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR && MotionModule::frame(fighter.module_accessor) > 8.0 { 
+        fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+        return 1.into();
+    }
+
     if MotionModule::is_end(fighter.module_accessor) {
         fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
         return 1.into();
@@ -139,10 +129,10 @@ unsafe extern "C" fn roy_speciallw_roll_end(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn roy_specicallw_dive_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        smash::app::SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -172,31 +162,6 @@ unsafe extern "C" fn roy_speciallw_dive_main(fighter: &mut L2CFighterCommon) -> 
 
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
-    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-
-    let lr = PostureModule::lr(fighter.module_accessor);
-    let dive_speed = -0.7;
-    let forward_speed = 2.75;
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_STOP,
-        forward_speed * lr,
-        0.0
-    );
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        dive_speed,
-        0.0
-    );
 
     fighter.fastshift(L2CValue::Ptr(roy_speciallw_dive_main_loop as *const () as _))
 }
@@ -261,7 +226,11 @@ unsafe extern "C" fn roy_specicallw_landing_pre(fighter: &mut L2CFighterCommon) 
 
 // MAIN
 unsafe extern "C" fn roy_speciallw_landing_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_landing"), 0.0, 1.0, false, 0.0, false, false); // add to motion list and make animation
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_landing"), 0.0, 1.0, false, 0.0, false, false);
+
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+    KineticModule::clear_speed_all(fighter.module_accessor);
+    KineticModule::mul_speed(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
     fighter.fastshift(L2CValue::Ptr(roy_speciallw_landing_main_loop as *const () as _))
 }

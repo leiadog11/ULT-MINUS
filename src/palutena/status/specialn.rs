@@ -144,16 +144,16 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
 
     // HALF CHARGE EFFECT
     if MEGA_LASER_CHARGE[ENTRY_ID] >= 120 && MEGA_LASER_CHARGE[ENTRY_ID] <= 121  { 
-        let dumb = Vector3f{x:0.0,y:0.0,z:0.0};
-        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 0.5, &dumb, &dumb, false, 0, 0, 0);
+        let vector = Vector3f{x:0.0,y:0.0,z:0.0};
+        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &vector, &vector, 0.5, &vector, &vector, false, 0, 0, 0);
     }
 
     // FINISH
     if MEGA_LASER_CHARGE[ENTRY_ID] >= 360 {
-        let dumb = Vector3f{x:0.0,y:5.0,z:0.0};
-        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
+        let vector = Vector3f{x:0.0,y:5.0,z:0.0};
+        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &vector, &vector, 1.2, &vector, &vector, false, 0, 0, 0);
         SoundModule::play_se(fighter.module_accessor, Hash40::new("se_gohoubi_icon_money"), true, false, false, false, enSEType(0));
-        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &dumb, &dumb, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &vector, &vector, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
         EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
         if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
             fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());

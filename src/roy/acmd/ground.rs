@@ -67,6 +67,26 @@ unsafe extern "C" fn roy_sound_attacks3(agent: &mut L2CAgentBase) {
     }
 }
 
+// F TILT EXPRESSION
+unsafe extern "C" fn roy_expression_attacks3(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        AttackModule::set_attack_reference_joint_id(agent.module_accessor, Hash40::new("sword1"), AttackDirectionAxis(*ATTACK_DIRECTION_Z), AttackDirectionAxis(*ATTACK_DIRECTION_X), AttackDirectionAxis(*ATTACK_DIRECTION_Y_MINUS));
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_erase"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitl"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 7.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_slashl"), 0);
+    }
+}
+
 // DOWN TILT
 unsafe extern "C" fn roy_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
@@ -130,6 +150,31 @@ unsafe extern "C" fn roy_sound_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP TILT EXPRESSION
+unsafe extern "C" fn roy_expression_attackhi3(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        AttackModule::set_attack_reference_joint_id(agent.module_accessor, Hash40::new("sword1"), AttackDirectionAxis(*ATTACK_DIRECTION_X_MINUS), AttackDirectionAxis(*ATTACK_DIRECTION_Z), AttackDirectionAxis(*ATTACK_DIRECTION_Y_MINUS));
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_erase"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitl"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_slashl"), 0);
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_L, 3);
+    }
+    frame(agent.lua_state_agent, 33.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 4);
+    }
+}
+
 pub fn install() {
     Agent::new("roy")
         .game_acmd("game_attack11", roy_attack11, Low)
@@ -137,12 +182,14 @@ pub fn install() {
         .game_acmd("game_attacks3", roy_attacks3, Low)
         .effect_acmd("effect_attacks3", roy_effect_attacks3, Low)
         .sound_acmd("sound_attacks3", roy_sound_attacks3, Low)
+        .expression_acmd("expression_attacks3", roy_expression_attacks3, Low)
         
         .game_acmd("game_attacklw3", roy_attacklw3, Low)
 
         .game_acmd("game_attackhi3", roy_attackhi3, Low)
         .effect_acmd("effect_attackhi3", roy_effect_attackhi3, Low)
         .sound_acmd("sound_attackhi3", roy_sound_attackhi3, Low)
+        .expression_acmd("expression_attackhi3", roy_expression_attackhi3, Low)
 
         .install();
 }

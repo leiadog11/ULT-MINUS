@@ -43,7 +43,7 @@ unsafe extern "C" fn link_specialhi(agent: &mut L2CAgentBase) {
         if WorkModule::get_float(agent.module_accessor, *FIGHTER_LINK_STATUS_RSLASH_WORK_HOLD_FRAME) >= 59.0 { 
             if URBOSAS_FURY[ENTRY_ID] { 
                 let se = SoundModule::play_se(agent.module_accessor, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
-                SoundModule::set_se_vol(agent.module_accessor, se as i32, 3.0, 0);
+                SoundModule::set_se_vol(agent.module_accessor, se as i32, 1.75, 0);
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 2.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -2.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(agent, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 4.0, 12.0, 0.0, 0, 0, 0, 0.8, false);
@@ -137,12 +137,12 @@ unsafe extern "C" fn link_sound_specialairhistart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         let se = SoundModule::play_se(agent.module_accessor, Hash40::new("se_link_glider_wind"), true, false, false, false, enSEType(0));
-        SoundModule::set_se_vol(agent.module_accessor, se as i32, 3.0, 0);
+        SoundModule::set_se_vol(agent.module_accessor, se as i32, 1.25, 0);
     }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) { 
         let se = SoundModule::play_se(agent.module_accessor, Hash40::new("se_link_glider_start"), true, false, false, false, enSEType(0));
-        SoundModule::set_se_vol(agent.module_accessor, se as i32, 3.0, 0);
+        SoundModule::set_se_vol(agent.module_accessor, se as i32, 1.25, 0);
     }
 }
 
