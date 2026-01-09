@@ -13,6 +13,7 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             GroundModule::set_collidable(boma, true); // COLLISION FIX
+            SLEEP_MOVE[ENTRY_ID] = false;
         }
 
         // FORWARD AIR CHARGE
@@ -81,6 +82,7 @@ pub unsafe extern "C" fn peach_start(fighter: &mut L2CFighterCommon) {
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         STALL_TIMER[ENTRY_ID] = 0;
         FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
+        SLEEP_MOVE[ENTRY_ID] = false;
     }
 }
 
