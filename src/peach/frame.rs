@@ -50,7 +50,7 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // CANCEL SIDE B WITH AERIALS
-        if motion_kind == smash::hash40("special_s_hit_end") || motion_kind == smash::hash40("special_s_start") {
+        if motion_kind == smash::hash40("special_air_s_start") || motion_kind == smash::hash40("special_air_s_end") {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
                 CancelModule::enable_cancel(boma);
             }
