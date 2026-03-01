@@ -9,6 +9,7 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
         let frame = MotionModule::frame(boma);
+        let xpos = ControlModule::get_stick_x(boma);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
@@ -40,6 +41,19 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         }
         else {
             FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
+        }
+
+        // CANCEL NAIR WITH SIDE B
+        if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && (xpos > 0.5 || xpos < -0.5) && CAN_CANCEL_NAIR[ENTRY_ID] {
+            CancelModule::enable_cancel(boma);
+            CAN_CANCEL_NAIR[ENTRY_ID] = false;
+        }
+
+        // CANCEL SIDE B WITH AERIALS
+        if motion_kind == smash::hash40("special_s_hit_end") || motion_kind == smash::hash40("special_s_start") {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
+                CancelModule::enable_cancel(boma);
+            }
         }
 
         // DANGER
@@ -83,6 +97,7 @@ pub unsafe extern "C" fn peach_start(fighter: &mut L2CFighterCommon) {
         STALL_TIMER[ENTRY_ID] = 0;
         FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
         SLEEP_MOVE[ENTRY_ID] = false;
+        CAN_CANCEL_NAIR[ENTRY_ID] = false;
     }
 }
 

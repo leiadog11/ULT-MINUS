@@ -2,6 +2,43 @@ use super::*;
 
 //---------------SMASH ATTACKS---------------
 
+// UP SMASH
+unsafe extern "C" fn peach_attackhi4(agent: &mut L2CAgentBase) {
+    // KEEP MOMENTUM
+    if macros::is_excute(agent) { 
+        let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+        let lr = PostureModule::lr(agent.module_accessor);
+        KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel) * lr, y: 0.0, z: 0.0 });
+    }
+    frame(agent.lua_state_agent, 10.0);
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
+    }
+    macros::FT_MOTION_RATE(agent, 0.9);
+    frame(agent.lua_state_agent, 14.0);
+    if macros::is_excute(agent) {
+        macros::HIT_NODE(agent, Hash40::new("head"), *HIT_STATUS_XLU);
+        macros::HIT_NODE(agent, Hash40::new("armr"), *HIT_STATUS_XLU);
+        macros::HIT_NODE(agent, Hash40::new("arml"), *HIT_STATUS_XLU);
+        macros::ATTACK(agent, 0, 0, Hash40::new("armr"), 17.0, 90, 97, 0, 24, 2.5, 7.0, 0.0, 0.0, Some(2.5), Some(0.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("armr"), 15.0, 90, 97, 0, 50, 5.8, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 12.0, 75, 97, 0, 40, 3.6, 0.0, 8.0, 6.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 3, 0, Hash40::new("top"), 12.0, 75, 97, 0, 40, 3.6, 0.0, 8.0, -6.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_MAGIC);
+    }
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("shoulderr"), 10.0, 85, 100, 0, 60, 5.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("handr"), 12.0, 85, 100, 0, 60, 6.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 4, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sting"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_MAGIC);
+        AttackModule::clear(agent.module_accessor, 2, false);
+        AttackModule::clear(agent.module_accessor, 3, false);
+    }
+    wait(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+        HitModule::set_status_all(agent.module_accessor, HitStatus(*HIT_STATUS_NORMAL), 0);
+    }
+}
+
 // DOWN SMASH
 unsafe extern "C" fn peach_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
@@ -35,6 +72,8 @@ unsafe extern "C" fn peach_attacklw4(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("peach")
+        .game_acmd("game_attackhi4", peach_attackhi4, Low)
+
         .game_acmd("game_attacklw4", peach_attacklw4, Low)
         
         .install();
