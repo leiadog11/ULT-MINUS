@@ -17,6 +17,16 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
             SLEEP_MOVE[ENTRY_ID] = false;
         }
 
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 {
+            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+
+        // ON LEDGE
+        if situation_kind == *SITUATION_KIND_CLIFF { 
+            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        }
+
         // FORWARD AIR CHARGE
         if motion_kind == hash40("attack_air_f") { 
             if frame >= 6.0 && frame <= 13.0 {
@@ -54,6 +64,11 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
                 CancelModule::enable_cancel(boma);
             }
+        }
+
+        // TRANSITION TO FALL FROM SPECIAL FALL
+        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         }
 
         // DANGER

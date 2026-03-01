@@ -85,7 +85,7 @@ unsafe extern "C" fn peach_effect_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("peach_attack_hi3"), Hash40::new("top"), 2.5, 10, 16, 0, 0, 0, 1, true);
         macros::EFFECT_FOLLOW(agent, Hash40::new("peach_back_atk"), Hash40::new("top"), 2.5, 10, 16, 0, 0, 0, 1, true);
-        macros::EFFECT_FLIP_ALPHA(agent, Hash40::new("sys_attack_arc_b"), Hash40::new("sys_attack_arc_b"), Hash40::new("top"), 0, 10, 3.5, 0, -30, 198, 0.8, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ, 0.3);
+        macros::EFFECT_FLIP_ALPHA(agent, Hash40::new("sys_attack_arc_b"), Hash40::new("sys_attack_arc_b"), Hash40::new("top"), 0, 5, 3.5, 0, -30, 198, 0.8, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ, 0.3);
         macros::LAST_EFFECT_SET_RATE(agent, 1.4);
         macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), -4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
