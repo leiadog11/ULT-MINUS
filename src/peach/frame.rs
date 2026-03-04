@@ -15,6 +15,7 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             GroundModule::set_collidable(boma, true); // COLLISION FIX
             SLEEP_MOVE[ENTRY_ID] = false;
+            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
 
         // ON HIT
@@ -97,6 +98,7 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         if status_kind == *FIGHTER_STATUS_KIND_DEMO {
             STALL_TIMER[ENTRY_ID] = 0;
             EffectModule::kill_kind(boma, Hash40::new("sys_flies_up"), false, true);
+            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
         if DamageModule::reaction(boma, 0) > 1.0 { 
             STALL_TIMER[ENTRY_ID] = 0;

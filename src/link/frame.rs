@@ -55,7 +55,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
             macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
             EFFECT_ON[ENTRY_ID] = true;
         }
-        else {
+        else if motion_kind != hash40("attack_air_hi") && motion_kind != hash40("attack_air_lw") {
             EFFECT_ON[ENTRY_ID] = false;
             EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
         }

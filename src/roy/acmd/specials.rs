@@ -79,10 +79,6 @@ unsafe extern "C" fn roy_speciallwroll(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.75);
     frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) { 
-        KineticModule::clear_speed_all(agent.module_accessor);
-        macros::SET_SPEED_EX(agent, -1.5, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        KineticModule::suspend_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::suspend_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
         JostleModule::set_status(agent.module_accessor, false);
     } 
     frame(agent.lua_state_agent, 9.0);
@@ -99,8 +95,6 @@ unsafe extern "C" fn roy_speciallwroll(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) { 
-        KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
         CancelModule::enable_cancel(agent.module_accessor);
         JostleModule::set_status(agent.module_accessor, true);
     }
@@ -155,12 +149,6 @@ unsafe extern "C" fn roy_expression_speciallwroll(agent: &mut L2CAgentBase) {
 // DOWN B DIVE
 unsafe extern "C" fn roy_speciallwdive(agent: &mut L2CAgentBase) { 
     macros::FT_MOTION_RATE(agent, 0.9);
-    let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-    frame(agent.lua_state_agent, 2.0);
-    if macros::is_excute(agent) { 
-        macros::SET_SPEED_EX(agent, 1.75, -1.75, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        KineticModule::suspend_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    }
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("sword1"), 11.0, 240, 100, 0, 70, 6.8, 0.0, -0.7, 0.4, Some(0.0), Some(-2.5), Some(0.4), 1.3, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
@@ -168,10 +156,6 @@ unsafe extern "C" fn roy_speciallwdive(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) { 
         AttackModule::clear_all(agent.module_accessor);
-    }
-    frame(agent.lua_state_agent, 29.0);
-    if macros::is_excute(agent) { 
-        KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     }
 }
 

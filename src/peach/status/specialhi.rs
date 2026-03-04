@@ -193,7 +193,6 @@ unsafe extern "C" fn peach_specialhi_ascend_main_loop(fighter: &mut L2CFighterCo
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    
 
     let lr = PostureModule::lr(fighter.module_accessor);
     let jump_speed = 2.5;

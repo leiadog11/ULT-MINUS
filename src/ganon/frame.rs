@@ -202,6 +202,8 @@ pub unsafe extern "C" fn ganon_start(fighter: &mut L2CFighterCommon) {
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         SWORD[ENTRY_ID] = true;
         GROUND_CHECK[ENTRY_ID] = false;
+        FORWARD_AMOUNT[ENTRY_ID] = 0.0;
+        UP_AMOUNT[ENTRY_ID] = 0.0;
     }
 }
 
