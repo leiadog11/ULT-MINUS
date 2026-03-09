@@ -11,11 +11,6 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
         let ypos = ControlModule::get_stick_y(boma);
 
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { // COLLISION FIX
-            GroundModule::set_collidable(boma, true);
-        }
-
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FIRE BIRD ON F SMASH DAMAGE
             ArticleModule::remove_exist(boma, *FIGHTER_CAPTAIN_GENERATE_ARTICLE_FALCONPUNCH, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));

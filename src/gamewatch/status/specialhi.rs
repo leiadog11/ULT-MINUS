@@ -7,10 +7,10 @@ use super::*;
 unsafe extern "C" fn gamewatch_specialhi_start_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_AIR),
+        SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_AIR).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_AIR as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
@@ -25,9 +25,9 @@ unsafe extern "C" fn gamewatch_specialhi_start_pre(fighter: &mut L2CFighterCommo
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI  | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI  | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK) as u64,
         *FIGHTER_STATUS_ATTR_START_TURN as u32,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
     );
       
@@ -36,10 +36,11 @@ unsafe extern "C" fn gamewatch_specialhi_start_pre(fighter: &mut L2CFighterCommo
 
 // MAIN
 unsafe extern "C" fn gamewatch_specialhi_start_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-    fighter.set_situation(SITUATION_KIND_AIR.into());
-    GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi_start"), 0.0, 1.0, false, 0.0, false, false);
+
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_specialhi_start_main_loop as *const () as _));
     return 0.into();
@@ -75,10 +76,10 @@ unsafe extern "C" fn gamewatch_specialhi_start_end(fighter: &mut L2CFighterCommo
 unsafe extern "C" fn gamewatch_specialhi_fall_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_AIR),
+        SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_AIR).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_AIR as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
@@ -93,9 +94,9 @@ unsafe extern "C" fn gamewatch_specialhi_fall_pre(fighter: &mut L2CFighterCommon
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK) as u64,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
     );
       
@@ -104,10 +105,11 @@ unsafe extern "C" fn gamewatch_specialhi_fall_pre(fighter: &mut L2CFighterCommon
 
 // MAIN
 unsafe extern "C" fn gamewatch_specialhi_fall_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     
-    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
     fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_specialhi_fall_main_loop as *const () as _))
 }
 
@@ -118,7 +120,7 @@ unsafe extern "C" fn gamewatch_specialhi_fall_main_loop(fighter: &mut L2CFighter
     let posy = PostureModule::pos_y(fighter.module_accessor);
 
     // FALL UNTIL TOUCHING GROUND
-    if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND { 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND { 
         MotionModule::set_rate(fighter.module_accessor, 1.5);
     } 
     else {
@@ -140,9 +142,7 @@ unsafe extern "C" fn gamewatch_specialhi_fall_main_loop(fighter: &mut L2CFighter
 unsafe extern "C" fn gamewatch_specialhi_fall_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
-    fighter.set_situation(SITUATION_KIND_GROUND.into());
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
 
     return 0.into();

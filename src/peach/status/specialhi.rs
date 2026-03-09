@@ -6,29 +6,29 @@ use super::*;
 unsafe extern "C" fn peach_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_MOTION_AIR,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_START_TURN).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -69,10 +69,10 @@ unsafe extern "C" fn peach_specialhi_end(fighter: &mut L2CFighterCommon) -> L2CV
 unsafe extern "C" fn peach_specialhi_open_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_MOTION_AIR,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -80,18 +80,18 @@ unsafe extern "C" fn peach_specialhi_open_pre(fighter: &mut L2CFighterCommon) ->
         0
       );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_START_TURN).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -147,10 +147,10 @@ unsafe extern "C" fn peach_specialhi_open_end(fighter: &mut L2CFighterCommon) ->
 unsafe extern "C" fn peach_specialhi_ascend_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_MOTION_AIR,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -158,18 +158,18 @@ unsafe extern "C" fn peach_specialhi_ascend_pre(fighter: &mut L2CFighterCommon) 
         0
       );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_START_TURN).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -234,10 +234,10 @@ unsafe extern "C" fn peach_specialhi_ascend_end(fighter: &mut L2CFighterCommon) 
 unsafe extern "C" fn peach_specialhi_glide_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_MOTION_AIR,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ON_DROP_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -245,18 +245,18 @@ unsafe extern "C" fn peach_specialhi_glide_pre(fighter: &mut L2CFighterCommon) -
         0
       );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }

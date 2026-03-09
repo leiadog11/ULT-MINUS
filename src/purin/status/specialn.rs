@@ -8,14 +8,14 @@ static mut OPP_X: [f32; 8] = [0.0; 8];
 static mut OPP_Y: [f32; 8] = [0.0; 8];
 static mut OPP_Z: [f32; 8] = [0.0; 8];
 
-// SPECIAL N - PRE
+// PRE
 unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
   StatusModule::init_settings(
     fighter.module_accessor,
-    smash::app::SituationKind(*SITUATION_KIND_NONE),
+    SituationKind(*SITUATION_KIND_NONE),
     *FIGHTER_KINETIC_TYPE_UNIQ,
-    (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-    smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+    *GROUND_CORRECT_KIND_KEEP as u32,
+    GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
     true,
     *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
     *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -30,16 +30,26 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
     false,
     false,
     false,
-    (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON).try_into().unwrap(),
-    (*FIGHTER_STATUS_ATTR_DISABLE_TURN_DAMAGE).try_into().unwrap(),
-    (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N).try_into().unwrap(),
+    (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
+    *FIGHTER_STATUS_ATTR_DISABLE_TURN_DAMAGE as u32,
+    *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
     0
   );
       
   return 0.into();
 }
 
-// SPECIAL N - MAIN
+// INIT
+unsafe extern "C" fn purin_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+  return 0.into();
+}
+
+// EXEC
+unsafe extern "C" fn purin_specialn_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
+  return 0.into();
+}
+
+// MAIN
 unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
   MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
 
@@ -61,7 +71,7 @@ unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CV
   fighter.sub_shift_status_main(L2CValue::Ptr(purin_specialn_main_loop as *const () as _))
 }
 
-// SPECIAL N - MAIN LOOP
+// MAIN LOOP
 unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
   let ENTRY_ID = get_entry_id(fighter.module_accessor);
 
@@ -109,12 +119,12 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
   }
 
   if MotionModule::is_end(fighter.module_accessor) {
-    if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_GROUND {
-      fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
+      fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
       return 1.into();
     }
     else {
-      fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+      fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
       return 1.into();
     }   
   }
@@ -122,7 +132,7 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
   return 0.into();
 }
 
-// SPECIAL N - END
+// END
 unsafe extern "C" fn purin_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
   let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
 
@@ -133,9 +143,12 @@ unsafe extern "C" fn purin_specialn_end(fighter: &mut L2CFighterCommon) -> L2CVa
 }
 
 pub fn install() {
-    Agent::new("purin")
-        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_pre)
-        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_main)
-        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_end)
-        .install();
+  Agent::new("purin")
+    .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_pre)
+    .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_init)
+    .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_exec)
+    .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_main)
+    .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_end)
+
+    .install();
 }

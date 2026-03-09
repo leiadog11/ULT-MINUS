@@ -5,7 +5,6 @@ pub mod frame;
 pub mod status;
 pub mod bigpacman;
 pub mod firehydrant;
-pub mod trampoline;
 
 static mut UP_SMASH: [bool; 8] = [false; 8];
 static mut DOWN_SMASH: [bool; 8] = [false; 8];
@@ -211,5 +210,4 @@ pub fn install() {
     status::install();
     bigpacman::install();
     firehydrant::install();
-    trampoline::install();
 }

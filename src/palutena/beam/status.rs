@@ -9,13 +9,14 @@ unsafe extern "C" fn beam_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_RESET, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+
     return 0.into();
 }
 

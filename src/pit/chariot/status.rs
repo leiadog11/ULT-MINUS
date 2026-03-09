@@ -9,13 +9,14 @@ unsafe extern "C" fn chariot_shield_pre(weapon: &mut L2CWeaponCommon) -> L2CValu
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NONE, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+
     return 0.into();
 }
 
@@ -95,13 +96,14 @@ unsafe extern "C" fn chariot_break_pre(weapon: &mut L2CWeaponCommon) -> L2CValue
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NONE, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+
     return 0.into();
 }
 
@@ -150,13 +152,14 @@ unsafe extern "C" fn chariot_end_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NONE, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+    
     return 0.into();
 }
 

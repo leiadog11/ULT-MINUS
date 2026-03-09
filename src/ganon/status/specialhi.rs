@@ -14,5 +14,6 @@ unsafe extern "C" fn ganon_specialhi_init(fighter: &mut L2CFighterCommon) -> L2C
 pub fn install() {
     Agent::new("ganon")
         .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, ganon_specialhi_init)
+        
         .install();
 }

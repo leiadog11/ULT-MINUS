@@ -3,43 +3,43 @@ use super::*;
 // -------- UP B --------
 
 // PRE
-unsafe extern "C" fn pit_specicalhi_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_MOTION_CLIFF_MOVE,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_NONE).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_START_TURN).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_NONE as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }
 
 // INIT
-unsafe extern "C" fn pit_specicalhi_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
     return 0.into();
 }
 
 // EXEC
-unsafe extern "C" fn pit_specicalhi_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
     return 0.into();
 }
 
@@ -74,21 +74,21 @@ unsafe extern "C" fn pit_specialhi_end(fighter: &mut L2CFighterCommon) -> L2CVal
 // -------- UP B RUSH (INFINITE FLIGHT)
 
 // PRE
-unsafe extern "C" fn pit_specicalhi_flight_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_flight_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
@@ -97,20 +97,20 @@ unsafe extern "C" fn pit_specicalhi_flight_pre(fighter: &mut L2CFighterCommon) -
         false,
         0,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
-      );
+    );
       
     return 0.into();
 }
 
 // INIT
-unsafe extern "C" fn pit_specicalhi_flight_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_flight_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
     return 0.into();
 }
 
 // EXEC
-unsafe extern "C" fn pit_specicalhi_flight_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
+unsafe extern "C" fn pit_specialhi_flight_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
     return 0.into();
 }
 
@@ -185,15 +185,15 @@ unsafe extern "C" fn pit_specialhi_flight_end(fighter: &mut L2CFighterCommon) ->
 
 pub fn install() {
     Agent::new("pit")
-        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_pre)
-        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_init)
-        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specicalhi_exec)
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_pre)
+        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_init)
+        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_exec)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, pit_specialhi_end)
         
-        .status(Pre, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_pre)
-        .status(Init, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_init)
-        .status(Exec, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specicalhi_flight_exec)
+        .status(Pre, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_pre)
+        .status(Init, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_init)
+        .status(Exec, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_exec)
         .status(Main, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_main)
         .status(End, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_end)
     

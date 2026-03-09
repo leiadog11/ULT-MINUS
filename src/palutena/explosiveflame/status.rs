@@ -50,6 +50,7 @@ unsafe extern "C" fn explosiveflame_explode_init(weapon: &mut L2CWeaponCommon) -
 // MAIN
 unsafe extern "C" fn explosiveflame_explode_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("explode"), 0.0, 1.0, false, 0.0, false, false);
+
     weapon.fastshift(L2CValue::Ptr(explosiveflame_explode_main_loop as *const () as _))
 }
 
@@ -62,7 +63,6 @@ unsafe extern "C" fn explosiveflame_explode_main_loop(weapon: &mut L2CWeaponComm
 unsafe extern "C" fn explosiveflame_explode_end(weapon: &mut L2CWeaponCommon) -> L2CValue {
     return 0.into();
 }
-
 
 pub fn install() {
     Agent::new("palutena_explosiveflame")

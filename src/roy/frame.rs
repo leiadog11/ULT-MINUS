@@ -8,16 +8,10 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
-        let frame = MotionModule::frame(boma);
-        let lr = PostureModule::lr(boma);
-        let xpos = ControlModule::get_stick_x(boma);
-        let ypos = ControlModule::get_stick_y(boma);
-        let posx = PostureModule::pos_x(boma);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
             UP_B_USED[ENTRY_ID] = false;
-            GroundModule::set_collidable(boma, true);
             remove_pyra(boma);
         }
 

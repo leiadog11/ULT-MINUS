@@ -6,10 +6,10 @@ use super::*;
 unsafe extern "C" fn luigi_fireball_start_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NORMAL, 
         GROUND_CORRECT_KIND_AIR.into(), 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
@@ -104,5 +104,6 @@ pub fn install() {
     Agent::new("luigi_fireball")
         .status(Pre, *WEAPON_LUIGI_FIREBALL_STATUS_KIND_START, luigi_fireball_start_pre)
         .status(Main, *WEAPON_LUIGI_FIREBALL_STATUS_KIND_START, luigi_fireball_start_main)
+        
         .install();
 }

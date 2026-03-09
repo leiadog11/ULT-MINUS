@@ -5,8 +5,6 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
-        let motion_kind = MotionModule::motion_kind(boma);
-        let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
 
         WorkModule::set_flag(boma, true, 0x200000E9);
@@ -15,7 +13,6 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             CURSE_TIMER[ENTRY_ID] = 0;
-            GroundModule::set_collidable(boma, true);
         }
 
         // DEPLETE CURSE_TIMER

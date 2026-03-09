@@ -60,8 +60,6 @@ mod roy;
 mod peach;
 
 // GLOBAL VARIABLES
-pub const SITUATION_KIND: i32 = 0x16;
-pub const PREV_SITUATION_KIND: i32 = 0x17;
 pub static mut FIGHTER_MANAGER: usize = 0;
 
 // THE GREAT OPPONENT BOMA LIST

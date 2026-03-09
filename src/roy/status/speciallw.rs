@@ -6,29 +6,29 @@ use super::*;
 unsafe extern "C" fn roy_specicallw_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_START_TURN).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -65,29 +65,29 @@ unsafe extern "C" fn roy_speciallw_end(fighter: &mut L2CFighterCommon) -> L2CVal
 unsafe extern "C" fn roy_specicallw_roll_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -153,29 +153,29 @@ unsafe extern "C" fn roy_speciallw_roll_end(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn roy_specicallw_dive_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_AIR),
+        SituationKind(*SITUATION_KIND_AIR),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
-      );
+    );
       
     return 0.into();
 }
@@ -185,6 +185,7 @@ unsafe extern "C" fn roy_speciallw_dive_main(fighter: &mut L2CFighterCommon) -> 
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_dive"), 0.0, 1.0, false, 0.0, false, false);
 
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
 
     fighter.fastshift(L2CValue::Ptr(roy_speciallw_dive_main_loop as *const () as _))
@@ -245,29 +246,29 @@ unsafe extern "C" fn roy_speciallw_dive_end(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn roy_specicallw_landing_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_GROUND).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        *GROUND_CORRECT_KIND_GROUND as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
-      );
+    );
       
-      FighterStatusModuleImpl::set_fighter_status_data(
+    FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
         *FIGHTER_TREADED_KIND_NO_REAC,
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP).try_into().unwrap(),
+        *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_KEEP as u64,
         0,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
-      );
+    );
       
     return 0.into();
 }

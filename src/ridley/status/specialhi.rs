@@ -7,10 +7,10 @@ use super::*;
 unsafe extern "C" fn ridley_specialhi_start_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -25,9 +25,9 @@ unsafe extern "C" fn ridley_specialhi_start_pre(fighter: &mut L2CFighterCommon) 
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON | *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON | *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI) as u64,
         *FIGHTER_STATUS_ATTR_START_TURN as u32,
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI).try_into().unwrap(),
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
         0
     );
       
@@ -36,15 +36,16 @@ unsafe extern "C" fn ridley_specialhi_start_pre(fighter: &mut L2CFighterCommon) 
 
 // MAIN
 unsafe extern "C" fn ridley_specialhi_start_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi_start"), 0.0, 1.0, false, 0.0, false, false);
+
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     UP_B_USES[ENTRY_ID] -= 1;
+
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-    fighter.set_situation(SITUATION_KIND_AIR.into());
     GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi_start"), 0.0, 1.0, false, 0.0, false, false);
+    WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
     
-    fighter.sub_shift_status_main(L2CValue::Ptr(ridley_specialhi_start_main_loop as *const () as _));
-    return 0.into();
+    fighter.sub_shift_status_main(L2CValue::Ptr(ridley_specialhi_start_main_loop as *const () as _))
 }
 
 // MAIN LOOP
@@ -161,7 +162,6 @@ unsafe extern "C" fn ridley_specialhi_start_main_loop(fighter: &mut L2CFighterCo
         return 0.into();
     }
     if MotionModule::frame(fighter.module_accessor) >= 6.0 {
-
         if MotionModule::frame(fighter.module_accessor) >= 20.0 { 
             // JUMP CANCEL
             if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
@@ -207,5 +207,6 @@ pub fn install() {
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, ridley_specialhi_start_end)
+        
         .install();
 }

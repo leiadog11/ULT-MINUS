@@ -6,16 +6,17 @@ use super::*;
 unsafe extern "C" fn mario_pump_boost_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_NONE), 
+        SituationKind(*SITUATION_KIND_NONE), 
         *WEAPON_KINETIC_TYPE_NONE, 
         GROUND_CORRECT_KIND_AIR.into(), 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_INT,
         *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_FLOAT, 
         0
     );
+    
     return 0.into();
 }
 
@@ -47,5 +48,6 @@ pub fn install() {
         .status(Pre, WEAPON_MARIO_PUMP_STATUS_KIND_BOOST, mario_pump_boost_pre)
         .status(Main, WEAPON_MARIO_PUMP_STATUS_KIND_BOOST, mario_pump_boost_main)
         .status(End, WEAPON_MARIO_PUMP_STATUS_KIND_BOOST, mario_pump_boost_end)
+        
         .install();
 }
