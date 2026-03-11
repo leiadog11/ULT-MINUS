@@ -3,10 +3,11 @@ use super::*;
 pub mod acmd;
 pub mod frame;
 pub mod status;
+pub mod roysword;
 
-const FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD : i32 = 0x2;
+const FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD : i32 = 0x1;
 
-const WEAPON_ROY_ROYSWORD_STATUS_KIND_SPECIAL_S: i32 = 0;
+const WEAPON_ROY_ROYSWORD_STATUS_KIND_REGULAR: i32 = 0;
 
 const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_ROLL: i32 = 0x1EA;
 const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_DIVE: i32 = 0x1EB;
@@ -40,4 +41,5 @@ pub fn install() {
     acmd::install();
     frame::install();
     status::install();
+    roysword::install();
 }

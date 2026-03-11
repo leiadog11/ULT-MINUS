@@ -33,16 +33,6 @@ unsafe extern "C" fn roy_specials_pre(fighter: &mut L2CFighterCommon) -> L2CValu
     return 0.into();
 }
 
-// INIT
-unsafe extern "C" fn roy_specials_init(fighter: &mut L2CFighterCommon) -> L2CValue {
-    return 0.into();
-}
-
-// EXEC
-unsafe extern "C" fn roy_specials_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    return 0.into();
-}
-
 // MAIN
 unsafe extern "C" fn roy_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s"), 0.0, 1.0, false, 0.0, false, false);
@@ -74,8 +64,6 @@ unsafe extern "C" fn roy_specials_end(fighter: &mut L2CFighterCommon) -> L2CValu
 pub fn install() {
     Agent::new("roy")
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_pre)
-        .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_init)
-        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_exec)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_end)
 

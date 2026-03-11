@@ -915,15 +915,8 @@
             "fighter/roy/motion/body/c00/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c00/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c00/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c00/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c00/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c00/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c00/motion_list.bin",
-            "fighter/roy/motion/roysword/c00/update.prc",
-            "fighter/roy/motion/roysword/c00/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c00/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c00/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c00/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c00/update.prc"
         ],
         "fighter/roy/c01": [
             "fighter/roy/model/body/c01/alp_flame_002_col.nutexb",
@@ -982,15 +975,8 @@
             "fighter/roy/motion/body/c01/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c01/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c01/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c01/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c01/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c01/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c01/motion_list.bin",
-            "fighter/roy/motion/roysword/c01/update.prc",
-            "fighter/roy/motion/roysword/c01/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c01/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c01/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c01/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c01/update.prc"
         ],
         "fighter/roy/c02": [
             "fighter/roy/model/body/c02/alp_flame_002_col.nutexb",
@@ -1049,15 +1035,8 @@
             "fighter/roy/motion/body/c02/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c02/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c02/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c02/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c02/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c02/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c02/motion_list.bin",
-            "fighter/roy/motion/roysword/c02/update.prc",
-            "fighter/roy/motion/roysword/c02/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c02/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c02/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c02/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c02/update.prc"
         ],
         "fighter/roy/c03": [
             "fighter/roy/model/body/c03/alp_flame_002_col.nutexb",
@@ -1116,15 +1095,8 @@
             "fighter/roy/motion/body/c03/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c03/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c03/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c03/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c03/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c03/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c03/motion_list.bin",
-            "fighter/roy/motion/roysword/c03/update.prc",
-            "fighter/roy/motion/roysword/c03/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c03/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c03/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c03/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c03/update.prc"
         ],
         "fighter/roy/c04": [
             "fighter/roy/model/body/c04/alp_flame_002_col.nutexb",
@@ -1183,15 +1155,8 @@
             "fighter/roy/motion/body/c04/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c04/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c04/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c04/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c04/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c04/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c04/motion_list.bin",
-            "fighter/roy/motion/roysword/c04/update.prc",
-            "fighter/roy/motion/roysword/c04/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c04/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c04/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c04/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c04/update.prc"
         ],
         "fighter/roy/c05": [
             "fighter/roy/model/body/c05/alp_flame_002_col.nutexb",
@@ -1250,15 +1215,8 @@
             "fighter/roy/motion/body/c05/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c05/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c05/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c05/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c05/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c05/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c05/motion_list.bin",
-            "fighter/roy/motion/roysword/c05/update.prc",
-            "fighter/roy/motion/roysword/c05/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c05/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c05/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c05/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c05/update.prc"
         ],
         "fighter/roy/c06": [
             "fighter/roy/model/body/c06/alp_flame_002_col.nutexb",
@@ -1317,15 +1275,8 @@
             "fighter/roy/motion/body/c06/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c06/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c06/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c06/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c06/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c06/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c06/motion_list.bin",
-            "fighter/roy/motion/roysword/c06/update.prc",
-            "fighter/roy/motion/roysword/c06/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c06/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c06/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c06/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c06/update.prc"
         ],
         "fighter/roy/c07": [
             "fighter/roy/model/body/c07/alp_flame_002_col.nutexb",
@@ -1384,15 +1335,8 @@
             "fighter/roy/motion/body/c07/d03speciallwlanding.nuanmb",
             "fighter/roy/motion/body/c07/d01specials.nuanmb",
             "fighter/roy/motion/roysword/c07/d01specials1.nuanmb",
-            "fighter/roy/motion/roysword/c07/d01specials2.nuanmb",
-            "fighter/roy/motion/roysword/c07/d01specialsmovel.nuanmb",
-            "fighter/roy/motion/roysword/c07/d01specialsmover.nuanmb",
             "fighter/roy/motion/roysword/c07/motion_list.bin",
-            "fighter/roy/motion/roysword/c07/update.prc",
-            "fighter/roy/motion/roysword/c07/z00close.nuanmb",
-            "fighter/roy/motion/roysword/c07/z00open.nuanmb",
-            "fighter/roy/motion/roysword/c07/z00toclose.nuanmb",
-            "fighter/roy/motion/roysword/c07/z00toopen.nuanmb"
+            "fighter/roy/motion/roysword/c07/update.prc"
         ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
