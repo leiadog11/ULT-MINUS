@@ -63,8 +63,12 @@ unsafe extern "C" fn kinopio_wait_pre(weapon: &mut L2CWeaponCommon) -> L2CValue 
 }
 
 // MAIN
-unsafe extern "C" fn kinopio_wait_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+unsafe extern "C" fn kinopio_wait_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("wait"), 0.0, 1.0, false, 0.0, false, false);
+
+    if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
+        LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
+    }
 
     weapon.fastshift(L2CValue::Ptr(kinopio_wait_main_loop as *const () as _))
 }
@@ -72,6 +76,8 @@ unsafe extern "C" fn kinopio_wait_main(weapon: &mut L2CWeaponCommon) -> L2CValue
 // MAIN LOOP
 unsafe extern "C" fn kinopio_wait_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let xpos = ControlModule::get_stick_x(owner_boma);
+    let ypos = ControlModule::get_stick_y(owner_boma);
 
     // PEACH PRESSES A - PUNCH
     if ControlModule::check_button_on(owner_boma, *CONTROL_PAD_BUTTON_ATTACK) { 
@@ -80,7 +86,7 @@ unsafe extern "C" fn kinopio_wait_main_loop(weapon: &mut L2CWeaponCommon) -> L2C
     }
 
     // PEACH PRESSES B - SPRAY
-    if ControlModule::check_button_on(owner_boma, *CONTROL_PAD_BUTTON_SPECIAL) {
+    if ControlModule::check_button_on(owner_boma, *CONTROL_PAD_BUTTON_SPECIAL) && xpos == 0.0 && ypos == 0.0 {
         weapon.change_status(WEAPON_PEACH_KINOPIO_STATUS_KIND_SPRAY.into(), false.into());
         return 1.into();
     }
@@ -203,7 +209,7 @@ unsafe extern "C" fn kinopio_air_spray_main(weapon: &mut L2CWeaponCommon) -> L2C
 
     // LINK TO PEACH
     LinkModule::set_model_constraint_pos_ort(weapon.module_accessor,*LINK_NO_CONSTRAINT,Hash40::new("top"),Hash40::new("top"),(*CONSTRAINT_FLAG_ORIENTATION | *CONSTRAINT_FLAG_OFFSET_TRANSLATE) as u32,true);
-    LinkModule::set_constraint_translate_offset(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0});
+    LinkModule::set_constraint_translate_offset(weapon.module_accessor, &Vector3f{x: 0.0, y: 8.0, z: 0.0});
 
     weapon.fastshift(L2CValue::Ptr(kinopio_air_spray_main_loop as *const () as _))
 }
