@@ -1338,6 +1338,78 @@
             "fighter/roy/motion/roysword/c07/motion_list.bin",
             "fighter/roy/motion/roysword/c07/update.prc"
         ],
+        "fighter/peach/c00": [
+            "fighter/peach/motion/kinopio/c00/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c00/e00wait.nuanmb"
+        ],
+        "fighter/peach/c01": [
+            "fighter/peach/motion/kinopio/c01/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c01/e00wait.nuanmb"
+        ],
+        "fighter/peach/c02": [
+            "fighter/peach/motion/kinopio/c02/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c02/e00wait.nuanmb"
+        ],
+        "fighter/peach/c03": [
+            "fighter/peach/motion/kinopio/c03/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c03/e00wait.nuanmb"
+        ],
+        "fighter/peach/c04": [
+            "fighter/peach/motion/kinopio/c04/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c04/e00wait.nuanmb"
+        ],
+        "fighter/peach/c05": [
+            "fighter/peach/motion/kinopio/c05/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c05/e00wait.nuanmb"
+        ],
+        "fighter/peach/c06": [
+            "fighter/peach/motion/kinopio/c06/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c06/e00wait.nuanmb"
+        ],
+        "fighter/peach/c07": [
+            "fighter/peach/motion/kinopio/c07/e00airspray.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00appear.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00fall.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00land.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00punch.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00spray.nuanmb",
+            "fighter/peach/motion/kinopio/c07/e00wait.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"

@@ -16,6 +16,7 @@ unsafe extern "C" fn parasail_specialairhistart_pre(weapon: &mut L2CWeaponCommon
         0, 
         0
     );
+    
     return 0.into();
 }
 

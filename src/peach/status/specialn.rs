@@ -1,0 +1,82 @@
+use super::*;
+
+// -------- NEUTRAL B --------
+
+// PRE
+unsafe extern "C" fn peach_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+        0
+    );
+      
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
+        0
+    );
+      
+    return 0.into();
+}
+
+// MAIN
+unsafe extern "C" fn peach_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n"), 0.0, 1.0, false, 0.0, false, false);
+    } else {
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
+    }
+
+    fighter.fastshift(L2CValue::Ptr(peach_specialn_main_loop as *const () as _))
+}
+
+// MAIN LOOP
+unsafe extern "C" fn peach_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    }
+    else {
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+    }
+
+    if MotionModule::is_end(fighter.module_accessor) { 
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            return 1.into();
+        } else {
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+            return 1.into();
+        }
+    }
+
+    return 0.into();
+}
+
+// END
+unsafe extern "C" fn peach_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    return 0.into();
+}
+
+pub fn install() {
+    Agent::new("peach")
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, peach_specialn_pre)
+        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, peach_specialn_main)
+        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, peach_specialn_end)
+
+        .install();
+}
