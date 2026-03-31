@@ -49,7 +49,7 @@ unsafe extern "C" fn peach_attacks3(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     macros::FT_MOTION_RATE(agent, 0.45);
-    let rand = smash::app::sv_math::rand(hash40("agent"), 14) as u64;
+    let rand = smash::app::sv_math::rand(hash40("agent"), 13) as u64;
     if rand < 3 { 
         frame(agent.lua_state_agent, 24.0);
         if macros::is_excute(agent) { 
@@ -85,7 +85,7 @@ unsafe extern "C" fn peach_effect_attacks3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("peach_attack_hi3"), Hash40::new("top"), 2.5, 10, 16, 0, 0, 0, 1, true);
         macros::EFFECT_FOLLOW(agent, Hash40::new("peach_back_atk"), Hash40::new("top"), 2.5, 10, 16, 0, 0, 0, 1, true);
-        macros::EFFECT_FLIP_ALPHA(agent, Hash40::new("sys_attack_arc_b"), Hash40::new("sys_attack_arc_b"), Hash40::new("top"), 0, 5, 3.5, 0, -30, 198, 0.8, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ, 0.3);
+        macros::EFFECT_FLIP_ALPHA(agent, Hash40::new("sys_attack_arc_b"), Hash40::new("sys_attack_arc_b"), Hash40::new("top"), 0, 5, 5.5, 0, -30, 198, 0.8, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ, 0.3);
         macros::LAST_EFFECT_SET_RATE(agent, 1.4);
         macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), -4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
@@ -102,7 +102,7 @@ unsafe extern "C" fn peach_sound_attacks3(agent: &mut L2CAgentBase) {
 
 // FORWARD TILT EXPRESSION
 unsafe extern "C" fn peach_expression_attacks3(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 36.0);
+    frame(agent.lua_state_agent, 26.0);
     if macros::is_excute(agent) {
         macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
@@ -137,7 +137,7 @@ unsafe extern "C" fn peach_attacklw3(agent: &mut L2CAgentBase) {
 // UP TILT
 unsafe extern "C" fn peach_attackhi3(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
-    let rand = smash::app::sv_math::rand(hash40("agent"), 14) as u64;
+    let rand = smash::app::sv_math::rand(hash40("agent"), 13) as u64;
     if rand < 3 { 
         frame(agent.lua_state_agent, 5.0);
         if macros::is_excute(agent) { 

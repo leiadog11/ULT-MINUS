@@ -53,6 +53,24 @@ unsafe extern "C" fn peach_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+
+        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+
+        sv_kinetic_energy!(
+            set_speed,
+            fighter,
+            FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+            -0.2,
+            0.0
+        );
+
+        sv_kinetic_energy!(
+            set_speed,
+            fighter,
+            FIGHTER_KINETIC_ENERGY_ID_CONTROL,
+            xpos * 0.2,
+            0.0
+        );
     }
     else {
         GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
@@ -61,14 +79,6 @@ unsafe extern "C" fn peach_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     }
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        -0.2,
-        0.0
-    );
 
     if MotionModule::is_end(fighter.module_accessor) { 
         if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 

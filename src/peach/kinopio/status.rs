@@ -319,22 +319,6 @@ unsafe extern "C" fn kinopio_land_end(weapon: &mut L2CWeaponCommon) -> L2CValue 
 
 // REMOVE
 pub unsafe extern "C" fn kinopio_remove(weapon: &mut L2CWeaponCommon) {
-    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-
-    let pos = PostureModule::pos(weapon.module_accessor);
-    let eff = EffectModule::req(
-        weapon.module_accessor,
-        Hash40::new("sys_misfire"),
-        pos,
-        &Vector3f{x: 0.0,y:0.0,z:0.0},
-        1.0,
-        0,
-        -1,
-        false,
-        0
-    ) as u32;
-    EffectModule::set_rgb(weapon.module_accessor, eff, 0.5, 0.5, 0.5);
-
     smash_script::notify_event_msc_cmd!(weapon, Hash40::new_raw(0x199c462b5d));
 }
 
