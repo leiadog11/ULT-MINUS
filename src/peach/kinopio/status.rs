@@ -253,13 +253,19 @@ unsafe extern "C" fn kinopio_fall_pre(weapon: &mut L2CWeaponCommon) -> L2CValue 
 unsafe extern "C" fn kinopio_fall_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("fall"), 0.0, 1.0, false, 0.0, false, false);
 
+    if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
+        LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
+    }
+
     weapon.fastshift(L2CValue::Ptr(kinopio_fall_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn kinopio_fall_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+    let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
+    let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
 
-    // FALL DOWN
+    speed_y += -0.1;
 
     // LAND
     if StatusModule::situation_kind(weapon.module_accessor) == *SITUATION_KIND_GROUND { 

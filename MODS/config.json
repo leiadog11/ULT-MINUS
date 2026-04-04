@@ -1339,6 +1339,7 @@
             "fighter/roy/motion/roysword/c07/update.prc"
         ],
         "fighter/peach/c00": [
+            "fighter/peach/motion/body/c00/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c00/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c00/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c00/e00fall.nuanmb",
@@ -1348,6 +1349,7 @@
             "fighter/peach/motion/kinopio/c00/e00wait.nuanmb"
         ],
         "fighter/peach/c01": [
+            "fighter/peach/motion/body/c01/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c01/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c01/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c01/e00fall.nuanmb",
@@ -1357,6 +1359,7 @@
             "fighter/peach/motion/kinopio/c01/e00wait.nuanmb"
         ],
         "fighter/peach/c02": [
+            "fighter/peach/motion/body/c02/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c02/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c02/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c02/e00fall.nuanmb",
@@ -1366,6 +1369,7 @@
             "fighter/peach/motion/kinopio/c02/e00wait.nuanmb"
         ],
         "fighter/peach/c03": [
+            "fighter/peach/motion/body/c03/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c03/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c03/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c03/e00fall.nuanmb",
@@ -1375,6 +1379,7 @@
             "fighter/peach/motion/kinopio/c03/e00wait.nuanmb"
         ],
         "fighter/peach/c04": [
+            "fighter/peach/motion/body/c04/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c04/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c04/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c04/e00fall.nuanmb",
@@ -1384,6 +1389,7 @@
             "fighter/peach/motion/kinopio/c04/e00wait.nuanmb"
         ],
         "fighter/peach/c05": [
+            "fighter/peach/motion/body/c05/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c05/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c05/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c05/e00fall.nuanmb",
@@ -1393,6 +1399,7 @@
             "fighter/peach/motion/kinopio/c05/e00wait.nuanmb"
         ],
         "fighter/peach/c06": [
+            "fighter/peach/motion/body/c06/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c06/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c06/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c06/e00fall.nuanmb",
@@ -1402,6 +1409,7 @@
             "fighter/peach/motion/kinopio/c06/e00wait.nuanmb"
         ],
         "fighter/peach/c07": [
+            "fighter/peach/motion/body/c07/d00specialairlw.nuanmb",
             "fighter/peach/motion/kinopio/c07/e00airspray.nuanmb",
             "fighter/peach/motion/kinopio/c07/e00appear.nuanmb",
             "fighter/peach/motion/kinopio/c07/e00fall.nuanmb",
