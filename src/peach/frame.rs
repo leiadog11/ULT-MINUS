@@ -1,5 +1,8 @@
 use super::*;
 
+pub const CHECK_AIR_SPECIAL_UNIQ: i32 = 0x26;
+pub const CHECK_SPECIAL_LW_UNIQ: i32 = 0x3B;
+
 // OPFF
 pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
@@ -80,7 +83,18 @@ pub unsafe extern "C" fn peach_start(fighter: &mut L2CFighterCommon) {
         FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
         SLEEP_MOVE[ENTRY_ID] = false;
         CAN_CANCEL_NAIR[ENTRY_ID] = false;
+
+        // ALLOW USE OF DOWN B IN AIR
+        fighter.global_table[CHECK_AIR_SPECIAL_UNIQ].assign(&false.into());
+        fighter.global_table[CHECK_SPECIAL_LW_UNIQ].assign(&L2CValue::Ptr(peach_check_special_lw_uniq as *const () as _));
     }
+}
+
+unsafe extern "C" fn peach_check_special_lw_uniq(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if ItemModule::is_have_item(fighter.module_accessor, 0) {
+        return 0.into();
+    }
+    1.into()
 }
 
 pub fn install() {
