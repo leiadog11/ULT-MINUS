@@ -198,8 +198,13 @@ unsafe extern "C" fn peach_specialairlw(agent: &mut L2CAgentBase) {
 
 // AERIAL DOWN B EFFECT
 unsafe extern "C" fn peach_effect_specialairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 11.0);
     if macros::is_excute(agent) {
-        
+        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, 6, 7, 0, 0, 0, 1.0, true);
+    }
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("top"), 4, 8, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
     }
 }
 

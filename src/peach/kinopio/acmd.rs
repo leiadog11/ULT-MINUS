@@ -284,7 +284,7 @@ unsafe extern "C" fn kinopio_fall(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn kinopio_effect_fall(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-
+        macros::EFFECT_FOLLOW(agent, Hash40::new("sys_flyroll_smoke"), Hash40::new("top"), 0, 16, 0, 90, 0, 0, 0.3, true);
     }
 }
 
@@ -292,7 +292,7 @@ unsafe extern "C" fn kinopio_effect_fall(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn kinopio_sound_fall(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-
+        macros::PLAY_SE(agent, Hash40::new("se_peach_catch_kinopio"));
     }
 }
 
@@ -300,7 +300,7 @@ unsafe extern "C" fn kinopio_sound_fall(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn kinopio_land(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-
+        
     }
 }
 
@@ -308,7 +308,7 @@ unsafe extern "C" fn kinopio_land(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn kinopio_effect_land(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-
+        macros::EFFECT(agent, Hash40::new("sys_bound_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
 }
 
@@ -316,7 +316,7 @@ unsafe extern "C" fn kinopio_effect_land(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn kinopio_sound_land(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-
+        macros::PLAY_SE(agent, Hash40::new("se_peach_catch_kinopio"));
     }
 }
 
