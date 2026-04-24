@@ -91,7 +91,9 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
     }
     // HEAL
     if METRONOME[ENTRY_ID] == 3 {
-      DamageModule::add_damage(fighter.module_accessor, -8.0, 0);
+      if DamageModule::damage(fighter.module_accessor, 0) > 0.0 { 
+        DamageModule::add_damage(fighter.module_accessor, -8.0, 0);
+      }
       SoundModule::play_se(fighter.module_accessor, Hash40::new("se_common_lifeup"), true, false, false, false, enSEType(0));
       macros::EFFECT(fighter, Hash40::new("sys_recovery"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
     }

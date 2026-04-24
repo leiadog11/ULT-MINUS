@@ -94,14 +94,18 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
         for opponent_boma in opponent_bomas.iter() { 
             DamageModule::add_damage(*opponent_boma, 5.0, 0);
         }
-        DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        if DamageModule::damage(agent.module_accessor, 0) > 0.0 {
+            DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        }
     }
     frame(agent.lua_state_agent, 38.0); 
     if macros::is_excute(agent) {
         for opponent_boma in opponent_bomas.iter() { 
             DamageModule::add_damage(*opponent_boma, 5.0, 0);
         }
-        DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        if DamageModule::damage(agent.module_accessor, 0) > 0.0 { 
+            DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        }
     }
     frame(agent.lua_state_agent, 45.0);
     if macros::is_excute(agent) {
@@ -109,7 +113,9 @@ unsafe extern "C" fn ganon_specials(agent: &mut L2CAgentBase) {
         let target_group = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_GROUP);
         let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
         macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
-        DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        if DamageModule::damage(agent.module_accessor, 0) > 0.0 { 
+            DamageModule::add_damage(agent.module_accessor, -5.0, 0);
+        }
     }
     frame(agent.lua_state_agent, 46.0);
     if macros::is_excute(agent) {
