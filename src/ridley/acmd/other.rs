@@ -112,6 +112,18 @@ unsafe extern "C" fn ridley_expression_appealhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// LEDGE ATTACK
+unsafe extern "C" fn ridley_cliffattack(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 21.0);
+    if macros::is_excute(agent) {
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 10.0, 150, 20, 0, 90, 5.0, 0.0, 5.0, 18.8, Some(0.0), Some(5.0), Some(2.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 1, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_PUNCH);
+    }
+    wait(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+}
+
 //----------------------WIN/LOSE------------------------
 
 // LOSE
@@ -155,6 +167,8 @@ pub fn install() {
         .effect_acmd("effect_appealhil", ridley_effect_appealhi, Low)
         .expression_acmd("expression_appealhir", ridley_expression_appealhi, Low)
         .expression_acmd("expression_appealhil", ridley_expression_appealhi, Low)
+
+        .game_acmd("game_cliffattack", ridley_cliffattack, Low)
 
         .game_acmd("game_lose", ridley_lose, Low)
         
