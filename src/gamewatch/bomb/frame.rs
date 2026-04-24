@@ -6,22 +6,15 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
         let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
         let ENTRY_ID = get_entry_id(owner_boma);
         let motion_kind = MotionModule::motion_kind(weapon.module_accessor);
-        let status_kind = StatusModule::status_kind(weapon.module_accessor);
+        let status_kind = StatusModule::status_kind(owner_boma);
+
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
+        }
 
         if motion_kind == hash40("fly") { 
-            let b1x = PostureModule::pos_x(weapon.module_accessor);
-            let b1y = PostureModule::pos_y(weapon.module_accessor);
-            
-            let opponent_bomas = get_opponent_bomas(owner_boma);
-
-            let b2x = PostureModule::pos_x(opponent_bomas[0]);
-            let b2y = PostureModule::pos_y(opponent_bomas[0]);   
-    
-            // distance formula
-            let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
-            let d = dSquared.sqrt();
-    
-            if d < 23.0 && !EXPLODED[ENTRY_ID] {
+            let boma_match = distance_formula_weapon(weapon.module_accessor, owner_boma, 24.0);
+            if boma_match.is_some() {
                 MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
             }
         }
@@ -36,9 +29,7 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
 // ON START
 pub unsafe extern "C" fn bomb_start(weapon: &mut L2CWeaponCommon) {
     unsafe { 
-        let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-        let ENTRY_ID = get_entry_id(owner_boma);
-        EXPLODED[ENTRY_ID] = false;
+        
     }
 }
 

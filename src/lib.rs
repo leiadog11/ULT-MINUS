@@ -80,6 +80,52 @@ unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -
     return opponent_bomas;
 }
 
+// DISTANCE FORMULA
+unsafe extern "C" fn distance_formula(boma: *mut BattleObjectModuleAccessor, distance: f32) -> Option<*mut BattleObjectModuleAccessor> {
+    let b1x = PostureModule::pos_x(boma);
+    let b1y = PostureModule::pos_y(boma);
+            
+    let opponent_bomas = get_opponent_bomas(boma);
+
+    for opponent_boma in opponent_bomas.iter() { 
+        let b2x = PostureModule::pos_x(*opponent_boma);
+        let b2y = PostureModule::pos_y(*opponent_boma); 
+
+        // distance formula
+        let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
+        let d = dSquared.sqrt();
+    
+        if d < distance {
+            return Some(*opponent_boma);
+        }
+    }
+
+    return None;
+}
+
+// DISTANCE FORMULA WEAPON
+unsafe extern "C" fn distance_formula_weapon(boma: *mut BattleObjectModuleAccessor, owner_boma: *mut BattleObjectModuleAccessor, distance: f32) -> Option<*mut BattleObjectModuleAccessor> {
+    let b1x = PostureModule::pos_x(boma);
+    let b1y = PostureModule::pos_y(boma);
+            
+    let opponent_bomas = get_opponent_bomas(owner_boma);
+
+    for opponent_boma in opponent_bomas.iter() { 
+        let b2x = PostureModule::pos_x(*opponent_boma);
+        let b2y = PostureModule::pos_y(*opponent_boma); 
+
+        // distance formula
+        let dSquared: f32 = (b1x - b2x) * (b1x - b2x) + (b1y - b2y) * (b1y - b2y);
+        let d = dSquared.sqrt();
+    
+        if d < distance {
+            return Some(*opponent_boma);
+        }
+    }
+
+    return None;
+}
+
 // GET ENTRY ID
 unsafe extern "C" fn get_entry_id(boma: *mut BattleObjectModuleAccessor) -> usize { 
     return WorkModule::get_int(boma, *FIGHTER_INSTANCE_WORK_ID_INT_ENTRY_ID) as usize;
@@ -105,6 +151,7 @@ unsafe extern "C" fn get_final_smash(boma: *mut BattleObjectModuleAccessor) {
 
 // REMOVE FINAL SMASH
 unsafe extern "C" fn remove_final_smash(boma: *mut BattleObjectModuleAccessor) {
+    let ENTRY_ID = get_entry_id(boma);
     LookupSymbol(
         &mut FIGHTER_MANAGER,
         "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
@@ -112,10 +159,12 @@ unsafe extern "C" fn remove_final_smash(boma: *mut BattleObjectModuleAccessor) {
             .as_ptr(),
     );
     let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
-    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL);
-    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL_STATUS);
-    WorkModule::off_flag(boma, *FIGHTER_INSTANCE_WORK_ID_FLAG_FINAL_AVAILABLE);
-    smash::app::lua_bind::FighterManager::set_visible_finalbg(fighter_manager, false);
+    smash::app::lua_bind::FighterManager::set_final(
+        fighter_manager, 
+        FighterEntryID(ENTRY_ID.try_into().unwrap()), 
+        smash::app::FighterAvailableFinal { _address: *(smash::lib::lua_const::FighterAvailableFinal::DISCRETION) as u8 },
+        0
+    );
 }
 
 // GET STOCK COUNT
