@@ -56,6 +56,7 @@ unsafe extern "C" fn peach_attacklw4(agent: &mut L2CAgentBase) {
         }
         wait(agent.lua_state_agent, 2.0);
         if macros::is_excute(agent) {
+            shield!(agent, *MA_MSC_CMD_SHIELD_OFF, *COLLISION_KIND_REFLECTOR, 0, *FIGHTER_REFLECTOR_GROUP_HOMERUNBAT);
             AttackModule::clear_all(agent.module_accessor);
         }
         wait(agent.lua_state_agent, 2.0);

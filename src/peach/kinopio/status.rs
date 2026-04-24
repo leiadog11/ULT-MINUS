@@ -24,6 +24,18 @@ unsafe extern "C" fn kinopio_appear_pre(weapon: &mut L2CWeaponCommon) -> L2CValu
 unsafe extern "C" fn kinopio_appear_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("appear"), 0.0, 1.0, false, 0.0, false, false);
 
+    if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
+        LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
+    }
+
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+    let pos_y = PostureModule::pos_y(owner_boma);
+    let pos_x = PostureModule::pos_x(owner_boma);
+    let pos_z = PostureModule::pos_z(owner_boma);
+
+    let mut newPos = Vector3f{x: pos_x + 10.0, y: pos_y, z: pos_z};
+    PostureModule::set_pos(weapon.module_accessor, &newPos);
+
     weapon.fastshift(L2CValue::Ptr(kinopio_appear_main_loop as *const () as _))
 }
 
@@ -65,10 +77,6 @@ unsafe extern "C" fn kinopio_wait_pre(weapon: &mut L2CWeaponCommon) -> L2CValue 
 // MAIN
 unsafe extern "C" fn kinopio_wait_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("wait"), 0.0, 1.0, false, 0.0, false, false);
-
-    if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
-        LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
-    }
 
     weapon.fastshift(L2CValue::Ptr(kinopio_wait_main_loop as *const () as _))
 }
@@ -276,7 +284,7 @@ unsafe extern "C" fn kinopio_fall_main_loop(weapon: &mut L2CWeaponCommon) -> L2C
     let pos_x = PostureModule::pos_x(weapon.module_accessor);
     let pos_z = PostureModule::pos_z(weapon.module_accessor);
 
-    let mut newPos = Vector3f{x: pos_x, y: pos_y - 2.5, z: pos_z};
+    let mut newPos = Vector3f{x: pos_x, y: pos_y - 3.0, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     // LAND
