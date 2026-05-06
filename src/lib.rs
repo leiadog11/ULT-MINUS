@@ -5,7 +5,6 @@
 #![allow(improper_ctypes_definitions)]
 
 #![feature(
-    concat_idents,
     proc_macro_hygiene
 )]
 #![allow(

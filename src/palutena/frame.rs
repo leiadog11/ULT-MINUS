@@ -52,6 +52,13 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
                 StatusModule::change_status_request_from_script(boma, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT, false);
             }
         }
+
+        // DISABLE UP B TRANSITION 
+        if UP_B_USED[ENTRY_ID] {
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
+        }
     }
 }
 

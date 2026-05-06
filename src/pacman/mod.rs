@@ -15,6 +15,32 @@ static mut MELON_COOLDOWN: [i32; 8] = [0; 8];
 static mut GALAXIAN_COOLDOWN: [i32; 8] = [0; 8];
 static mut BELL_COOLDOWN: [i32; 8] = [0; 8];
 
+extern "C" {
+    #[link_name = "\u{1}_ZN3app17sv_camera_manager10dead_rangeEP9lua_State"]
+    pub fn dead_range(lua_state: u64) -> Vector4f; 
+}
+
+unsafe extern "C" fn blastzone_check2(agent: &mut L2CAgentBase) { 
+    let posx = PostureModule::pos_x(agent.module_accessor);
+    let posy = PostureModule::pos_y(agent.module_accessor);
+
+    if posx <= dead_range(agent.lua_state_agent).x {
+      println!("LEFT BLASTZONE!!!");
+    }
+    if posx <= dead_range(agent.lua_state_agent).x - 10.0 {
+      println!("LEFT BLASTZONE MINUS 10!!!");
+    }
+    if posx >= dead_range(agent.lua_state_agent).y {
+        println!("RIGHT BLASTZONE!!!");
+    }
+    if posy >= dead_range(agent.lua_state_agent).z {
+        println!("TOP BLASTZONE!!!");
+    }
+    if posy <= dead_range(agent.lua_state_agent).w {
+        println!("BOTTOM BLASTZONE!!!");
+    }
+}
+
 // SIDE B BLASTZONE CHECK
 unsafe extern "C" fn blastzone_check(agent: &mut L2CAgentBase) { 
     let boma = agent.module_accessor;

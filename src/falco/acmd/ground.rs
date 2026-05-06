@@ -21,9 +21,9 @@ unsafe extern "C" fn falco_attack100(agent: &mut L2CAgentBase) {
         falco_attack100_internal(agent);
         frame(agent.lua_state_agent, 14.0);
         falco_attack100_internal(agent);
-        frame(agent.lua_state_agent, 16.0);
-        falco_attack100_internal(agent);
-        macros::wait_loop_clear(agent);
+        agent.clear_lua_stack();
+        wait_loop_clear(agent.lua_state_agent);
+        agent.pop_lua_stack(1);
     }
 }
 
