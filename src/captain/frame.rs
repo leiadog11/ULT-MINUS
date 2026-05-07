@@ -72,6 +72,9 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         // GUN COOLDOWN
         if GUN_COOLDOWN[ENTRY_ID] > 0 {
             GUN_COOLDOWN[ENTRY_ID] -= 1;
+        } 
+
+        if ItemModule::is_have_item(fighter.module_accessor, 0) || GUN_COOLDOWN[ENTRY_ID] > 0 {
             WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
         } else {
             WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);

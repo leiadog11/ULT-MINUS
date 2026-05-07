@@ -42,6 +42,13 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
             DOWN_SMASH[ENTRY_ID] = false;
             UP_SMASH[ENTRY_ID] = false;
         } 
+
+        // DISABLE NEUTRAL B TRANSITION
+        if ItemModule::is_have_item(boma, 0) { 
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
+        }
     }
 }
 
