@@ -21,18 +21,18 @@ extern "C" {
 }
 
 // BLASTZONE CHECK
-unsafe extern "C" fn blastzone_check(agent: &mut L2CAgentBase) { 
+unsafe extern "C" fn blastzone_check(agent: &mut L2CAgentBase, side_add: f32) { 
     let boma = agent.module_accessor;
     let posx = PostureModule::pos_x(boma);
     let posy = PostureModule::pos_y(boma);
 
-    if posx <= dead_range(agent.lua_state_agent).x + 80.0 {
-        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).y - 80.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
+    if posx <= dead_range(agent.lua_state_agent).x + side_add {
+        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).y - side_add , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
         AttackModule::clear_all(boma);
         GroundModule::set_collidable(boma, false);
     }
-    else if posx >= dead_range(agent.lua_state_agent).y - 80.0 {
-        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).x + 80.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
+    else if posx >= dead_range(agent.lua_state_agent).y - side_add {
+        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).x + side_add , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
         AttackModule::clear_all(boma);
         GroundModule::set_collidable(boma, false);
     }
