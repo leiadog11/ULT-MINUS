@@ -20,213 +20,31 @@ extern "C" {
     pub fn dead_range(lua_state: u64) -> Vector4f; 
 }
 
-unsafe extern "C" fn blastzone_check2(agent: &mut L2CAgentBase) { 
-    let posx = PostureModule::pos_x(agent.module_accessor);
-    let posy = PostureModule::pos_y(agent.module_accessor);
-
-    if posx <= dead_range(agent.lua_state_agent).x {
-      println!("LEFT BLASTZONE!!!");
-    }
-    if posx <= dead_range(agent.lua_state_agent).x - 10.0 {
-      println!("LEFT BLASTZONE MINUS 10!!!");
-    }
-    if posx >= dead_range(agent.lua_state_agent).y {
-        println!("RIGHT BLASTZONE!!!");
-    }
-    if posy >= dead_range(agent.lua_state_agent).z {
-        println!("TOP BLASTZONE!!!");
-    }
-    if posy <= dead_range(agent.lua_state_agent).w {
-        println!("BOTTOM BLASTZONE!!!");
-    }
-}
-
-// SIDE B BLASTZONE CHECK
+// BLASTZONE CHECK
 unsafe extern "C" fn blastzone_check(agent: &mut L2CAgentBase) { 
     let boma = agent.module_accessor;
-    if smash::app::stage::get_stage_id() == 0x0 {
-        //Battlefield
-        if PostureModule::pos_x(boma) >= 170.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -170.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -170.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 170.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -80.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -80.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
+    let posx = PostureModule::pos_x(boma);
+    let posy = PostureModule::pos_y(boma);
+
+    if posx <= dead_range(agent.lua_state_agent).x + 80.0 {
+        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).y - 80.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
+        AttackModule::clear_all(boma);
+        GroundModule::set_collidable(boma, false);
     }
-    else if smash::app::stage::get_stage_id() == 0x3 {
-        //FD
-        if PostureModule::pos_x(boma) >= 180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -60.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -60.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
+    else if posx >= dead_range(agent.lua_state_agent).y - 80.0 {
+        PostureModule::set_pos(boma, &Vector3f{ x: dead_range(agent.lua_state_agent).x + 80.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
+        AttackModule::clear_all(boma);
+        GroundModule::set_collidable(boma, false);
     }
-    else if smash::app::stage::get_stage_id() == 0x15B {
-        //Small Battlefield
-        if PostureModule::pos_x(boma) >= 170.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -170.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -170.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 170.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -80.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -80.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
+    else if posy >= dead_range(agent.lua_state_agent).z - 70.0 {
+        PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: dead_range(agent.lua_state_agent).w + 70.0, z: PostureModule::pos_z(boma)});
+        AttackModule::clear_all(boma);
+        GroundModule::set_collidable(boma, false);
     }
-    else if smash::app::stage::get_stage_id() == 0x5F {
-        //Smashville
-        if PostureModule::pos_x(boma) >= 160.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -160.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -160.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 160.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -50.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 140.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 140.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -50.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-    }
-    else if smash::app::stage::get_stage_id() == 0x6B {
-        //PS2
-        if PostureModule::pos_x(boma) >= 180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -50.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -50.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-    }
-    else if smash::app::stage::get_stage_id() == 0xF2 {
-        //Kalos
-        if PostureModule::pos_x(boma) >= 165.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -165.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -165.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 165.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -60.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -60.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-    }
-    else if smash::app::stage::get_stage_id() == 0x101 {
-        //Town and City
-        if PostureModule::pos_x(boma) >= 160.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -160.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -160.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 160.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -80.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 105.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 105.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -80.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-    }
-    else if smash::app::stage::get_stage_id() == 0x169 {
-        //Hollow Bastion
-        if PostureModule::pos_x(boma) >= 180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: -180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_x(boma) <= -180.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: 180.0 , y: PostureModule::pos_y(boma), z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) <= -60.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: 130.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
-        else if PostureModule::pos_y(boma) >= 130.0 {
-            PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: -60.0, z: PostureModule::pos_z(boma)});
-            AttackModule::clear_all(boma);
-            GroundModule::set_collidable(boma, false);
-        }
+    else if posy <= dead_range(agent.lua_state_agent).w + 70.0 {
+        PostureModule::set_pos(boma, &Vector3f{ x: PostureModule::pos_x(boma) , y: dead_range(agent.lua_state_agent).z - 70.0, z: PostureModule::pos_z(boma)});
+        AttackModule::clear_all(boma);
+        GroundModule::set_collidable(boma, false);
     }
 }
 
