@@ -10,7 +10,7 @@ This is a full modpack with changes to the SSS, game music, and characters. Ther
 
 Here is a link to the music mod that goes with it: [LEIADOG'S MUSIC MOD](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD/releases/tag/v1.0)
 
-Current Version: Alpha 0.5.1
+Current Version: Alpha 0.5.2
 
 ## Skins
 - Super Pac-Man (Pac-Man c01)
@@ -22,7 +22,7 @@ Current Version: Alpha 0.5.1
 - SaltyBet Stadium (PS2)
 
 ## Character Change Log
-Current Character Amount: 19
+Current Character Amount: 20
 
 Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
@@ -32,8 +32,6 @@ Jackson Mueth (Jmuze) - Dev\
 Daniel Palomarez (OpZ) - Dev
 
 Isaac Martinez (Pow) - Production\
-Jack Yarnell (PladMan) - Character UI Artist\
-Gabe Crandall (Architect) - Menu UI Artist
 
 # Special Thanks
 Big shoutout to the modding discord and the modding scene as a whole for creating the tools and resources to be able to make a mod like this. Also for all of the help and answers to my questions!
