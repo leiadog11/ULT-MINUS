@@ -31,7 +31,7 @@ JC Ho (leiadog) - Creator, Dev Lead\
 Jackson Mueth (Jmuze) - Dev\
 Daniel Palomarez (OpZ) - Dev
 
-Isaac Martinez (Pow) - Production\
+Isaac Martinez (Pow) - Production
 
 # Special Thanks
 Big shoutout to the modding discord and the modding scene as a whole for creating the tools and resources to be able to make a mod like this. Also for all of the help and answers to my questions!
