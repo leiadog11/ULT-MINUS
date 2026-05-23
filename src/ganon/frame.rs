@@ -25,11 +25,6 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
         let status_kind = StatusModule::status_kind(boma);
         let ENTRY_ID = get_entry_id(boma);
 
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            GroundModule::set_collidable(boma, true);
-        }
-
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { // REMOVE SWORD
             ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
@@ -202,6 +197,8 @@ pub unsafe extern "C" fn ganon_start(fighter: &mut L2CFighterCommon) {
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         SWORD[ENTRY_ID] = true;
         GROUND_CHECK[ENTRY_ID] = false;
+        FORWARD_AMOUNT[ENTRY_ID] = 0.0;
+        UP_AMOUNT[ENTRY_ID] = 0.0;
     }
 }
 

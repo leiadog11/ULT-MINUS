@@ -9,19 +9,21 @@ unsafe extern "C" fn autoaimbullet_shot_pre(weapon: &mut L2CWeaponCommon) -> L2C
         SituationKind(*SITUATION_KIND_GROUND), 
         *WEAPON_KINETIC_TYPE_NONE, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+
     return 0.into();
 }
 
 // MAIN
 unsafe extern "C" fn autoaimbullet_shot_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("shot"), 0.0, 1.0, false, 0.0, false, false);
+    
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
     let mut offset_add = Vector3f{x:0.0,y:4.0,z:0.0};

@@ -9,7 +9,7 @@ unsafe extern "C" fn palutena_specialn_pre(fighter: &mut L2CFighterCommon) -> L2
         SituationKind(*SITUATION_KIND_NONE), 
         *FIGHTER_KINETIC_TYPE_UNIQ, 
         *GROUND_CORRECT_KIND_KEEP as u32, 
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
         true, 
         0, 
         0, 
@@ -24,11 +24,7 @@ unsafe extern "C" fn palutena_specialn_pre(fighter: &mut L2CFighterCommon) -> L2
         false,
         false,
         false,
-        (
-            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
-        ) as u64,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
         *FIGHTER_STATUS_ATTR_START_TURN as u32,
         *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
         0
@@ -43,6 +39,7 @@ unsafe extern "C" fn palutena_specialn_init(fighter: &mut L2CFighterCommon) -> L
         fighter.change_status(FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT.into(), false.into());
         return 1.into();
     }
+
     return 0.into();
 }
 
@@ -60,6 +57,7 @@ unsafe extern "C" fn palutena_specialn_main_loop(fighter: &mut L2CFighterCommon)
         fighter.change_status(FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE.into(), false.into());
         return 1.into();
     }
+
     return 0.into();
 }
 
@@ -77,7 +75,7 @@ unsafe extern "C" fn palutena_specialn_charge_pre(fighter: &mut L2CFighterCommon
         SituationKind(*SITUATION_KIND_NONE), 
         *FIGHTER_KINETIC_TYPE_UNIQ, 
         *GROUND_CORRECT_KIND_KEEP as u32, 
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
         true, 
         0, 
         0, 
@@ -92,11 +90,7 @@ unsafe extern "C" fn palutena_specialn_charge_pre(fighter: &mut L2CFighterCommon
         false,
         false,
         false,
-        (
-            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
-        ) as u64,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
         *FIGHTER_STATUS_ATTR_START_TURN as u32,
         *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
         0
@@ -108,6 +102,7 @@ unsafe extern "C" fn palutena_specialn_charge_pre(fighter: &mut L2CFighterCommon
 // MAIN
 unsafe extern "C" fn palutena_specialn_charge_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_charge"), 0.0, 1.0, false, 0.0, false, false);
+    
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(palutena_specialn_charge_main_loop as *const () as _))
@@ -118,42 +113,66 @@ unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighter
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     MEGA_LASER_CHARGE[ENTRY_ID] += 1;
 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+
+        sv_kinetic_energy!(
+            set_speed,
+            fighter,
+            FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+            -1.0,
+            0.0
+        );
+    }
+    else {
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    }
+
     // SHIELD CANCEL
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
-        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR {
-            fighter.change_status(FIGHTER_STATUS_KIND_GUARD_ON.into(), false.into());
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+            fighter.change_status(FIGHTER_STATUS_KIND_ESCAPE_AIR.into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status(FIGHTER_STATUS_KIND_ESCAPE_AIR.into(), false.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_GUARD_ON.into(), false.into());
             return 1.into();
         }
     }
 
     // JUMP CANCEL
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
-        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR {
-            fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
             return 1.into();
         }
     }
 
     // HALF CHARGE EFFECT
     if MEGA_LASER_CHARGE[ENTRY_ID] >= 120 && MEGA_LASER_CHARGE[ENTRY_ID] <= 121  { 
-        let dumb = Vector3f{x:0.0,y:0.0,z:0.0};
-        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 0.5, &dumb, &dumb, false, 0, 0, 0);
+        let vector = Vector3f{x:0.0,y:0.0,z:0.0};
+        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &vector, &vector, 0.5, &vector, &vector, false, 0, 0, 0);
     }
 
     // FINISH
     if MEGA_LASER_CHARGE[ENTRY_ID] >= 360 {
-        let dumb = Vector3f{x:0.0,y:5.0,z:0.0};
-        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &dumb, &dumb, 1.2, &dumb, &dumb, false, 0, 0, 0);
+        let vector = Vector3f{x:0.0,y:5.0,z:0.0};
+        EffectModule::req_on_joint(fighter.module_accessor, Hash40::new("sys_flash"), Hash40::new("hip"), &vector, &vector, 1.2, &vector, &vector, false, 0, 0, 0);
         SoundModule::play_se(fighter.module_accessor, Hash40::new("se_gohoubi_icon_money"), true, false, false, false, enSEType(0));
-        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &dumb, &dumb, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+        let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &vector, &vector, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
         EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
         if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
             fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
@@ -181,8 +200,8 @@ unsafe extern "C" fn palutena_specialn_shoot_pre(fighter: &mut L2CFighterCommon)
         fighter.module_accessor, 
         SituationKind(*SITUATION_KIND_NONE), 
         *FIGHTER_KINETIC_TYPE_UNIQ, 
-        (*GROUND_CORRECT_KIND_NONE).try_into().unwrap(), 
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
+        *GROUND_CORRECT_KIND_NONE as u32, 
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
         true, 
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG, 
         *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT, 
@@ -197,10 +216,8 @@ unsafe extern "C" fn palutena_specialn_shoot_pre(fighter: &mut L2CFighterCommon)
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_FINAL | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | 
-        *FIGHTER_LOG_MASK_FLAG_SHOOT) as u64,
-        ((*FIGHTER_STATUS_ATTR_DISABLE_ITEM_INTERRUPT | *FIGHTER_STATUS_ATTR_DISABLE_TURN_DAMAGE |
-        *FIGHTER_STATUS_ATTR_FINAL)).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_FINAL | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_SHOOT) as u64,
+        (*FIGHTER_STATUS_ATTR_DISABLE_ITEM_INTERRUPT | *FIGHTER_STATUS_ATTR_DISABLE_TURN_DAMAGE | *FIGHTER_STATUS_ATTR_FINAL) as u32,
         *FIGHTER_POWER_UP_ATTACK_BIT_FINAL as u32,
         0
     );
@@ -211,6 +228,7 @@ unsafe extern "C" fn palutena_specialn_shoot_pre(fighter: &mut L2CFighterCommon)
 // MAIN
 unsafe extern "C" fn palutena_specialn_shoot_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_shoot"), 0.0, 1.0, false, 0.0, false, false);
+
     MEGA_LASER_CHARGE[get_entry_id(fighter.module_accessor)] = 0;
     DamageModule::set_no_reaction_mode_status(fighter.module_accessor, DamageNoReactionMode{_address: *DAMAGE_NO_REACTION_MODE_ALWAYS as u8}, -1.0, -1.0, -1);
     AreaModule::set_whole(fighter.module_accessor, false);
@@ -228,12 +246,12 @@ unsafe extern "C" fn palutena_specialn_shoot_main(fighter: &mut L2CFighterCommon
 unsafe extern "C" fn palutena_specialn_shoot_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     CameraModule::req_quake(fighter.module_accessor, *CAMERA_QUAKE_KIND_SMALL);
     if MotionModule::is_end(fighter.module_accessor) { 
-        if StatusModule::situation_kind(fighter.module_accessor) != *SITUATION_KIND_AIR { 
-            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
             return 1.into();
         }
     }

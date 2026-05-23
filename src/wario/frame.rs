@@ -6,18 +6,12 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
         let xpos = ControlModule::get_stick_x(boma);
-        let ypos = ControlModule::get_stick_y(boma);
         let pos_x = PostureModule::pos_x(boma);
         let pos_y = PostureModule::pos_y(boma);
         let lr = PostureModule::lr(boma);
         let mut max_speed = 0.0;
         let damage = DamageModule::damage(boma, 0);
         let status_kind = StatusModule::status_kind(boma);
-
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            GroundModule::set_collidable(boma, true);
-        }
 
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {

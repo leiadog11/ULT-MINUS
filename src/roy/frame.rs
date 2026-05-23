@@ -4,15 +4,43 @@ use super::*;
 pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+        let ENTRY_ID = get_entry_id(boma);
         let status_kind = StatusModule::status_kind(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
-        let frame = MotionModule::frame(boma);
-        let lr = PostureModule::lr(boma);
-        let xpos = ControlModule::get_stick_x(boma);
-        let ypos = ControlModule::get_stick_y(boma);
-        let posx = PostureModule::pos_x(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            UP_B_USED[ENTRY_ID] = false;
+            remove_pyra(boma);
+        }
+
+        // ON HIT
+        if DamageModule::reaction(boma, 0) > 1.0 { // REMOVE SWORD
+            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+            remove_pyra(boma);
+        }
+
+        // ON GROUND
+        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
+            UP_B_USED[ENTRY_ID] = false;
+        } 
+
+        // SPECIAL FALL CHECK
+        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL && !UP_B_USED[ENTRY_ID] {
+            UP_B_USED[ENTRY_ID] = true;
+            StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
+        }
+
+        // REMOVE PYRA
+        if (motion_kind != hash40("appeal_hi_r") && motion_kind != hash40("appeal_hi_l")) && !PYRA_REMOVED[ENTRY_ID] {
+            remove_pyra(boma);
+        }
+
+        // CANCEL DOWN SMASH
+        if motion_kind == hash40("attack_lw4") {
+            cancel_with_dash(fighter.module_accessor, 7.0);
+        }
         
     }
 }
@@ -20,7 +48,10 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
 // ON START
 pub unsafe extern "C" fn roy_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
-
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        PYRA_REMOVED[ENTRY_ID] = true;
+        UP_B_USED[ENTRY_ID] = false;
+        remove_pyra(fighter.module_accessor);
     }
 }
 

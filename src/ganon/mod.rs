@@ -15,6 +15,8 @@ const FIGHTER_GANON_STATUS_KIND_SPECIAL_HI2: i32 = 0x1EF;
 
 static mut SWORD: [bool; 8] = [true; 8];
 static mut GROUND_CHECK: [bool; 8] = [false; 8];
+static mut FORWARD_AMOUNT: [f32; 8] = [0.0; 8];
+static mut UP_AMOUNT: [f32; 8] = [0.0; 8];
 
 pub fn install() {
     acmd::install();

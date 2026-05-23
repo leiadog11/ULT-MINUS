@@ -6,16 +6,17 @@ use super::*;
 unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         *GROUND_CORRECT_KIND_KEEP as u32,
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_ATTR_START_TURN,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
         0
     );
+
     FighterStatusModuleImpl::set_fighter_status_data(
         fighter.module_accessor,
         false,
@@ -23,43 +24,40 @@ unsafe extern "C" fn pacman_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CV
         false,
         false,
         false,
-        (
-            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
-        ) as u64,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
         *FIGHTER_STATUS_ATTR_START_TURN as u32,
         *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
         0
     );
+
     return 0.into();
 }
 
 // MAIN
 unsafe extern "C" fn pacman_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND { 
-        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-    }
-    else { 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND { 
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_start"), 0.0, 1.0, false, 0.0, false, false);
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
         GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND_CLIFF_STOP));
     }
+    else { 
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_start"), 0.0, 1.0, false, 0.0, false, false); 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    }
       
-      fighter.fastshift(L2CValue::Ptr(pacman_specialn_main_loop as *const () as _ ));
-      return 0.into()
+    fighter.fastshift(L2CValue::Ptr(pacman_specialn_main_loop as *const () as _ ));
+    return 0.into()
 }
 
 // MAIN LOOP
 unsafe extern "C" fn pacman_specialn_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::is_end(fighter.module_accessor) {
-        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
         }
         else {
-            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+            MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
         }  
 
         StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, true); 
@@ -81,10 +79,10 @@ unsafe extern "C" fn pacman_specialn_end(fighter: &mut L2CFighterCommon) -> L2CV
 unsafe extern "C" fn pacman_specialn_hold_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
         *GROUND_CORRECT_KIND_KEEP as u32,
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_ATTR_START_TURN,
@@ -130,11 +128,11 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
 
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
         if MotionModule::is_end(fighter.module_accessor) {
-            if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+            if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
             }
             else {
-                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_hold"), 0.0, 1.0, false, 0.0, false, false);
+                MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_n_hold"), 0.0, 1.0, false, 0.0, false, false);
             }   
         }
 
@@ -255,24 +253,18 @@ unsafe extern "C" fn pacman_specialn_hold_main_loop(fighter: &mut L2CFighterComm
         }
 
         else {
-            if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-                fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
-                return 1.into()
-            }
-            else {
-                fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
-                return 1.into()
-            }   
+            fighter.change_status((*FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_CANCEL).into(), false.into());
+            return 1.into()
         }
 
-        if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            fighter.change_status((*FIGHTER_STATUS_KIND_FALL).into(), false.into());
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
             return 1.into();
         }
         else {
-            fighter.change_status((*FIGHTER_STATUS_KIND_WAIT).into(), false.into());
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();
-        }   
+        }     
     }
     return 0.into()
 }
@@ -297,5 +289,6 @@ pub fn install() {
         .status(Pre, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_pre)
         .status(Main, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_main)
         .status(End, *FIGHTER_PACMAN_STATUS_KIND_SPECIAL_N_HOLD, pacman_specialn_hold_end)
+
         .install();
 }

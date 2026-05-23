@@ -11,11 +11,6 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
         let ypos = ControlModule::get_stick_y(boma);
 
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { // COLLISION FIX
-            GroundModule::set_collidable(boma, true);
-        }
-
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FIRE BIRD ON F SMASH DAMAGE
             ArticleModule::remove_exist(boma, *FIGHTER_CAPTAIN_GENERATE_ARTICLE_FALCONPUNCH, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
@@ -77,6 +72,12 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         // GUN COOLDOWN
         if GUN_COOLDOWN[ENTRY_ID] > 0 {
             GUN_COOLDOWN[ENTRY_ID] -= 1;
+        } 
+
+        if ItemModule::is_have_item(fighter.module_accessor, 0) || GUN_COOLDOWN[ENTRY_ID] > 0 {
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
         }
 
         // CANCEL FALCON KICK INTO FALCON KICK

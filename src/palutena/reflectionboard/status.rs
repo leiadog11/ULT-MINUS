@@ -33,6 +33,7 @@ unsafe extern "C" fn reflectionboard_shoot_init(weapon: &mut L2CWeaponCommon) ->
 // MAIN
 unsafe extern "C" fn reflectionboard_shoot_main(weapon: &mut L2CWeaponCommon) -> L2CValue {
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("shoot"), 0.0, 1.0, false, 0.0, false, false);
+
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
     let lr = PostureModule::lr(weapon.module_accessor);
@@ -94,5 +95,6 @@ pub fn install() {
         .status(Init, *WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_SHOOT, reflectionboard_shoot_init)
         .status(Main, *WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_SHOOT, reflectionboard_shoot_main)
         .status(End, *WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_SHOOT, reflectionboard_shoot_end)
+        
         .install();
 }

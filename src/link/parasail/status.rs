@@ -9,13 +9,14 @@ unsafe extern "C" fn parasail_specialairhistart_pre(weapon: &mut L2CWeaponCommon
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_RESET, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
         0, 
         0
     );
+    
     return 0.into();
 }
 
@@ -45,7 +46,7 @@ unsafe extern "C" fn parasail_specialairhiglide_pre(weapon: &mut L2CWeaponCommon
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_RESET, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
@@ -81,7 +82,7 @@ unsafe extern "C" fn parasail_specialairhiequip_pre(weapon: &mut L2CWeaponCommon
         SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_RESET, 
         *GROUND_CORRECT_KIND_NONE as u32, 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 

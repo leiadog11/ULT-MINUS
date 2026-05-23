@@ -6,10 +6,10 @@ use super::*;
 unsafe extern "C" fn ganon_speciallw_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -24,9 +24,9 @@ unsafe extern "C" fn ganon_speciallw_pre(fighter: &mut L2CFighterCommon) -> L2CV
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_DISABLE_GROUND_FRICTION).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
+        *FIGHTER_STATUS_ATTR_DISABLE_GROUND_FRICTION as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
     );
       
@@ -45,23 +45,23 @@ unsafe extern "C" fn ganon_speciallw_main(fighter: &mut L2CFighterCommon) -> L2C
     WorkModule::set_float(fighter.module_accessor, 1.0, *FIGHTER_GANON_STATUS_WORK_ID_FLOAT_GANON_KICK_SPEED_COEFFICIENT);
     WorkModule::set_int(fighter.module_accessor, -1, *FIGHTER_GANON_STATUS_WORK_ID_INT_GANON_KICK_END_SITUATION);
 
-    if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_GROUND {
-        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_AIR, *FIGHTER_GANON_STATUS_WORK_ID_INT_GANON_KICK_START_SITUATION);
-        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_lw"), 0.0, 1.0, false, 0.0, false, false);
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-
-        fighter.set_situation(SITUATION_KIND_AIR.into());
-        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-    }
-    else {
-        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_GROUND, *FIGHTER_GANON_STATUS_WORK_ID_INT_GANON_KICK_START_SITUATION);
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
         MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw"), 0.0, 1.0, false, 0.0, false, false);
 
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_GROUND, *FIGHTER_GANON_STATUS_WORK_ID_INT_GANON_KICK_START_SITUATION);
         let lr = PostureModule::lr(fighter.module_accessor); 
         WorkModule::set_float(fighter.module_accessor, lr, *FIGHTER_GANON_STATUS_WORK_ID_FLOAT_GANON_KICK_START_LR);
-
         let ganon_kick_speed_coeff = WorkModule::get_param_float(fighter.module_accessor, hash40("param_special_lw"), hash40("ganon_kick_speed_coeff")); 
         WorkModule::set_float(fighter.module_accessor, ganon_kick_speed_coeff, *FIGHTER_STATUS_WORK_ID_FLOAT_RESERVE_KINETIC_MOTION_SPEED_MUL);
+
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+    }
+    else {
+        MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_air_lw"), 0.0, 1.0, false, 0.0, false, false);
+        WorkModule::set_int(fighter.module_accessor, *SITUATION_KIND_AIR, *FIGHTER_GANON_STATUS_WORK_ID_INT_GANON_KICK_START_SITUATION);
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     }
 
     fighter.sub_shift_status_main(L2CValue::Ptr(ganon_speciallw_main_loop as *const () as _))
@@ -119,28 +119,20 @@ unsafe extern "C" fn ganon_speciallw_main_loop(fighter: &mut L2CFighterCommon) -
         } 
     }
     
-        if StatusModule::is_changing(fighter.module_accessor) {
-          if fighter.global_table[PREV_SITUATION_KIND] != *SITUATION_KIND_GROUND {
-            if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_AIR {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-                fighter.set_situation(SITUATION_KIND_AIR.into());
-                GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-            }
-          }
+    if StatusModule::is_changing(fighter.module_accessor) {
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+            KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+            GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+        }
     
-          if fighter.global_table[PREV_SITUATION_KIND] == *SITUATION_KIND_GROUND {
-            if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
-                return 0.into();
-            } 
-          }
+        return 0.into();
+    }
+    else {
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND {
+            KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
+            GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
         }
-        else {
-            if fighter.global_table[SITUATION_KIND] != *SITUATION_KIND_AIR {
-                KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
-                fighter.set_situation(SITUATION_KIND_GROUND.into());
-                GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
-            }
-        }
+    }
     
     return 0.into();
 }
@@ -158,10 +150,10 @@ unsafe extern "C" fn ganon_speciallw_end(fighter: &mut L2CFighterCommon) -> L2CV
 unsafe extern "C" fn ganon_speciallw_continue_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
     StatusModule::init_settings(
         fighter.module_accessor,
-        smash::app::SituationKind(*SITUATION_KIND_NONE),
+        SituationKind(*SITUATION_KIND_NONE),
         *FIGHTER_KINETIC_TYPE_UNIQ,
-        (*GROUND_CORRECT_KIND_KEEP).try_into().unwrap(),
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        *GROUND_CORRECT_KIND_KEEP as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
         true,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
@@ -176,9 +168,9 @@ unsafe extern "C" fn ganon_speciallw_continue_pre(fighter: &mut L2CFighterCommon
         false,
         false,
         false,
-        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON).try_into().unwrap(),
-        (*FIGHTER_STATUS_ATTR_DISABLE_GROUND_FRICTION).try_into().unwrap(),
-        (*FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW).try_into().unwrap(),
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
+        *FIGHTER_STATUS_ATTR_DISABLE_GROUND_FRICTION as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
     );
       
@@ -188,6 +180,7 @@ unsafe extern "C" fn ganon_speciallw_continue_pre(fighter: &mut L2CFighterCommon
 // MAIN
 unsafe extern "C" fn ganon_speciallw_continue_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_lw_hold"), 0.0, 1.0, false, 0.0, false, false);
+
     fighter.sub_shift_status_main(L2CValue::Ptr(ganon_speciallw_continue_main_loop as *const () as _))
 }
 
@@ -210,8 +203,7 @@ unsafe extern "C" fn ganon_speciallw_continue_main_loop(fighter: &mut L2CFighter
 
     let ypos = ControlModule::get_stick_y(fighter.module_accessor);
     
-    if fighter.global_table[SITUATION_KIND] == *SITUATION_KIND_AIR &&
-    ypos < -0.5 {
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR && ypos < -0.5 {
         fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_LW.into(), false.into());
         return 1.into();
     }

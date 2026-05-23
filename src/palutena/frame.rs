@@ -8,13 +8,7 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
-        let stick_y = ControlModule::get_stick_y(boma);
         let frame = MotionModule::frame(boma);
-
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            GroundModule::set_collidable(boma, true);
-        }
 
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
@@ -57,6 +51,13 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
             if ControlModule::check_button_trigger(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
                 StatusModule::change_status_request_from_script(boma, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_SHOOT, false);
             }
+        }
+
+        // DISABLE UP B TRANSITION 
+        if UP_B_USED[ENTRY_ID] {
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
         }
     }
 }

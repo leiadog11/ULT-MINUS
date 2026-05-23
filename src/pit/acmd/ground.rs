@@ -182,7 +182,7 @@ unsafe extern "C" fn pit_sound_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
     if macros::is_excute(agent) {
         macros::PLAY_SEQUENCE(agent, Hash40::new("seq_pit_rnd_attack"));
-        macros::PLAY_SE(agent, Hash40::new("se_pit_dash_start"));
+        macros::PLAY_SE(agent, Hash40::new("se_pit_squat"));
     }
 }
 

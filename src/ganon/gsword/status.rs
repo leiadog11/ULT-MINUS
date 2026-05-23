@@ -6,10 +6,10 @@ use super::*;
 unsafe extern "C" fn ganon_gsword_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NORMAL, 
         GROUND_CORRECT_KIND_AIR.into(), 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
@@ -76,7 +76,7 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
         return 0.into();
     }
 
-    if weapon.global_table[SITUATION_KIND] == *SITUATION_KIND_GROUND {
+    if StatusModule::situation_kind(weapon.module_accessor) == *SITUATION_KIND_GROUND {
         gsword_remove(weapon);
         return 0.into();
     }
@@ -92,7 +92,7 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
 }
 
 // REMOVE
-pub unsafe extern "C" fn gsword_remove(weapon: &mut smashline::L2CWeaponCommon) {
+pub unsafe extern "C" fn gsword_remove(weapon: &mut L2CWeaponCommon) {
     let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
 
     let pos = PostureModule::pos(weapon.module_accessor);

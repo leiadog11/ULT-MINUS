@@ -50,10 +50,8 @@ unsafe extern "C" fn jack_attacks3(agent: &mut L2CAgentBase) {
     if WorkModule::is_flag(agent.module_accessor, *FIGHTER_JACK_INSTANCE_WORK_ID_FLAG_DOYLE) {
         if macros::is_excute(agent) {
             AttackModule::set_size(agent.module_accessor, 2, 0.0);
-            macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 5.0, 170, 106, 0, 10, 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 6.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
-            macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 170, 106, 0, 10, 6.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 6.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
-            AttackModule::set_poison_param(agent.module_accessor, 0, 321, 40, 1.5, false);
-            AttackModule::set_poison_param(agent.module_accessor, 1, 321, 40, 1.5, false);
+            macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 5.0, 170, 106, 0, 10, 3.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 6.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+            macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 170, 106, 0, 10, 6.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 6.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 2);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 2);
             

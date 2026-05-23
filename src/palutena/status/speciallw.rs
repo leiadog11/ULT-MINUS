@@ -9,7 +9,7 @@ unsafe extern "C" fn palutena_speciallw_pre(fighter: &mut L2CFighterCommon) -> L
         SituationKind(*SITUATION_KIND_NONE), 
         *FIGHTER_KINETIC_TYPE_UNIQ, 
         *GROUND_CORRECT_KIND_KEEP as u32, 
-        smash::app::GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
         true, 
         0, 
         0, 
@@ -24,11 +24,7 @@ unsafe extern "C" fn palutena_speciallw_pre(fighter: &mut L2CFighterCommon) -> L
         false,
         false,
         false,
-        (
-            *FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK |
-            *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON
-        ) as u64,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_LW | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
         0,
         *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_LW as u32,
         0
@@ -101,12 +97,12 @@ unsafe extern "C" fn palutena_speciallw_end(fighter: &mut L2CFighterCommon) -> L
     return 0.into();
 }
 
-
 pub fn install() {
     Agent::new("palutena")
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_LW, palutena_speciallw_pre)
         .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_LW, palutena_speciallw_init)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_LW, palutena_speciallw_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_LW, palutena_speciallw_end)
+        
         .install();
 }

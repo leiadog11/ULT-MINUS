@@ -4,19 +4,18 @@ use super::*;
 pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
+        let ENTRY_ID = get_entry_id(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
         let frame = MotionModule::frame(boma);
         let lr = PostureModule::lr(boma);
         let xpos = ControlModule::get_stick_x(boma);
-        let ypos = ControlModule::get_stick_y(boma);
         let posx = PostureModule::pos_x(boma);
-        let y_vel = KineticModule::get_sum_speed_y(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            GroundModule::set_collidable(boma, true);
+            BOMB_OUT[ENTRY_ID] = false;
         }
 
         // ON HIT
@@ -56,7 +55,6 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
                 }
                 if xpos < -0.5 {
                     CancelModule::enable_cancel(boma);
-                    
                 }
             }
         }

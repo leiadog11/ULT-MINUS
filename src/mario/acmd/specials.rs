@@ -166,13 +166,8 @@ unsafe extern "C" fn mario_specialairhi(agent: &mut L2CAgentBase) {
 
 // AERIAL DOWN SPECIAL 
 unsafe extern "C" fn mario_specialairlw(agent: &mut L2CAgentBase) {
-    //macros::FT_MOTION_RATE(agent, 1.2);
-    frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        let lr = PostureModule::lr(agent.module_accessor);
-        let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        macros::SET_SPEED_EX(agent, (x_vel * lr), 2.75, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
-        //KineticModule::resume_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+        
     }
 }
 

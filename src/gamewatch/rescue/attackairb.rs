@@ -6,10 +6,10 @@ use super::*;
 unsafe extern "C" fn gamewatch_rescue_attackairb_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_NONE), 
+        SituationKind(*SITUATION_KIND_NONE), 
         *WEAPON_KINETIC_TYPE_NONE, 
         GROUND_CORRECT_KIND_AIR.into(), 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
         *WEAPON_STATUS_WORK_KEEP_FLAG_ALL_INT,

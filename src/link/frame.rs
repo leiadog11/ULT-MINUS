@@ -16,37 +16,55 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
-            GroundModule::set_collidable(boma, true);
+            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
+            DOWN_TILT_COUNT[ENTRY_ID] = 0;
             MIPHAS_GRACE[ENTRY_ID] = true;
             DARUKS_PROTECTION[ENTRY_ID] = true;
             REVALIS_GALE[ENTRY_ID] = true;
             URBOSAS_FURY[ENTRY_ID] = true;
+            EFFECT_ON[ENTRY_ID] = false;
             // PLAY A RANDOM SPIRIT VOICE
-            let rand = smash::app::sv_math::rand(hash40("agent"), 3) as u64;
+            let rand = smash::app::sv_math::rand(hash40("agent"), 4) as u64;
             if !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready01")) &&
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready02")) && 
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready03")) &&
                 !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready04")) { 
+                
                 if rand == 0 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready01"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready01"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                 }
-                else if rand == 1 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready02"), true, false, false, false, enSEType(0));
+                if rand == 1 {
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready02"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                 }
                 else if rand == 2 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready03"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready03"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                 }
                 else if rand == 3 {
-                    SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready04"), true, false, false, false, enSEType(0));
+                    let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_ready04"), true, false, false, false, enSEType(0));
+                    SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                 }
             }
+        }
+
+        // GLOW ON DOWN TILT AMOUNT
+        if DOWN_TILT_COUNT[ENTRY_ID] == 2 && !EFFECT_ON[ENTRY_ID] { 
+            macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
+            EFFECT_ON[ENTRY_ID] = true;
+        }
+        else if motion_kind != hash40("attack_air_hi") && motion_kind != hash40("attack_air_lw") {
+            EFFECT_ON[ENTRY_ID] = false;
+            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
         }
 
         // MIPHAS GRACE
         if MIPHAS_GRACE[ENTRY_ID] == true {
             if damage >= 120.0 { 
                 SoundModule::play_se(boma, Hash40::new("se_item_fairybottle_fairy"), true, false, false, false, enSEType(0));
-                SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                 macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 10.0, 15.0, 0.0, 0, 0, 0, 0.8, false);
@@ -67,7 +85,8 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
                     if REVALIS_GALE[ENTRY_ID] { 
                         if !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_activate")) {
                             REVALIS_GALE[ENTRY_ID] = false;
-                            SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                            let se = SoundModule::play_se(boma, Hash40::new("se_link_spirit_activate"), true, false, false, false, enSEType(0));
+                            SoundModule::set_se_vol(boma, se as i32, 1.75, 0);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), -5.0, 10.0, 0.0, 0, 0, 0, 0.8, false);
                             macros::EFFECT_FOLLOW(fighter, Hash40::new("sys_damage_aura"), Hash40::new("trans"), 10.0, 15.0, 0.0, 0, 0, 0, 0.8, false);
@@ -131,6 +150,13 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
         else {
             FLOAT_TIMER[ENTRY_ID] = 60;
         }
+
+        // DEMO
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
+            DOWN_TILT_COUNT[ENTRY_ID] = 0;
+            EFFECT_ON[ENTRY_ID] = false;
+            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
+        }
     }
 }
 
@@ -144,6 +170,7 @@ pub unsafe extern "C" fn link_start(fighter: &mut L2CFighterCommon) {
         DARUKS_PROTECTION[ENTRY_ID] = true;
         REVALIS_GALE[ENTRY_ID] = true;
         URBOSAS_FURY[ENTRY_ID] = true;
+        EFFECT_ON[ENTRY_ID] = false;
         DOWN_TILT_COUNT[ENTRY_ID] = 0;
         FLOAT_TIMER[ENTRY_ID] = 60;
     }

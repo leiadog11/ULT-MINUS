@@ -2,6 +2,23 @@ use super::*;
 
 ////////////// GHOST START
 
+// PRE
+unsafe extern "C" fn pacman_bigpacman_start_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+    StatusModule::init_settings(
+        weapon.module_accessor, 
+        SituationKind(*SITUATION_KIND_AIR), 
+        *WEAPON_KINETIC_TYPE_NORMAL, 
+        GROUND_CORRECT_KIND_NONE.into(), 
+        GroundCliffCheckKind(0), 
+        false, 
+        0, 
+        0, 
+        0, 
+        0
+    );
+    return 0.into();
+}
+
 // INIT
 pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2CWeaponCommon) -> smashline::L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
@@ -30,29 +47,13 @@ pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2C
     0.into()
 }
 
-// PRE
-unsafe extern "C" fn pacman_bigpacman_start_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    StatusModule::init_settings(
-        weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_AIR), 
-        *WEAPON_KINETIC_TYPE_NORMAL, 
-        GROUND_CORRECT_KIND_NONE.into(), 
-        smash::app::GroundCliffCheckKind(0), 
-        false, 
-        0, 
-        0, 
-        0, 
-        0
-    );
-    return 0.into();
-}
-
 // MAIN
 unsafe extern "C" fn pacman_bigpacman_start_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+    MotionModule::change_motion(weapon.module_accessor, Hash40::new("start"), 0.0, 1.0, false, 0.0, false, false);
+
     //Life
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
-    MotionModule::change_motion(weapon.module_accessor, Hash40::new("start"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
@@ -141,5 +142,6 @@ pub fn install() {
         .status(Init, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_init)
         .status(Pre, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_pre)
         .status(Main, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_main)
+        
         .install();
 }

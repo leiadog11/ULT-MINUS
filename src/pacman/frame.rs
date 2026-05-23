@@ -9,11 +9,6 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let status_kind = StatusModule::status_kind(boma);
 
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            GroundModule::set_collidable(boma, true);
-        }
-
         // CLIFF CAPE CHECK
         if situation_kind == *SITUATION_KIND_CLIFF || DamageModule::reaction(boma, 0) > 1.0 || status_kind == *FIGHTER_STATUS_KIND_DEAD { 
             ModelModule::set_mesh_visibility(boma, Hash40::new("cape"), true);
@@ -47,6 +42,13 @@ pub unsafe extern "C" fn pacman_frame(fighter: &mut L2CFighterCommon) {
             DOWN_SMASH[ENTRY_ID] = false;
             UP_SMASH[ENTRY_ID] = false;
         } 
+
+        // DISABLE NEUTRAL B TRANSITION
+        if ItemModule::is_have_item(boma, 0) { 
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
+        }
     }
 }
 

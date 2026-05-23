@@ -23,10 +23,10 @@ pub unsafe extern "C" fn gamewatch_parachute_attacks4_init(weapon: &mut smashlin
 unsafe extern "C" fn gamewatch_parachute_attacks4_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
-        smash::app::SituationKind(*SITUATION_KIND_AIR), 
+        SituationKind(*SITUATION_KIND_AIR), 
         *WEAPON_KINETIC_TYPE_NORMAL, 
         GROUND_CORRECT_KIND_AIR.into(), 
-        smash::app::GroundCliffCheckKind(0), 
+        GroundCliffCheckKind(0), 
         false, 
         0, 
         0, 
@@ -38,9 +38,10 @@ unsafe extern "C" fn gamewatch_parachute_attacks4_pre(weapon: &mut L2CWeaponComm
 
 // MAIN
 unsafe extern "C" fn gamewatch_parachute_attacks4_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+    MotionModule::change_motion(weapon.module_accessor, Hash40::new("attack_s4"), 0.0, 1.0, false, 0.0, false, false);
+
     let life = 80;
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
-    MotionModule::change_motion(weapon.module_accessor, Hash40::new("attack_s4"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let lr = PostureModule::lr(weapon.module_accessor);
