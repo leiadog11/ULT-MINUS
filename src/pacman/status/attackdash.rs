@@ -31,8 +31,20 @@ unsafe extern "C" fn pacman_attackdash_main(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn pacman_attackdash_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     if MotionModule::frame(fighter.module_accessor) >= 51.0 { 
         GroundModule::set_collidable(fighter.module_accessor, true);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        
         if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
             KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        }
+
+        if CancelModule::is_enable_cancel(fighter.module_accessor) {
+            if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+                fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+                return 1.into();
+            } else {
+                fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+                return 1.into();
+            }
         }
     } else {
         KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);

@@ -1418,6 +1418,30 @@
             "fighter/peach/motion/kinopio/c07/e00spray.nuanmb",
             "fighter/peach/motion/kinopio/c07/e00wait.nuanmb"
         ],
+        "fighter/jack/c00": [
+            "fighter/jack/motion/body/c00/d01specials.nuanmb"
+        ],
+        "fighter/jack/c01": [
+            "fighter/jack/motion/body/c01/d01specials.nuanmb"
+        ],
+        "fighter/jack/c02": [
+            "fighter/jack/motion/body/c02/d01specials.nuanmb"
+        ],
+        "fighter/jack/c03": [
+            "fighter/jack/motion/body/c03/d01specials.nuanmb"
+        ],
+        "fighter/jack/c04": [
+            "fighter/jack/motion/body/c04/d01specials.nuanmb"
+        ],
+        "fighter/jack/c05": [
+            "fighter/jack/motion/body/c05/d01specials.nuanmb"
+        ],
+        "fighter/jack/c06": [
+            "fighter/jack/motion/body/c06/d01specials.nuanmb"
+        ],
+        "fighter/jack/c07": [
+            "fighter/jack/motion/body/c07/d01specials.nuanmb"
+        ],
         "stage/battlefield_s/normal/model/bg_skydome_set": [
             "stage/battlefield_s/normal/model/bg_skydome_set/spaceinneruniverse.nutexb",
             "stage/battlefield_s/normal/model/bg_skydome_set/vertexcolors.nutexb"
