@@ -67,14 +67,8 @@ unsafe extern "C" fn reflectionboard_shoot_main_loop(weapon: &mut L2CWeaponCommo
     let mut life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    // REFLECTION CHECK
-    if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
-        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 1.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
-        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
-        return 0.into();
-    }
-
-    if life < 10 {
+    // LIFE AND REFLECTION CHECK
+    if life < 10 || (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
         weapon.change_status(WEAPON_PALUTENA_REFLECTIONBOARD_STATUS_KIND_BREAK.into(), false.into());
         CHARGE_MUL[get_entry_id(owner_boma)] = 1.0;
         life += 20;
