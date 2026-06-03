@@ -12,6 +12,12 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
         let xpos = ControlModule::get_stick_x(boma);
         let posx = PostureModule::pos_x(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            DOWN_TILT_COUNTER[ENTRY_ID] = 0;
+            NEG_ZONE[ENTRY_ID] = 0.0;
+        }
+
         // NEGATIVE ZONE
         if status_kind == *FIGHTER_STATUS_KIND_GUARD || status_kind == *FIGHTER_STATUS_KIND_GUARD_ON || status_kind == *FIGHTER_STATUS_KIND_GUARD_DAMAGE {
             let b1x = PostureModule::pos_x(boma);

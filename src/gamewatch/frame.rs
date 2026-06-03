@@ -18,6 +18,11 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             BOMB_OUT[ENTRY_ID] = false;
         }
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            BOMB_OUT[ENTRY_ID] = false;
+        }
+
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { // INVISIBLE FIX
             VisibilityModule::set_whole(boma, true);
