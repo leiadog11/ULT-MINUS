@@ -35,7 +35,7 @@ unsafe extern "C" fn jack_specials_pre(fighter: &mut L2CFighterCommon) -> L2CVal
 
 // MAIN
 unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue {
-    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s"), 0.0, 1.0, false, 0.0, false, false);
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s2"), 0.0, 1.0, false, 0.0, false, false);
 
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
@@ -46,6 +46,28 @@ unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // MAIN LOOP
 unsafe extern "C" fn jack_specials_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 32.0 {
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+
+        let lr = PostureModule::lr(fighter.module_accessor);
+
+        sv_kinetic_energy!(
+            set_speed,
+            fighter,
+            FIGHTER_KINETIC_ENERGY_ID_MOTION,
+            0.75 * lr,
+            0.0
+        );
+    } else {
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    }
+
     return 0.into();
 }
 
