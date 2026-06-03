@@ -12,6 +12,9 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_mball_flash"), false, true);
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("palutena_wand_light_trace"), false, true);
+
             if MEGA_LASER_CHARGE[ENTRY_ID] >= 360 { 
                 let vector = Vector3f{x:0.0,y:5.0,z:0.0};
                 EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &vector, &vector, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
