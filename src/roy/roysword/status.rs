@@ -53,7 +53,7 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
     }
 
     speed_y += accel_y;
-    PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 10.0, y: 0.0, z: 0.0}, 0);
+    PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 20.0, y: 0.0, z: 0.0}, 0);
 
     // Set speed
     weapon.agent.clear_lua_stack();
@@ -69,7 +69,7 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
         return 0.into();
     }
 
-    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
+    let life = 180;
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     if life < 0 {
         roysword_remove(weapon);
