@@ -6,6 +6,7 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
         let status_kind = StatusModule::status_kind(boma);
+        let frame = MotionModule::frame(boma);
 
         WorkModule::set_flag(boma, true, 0x200000E9);
         FighterSpecializer_Jack::add_rebel_gauge(boma, FighterEntryID(ENTRY_ID as i32), 999.0);
@@ -19,6 +20,15 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         if CURSE_TIMER[ENTRY_ID] > 0 {
             CURSE_TIMER[ENTRY_ID] -= 1; 
         }
+
+        // JUMP CANCEL SIDE B
+        if status_kind == FIGHTER_STATUS_KIND_SPECIAL_S && frame >= 29.0 {
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) {
+                MOMENTUM[ENTRY_ID] = 0.0;
+                macros::EFFECT_OFF_KIND(fighter, Hash40::new("jack_final_speedline"), false, true);
+                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_JUMP, true);
+            }
+        }
     }
 }
 
@@ -26,6 +36,7 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn jack_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        MOMENTUM[ENTRY_ID] = 0.0;
         CURSE_TIMER[ENTRY_ID] = 0;
     }
 }

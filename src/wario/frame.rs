@@ -75,7 +75,7 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
             max_speed = 0.0
         }   
 
-        if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
+        if status_kind == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
             if xpos < -0.5 && lr == -1.0 { //left if facing left
                 if WECTOR[ENTRY_ID] < max_speed {
                     WECTOR[ENTRY_ID] += 0.10;

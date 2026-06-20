@@ -18,21 +18,28 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 
 // SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
+        KineticModule::suspend_energy_all(agent.module_accessor);
+    }
     let mut curr_scale = PostureModule::scale(agent.module_accessor);
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
         CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 5.0,/*no*/ 0.0,/*zoom*/ 3.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
-        SlowModule::set_whole(agent.module_accessor, 100, 5);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 5.0,/*no*/ 0.0,/*zoom*/ 3.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
+        SlowModule::set_whole(agent.module_accessor, 8, 20);
         macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
         PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
     }
     frame(agent.lua_state_agent, 45.0);
     if macros::is_excute(agent) {
+        KineticModule::unable_energy(agent.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
         SlowModule::clear_whole(agent.module_accessor);
         CameraModule::reset_all(agent.module_accessor);
-        macros::SET_SPEED_EX(agent, 1.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         macros::CAM_ZOOM_OUT(agent);
+        macros::SET_SPEED_EX(agent, 0.0, 0.0, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     }
 }
 

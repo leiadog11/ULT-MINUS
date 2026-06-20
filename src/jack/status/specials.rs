@@ -34,7 +34,7 @@ unsafe extern "C" fn jack_specials_pre(fighter: &mut L2CFighterCommon) -> L2CVal
 }
 
 // MAIN
-unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+pub unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s2"), 0.0, 1.0, false, 0.0, false, false);
 
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
@@ -46,26 +46,38 @@ unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // MAIN LOOP
 unsafe extern "C" fn jack_specials_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let ENTRY_ID = get_entry_id(fighter.module_accessor);
+
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+
     if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 32.0 {
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
         KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
         let lr = PostureModule::lr(fighter.module_accessor);
+
+        MOMENTUM[ENTRY_ID] += 0.5;
 
         sv_kinetic_energy!(
             set_speed,
             fighter,
             FIGHTER_KINETIC_ENERGY_ID_MOTION,
-            0.75 * lr,
+            (2.5 * lr) + (MOMENTUM[ENTRY_ID] * lr),
             0.0
         );
-    } else {
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    }
+
+    if MotionModule::is_end(fighter.module_accessor) { 
+        MOMENTUM[ENTRY_ID] = 0.0;
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            return 1.into();
+        } else {
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+            return 1.into();
+        }
     }
 
     return 0.into();

@@ -371,7 +371,7 @@ unsafe extern "C" fn jack_specialn3(agent: &mut L2CAgentBase) {
 
 // SPECIAL S
 unsafe extern "C" fn jack_specials(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.6);
+    macros::FT_MOTION_RATE(agent, 0.2);
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_XLU);
@@ -386,7 +386,7 @@ unsafe extern "C" fn jack_specials(agent: &mut L2CAgentBase) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
     }
     frame(agent.lua_state_agent, 35.0);
-    macros::FT_MOTION_RATE(agent, 0.6);
+    macros::FT_MOTION_RATE(agent, 0.2);
     frame(agent.lua_state_agent, 44.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
