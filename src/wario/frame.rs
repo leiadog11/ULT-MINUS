@@ -62,7 +62,7 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // WECTORING
-        if damage > 30.0 && damage < 60.0 {
+        if damage > 10.0 && damage < 60.0 {
             max_speed = 4.0
         }
         if damage > 60.0 && damage < 90.0 {
@@ -71,7 +71,7 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         if damage > 90.0 {
             max_speed = 8.0
         }     
-        if damage >= 125.0 {
+        if damage >= 135.0 {
             max_speed = 0.0
         }   
 
