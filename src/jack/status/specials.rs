@@ -37,6 +37,7 @@ unsafe extern "C" fn jack_specials_pre(fighter: &mut L2CFighterCommon) -> L2CVal
 pub unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_s2"), 0.0, 1.0, false, 0.0, false, false);
 
+    KineticModule::clear_speed_all(fighter.module_accessor);
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
     GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
@@ -48,29 +49,21 @@ pub unsafe extern "C" fn jack_specials_main(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn jack_specials_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
 
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
 
-    if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 32.0 {
-        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-
+    if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 29.0 {
+        let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
         let lr = PostureModule::lr(fighter.module_accessor);
 
-        MOMENTUM[ENTRY_ID] += 0.5;
-
-        sv_kinetic_energy!(
-            set_speed,
-            fighter,
-            FIGHTER_KINETIC_ENERGY_ID_MOTION,
-            (2.5 * lr) + (MOMENTUM[ENTRY_ID] * lr),
-            0.0
-        );
+        sv_kinetic_energy::friction_off(fighter.lua_state_agent);
+        AttackModule::set_attack_height_all(fighter.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
+        KineticModule::add_speed(fighter.module_accessor, &Vector3f{ x: (x_vel + 0.05) * lr, y: 0.0, z: 0.0 });
     }
 
     if MotionModule::is_end(fighter.module_accessor) { 
-        MOMENTUM[ENTRY_ID] = 0.0;
         if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
             fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
             return 1.into();

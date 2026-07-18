@@ -24,7 +24,7 @@ unsafe extern "C" fn roy_roysword_regular_pre(weapon: &mut L2CWeaponCommon) -> L
 unsafe extern "C" fn roy_roysword_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let life = 300;
+    let life = 67;
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
@@ -34,32 +34,17 @@ unsafe extern "C" fn roy_roysword_regular_main(weapon: &mut L2CWeaponCommon) -> 
 // MAIN LOOP
 unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let facing = PostureModule::lr(weapon.module_accessor);
+    let lr = PostureModule::lr(weapon.module_accessor);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
 
-    let mut speed_x: f32 = lua_bind::KineticEnergy::get_speed_x(energy_type);
-    let mut speed_y: f32 = lua_bind::KineticEnergy::get_speed_y(energy_type);
+    let mut speed_x = if lr == 1.0 {1.5} else {-1.5};
 
-    // Declare acceleration and max speed
-    speed_x = if facing == 1.0 {0.5} else {-0.5};
-    let accel_y: f32 = -0.0054; // Adjusted for controlled y movement
-    let speed_max_y: f32 = 1.0; // Adjusted max speed for y movement
-
-    // Declare status_frame
-    let status_frame = weapon.global_table[0xe].get_f32();
-
-    if status_frame == 1.0 {
-        speed_y = 0.5;
-    }
-
-    speed_y += accel_y;
-    PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 20.0, y: 0.0, z: 0.0}, 0);
+    //PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 50.0, y: 0.0, z: 0.0}, 0);
 
     // Set speed
     weapon.agent.clear_lua_stack();
     weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
     weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_x));
-    weapon.agent.push_lua_stack(&mut L2CValue::new_num(speed_y));
     sv_kinetic_energy::set_speed(weapon.lua_state_agent);
 
     // REFLECTION CHECK
@@ -69,14 +54,9 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
         return 0.into();
     }
 
-    let life = 180;
+    let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
-    if life < 0 {
-        roysword_remove(weapon);
-        return 0.into();
-    }
-
-    if StatusModule::situation_kind(weapon.module_accessor) == *SITUATION_KIND_GROUND {
+    if life <= 0 {
         roysword_remove(weapon);
         return 0.into();
     }

@@ -16,6 +16,7 @@ unsafe extern "C" fn luigi_fireball_start_pre(weapon: &mut L2CWeaponCommon) -> L
         0, 
         0
     );
+    
     return 0.into();
 }
 

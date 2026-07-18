@@ -24,8 +24,8 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         // JUMP CANCEL SIDE B
         if status_kind == FIGHTER_STATUS_KIND_SPECIAL_S && frame >= 29.0 {
             if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) {
-                MOMENTUM[ENTRY_ID] = 0.0;
                 macros::EFFECT_OFF_KIND(fighter, Hash40::new("jack_final_speedline"), false, true);
+                macros::EFFECT_OFF_KIND(fighter, Hash40::new("tex_jack_sword1"), false, true);
                 StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_JUMP, true);
             }
         }
@@ -36,7 +36,6 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn jack_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
-        MOMENTUM[ENTRY_ID] = 0.0;
         CURSE_TIMER[ENTRY_ID] = 0;
     }
 }
