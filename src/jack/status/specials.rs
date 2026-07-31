@@ -54,13 +54,27 @@ unsafe extern "C" fn jack_specials_main_loop(fighter: &mut L2CFighterCommon) -> 
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
 
-    if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 29.0 {
-        let x_vel = KineticModule::get_sum_speed_x(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    sv_kinetic_energy!(
+        set_speed,
+        fighter,
+        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
+        -0.3,
+        0.0
+    );
+
+    if MotionModule::frame(fighter.module_accessor) >= 26.0 && MotionModule::frame(fighter.module_accessor) <= 30.0 {
         let lr = PostureModule::lr(fighter.module_accessor);
 
         sv_kinetic_energy::friction_off(fighter.lua_state_agent);
         AttackModule::set_attack_height_all(fighter.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
-        KineticModule::add_speed(fighter.module_accessor, &Vector3f{ x: (x_vel + 0.05) * lr, y: 0.0, z: 0.0 });
+
+        sv_kinetic_energy!(
+            set_speed,
+            fighter,
+            FIGHTER_KINETIC_ENERGY_ID_MOTION,
+            2.2 * lr,
+            0.0
+        );
     }
 
     if MotionModule::is_end(fighter.module_accessor) { 
