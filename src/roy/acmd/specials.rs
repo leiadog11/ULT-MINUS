@@ -4,8 +4,9 @@ use super::*;
 
 // SIDE B
 unsafe extern "C" fn roy_specials(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
+    frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) { 
+        ArticleModule::remove_exist(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         ArticleModule::generate_article(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, false, -1);
     }
     frame(agent.lua_state_agent, 14.0);
@@ -53,11 +54,7 @@ unsafe extern "C" fn roy_effect_specials(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn roy_sound_specials(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
-        //macros::PLAY_SE(agent, Hash40::new("se_eflame_special_s01"));
-    }
-    frame(agent.lua_state_agent, 12.0);
-    if macros::is_excute(agent) {
-        //macros::PLAY_SE(agent, Hash40::new("vc_eflame_special_s01_rand"));
+        macros::PLAY_SE(agent, Hash40::new("vc_roy_special_l01"));
     }
 }
 

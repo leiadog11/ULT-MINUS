@@ -28,26 +28,41 @@ unsafe extern "C" fn roy_roysword_regular_main(weapon: &mut L2CWeaponCommon) -> 
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    LinkModule::set_model_constraint_pos_ort(weapon.module_accessor,*LINK_NO_CONSTRAINT,Hash40::new("top"),Hash40::new("top"),(*CONSTRAINT_FLAG_ORIENTATION | *CONSTRAINT_FLAG_OFFSET_TRANSLATE) as u32,true);
-    LinkModule::set_constraint_translate_offset(weapon.module_accessor, &Vector3f{x: 0.0, y: 12.0, z: 12.0});
     if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
         LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
     }
+
+    let pos_x = PostureModule::pos_x(owner_boma);
+    let pos_y = PostureModule::pos_y(owner_boma);
+    let pos_z = PostureModule::pos_z(owner_boma);
+
+    let mut newPos = Vector3f{x: pos_x + 12.0, y: pos_y + 12.0, z: pos_z};
+    PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     weapon.fastshift(L2CValue::Ptr(roy_roysword_regular_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
-    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let lr = PostureModule::lr(weapon.module_accessor);
 
-    let pos_x = PostureModule::pos_x(owner_boma) + 12.0;
-    let pos_y = PostureModule::pos_y(owner_boma) + 12.0;
-    let pos_z = PostureModule::pos_z(owner_boma);
+    let pos_x = PostureModule::pos_x(weapon.module_accessor);
+    let pos_y = PostureModule::pos_y(weapon.module_accessor);
+    let pos_z = PostureModule::pos_z(weapon.module_accessor);
 
-    let mut newPos = Vector3f{x: pos_x + 2.0, y: pos_y, z: pos_z};
-    PostureModule::set_pos(weapon.module_accessor, &newPos);
+    if MotionModule::frame(weapon.module_accessor) == 1.0 {
+        let mut newPos = Vector3f{x: pos_x, y: pos_y + 12.0, z: pos_z};
+        PostureModule::set_pos(weapon.module_accessor, &newPos);
+    }
+
+    if MotionModule::frame(weapon.module_accessor) >= 0.0 && MotionModule::frame(weapon.module_accessor) <= 30.0 { 
+        let mut newPos = Vector3f{x: pos_x + 1.5 * lr, y: pos_y, z: pos_z};
+        PostureModule::set_pos(weapon.module_accessor, &newPos);
+    }
+    else if MotionModule::frame(weapon.module_accessor) >= 31.0 && MotionModule::frame(weapon.module_accessor) <= 107.0 { 
+        let mut newPos = Vector3f{x: pos_x + 0.1 * lr, y: pos_y, z: pos_z};
+        PostureModule::set_pos(weapon.module_accessor, &newPos);
+    }
 
     // REFLECTION CHECK
     if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {

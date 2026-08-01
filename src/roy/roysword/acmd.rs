@@ -18,24 +18,15 @@ unsafe extern "C" fn roysword_regular(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.5, 90, 100, 10, 20, 4.5, 0.0, -1.5, -2.0, Some(0.0), Some(-1.5), Some(5.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 3, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
     }
     frame(agent.lua_state_agent, 3.0);
-    if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.4, 361, 100, 0, 50, 15.0, 0.0, 2.0, 0.0, None, None, None, 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, true, -3, -1.0, 8, false, false, true, true, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-    }
-    frame(agent.lua_state_agent, 9.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 7, false, *BATTLE_OBJECT_ID_INVALID as u32);
-    }
-    frame(agent.lua_state_agent, 17.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 7, false, *BATTLE_OBJECT_ID_INVALID as u32);
-    }
-    frame(agent.lua_state_agent, 25.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 7, false, *BATTLE_OBJECT_ID_INVALID as u32);
-    }
-    frame(agent.lua_state_agent, 33.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 7, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    for _ in 0..14 {
+        if macros::is_excute(agent) {
+            macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.1, 361, 10, 0, 10, 14.0, 0.0, 2.0, 0.0, None, None, None, 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, true, 0, -1.0, 8, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        }
+        wait(agent.lua_state_agent, 6.0);
+        if macros::is_excute(agent) {
+            AttackModule::clear_all(agent.module_accessor);
+        }
+        wait(agent.lua_state_agent, 1.0);
     }
     frame(agent.lua_state_agent, 103.0);
     if macros::is_excute(agent) {
@@ -94,22 +85,26 @@ unsafe extern "C" fn roysword_effect_regular(agent: &mut L2CAgentBase) {
     }
 }
 
-/*
-unsafe extern "C" fn sound_rotate(agent: &mut L2CAgentBase) {
+// SOUND REGULAR
+unsafe extern "C" fn roysword_sound_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_eflame_special_s03_00"));
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
     }
-    frame(agent.lua_state_agent, 34.0);
+    frame(agent.lua_state_agent, 64.0);
     if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_eflame_special_s03_01"));
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
+    }
+    frame(agent.lua_state_agent, 104.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l03"));
     }
 }
-*/
 
 pub fn install() {
     Agent::new("roy_roysword")
         .game_acmd("game_regular", roysword_regular, Low)
         .effect_acmd("effect_regular", roysword_effect_regular, Low)
+        .sound_acmd("sound_regular", roysword_sound_regular, Low)
         
         .install();
 }
