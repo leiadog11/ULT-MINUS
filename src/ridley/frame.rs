@@ -15,19 +15,20 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             AURA[ENTRY_ID] = false;
+            UP_B_USES[ENTRY_ID] = 3;
         }
 
         // ON GROUND
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
-            UP_B_USES[ENTRY_ID] = 3; // UP B USES BACK
+            UP_B_USES[ENTRY_ID] = 3;
         }
 
         // ACTIVATE AURA
         if DamageModule::damage(boma, 0) >= 70.0 && !AURA[ENTRY_ID] { 
-            let dumb = Vector3f{x:0.0,y:10.0,z:0.0};
+            let vector = Vector3f{x:0.0,y:10.0,z:0.0};
             SoundModule::play_se(boma, Hash40::new("se_common_boss_core_hit"), true, false, false, false, enSEType(0));
             SoundModule::play_se(boma, Hash40::new("se_common_fire_m"), true, false, false, false, enSEType(0));
-            let effect = EffectModule::req_follow(boma, Hash40::new("sys_special_defense_up"), Hash40::new("top"), &dumb, &dumb, 3.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+            let effect = EffectModule::req_follow(boma, Hash40::new("sys_special_defense_up"), Hash40::new("top"), &vector, &vector, 3.0, true, 0, 0, 0, 0, 0, true, true) as u32;
             EffectModule::set_rgb(boma, effect, 0.9, 0.0, 0.5);
             EffectModule::enable_sync_init_pos_last(boma);
             AURA[ENTRY_ID] = true;
@@ -96,11 +97,11 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             UP_AIR_HOLD[ENTRY_ID] = 0;
         }
 
-        // CANCEL SIDE B DRAG INTO GRAB
-        if motion == hash40("special_s_drag_f") {
-            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
-                MotionModule::change_motion(boma, Hash40::new("catch"), 0.0, 1.0, false, 0.0, false, false);
-            }
+        // PREVENT UP B AFTER 3RD
+        if UP_B_USES[ENTRY_ID] <= 0 {
+            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
+        } else {
+            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
         }
     }
 }

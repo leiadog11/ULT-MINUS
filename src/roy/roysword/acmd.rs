@@ -1,29 +1,110 @@
 use super::*;
 
-// ROY SWORD
-unsafe extern "C" fn roy_roysword_regular(agent: &mut L2CAgentBase) {
+// REGULAR
+unsafe extern "C" fn roysword_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.2, 68, 20, 0, 35, 2.4, 0.0, 14.0, 0.0, Some(0.0), Some(0.0), Some(0.0), 3.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_SPEED, false, -2.5, 0.0, 5, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
+        AttackModule::disable_tip(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 0.0);
+    if macros::is_excute(agent) {
+        MotionModule::set_rate(agent.module_accessor, 1.2);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 7, false, *BATTLE_OBJECT_ID_INVALID as u32);
+        macros::ATTACK(agent, 1, 0, Hash40::new("sword1"), 0.8, 0, 60, 20, 10, 2.3, 2.5, -2.0, 0.0, Some(2.5), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 2, 0, Hash40::new("sword1"), 0.8, 90, 70, 20, 10, 2.3, 2.5, -2.0, 0.0, Some(2.5), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 3, 0, Hash40::new("sword1"), 0.8, 190, 60, 20, 5, 1.8, 6.0, -2.0, 0.0, Some(6.0), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 4, 0, Hash40::new("sword1"), 0.8, 120, 70, 20, 5, 1.8, 6.0, -2.0, 0.0, Some(6.0), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 5, 0, Hash40::new("sword1"), 0.8, 190, 60, 20, 10, 1.8, 9.5, -2.0, 0.0, Some(9.5), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 6, 0, Hash40::new("sword1"), 0.8, 120, 70, 30, 10, 1.8, 9.5, -2.0, 0.0, Some(9.5), Some(2.0), Some(0.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 8, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.5, 90, 100, 10, 20, 4.5, 0.0, -1.5, -2.0, Some(0.0), Some(-1.5), Some(5.0), 0.5, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, true, -3, -1.0, 3, false, false, false, false, false, *COLLISION_SITUATION_MASK_A, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+    }
+    frame(agent.lua_state_agent, 3.0);
+    for _ in 0..14 {
+        if macros::is_excute(agent) {
+            macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.1, 361, 10, 0, 10, 14.0, 0.0, 2.0, 0.0, None, None, None, 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, true, 0, -1.0, 8, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        }
+        wait(agent.lua_state_agent, 6.0);
+        if macros::is_excute(agent) {
+            AttackModule::clear_all(agent.module_accessor);
+        }
+        wait(agent.lua_state_agent, 1.0);
+    }
+    frame(agent.lua_state_agent, 103.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 104.0);
+    if macros::is_excute(agent) {
+        MotionModule::set_rate(agent.module_accessor, 1.0);
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+        macros::ATTACK(agent, 1, 0, Hash40::new("sword1"), 10.0, 65, 100, 0, 35, 3.5, 5.0, 0.0, 0.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, -1.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 2, 0, Hash40::new("sword1"), 10.0, 65, 100, 0, 35, 3.5, 9.0, 0.0, 0.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, -1.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        macros::ATTACK(agent, 3, 0, Hash40::new("sword1"), 10.0, 65, 100, 0, 35, 3.5, 11.0, 0.0, 0.0, None, None, None, 1.3, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, -1.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+        WorkModule::on_flag(agent.module_accessor, *WEAPON_EFLAME_ESWORD_STATUS_SPECIAL_S_FLAG_FINISH);
+    }
+    frame(agent.lua_state_agent, 120.0);
+    if macros::is_excute(agent) {
+        AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 130.0);
+    if macros::is_excute(agent) {
+        MotionModule::set_rate(agent.module_accessor, 0.5);
     }
 }
 
-// ROY SWORD EFFECT
-unsafe extern "C" fn roy_roysword_effect_regular(agent: &mut L2CAgentBase) {
+// EFFECT REGULAR
+unsafe extern "C" fn roysword_effect_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        //macros::EFFECT_FOLLOW(agent, Hash40::new("ganon_sword_trace"), Hash40::new("haver"), 0, 1.5, 0, 0, 0, 0, 1, true);
-        //macros::EFFECT_FOLLOW(agent, Hash40::new("ganon_majinken_start"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 1, true);
-        //EffectModule::enable_sync_init_pos_last(agent.module_accessor);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_sword"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW_NO_STOP(agent, Hash40::new("roy_blazeend_trail"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
     }
-    frame(agent.lua_state_agent, 10.0);
+    frame(agent.lua_state_agent, 64.0);
     if macros::is_excute(agent) {
-        //macros::EFFECT_FOLLOW(agent, Hash40::new("tex_ganon_sword1"), Hash40::new("haver"), 0, 1.5, 0, 0, 0, 0, 1, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_sword"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW_NO_STOP(agent, Hash40::new("roy_blazeend_trail"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 104.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_blazeend_trail"), false, true);
+    }
+    frame(agent.lua_state_agent, 105.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_trail_last_back"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_trail_last"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW_NO_STOP(agent, Hash40::new("roy_blazeend_trail_last_spin"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+    }
+    frame(agent.lua_state_agent, 116.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_blazeend_trail_last_back"), false, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_blazeend_trail_last_spin"), false, true);
+    }
+    frame(agent.lua_state_agent, 130.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_blazeend_sword"), false, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_sword_close"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_DETACH_KIND(agent, Hash40::new("roy_blazeend_trail_last"), -1);
+    }
+}
+
+// SOUND REGULAR
+unsafe extern "C" fn roysword_sound_regular(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
+    }
+    frame(agent.lua_state_agent, 64.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
+    }
+    frame(agent.lua_state_agent, 104.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l03"));
     }
 }
 
 pub fn install() {
     Agent::new("roy_roysword")
-        .game_acmd("game_regular", roy_roysword_regular, Low)
-        .effect_acmd("effect_regular", roy_roysword_effect_regular, Low)
+        .game_acmd("game_regular", roysword_regular, Low)
+        .effect_acmd("effect_regular", roysword_effect_regular, Low)
+        .sound_acmd("sound_regular", roysword_sound_regular, Low)
         
         .install();
 }

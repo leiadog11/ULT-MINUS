@@ -10,6 +10,26 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let frame = MotionModule::frame(boma);
 
+        // ON RESPAWN
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            UP_B_USED[ENTRY_ID] = false;
+            
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("sys_mball_flash"), false, true);
+            EffectModule::kill_kind(fighter.module_accessor, Hash40::new("palutena_wand_light_trace"), false, true);
+
+            if MEGA_LASER_CHARGE[ENTRY_ID] >= 360 { 
+                let vector = Vector3f{x:0.0,y:5.0,z:0.0};
+                EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_mball_flash"), Hash40::new("stick"), &vector, &vector, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+                EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
+            }
+            if BLACKHOLE_CHARGE[ENTRY_ID] >= 360 { 
+                let vector = Vector3f{x:0.0,y:10.0,z:0.0};
+                let effect = EffectModule::req_follow(fighter.module_accessor, Hash40::new("palutena_wand_light_trace"), Hash40::new("stick"), &vector, &vector, 1.0, true, 0, 0, 0, 0, 0, true, true) as u32;
+                EffectModule::set_rgb(fighter.module_accessor, effect, 0.5, 0.0, 0.5);
+                EffectModule::enable_sync_init_pos_last(fighter.module_accessor);
+            }
+        }
+
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
             ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL)); // CLEAR WINGS

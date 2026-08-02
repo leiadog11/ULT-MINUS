@@ -4,8 +4,9 @@ use super::*;
 
 // SIDE B
 unsafe extern "C" fn roy_specials(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 2.0);
+    frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) { 
+        ArticleModule::remove_exist(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         ArticleModule::generate_article(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, false, -1);
     }
     frame(agent.lua_state_agent, 14.0);
@@ -28,15 +29,15 @@ unsafe extern "C" fn roy_specials(agent: &mut L2CAgentBase) {
 // SIDE B EFFECT
 unsafe extern "C" fn roy_effect_specials(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        //macros::EFFECT_FOLLOW(agent, Hash40::new("eflame_sword_open"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_sword_open"), Hash40::new("sword1"), 0, 0, 0, 0, 90, 0, 1, true);
     }
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
-        //macros::EFFECT_FOLLOW(agent, Hash40::new("eflame_blazeend_throw"), Hash40::new("top"), 0, 12, 4, 50, -93, 0, 0.7, true);
+        macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_throw"), Hash40::new("top"), 0, 12, 4, 50, -93, 0, 0.7, true);
     }
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
-       // macros::EFFECT_OFF_KIND(agent, Hash40::new("eflame_sword_open"), true, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_sword_open"), true, true);
         macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
     frame(agent.lua_state_agent, 19.0);
@@ -45,7 +46,7 @@ unsafe extern "C" fn roy_effect_specials(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 24.0);
     if macros::is_excute(agent) {
-        //macros::EFFECT_OFF_KIND(agent, Hash40::new("eflame_catch_hand"), false, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("roy_catch_hand"), false, true);
     }
 }
 
@@ -53,11 +54,7 @@ unsafe extern "C" fn roy_effect_specials(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn roy_sound_specials(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
-        //macros::PLAY_SE(agent, Hash40::new("se_eflame_special_s01"));
-    }
-    frame(agent.lua_state_agent, 12.0);
-    if macros::is_excute(agent) {
-        //macros::PLAY_SE(agent, Hash40::new("vc_eflame_special_s01_rand"));
+        macros::PLAY_SE(agent, Hash40::new("vc_roy_special_l01"));
     }
 }
 

@@ -8,11 +8,11 @@ pub unsafe extern "C" fn bomb_frame(weapon: &mut L2CWeaponCommon) {
         let motion_kind = MotionModule::motion_kind(weapon.module_accessor);
         let status_kind = StatusModule::status_kind(owner_boma);
 
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+        if status_kind == *FIGHTER_STATUS_KIND_DEAD { 
             MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);
         }
 
-        if motion_kind == hash40("fly") { 
+        if motion_kind == hash40("fly") {  
             let boma_match = distance_formula_weapon(weapon.module_accessor, owner_boma, 24.0);
             if boma_match.is_some() {
                 MotionModule::change_motion(weapon.module_accessor, Hash40::new("burst"), 0.0, 1.0, false, 0.0, false, false);

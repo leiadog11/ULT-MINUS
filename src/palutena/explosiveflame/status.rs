@@ -36,7 +36,7 @@ unsafe extern "C" fn explosiveflame_explode_init(weapon: &mut L2CWeaponCommon) -
     let mut article_pos = Vector3f{x:0.0,y:0.0,z:0.0};
     let mut offset_add = Vector3f{x:22.0,y:14.0,z:0.0};
 
-    PostureModule::set_scale(weapon.module_accessor, 1.5, false);
+    PostureModule::set_scale(weapon.module_accessor, 1.4, false);
 
     let lr = PostureModule::lr(owner);
     let owner_offset = ModelModule::joint_global_offset_from_top(owner, Hash40{hash: hash40("throw")}, &mut owner_pos);  

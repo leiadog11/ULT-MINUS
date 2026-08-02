@@ -18,8 +18,8 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
 
         // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
-            if CHARGE_MUL[ENTRY_ID] < 5.0 {
-                CHARGE_MUL[ENTRY_ID] += 0.05;
+            if CHARGE_MUL[ENTRY_ID] < 6.0 {
+                CHARGE_MUL[ENTRY_ID] += 0.1;
             }
         }
 
