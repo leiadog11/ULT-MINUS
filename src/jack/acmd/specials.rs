@@ -371,22 +371,22 @@ unsafe extern "C" fn jack_specialn3(agent: &mut L2CAgentBase) {
 
 // SPECIAL S
 unsafe extern "C" fn jack_specials(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.2);
+    macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_XLU);
     }
     frame(agent.lua_state_agent, 26.0);
-    macros::FT_MOTION_RATE(agent, 2.0);
+    macros::FT_MOTION_RATE(agent, 1.8);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 80, 100, 80, 0, 7.0, 0.0, 6.5, -5.0, Some(0.0), Some(6.5), Some(5.0), 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, f32::NAN, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_jack_final"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 80, 100, 80, 0, 7.0, 0.0, 6.0, -5.0, Some(0.0), Some(6.5), Some(5.0), 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_jack_final"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_NONE);
     }
     frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
     }
     frame(agent.lua_state_agent, 35.0);
-    macros::FT_MOTION_RATE(agent, 0.2);
+    macros::FT_MOTION_RATE(agent, 0.4);
     frame(agent.lua_state_agent, 44.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);

@@ -62,6 +62,7 @@ mod peach;
 pub static mut FIGHTER_MANAGER: usize = 0;
 
 // THE GREAT OPPONENT BOMA LIST
+// TOOD: Change so that it grabs all bomas and filters out null ones or find other solution
 unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
     let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
     let entry_count_usize = entry_count as usize;
