@@ -35,7 +35,7 @@ unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::
     if (*weapon).battle_object.kind == *WEAPON_KIND_PEACH_KINOPIO as u32 && owner_kind == *FIGHTER_KIND_PEACH {
         *(weapon as *mut bool).add(0x90) = true;
     }
-
+    
     call_original!(vtable, weapon, log)
 }
 
