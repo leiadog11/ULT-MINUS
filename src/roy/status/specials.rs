@@ -62,6 +62,20 @@ unsafe extern "C" fn roy_specials_main(fighter: &mut L2CFighterCommon) -> L2CVal
 
 // MAIN LOOP
 unsafe extern "C" fn roy_specials_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    let frame = MotionModule::frame(fighter.module_accessor);
+    if frame >= 1.0 && frame < 3.0 {
+        if ArticleModule::is_exist(fighter.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD) {
+            if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+                fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+                return 1.into();
+            }
+            else {
+                fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+                return 1.into();
+            }
+        }
+    }
+    
     if MotionModule::is_end(fighter.module_accessor) {
         if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
             fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());

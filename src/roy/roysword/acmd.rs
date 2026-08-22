@@ -28,7 +28,7 @@ unsafe extern "C" fn roysword_regular(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 23.0);
     for _ in 0..11 {
         if macros::is_excute(agent) {
-            macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.1, 361, 10, 0, 10, 14.0, 0.0, 2.0, 0.0, None, None, None, 0.5, 3.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, true, 0, -1.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
+            macros::ATTACK(agent, 0, 1, Hash40::new("top"), 1.1, 361, 10, 0, 10, 14.0, 0.0, 2.0, 0.0, None, None, None, 0.5, 5.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, true, 0, -1.0, 0, true, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_fire"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_SWORD);
             AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 5.0, false);
         }
         wait(agent.lua_state_agent, 6.0);
@@ -96,10 +96,6 @@ unsafe extern "C" fn roysword_effect_regular(agent: &mut L2CAgentBase) {
 
 // SOUND REGULAR
 unsafe extern "C" fn roysword_sound_regular(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
-    }
-    frame(agent.lua_state_agent, 54.0);
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
     }

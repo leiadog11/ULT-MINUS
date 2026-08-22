@@ -85,8 +85,6 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
 
 // REMOVE
 pub unsafe extern "C" fn roysword_remove(weapon: &mut smashline::L2CWeaponCommon) {
-    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-
     let pos = PostureModule::pos(weapon.module_accessor);
     let eff = EffectModule::req(
         weapon.module_accessor,

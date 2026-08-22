@@ -11,24 +11,16 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            UP_B_USED[ENTRY_ID] = false;
             remove_pyra(boma);
         }
 
         // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { // REMOVE SWORD
-            ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        if DamageModule::reaction(boma, 0) > 1.0 {
             remove_pyra(boma);
         }
 
-        // ON GROUND
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
-            UP_B_USED[ENTRY_ID] = false;
-        } 
-
         // SPECIAL FALL CHECK
-        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL && !UP_B_USED[ENTRY_ID] {
-            UP_B_USED[ENTRY_ID] = true;
+        if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         }
 
@@ -39,9 +31,8 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
 
         // CANCEL DOWN SMASH
         if motion_kind == hash40("attack_lw4") {
-            cancel_with_dash(fighter.module_accessor, 7.0);
+            cancel_with_dash(boma, 7.0);
         }
-        
     }
 }
 
@@ -50,7 +41,6 @@ pub unsafe extern "C" fn roy_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         PYRA_REMOVED[ENTRY_ID] = true;
-        UP_B_USED[ENTRY_ID] = false;
         remove_pyra(fighter.module_accessor);
     }
 }

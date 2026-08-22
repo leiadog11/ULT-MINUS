@@ -6,7 +6,6 @@ use super::*;
 unsafe extern "C" fn roy_specials(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) { 
-        ArticleModule::remove_exist(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         ArticleModule::generate_article(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, false, -1);
     }
     frame(agent.lua_state_agent, 14.0);
@@ -282,9 +281,11 @@ unsafe extern "C" fn roy_specialhi(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
-        if !UP_B_USED[ENTRY_ID] {
+        let stick_y = ControlModule::get_stick_y(agent.module_accessor);
+        if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) && stick_y > 0.0 { }
+        else {
             CancelModule::enable_cancel(agent.module_accessor);
-        }
+        } 
     }
     frame(agent.lua_state_agent, 20.0);
     if macros::is_excute(agent) {
