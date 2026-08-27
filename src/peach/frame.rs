@@ -73,17 +73,6 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);
         }
-
-        // DISABLE TRANSITION TERMS FOR TOAD
-        if TOAD_OUT[ENTRY_ID] {
-            if situation_kind == *SITUATION_KIND_AIR {
-                WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_LW);
-            }
-            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
-        } else {
-            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_LW);
-            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
-        }
     }
 }
 
@@ -94,7 +83,6 @@ pub unsafe extern "C" fn peach_start(fighter: &mut L2CFighterCommon) {
         FORWARD_AIR_CHARGE[ENTRY_ID] = 0.0;
         SLEEP_MOVE[ENTRY_ID] = false;
         CAN_CANCEL_NAIR[ENTRY_ID] = false;
-        TOAD_OUT[ENTRY_ID] = false;
 
         // ALLOW USE OF DOWN B IN AIR
         fighter.global_table[CHECK_AIR_SPECIAL_UNIQ].assign(&false.into());

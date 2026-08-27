@@ -99,6 +99,25 @@ unsafe extern "C" fn palutena_specialn_charge_pre(fighter: &mut L2CFighterCommon
     return 0.into();
 }
 
+// INIT
+unsafe extern "C" fn palutena_specialn_charge_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+  if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+    let start_spd_x_mul = 0.8;
+    sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
+    let air_spd_y = 1.2;
+    let reset_speed_gravity_2f = Vector2f { x: 0.0, y: air_spd_y };
+    let reset_speed_3f = Vector3f { x: 0.0, y: 0.0, z: 0.0 };
+    let mut gravity_energy = KineticModule::get_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY) as *mut KineticEnergy;
+    smash::app::lua_bind::KineticEnergy::reset_energy(gravity_energy, *ENERGY_GRAVITY_RESET_TYPE_GRAVITY, &reset_speed_gravity_2f, &reset_speed_3f, fighter.module_accessor);
+    smash::app::lua_bind::KineticEnergy::enable(gravity_energy);
+  } else {
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+  }
+
+  return 0.into();
+}
+
 // MAIN
 unsafe extern "C" fn palutena_specialn_charge_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n_charge"), 0.0, 1.0, false, 0.0, false, false);
@@ -112,30 +131,6 @@ unsafe extern "C" fn palutena_specialn_charge_main(fighter: &mut L2CFighterCommo
 unsafe extern "C" fn palutena_specialn_charge_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     MEGA_LASER_CHARGE[ENTRY_ID] += 1;
-
-    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-        KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-
-        sv_kinetic_energy!(
-            set_speed,
-            fighter,
-            FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-            -1.0,
-            0.0
-        );
-    }
-    else {
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-        KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
-    }
 
     // SHIELD CANCEL
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
@@ -277,6 +272,7 @@ pub fn install() {
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, palutena_specialn_end)
 
         .status(Pre, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE, palutena_specialn_charge_pre)
+        .status(Init, *FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE, palutena_specialn_charge_init)
         .status(Main, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE, palutena_specialn_charge_main)
         .status(End, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_N_CHARGE, palutena_specialn_charge_end)
 

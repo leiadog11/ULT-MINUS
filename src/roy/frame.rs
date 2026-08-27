@@ -41,6 +41,7 @@ pub unsafe extern "C" fn roy_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         PYRA_REMOVED[ENTRY_ID] = true;
+        CAN_GEN[ENTRY_ID] = true;
         remove_pyra(fighter.module_accessor);
     }
 }

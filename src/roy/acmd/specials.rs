@@ -6,7 +6,10 @@ use super::*;
 unsafe extern "C" fn roy_specials(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) { 
-        ArticleModule::generate_article(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, false, -1);
+        let ENTRY_ID = get_entry_id(agent.module_accessor);
+        if CAN_GEN[ENTRY_ID] {
+            ArticleModule::generate_article(agent.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD, false, -1);
+        }
     }
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {

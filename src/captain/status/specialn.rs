@@ -35,6 +35,20 @@ unsafe extern "C" fn captain_specialn_pre(fighter: &mut L2CFighterCommon) -> L2C
 
 // INIT
 unsafe extern "C" fn captain_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        let start_spd_x_mul = 0.8;
+        sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
+        let air_spd_y = 1.2;
+        let reset_speed_gravity_2f = Vector2f { x: 0.0, y: air_spd_y };
+        let reset_speed_3f = Vector3f { x: 0.0, y: 0.0, z: 0.0 };
+        let mut gravity_energy = KineticModule::get_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY) as *mut KineticEnergy;
+        smash::app::lua_bind::KineticEnergy::reset_energy(gravity_energy, *ENERGY_GRAVITY_RESET_TYPE_GRAVITY, &reset_speed_gravity_2f, &reset_speed_3f, fighter.module_accessor);
+        smash::app::lua_bind::KineticEnergy::enable(gravity_energy);
+    } else {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+    }
+
     return 0.into();
 }
 
@@ -46,7 +60,6 @@ unsafe extern "C" fn captain_specialn_exec(fighter: &mut L2CFighterCommon) -> L2
 // MAIN
 unsafe extern "C" fn captain_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(captain_specialn_main_loop as *const () as _))
 }
