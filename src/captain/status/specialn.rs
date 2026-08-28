@@ -1,4 +1,5 @@
 use super::*;
+use smash::app::KineticEnergy;
 
 //--------------------SPECIAL N------------------------
 

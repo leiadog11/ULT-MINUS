@@ -1,4 +1,5 @@
 use super::*;
+use smash::app::KineticEnergy;
 
 static mut PUFF_X: [f32; 8] = [0.0; 8];
 static mut PUFF_Y: [f32; 8] = [0.0; 8];
@@ -45,12 +46,6 @@ unsafe extern "C" fn purin_specialn_init(fighter: &mut L2CFighterCommon) -> L2CV
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
     let start_spd_x_mul = 0.8;
     sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
-    let air_spd_y = 1.2;
-    let reset_speed_gravity_2f = Vector2f { x: 0.0, y: air_spd_y };
-    let reset_speed_3f = Vector3f { x: 0.0, y: 0.0, z: 0.0 };
-    let mut gravity_energy = KineticModule::get_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY) as *mut KineticEnergy;
-    smash::app::lua_bind::KineticEnergy::reset_energy(gravity_energy, *ENERGY_GRAVITY_RESET_TYPE_GRAVITY, &reset_speed_gravity_2f, &reset_speed_3f, fighter.module_accessor);
-    smash::app::lua_bind::KineticEnergy::enable(gravity_energy);
   } else {
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
   }
@@ -90,7 +85,7 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
   let ENTRY_ID = get_entry_id(fighter.module_accessor);
 
   // METRONOME DECISION
-  if MotionModule::frame(fighter.module_accessor) == 28.0 {
+  if MotionModule::frame(fighter.module_accessor) >= 28.0 && MotionModule::frame(fighter.module_accessor) < 29.0 {
     // DRILL
     if METRONOME[ENTRY_ID] == 0 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_DRILL), 0, 0, false, false);
