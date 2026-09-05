@@ -1,4 +1,5 @@
 use super::*;
+use smash::app::KineticEnergy;
 
 static mut PUFF_X: [f32; 8] = [0.0; 8];
 static mut PUFF_Y: [f32; 8] = [0.0; 8];
@@ -41,6 +42,14 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // INIT
 unsafe extern "C" fn purin_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+  if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+    let start_spd_x_mul = 0.8;
+    sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
+  } else {
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+  }
+
   return 0.into();
 }
 
@@ -115,8 +124,8 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
     }
     // ROLLOUT?
     if METRONOME[ENTRY_ID] == 6 {
-      WorkModule::set_float(fighter.module_accessor, 100.0, *FIGHTER_PURIN_STATUS_SPECIAL_N_WORK_FLOAT_CHARGE_COUNT);
-      StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PURIN_STATUS_KIND_SPECIAL_N_ROLL_AIR, false.into());
+      WorkModule::set_float(fighter.module_accessor, 20.0, *FIGHTER_PURIN_STATUS_SPECIAL_N_WORK_FLOAT_SPEED);
+      StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PURIN_STATUS_KIND_SPECIAL_N_HOLD_MAX, false.into());
     }
   }
 

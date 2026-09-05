@@ -107,7 +107,17 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
 
         // MOVE DURING DOWN SMASH
         if motion_kind == hash40("attack_lw4") {
-            if frame < 25.0 {
+            if frame > 0.0 && frame < 11.0 { 
+                //RIGHT
+                if xpos > 0.0  {
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 2.0, y: PostureModule::pos_y(boma)});
+                }
+                //LEFT
+                if xpos < 0.0  {
+                    PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 2.0, y: PostureModule::pos_y(boma)});
+                }
+            }
+            if frame > 11.0 && frame < 26.0 {
                 //RIGHT
                 if xpos > 0.0  {
                     PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 0.75, y: PostureModule::pos_y(boma)});

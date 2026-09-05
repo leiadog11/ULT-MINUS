@@ -2,7 +2,7 @@ use super::*;
 
 //------------------TAUNTS--------------------
 
-//SIDE TAUNT FACING RIGHT
+// SIDE TAUNT FACING RIGHT
 unsafe extern "C" fn falco_appeals(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 22.0);
     if macros::is_excute(agent) {
@@ -14,7 +14,7 @@ unsafe extern "C" fn falco_appeals(agent: &mut L2CAgentBase) {
     }
 }
 
-//SIDE TAUNT SOUND EFFECT
+// SIDE TAUNT SOUND EFFECT
 unsafe extern "C" fn falco_sound_appeals(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.2);
     frame(agent.lua_state_agent, 21.0);

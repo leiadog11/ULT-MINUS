@@ -31,7 +31,7 @@ unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
         // BLOW UP ITEM
         if StatusModule::status_kind(fighter.module_accessor) == *WEAPON_WARIO_WARIOBIKE_STATUS_KIND_SPECIAL_S_ITEM {
             if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
-                println!("BLOW UP BIKE");
+                // TODO: BLOW UP BIKE
             }
         }
     }

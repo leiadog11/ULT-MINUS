@@ -1,4 +1,5 @@
 use super::*;
+use smash::app::KineticEnergy;
 
 /////NEUTRAL B
 
@@ -35,6 +36,14 @@ unsafe extern "C" fn ganon_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 
 // INIT
 unsafe extern "C" fn ganon_specialn_init(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        let start_spd_x_mul = 0.8;
+        sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
+    } else {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+    }
+
     return 0.into();
 }
 
@@ -46,7 +55,6 @@ unsafe extern "C" fn ganon_specialn_exec(fighter: &mut L2CFighterCommon) -> L2CV
 // MAIN
 unsafe extern "C" fn ganon_specialn_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
 
     fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialn_main_loop as *const () as _))
 }

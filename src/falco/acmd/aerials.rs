@@ -96,14 +96,6 @@ unsafe extern "C" fn falco_attackairf(agent: &mut L2CAgentBase) {
     }
 }
 
-// FORWARD AIR BEAK BONK
-unsafe extern "C" fn falco_attackairfbeakbonk(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) { 
-        println!("im beak bonked");
-    }
-}
-
 // UP AIR
 unsafe extern "C" fn falco_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
@@ -274,8 +266,6 @@ pub fn install() {
         .effect_acmd("effect_attackairhihold", falco_effect_attackairhihold, Low)
 
         .game_acmd("game_attackairf", falco_attackairf, Low)
-
-        .game_acmd("game_attackairfbeakbonk", falco_attackairfbeakbonk, Low)
 
         .game_acmd("game_attackairb", falco_attackairb, Low)
         .sound_acmd("sound_attackairb", falco_sound_attackairb, Low)

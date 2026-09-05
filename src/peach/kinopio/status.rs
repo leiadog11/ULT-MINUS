@@ -34,9 +34,6 @@ unsafe extern "C" fn kinopio_appear_main(weapon: &mut L2CWeaponCommon) -> L2CVal
     let pos_z = PostureModule::pos_z(owner_boma);
     let lr = PostureModule::lr(owner_boma);
 
-    let ENTRY_ID = get_entry_id(owner_boma);
-    TOAD_OUT[ENTRY_ID] = true;
-
     let mut newPos = Vector3f{x: pos_x + 10.0 * lr, y: pos_y, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
@@ -278,9 +275,6 @@ unsafe extern "C" fn kinopio_fall_main(weapon: &mut L2CWeaponCommon) -> L2CValue
     let mut newPos = Vector3f{x: pos_x + 2.0, y: pos_y - 3.0, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
-    let ENTRY_ID = get_entry_id(owner_boma);
-    TOAD_OUT[ENTRY_ID] = true;
-
     weapon.fastshift(L2CValue::Ptr(kinopio_fall_main_loop as *const () as _))
 }
 
@@ -356,7 +350,6 @@ pub unsafe extern "C" fn kinopio_remove(weapon: &mut L2CWeaponCommon) {
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
-    TOAD_OUT[ENTRY_ID] = false;
 }
 
 pub fn install() {

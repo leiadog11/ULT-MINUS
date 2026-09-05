@@ -26,7 +26,7 @@ unsafe extern "C" fn jack_attack11(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
     }
-    frame(agent.lua_state_agent, 14.0);
+    frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
         CancelModule::enable_cancel(agent.module_accessor);
     }

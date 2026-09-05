@@ -46,11 +46,6 @@ unsafe extern "C" fn luigi_catch(agent: &mut L2CAgentBase) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
         GrabModule::set_rebound(agent.module_accessor, false);
-        /*
-        if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_CATCH) {
-            MotionModule::change_motion(agent.module_accessor, Hash40::new("catch_suck"), 0.0, 1.0, false, 0.0, false, false);
-        }
-        */
     }
 }
 
@@ -143,39 +138,6 @@ unsafe extern "C" fn luigi_catchturn(agent: &mut L2CAgentBase) {
         GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
-
-
-// SUCK
-/*
-unsafe extern "C" fn luigi_catchsuck(agent: &mut L2CAgentBase) {
-    ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_LUIGI_GENERATE_ARTICLE_PLUNGER, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-    frame(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) {
-        for _ in 0..3 {
-            println!("Doin it?");
-            macros::CATCH(agent, 0, Hash40::new("throw"), 3.0, 0.0, 0.0, -1.5, None, None, None, *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-            macros::CATCH(agent, 1, Hash40::new("top"), 3.0, 0.0, 6.6, 4.0, Some(0.0), Some(6.6), Some(8.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-            wait(agent.lua_state_agent, 1.0);
-        }
-
-        if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_CATCH) {
-            for _ in 0..3 {
-                println!("In here?");
-                macros::CATCH(agent, 0, Hash40::new("throw"), 3.0, 0.0, 0.0, -1.5, None, None, None, *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_GA);
-                macros::CATCH(agent, 1, Hash40::new("top"), 3.0, 0.0, 6.6, 4.0, Some(0.0), Some(6.6), Some(8.7), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-                wait(agent.lua_state_agent, 1.0);
-            }
-        }
-    }
-
-    wait(agent.lua_state_agent, 1.0);
-    if macros::is_excute(agent) {
-        grab!(agent, *MA_MSC_CMD_GRAB_CLEAR, 1);
-        search!(agent, *MA_MSC_CMD_SEARCH_SEARCH_SCH_CLR_ALL);
-        MotionModule::change_motion(agent.module_accessor, Hash40::new("catch_cut"), 0.0, 1.0, false, 0.0, false, false);
-    }
-}
-*/
 
 // UP THROW
 unsafe extern "C" fn luigi_throwhi(agent: &mut L2CAgentBase) {

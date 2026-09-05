@@ -63,17 +63,18 @@ pub static mut FIGHTER_MANAGER: usize = 0;
 
 // THE GREAT OPPONENT BOMA LIST
 unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -> Vec<*mut BattleObjectModuleAccessor> { 
-    let entry_count = lua_bind::FighterManager::entry_count(singletons::FighterManager());
-    let entry_count_usize = entry_count as usize;
-    let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(entry_count_usize);
-    let mut boma_counter = 0;
+    let mut opponent_bomas: Vec<*mut BattleObjectModuleAccessor> = Vec::with_capacity(8);
     
-    for _ in 0..entry_count_usize { 
-        let mut curr_boma = sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter));
+    for entry_id in 0..8i32 { 
+        let object_id = Fighter::get_id_from_entry_id(entry_id);
+        if !sv_battle_object::is_active(object_id) { continue; }
+
+        let curr_boma = sv_battle_object::module_accessor(object_id);
+        if curr_boma.is_null() { continue; }
+
         if curr_boma != boma {
-            opponent_bomas.push(sv_battle_object::module_accessor(Fighter::get_id_from_entry_id(boma_counter)));
+            opponent_bomas.push(curr_boma);
         }
-        boma_counter += 1;
     }
 
     return opponent_bomas;
