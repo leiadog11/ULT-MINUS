@@ -39,7 +39,7 @@ unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::
     call_original!(vtable, weapon, log)
 }
 
-// GLOBAl FIGHTER FRAME
+// GLOBAL FIGHTER FRAME
 pub unsafe extern "C" fn global_fighter_frame(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
