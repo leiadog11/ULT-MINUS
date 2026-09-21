@@ -16,6 +16,11 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
             stock_count = get_stock_count(boma);
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            RECEIVED_FINAL_SMASH[ENTRY_ID] = false;
+        }
+
         // UP TILT
         if MotionModule::motion_kind(boma) == hash40("attack_hi3") {
             if frame >= 8.0 {

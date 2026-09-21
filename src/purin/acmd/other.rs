@@ -5,18 +5,19 @@ use super::*;
 // DOWN TAUNT
 unsafe extern "C" fn purin_appeallw(agent: &mut L2CAgentBase) {
     AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
-    macros::FT_MOTION_RATE(agent, 0.8);
+    macros::FT_MOTION_RATE(agent, 0.7);
     frame(agent.lua_state_agent, 78.0);
     if macros::is_excute(agent) {
         if true {
             MotionModule::set_rate(agent.module_accessor, 0.0);
+            JostleModule::set_status(agent.module_accessor, false);
         }
     }
 }
 
 //---------------SHIELD----------------
 
-//SHIELD BREAK
+// SHIELD BREAK
 unsafe extern "C" fn purin_shieldbreakfly(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 20.0, 90, 1000, 0, 300, 8.0, 0.0, 1.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);

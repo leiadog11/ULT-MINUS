@@ -16,6 +16,11 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
             CURSE_TIMER[ENTRY_ID] = 0;
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            CURSE_TIMER[ENTRY_ID] = 0;
+        }
+
         // DEPLETE CURSE_TIMER
         if CURSE_TIMER[ENTRY_ID] > 0 {
             CURSE_TIMER[ENTRY_ID] -= 1; 

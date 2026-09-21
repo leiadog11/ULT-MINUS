@@ -54,6 +54,7 @@ unsafe extern "C" fn captain_specialsstart(agent: &mut L2CAgentBase) {
         AttackModule::clear_all(agent.module_accessor);
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_CAPTAIN_STATUS_WORK_ID_FLAG_FALCON_KNUCKLE_HIT_CHECK_ONOFF);
         JostleModule::set_status(agent.module_accessor, true);
+        shield!(agent, *MA_MSC_CMD_SHIELD_OFF, *COLLISION_KIND_REFLECTOR, 0, *FIGHTER_REFLECTOR_GROUP_HOMERUNBAT);
     }
 }
 

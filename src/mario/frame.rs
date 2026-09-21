@@ -18,6 +18,12 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
             SHRUNK[ENTRY_ID] = false;
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            SHRUNK[ENTRY_ID] = false;
+            COIN_COUNT[ENTRY_ID] = 0;
+        }
+
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 { 
             ModelModule::set_mesh_visibility(fighter.module_accessor, Hash40::new("block"), false);

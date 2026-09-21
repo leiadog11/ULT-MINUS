@@ -1,4 +1,5 @@
 use super::*;
+use smash::app::KineticEnergy;
 
 //--------------------------SHRINK---------------------------
 
@@ -23,7 +24,7 @@ unsafe extern "C" fn mario_shrink_pre(fighter: &mut L2CFighterCommon) -> L2CValu
 // MAIN
 unsafe extern "C" fn mario_shrink_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
-
+    
     fighter.sub_shift_status_main(L2CValue::Ptr(mario_shrink_main_loop as *const () as _))
 }
 
@@ -32,13 +33,9 @@ unsafe extern "C" fn mario_shrink_main_loop(fighter: &mut L2CFighterCommon) -> L
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     SHRINK_TIME[ENTRY_ID] -= 1;
 
-    if SHRINK_TIME[ENTRY_ID] <= 43 {
-        fighter.clear_lua_stack();
-        lua_args!(fighter, FIGHTER_KINETIC_ENERGY_ID_CONTROL, 0.0);
-        sv_kinetic_energy::set_accel_x_add(fighter.lua_state_agent);
-        sv_kinetic_energy::clear_speed(fighter.lua_state_agent);
-        KineticModule::clear_speed_all(fighter.module_accessor);
-    }
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
+    sv_kinetic_energy::clear_speed(fighter.lua_state_agent);
+    KineticModule::clear_speed_all(fighter.module_accessor);
 
     if SHRINK_TIME[ENTRY_ID] <= 0 {
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
@@ -53,7 +50,6 @@ unsafe extern "C" fn mario_shrink_main_loop(fighter: &mut L2CFighterCommon) -> L
 unsafe extern "C" fn mario_shrink_end(fighter: &mut L2CFighterCommon) -> L2CValue {
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     SHRINK_TIME[ENTRY_ID] = 45;
-    macros::CAM_ZOOM_OUT(fighter);
     return 0.into();
 }
 

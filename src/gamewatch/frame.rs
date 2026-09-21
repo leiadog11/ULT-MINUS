@@ -13,13 +13,18 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
         let xpos = ControlModule::get_stick_x(boma);
         let posx = PostureModule::pos_x(boma);
 
-        // ON DEATH
-        if status_kind == *FIGHTER_STATUS_KIND_DEAD { 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
             BOMB_OUT[ENTRY_ID] = false;
         }
 
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+            BOMB_OUT[ENTRY_ID] = false;
+        }
+
+        // ON DEATH
+        if status_kind == *FIGHTER_STATUS_KIND_DEAD { 
             BOMB_OUT[ENTRY_ID] = false;
         }
 

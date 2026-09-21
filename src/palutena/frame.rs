@@ -30,6 +30,13 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            ANCHOR_PLANTED[ENTRY_ID] = false;
+            MEGA_LASER_CHARGE[ENTRY_ID] = 0;
+            BLACKHOLE_CHARGE[ENTRY_ID] = 0;
+        }
+
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
             ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL)); // CLEAR WINGS
@@ -86,7 +93,7 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn palutena_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
-        ANCHOR_PLANTED[ENTRY_ID] = false; 
+        ANCHOR_PLANTED[ENTRY_ID] = false;
         UP_B_USED[ENTRY_ID] = false;
         MEGA_LASER_CHARGE[ENTRY_ID] = 0;
         BLACKHOLE_CHARGE[ENTRY_ID] = 0;

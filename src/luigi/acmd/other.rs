@@ -27,9 +27,6 @@ unsafe extern "C" fn luigi_appeallw(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn luigi_appealhi(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.2);
     frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        
-    }
 }
 
 // SIDE TAUNT
@@ -93,6 +90,7 @@ unsafe extern "C" fn luigi_squat(agent: &mut L2CAgentBase) {
         if x_vel > 0.0 || x_vel < 0.0 {
             macros::FOOT_EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
             KineticModule::add_speed(agent.module_accessor, &Vector3f{ x: (x_vel * 1.1) * lr, y: 0.0, z: 0.0 });
+            JostleModule::set_status(agent.module_accessor, false);
         }
     }
     frame(agent.lua_state_agent, 6.0);

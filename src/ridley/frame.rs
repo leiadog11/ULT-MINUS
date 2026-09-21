@@ -18,6 +18,11 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
             UP_B_USES[ENTRY_ID] = 3;
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            AURA[ENTRY_ID] = false;
+        }
+
         // ON GROUND
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
             UP_B_USES[ENTRY_ID] = 3;
@@ -95,13 +100,6 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         }
         else {
             UP_AIR_HOLD[ENTRY_ID] = 0;
-        }
-
-        // PREVENT UP B AFTER 3RD
-        if UP_B_USES[ENTRY_ID] <= 0 {
-            WorkModule::unable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
-        } else {
-            WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_HI);
         }
     }
 }

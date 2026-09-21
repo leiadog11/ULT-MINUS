@@ -18,6 +18,11 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
             NEG_ZONE[ENTRY_ID] = 0.0;
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            DOWN_TILT_COUNTER[ENTRY_ID] = 0;
+        }
+
         // NEGATIVE ZONE
         if status_kind == *FIGHTER_STATUS_KIND_GUARD || status_kind == *FIGHTER_STATUS_KIND_GUARD_ON || status_kind == *FIGHTER_STATUS_KIND_GUARD_DAMAGE {
             let b1x = PostureModule::pos_x(boma);
@@ -33,7 +38,6 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                 let d = dSquared.sqrt();
         
                 if d < 22.0 {
-                    //macros::SLOW_OPPONENT(fighter, 2.0, 1.0);
                     DamageModule::add_damage(*opponent_boma, 0.05, 0);
                     SlowModule::set_whole(*opponent_boma, 2, 1);
                 }

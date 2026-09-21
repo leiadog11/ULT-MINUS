@@ -110,6 +110,7 @@ unsafe extern "C" fn pacman_attackairhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 17.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        shield!(agent, *MA_MSC_CMD_SHIELD_OFF, *COLLISION_KIND_REFLECTOR, 0, *FIGHTER_REFLECTOR_GROUP_HOMERUNBAT);
     }
     frame(agent.lua_state_agent, 32.0);
     if macros::is_excute(agent) {

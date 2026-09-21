@@ -30,6 +30,11 @@ pub unsafe extern "C" fn ganon_frame(fighter: &mut L2CFighterCommon) {
             ArticleModule::remove_exist(boma, *FIGHTER_GANON_GENERATE_ARTICLE_SWORD, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            SWORD[ENTRY_ID] = true;
+        }
+
         // ON GROUND
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { // UP B 2 CHECK
             GROUND_CHECK[ENTRY_ID] = true;

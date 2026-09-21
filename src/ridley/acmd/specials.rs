@@ -5,7 +5,7 @@ use super::*;
 // UP SPECIAL START
 unsafe extern "C" fn ridley_specialhistart(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
@@ -18,6 +18,7 @@ unsafe extern "C" fn ridley_specialhistart(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 26.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 

@@ -15,6 +15,11 @@ pub unsafe extern "C" fn pit_frame(fighter: &mut L2CFighterCommon) {
             SHIELD_ON[ENTRY_ID] = false;
         }
 
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            SHIELD_ON[ENTRY_ID] = false;
+        }
+
         // CANCEL NAIR WITH JUMP
         if motion_kind == hash40("attack_air_n") {
             cancel_with_jump(boma, 6.0);

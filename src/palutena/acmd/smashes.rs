@@ -21,30 +21,31 @@ unsafe extern "C" fn palutena_attackhi4(agent: &mut L2CAgentBase) {
 
     LASER2_Y = BULLET_Y_POS[ENTRY_ID] - pos_y;
 
+    macros::FT_MOTION_RATE(agent, 1.45);
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
     }
     frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 16.0, 88, 84, 0, 53, 5.5, 0.0, 121.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 12.0, 88, 89, 0, 58, 3.8, 0.0, 144.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 9.0, 88, 92, 0, 62, 3.8, 0.0, 165.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 16.0, 88, 84, 0, 53, 4.0, 0.0, 121.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 12.0, 88, 89, 0, 58, 2.3, 0.0, 144.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 9.0, 88, 92, 0, 62, 2.3, 0.0, 165.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
         if ANCHOR_PLANTED[ENTRY_ID] {
-            macros::ATTACK(agent, 3, 0, Hash40::new("top"), 16.0, 88, 84, 0, 53, 5.5, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 120.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::ATTACK(agent, 4, 0, Hash40::new("top"), 12.0, 88, 89, 0, 58, 3.8, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 140.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::ATTACK(agent, 5, 0, Hash40::new("top"), 9.0, 88, 92, 0, 62, 3.8, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 160.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 3, 0, Hash40::new("top"), 16.0, 88, 84, 0, 53, 4.0, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 120.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 4, 0, Hash40::new("top"), 12.0, 88, 89, 0, 58, 2.3, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 140.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 5, 0, Hash40::new("top"), 9.0, 88, 92, 0, 62, 2.3, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 160.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
         }
     }
     frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 13.0, 88, 84, 0, 53, 3.8, 0.0, 122.0, 9.7, Some(0.0), Some(2.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 9.0, 88, 89, 0, 58, 3.8, 0.0, 144.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 7.0, 88, 92, 0, 62, 3.8, 0.0, 165.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 13.0, 88, 84, 0, 53, 2.3, 0.0, 122.0, 9.7, Some(0.0), Some(2.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 9.0, 88, 89, 0, 58, 2.3, 0.0, 144.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+        macros::ATTACK(agent, 2, 0, Hash40::new("top"), 7.0, 88, 92, 0, 62, 2.3, 0.0, 165.0, 9.7, Some(0.0), Some(4.0), Some(9.7), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
         if ANCHOR_PLANTED[ENTRY_ID] {
-            macros::ATTACK(agent, 3, 0, Hash40::new("top"), 13.0, 88, 84, 0, 53, 3.8, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 120.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::ATTACK(agent, 4, 0, Hash40::new("top"), 9.0, 88, 89, 0, 58, 3.8, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 140.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
-            macros::ATTACK(agent, 5, 0, Hash40::new("top"), 7.0, 88, 92, 0, 62, 3.8, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 160.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 3, 0, Hash40::new("top"), 13.0, 88, 84, 0, 53, 2.3, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 120.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 4, 0, Hash40::new("top"), 9.0, 88, 89, 0, 58, 2.3, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 140.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
+            macros::ATTACK(agent, 5, 0, Hash40::new("top"), 7.0, 88, 92, 0, 62, 2.3, 0.0, LASER2_Y, LASER2_X, Some(0.0), Some(LASER2_Y + 160.0), Some(LASER2_X), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, false, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_magic"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_MAGIC, *ATTACK_REGION_MAGIC);
         } 
     }
     frame(agent.lua_state_agent, 36.0);
@@ -78,6 +79,7 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("stick"), 0, 8.5, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
     }
+    macros::FT_MOTION_RATE(agent, 1.45);
     frame(agent.lua_state_agent, 14.0);
     if macros::is_excute(agent) {
         macros::FOOT_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 0, 0, -3, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, true);
@@ -86,10 +88,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 16.0);
     if ENTRY_ID == 0 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -99,9 +101,9 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 1 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
             macros::EFFECT_FOLLOW_ALPHA(agent, Hash40::new("palutena_backlight"), Hash40::new("top"), 4, 21.5, 2, 0, -60, 0, 1, true, 0.7);
@@ -110,10 +112,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 2 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.255, 0);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.255, 0);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -123,10 +125,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 3 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -136,10 +138,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 4 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0.1275, 0);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -149,10 +151,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 5 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.204, 0.255);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.204, 0.255);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -162,10 +164,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 6 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0.204);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.255, 0, 0.204);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);
@@ -175,10 +177,10 @@ unsafe extern "C" fn palutena_effect_attackhi4(agent: &mut L2CAgentBase) {
     }
     else if ENTRY_ID == 7 { 
         if macros::is_excute(agent) {
-            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 3, true);
+            macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 2, true);
             macros::LAST_EFFECT_SET_COLOR(agent, 0.204, 0, 0.255);
             if ANCHOR_PLANTED[ENTRY_ID] { 
-                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 3, true);
+                macros::EFFECT_FOLLOW(agent, Hash40::new("palutena_pressure"), Hash40::new("top"), 0, LASER2_Y - 5.0, LASER2_X, 0, 0, 0, 2, true);
                 macros::LAST_EFFECT_SET_COLOR(agent, 0.204, 0, 0.255);
             }
             macros::LANDING_EFFECT(agent, Hash40::new("sys_down_smoke"), Hash40::new("top"), 0, 0, 10, 0, 0, 0, 1.3, 0, 0, 0, 0, 0, 0, true);

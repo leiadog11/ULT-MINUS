@@ -5,7 +5,7 @@ use super::*;
 // FORWARD SMASH
 unsafe extern "C" fn ridley_attacks4(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     let mut fire_z = 14.0;
     frame(agent.lua_state_agent, 6.0);
@@ -37,6 +37,7 @@ unsafe extern "C" fn ridley_attacks4(agent: &mut L2CAgentBase) {
         wait(agent.lua_state_agent, 4.0);
         if macros::is_excute(agent) {
             AttackModule::clear_all(agent.module_accessor);
+            damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
         }
     }
     frame(agent.lua_state_agent, 54.0);
@@ -144,7 +145,7 @@ unsafe extern "C" fn ridley_expression_attacks4(agent: &mut L2CAgentBase) {
 // DOWN SMASH
 unsafe extern "C" fn ridley_attacklw4(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
@@ -158,6 +159,7 @@ unsafe extern "C" fn ridley_attacklw4(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 4.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 
@@ -198,7 +200,7 @@ unsafe extern "C" fn ridley_expression_attacklw4(agent: &mut L2CAgentBase) {
 // UP SMASH
 unsafe extern "C" fn ridley_attackhi4(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
@@ -226,6 +228,7 @@ unsafe extern "C" fn ridley_attackhi4(agent: &mut L2CAgentBase) {
         macros::HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_NORMAL);
         macros::HIT_NODE(agent, Hash40::new("toer"), *HIT_STATUS_NORMAL);
         AttackModule::clear_all(agent.module_accessor);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 

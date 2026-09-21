@@ -6,6 +6,12 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
         let boma = smash::app::sv_system::battle_object_module_accessor(fighter.lua_state_agent);
         let ENTRY_ID = get_entry_id(boma);
         let motion_kind = MotionModule::motion_kind(boma);
+        let status_kind = StatusModule::status_kind(boma);
+
+        // ON GAME OVER - RESET VARIABLES
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+            GYRO_LIFE[ENTRY_ID] = 0;
+        }
 
         // CANCEL SIDE B INTO UP B
         if motion_kind == hash40("attack_air_b") {

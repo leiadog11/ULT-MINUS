@@ -3,7 +3,7 @@ use super::*;
 // GRAB
 unsafe extern "C" fn ridley_catch(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 7.0);
     if macros::is_excute(agent) {
@@ -20,13 +20,14 @@ unsafe extern "C" fn ridley_catch(agent: &mut L2CAgentBase) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
         GrabModule::set_rebound(agent.module_accessor, false);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 
 // DASH GRAB
 unsafe extern "C" fn ridley_catchdash(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
@@ -43,13 +44,14 @@ unsafe extern "C" fn ridley_catchdash(agent: &mut L2CAgentBase) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
         GrabModule::set_rebound(agent.module_accessor, false);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 
 // PIVOT GRAB
 unsafe extern "C" fn ridley_catchturn(agent: &mut L2CAgentBase) {
     if AURA[get_entry_id(agent.module_accessor)] { 
-        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 6.0);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_DAMAGE_POWER, 5.0);
     }
     frame(agent.lua_state_agent, 11.0);
     if macros::is_excute(agent) {
@@ -66,6 +68,7 @@ unsafe extern "C" fn ridley_catchturn(agent: &mut L2CAgentBase) {
         grab!(agent, *MA_MSC_CMD_GRAB_CLEAR_ALL);
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_CATCH_FLAG_CATCH_WAIT);
         GrabModule::set_rebound(agent.module_accessor, false);
+        damage!(agent, *MA_MSC_DAMAGE_DAMAGE_NO_REACTION, *DAMAGE_NO_REACTION_MODE_NORMAL, 0);
     }
 }
 
