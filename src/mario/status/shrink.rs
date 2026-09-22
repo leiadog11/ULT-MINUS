@@ -24,6 +24,17 @@ unsafe extern "C" fn mario_shrink_pre(fighter: &mut L2CFighterCommon) -> L2CValu
 // MAIN
 unsafe extern "C" fn mario_shrink_main(fighter: &mut L2CFighterCommon) -> L2CValue {
     MotionModule::change_motion(fighter.module_accessor, Hash40::new("shrink"), 0.0, 1.0, false, 0.0, false, false);
+
+    KineticModule::clear_speed_all(fighter.module_accessor);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_DAMAGE);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_JOSTLE);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_ENV_WIND);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP_NO_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GROUND_MOVEMENT);
     
     fighter.sub_shift_status_main(L2CValue::Ptr(mario_shrink_main_loop as *const () as _))
 }
@@ -52,7 +63,6 @@ unsafe extern "C" fn mario_shrink_end(fighter: &mut L2CFighterCommon) -> L2CValu
     SHRINK_TIME[ENTRY_ID] = 45;
     return 0.into();
 }
-
 
 pub fn install() {
     Agent::new("mario")
