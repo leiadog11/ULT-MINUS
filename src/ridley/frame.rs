@@ -15,17 +15,11 @@ pub unsafe extern "C" fn ridley_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             AURA[ENTRY_ID] = false;
-            UP_B_USES[ENTRY_ID] = 3;
         }
 
         // ON GAME OVER - RESET VARIABLES
         if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
             AURA[ENTRY_ID] = false;
-        }
-
-        // ON GROUND
-        if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF {
-            UP_B_USES[ENTRY_ID] = 3;
         }
 
         // ACTIVATE AURA
@@ -109,7 +103,6 @@ pub unsafe extern "C" fn ridley_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         AURA[ENTRY_ID] = false;
-        UP_B_USES[ENTRY_ID] = 3;
         UP_AIR_HOLD[ENTRY_ID] = 0;
     }
 }

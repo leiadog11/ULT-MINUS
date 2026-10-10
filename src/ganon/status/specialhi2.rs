@@ -128,37 +128,37 @@ unsafe extern "C" fn ganon_specialhi2_main_loop(fighter: &mut L2CFighterCommon) 
 
     fighter.sub_transition_group_check_air_cliff();
 
-    //right
+    // RIGHT
     if stick_x > 0.5 && stick_y == 0.0 {
         stick_choice = 1;
     }
 
-    //up right
+    // UP RIGHT
     if stick_x > 0.3 && stick_y > 0.3 {
         stick_choice = 2;
     }
 
-    //up left
+    // UP LEFT
     if stick_x < -0.3 && stick_y > 0.3 {
         stick_choice = 3;
     }
 
-    //left
+    // LEFT
     if stick_x < -0.5 && stick_y == 0.0 {
         stick_choice = 4;
     }
 
-    //down left
+    // DOWN LEFT
     if stick_x < -0.3 && stick_y < -0.3 {
         stick_choice = 5;
     }
 
-    //down
+    // DOWN
     if stick_x == 0.0 && stick_y < -0.5 {
         stick_choice = 6;
     }
 
-    //down right
+    // DOWN RIGHT
     if stick_x > 0.3 && stick_y < -0.3 {
         stick_choice = 7;
     }
