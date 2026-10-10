@@ -4,8 +4,9 @@ use super::*;
 
 // UP SPECIAL
 unsafe extern "C" fn ridley_specialairhi(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.8);
+    macros::FT_MOTION_RATE(agent, 0.6);
     frame(agent.lua_state_agent, 1.0);
+    macros::FT_MOTION_RATE(agent, 0.6);
 }
 
 // UP SPECIAL EFFECT
