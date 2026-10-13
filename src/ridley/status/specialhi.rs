@@ -2,6 +2,7 @@ use super::*;
 
 static mut UP_AMOUNT: [f32; 8] = [0.0; 8];
 static mut FORWARD_AMOUNT: [f32; 8] = [0.0; 8];
+static mut STICK_CHOICE: [i32; 8] = [0; 8];
 
 //------------------ SPECIAL HI --------------------
 
@@ -58,56 +59,58 @@ unsafe extern "C" fn ridley_specialhi_main_loop(fighter: &mut L2CFighterCommon) 
 
     // UP
     if stick_x == 0.0 && stick_y > 0.3 {
-        UP_AMOUNT[ENTRY_ID] = 2.0;
+        UP_AMOUNT[ENTRY_ID] = 2.25;
         FORWARD_AMOUNT[ENTRY_ID] = 0.0;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -90.0, y: 0.0, z: 0.0}, 0);
+        STICK_CHOICE[ENTRY_ID] = 1;
     }
 
     // RIGHT
     if stick_x > 0.5 && stick_y == 0.0 { 
         UP_AMOUNT[ENTRY_ID] = 0.0;
-        FORWARD_AMOUNT[ENTRY_ID] = 2.0;
+        FORWARD_AMOUNT[ENTRY_ID] = 2.25;
+        STICK_CHOICE[ENTRY_ID] = 2;
     }
 
     // UP RIGHT
     if stick_x > 0.3 && stick_y > 0.3 { 
         UP_AMOUNT[ENTRY_ID] = 1.5;
-        FORWARD_AMOUNT[ENTRY_ID] = 1.5;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -45.0, y: 0.0, z: 0.0}, 0);
+        FORWARD_AMOUNT[ENTRY_ID] = 1.75;
+        STICK_CHOICE[ENTRY_ID] = 3;
     }
 
     // UP LEFT
     if stick_x < -0.3 && stick_y > 0.3 { 
         UP_AMOUNT[ENTRY_ID] = 1.5;
-        FORWARD_AMOUNT[ENTRY_ID] = -1.5;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: -45.0, y: 0.0, z: 0.0}, 0);
+        FORWARD_AMOUNT[ENTRY_ID] = -1.75;
+        STICK_CHOICE[ENTRY_ID] = 4;
     }
 
     // LEFT
     if stick_x < -0.5 && stick_y == 0.0 { 
         UP_AMOUNT[ENTRY_ID] = 0.0;
-        FORWARD_AMOUNT[ENTRY_ID] = -2.0;
+        FORWARD_AMOUNT[ENTRY_ID] = -2.25;
+        STICK_CHOICE[ENTRY_ID] = 5;
     }
 
     // DOWN LEFT
     if stick_x < -0.3 && stick_y < -0.3 { 
         UP_AMOUNT[ENTRY_ID] = -1.5;
-        FORWARD_AMOUNT[ENTRY_ID] = -1.5;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 45.0, y: 0.0, z: 0.0}, 0);
+        FORWARD_AMOUNT[ENTRY_ID] = -1.75;
+        STICK_CHOICE[ENTRY_ID] = 6;
     }
 
     // DOWN
     if stick_x == 0.0 && stick_y < -0.5 { 
-        UP_AMOUNT[ENTRY_ID] = -2.0;
+        UP_AMOUNT[ENTRY_ID] = -2.25;
         FORWARD_AMOUNT[ENTRY_ID] = 0.0;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 90.0, y: 0.0, z: 0.0}, 0);
+        STICK_CHOICE[ENTRY_ID] = 7;
     }
 
     // DOWN RIGHT
     if stick_x > 0.3 && stick_y < -0.3 { 
         UP_AMOUNT[ENTRY_ID] = -1.5;
-        FORWARD_AMOUNT[ENTRY_ID] = 1.5;
-        //PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 45.0, y: 0.0, z: 0.0}, 0);
+        FORWARD_AMOUNT[ENTRY_ID] = 1.75;
+        STICK_CHOICE[ENTRY_ID] = 8;
     }
 
     if MotionModule::is_end(fighter.module_accessor) {
@@ -168,15 +171,30 @@ unsafe extern "C" fn ridley_specialhi_charge_main(fighter: &mut L2CFighterCommon
 // MAIN LOOP
 unsafe extern "C" fn ridley_specialhi_charge_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
     KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
-    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
     KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
-    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
+
+    fighter.sub_transition_group_check_air_cliff();
+
+    if STICK_CHOICE[ENTRY_ID] == 1 {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("rot"), &Vector3f{x: -90.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+    }
+    else if STICK_CHOICE[ENTRY_ID] == 3 || STICK_CHOICE[ENTRY_ID] == 4 {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("rot"), &Vector3f{x: -45.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+    }
+    else if STICK_CHOICE[ENTRY_ID] == 6 || STICK_CHOICE[ENTRY_ID] == 8 {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("rot"), &Vector3f{x: 45.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+    }
+    else if STICK_CHOICE[ENTRY_ID] == 7 {
+        ModelModule::set_joint_rotate(fighter.module_accessor, Hash40::new("rot"), &Vector3f{x: 90.0, y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+    }
 
     sv_kinetic_energy!(
         set_speed,
         fighter,
-        FIGHTER_KINETIC_ENERGY_ID_MOTION,
+        FIGHTER_KINETIC_ENERGY_ID_STOP,
         FORWARD_AMOUNT[ENTRY_ID],
         0.0
     );
@@ -205,7 +223,6 @@ unsafe extern "C" fn ridley_specialhi_charge_main_loop(fighter: &mut L2CFighterC
 
 // END
 unsafe extern "C" fn ridley_specialhi_charge_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
-    PostureModule::set_rot(fighter.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0}, 0);
     return 0.into();
 }
 
