@@ -18,5 +18,5 @@ pub fn install() {
     Agent::new("zelda")
         .on_line(Main, zelda_frame)
         .on_start(zelda_start)
-        .install();
+    .install();
 }

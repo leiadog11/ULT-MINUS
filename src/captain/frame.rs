@@ -16,11 +16,6 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
             GUN_COOLDOWN[ENTRY_ID] = 0;
         }
 
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { // CLEAR FIRE BIRD ON F SMASH DAMAGE
-            ArticleModule::remove_exist(boma, *FIGHTER_CAPTAIN_GENERATE_ARTICLE_FALCONPUNCH, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
         // ON GROUND
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { // GROUND CHECK FOR UP B COUNT
             UP_B_AMOUNT[ENTRY_ID] = 2;
@@ -28,7 +23,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
 
         // CLEAR ZOOM IN UP TILT
         if motion_kind == hash40("attack_hi3") {
-            if MotionModule::is_end(boma) || DamageModule::reaction(boma, 0) > 1.0 {
+            if MotionModule::is_end(boma) {
                 SlowModule::clear_whole(boma);
                 CameraModule::reset_all(boma);
                 EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
@@ -38,7 +33,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
 
         // CLEAR ZOOM IN RAPID JAB
         if motion_kind == hash40("attack_100") {
-            if MotionModule::is_end(boma) || DamageModule::reaction(boma, 0) > 1.0 {
+            if MotionModule::is_end(boma) {
                 SlowModule::clear_whole(boma);
                 CameraModule::reset_all(boma);
                 EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
@@ -54,7 +49,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
 
         // CLEAR ZOOM IN FORWARD AIR
         if motion_kind == hash40("attack_air_f") { 
-            if frame >= 40.0 || DamageModule::reaction(boma, 0) > 1.0 {
+            if frame >= 40.0 {
                 SlowModule::clear_whole(boma);
                 CameraModule::reset_all(boma);
                 EffectModule::kill_kind(boma, Hash40::new("sys_bg_boss_finishhit"), false, false);
@@ -62,12 +57,6 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
             }
         }
         if motion_kind == hash40("landing_air_f") {
-            SlowModule::clear_whole(boma);
-            CameraModule::reset_all(boma);
-            EffectModule::kill_kind(boma, Hash40::new("sys_bg_boss_finishhit"), false, false);
-            macros::CAM_ZOOM_OUT(fighter);
-        }
-        if status_kind == *FIGHTER_STATUS_KIND_WAIT || status_kind == *FIGHTER_STATUS_KIND_FALL {
             SlowModule::clear_whole(boma);
             CameraModule::reset_all(boma);
             EffectModule::kill_kind(boma, Hash40::new("sys_bg_boss_finishhit"), false, false);
@@ -109,5 +98,5 @@ pub fn install() {
     Agent::new("captain")
         .on_line(Main, captain_frame)
         .on_start(captain_start)
-        .install();
+    .install();
 }

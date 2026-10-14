@@ -10,22 +10,11 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         let xpos = ControlModule::get_stick_x(boma);
         let motion_kind = MotionModule::motion_kind(boma);
 
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { 
-            CHARGE_MUL[ENTRY_ID] = 0.0; // RESET CHARGE MUL
-            macros::STOP_SE(fighter, Hash40::new("se_purin_special_n01")); // STOP METRONOME SOUND
-        }
-
         // SMASH ATTACK CHARGE FLOAT FOR DOWN SMASH AND FORWARD SMASH
         if motion_kind == hash40("attack_s4_hold") || motion_kind == hash40("attack_lw4_hold") {
             if CHARGE_MUL[ENTRY_ID] < 6.0 {
                 CHARGE_MUL[ENTRY_ID] += 0.1;
             }
-        }
-
-        // RESET SCALE
-        if motion_kind != hash40("attack_lw4") {
-            PostureModule::set_scale(boma, 1.0, false);
         }
 
         // MOVE ON DOWN TAUNT

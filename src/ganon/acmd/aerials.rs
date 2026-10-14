@@ -253,7 +253,6 @@ unsafe extern "C" fn ganon_landingairf2(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // BAIR
 unsafe extern "C" fn ganon_attackairb(agent: &mut L2CAgentBase) {
     if SWORD[get_entry_id(agent.module_accessor)] {
@@ -659,5 +658,5 @@ pub fn install() {
 
         .game_acmd("game_landingairlw2", ganon_landingairlw2, Low)
 
-        .install();
+    .install();
 }

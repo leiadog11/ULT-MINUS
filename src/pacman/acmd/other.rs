@@ -51,7 +51,7 @@ unsafe extern "C" fn pacman_appeallw(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn pacman_effect_win1(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
-        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), false);
         macros::EFFECT(agent, Hash40::new("sys_run_smoke"), Hash40::new("rot"), 0, -4, 0, 0, 90, 0, 1, 0, 0, 0, 0, 0, 0, false);
     }
     frame(agent.lua_state_agent, 24.0);

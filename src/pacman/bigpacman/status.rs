@@ -94,10 +94,9 @@ unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponComm
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    // REFLECTION CHECK
+    // REFLECTION CHECK - DESTROY FOR NOW
     if (AttackModule::is_infliction(weapon.module_accessor,*COLLISION_KIND_MASK_REFLECTOR)) {
-        KineticModule::reflect_speed(weapon.module_accessor,  &Vector3f{x: 1.2, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
-        KineticModule::mul_accel(weapon.module_accessor,  &Vector3f{x: 0.0, y: 0.0, z: 0.0}, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_ALL);
+        bigpacman_remove(weapon);
         return 0.into();
     }
 

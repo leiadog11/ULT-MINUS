@@ -31,7 +31,6 @@ unsafe extern "C" fn falco_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // DOWN SMASH
 unsafe extern "C" fn falco_attacklw4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 2.0);
@@ -64,7 +63,6 @@ unsafe extern "C" fn falco_attacklw4(agent: &mut L2CAgentBase) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
     }
 }
-
 
 // UP SMASH
 unsafe extern "C" fn falco_attackhi4(agent: &mut L2CAgentBase) {
@@ -117,11 +115,11 @@ unsafe extern "C" fn falco_attackhi4(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("falco")
-    .game_acmd("game_attacks4", falco_attacks4, Low)
+        .game_acmd("game_attacks4", falco_attacks4, Low)
 
-    .game_acmd("game_attacklw4", falco_attacklw4, Low)
+        .game_acmd("game_attacklw4", falco_attacklw4, Low)
 
-    .game_acmd("game_attackhi4", falco_attackhi4, Low)
+        .game_acmd("game_attackhi4", falco_attackhi4, Low)
 
     .install();
 }

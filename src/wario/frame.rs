@@ -13,11 +13,6 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         let damage = DamageModule::damage(boma, 0);
         let status_kind = StatusModule::status_kind(boma);
 
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            DOWN_SMASH_AMOUNT[ENTRY_ID] = 0; // RESET DOWN SMASH COUNT
-        }
-
         // CAMERA ZOOM OUT ON END OF UP B
         if MotionModule::motion_kind(boma) == hash40("special_hi_jump") {
             if MotionModule::is_end(boma) {
@@ -28,9 +23,8 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        // CAMERA ZOOM OUT ON LEDGE GRAB AND DAMAGE
-        if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_CLIFF_CATCH ||
-        DamageModule::reaction(boma, 0) > 1.0 {
+        // ON LEDGE
+        if StatusModule::status_kind(boma) == *FIGHTER_STATUS_KIND_CLIFF_CATCH {
             SlowModule::clear_whole(boma);
             CameraModule::reset_all(boma);
             EffectModule::kill_kind(boma, Hash40::new("sys_bg_criticalhit"), false, false);
@@ -53,11 +47,11 @@ pub unsafe extern "C" fn wario_frame(fighter: &mut L2CFighterCommon) {
         if MotionModule::motion_kind(boma) == hash40("throw_b") {
             //RIGHT
             if xpos > 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 1.45, y: pos_y});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x + 1.25, y: pos_y});
             }
             //LEFT
             if xpos < 0.0  {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 1.45, y: pos_y});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: pos_x - 1.25, y: pos_y});
             }
         }
 
@@ -115,5 +109,5 @@ pub fn install() {
     Agent::new("wario")
         .on_line(Main, wario_frame)
         .on_start(wario_start)
-        .install();
+    .install();
 }

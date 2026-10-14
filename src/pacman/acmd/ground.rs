@@ -132,12 +132,14 @@ unsafe extern "C" fn pacman_attacklw3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);
     macros::FT_MOTION_RATE(agent, 0.4);
     if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), false);
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 330, 55, 0, 25, 6.0, 0.0, 3.6, 5.5, None, None, None, 1.2, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.75, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
     }
     wait(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
     }
 }
 

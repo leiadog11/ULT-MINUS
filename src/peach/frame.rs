@@ -14,22 +14,6 @@ pub unsafe extern "C" fn peach_frame(fighter: &mut L2CFighterCommon) {
         let frame = MotionModule::frame(boma);
         let xpos = ControlModule::get_stick_x(boma);
 
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            SLEEP_MOVE[ENTRY_ID] = false;
-            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
-        // ON LEDGE
-        if situation_kind == *SITUATION_KIND_CLIFF { 
-            ArticleModule::remove_exist(boma, *FIGHTER_PEACH_GENERATE_ARTICLE_KASSAR, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-        }
-
         // FORWARD AIR CHARGE
         if motion_kind == hash40("attack_air_f") { 
             if frame >= 6.0 && frame <= 13.0 {

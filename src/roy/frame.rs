@@ -14,11 +14,6 @@ pub unsafe extern "C" fn roy_frame(fighter: &mut L2CFighterCommon) {
             remove_pyra(boma);
         }
 
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 {
-            remove_pyra(boma);
-        }
-
         // SPECIAL FALL CHECK
         if status_kind == *FIGHTER_STATUS_KIND_FALL_SPECIAL {
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_FALL, true);

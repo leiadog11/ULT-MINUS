@@ -13,7 +13,7 @@ pub unsafe extern "C" fn robot_frame(fighter: &mut L2CFighterCommon) {
             GYRO_LIFE[ENTRY_ID] = 0;
         }
 
-        // CANCEL SIDE B INTO UP B
+        // CANCEL BACK AIR INTO UP B
         if motion_kind == hash40("attack_air_b") {
             cancel_with_specialhi(boma, 19.0); 
         }

@@ -39,8 +39,6 @@ pub unsafe extern "C" fn palutena_frame(fighter: &mut L2CFighterCommon) {
 
         // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
-            ArticleModule::remove_exist(boma, *FIGHTER_PALUTENA_GENERATE_ARTICLE_GODWING, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL)); // CLEAR WINGS
-            CHARGE_MUL[ENTRY_ID] = 1.0; // RESET CHARGE MULT
             UP_B_USED[ENTRY_ID] = false; // GET UP B BACK
         }
         
@@ -107,5 +105,5 @@ pub fn install() {
     Agent::new("palutena")
         .on_line(Main, palutena_frame)
         .on_start(palutena_start)
-        .install();
+    .install();
 }

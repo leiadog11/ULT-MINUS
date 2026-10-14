@@ -30,5 +30,5 @@ pub fn install() {
     Agent::new("pichu")
         .on_line(Main, pichu_frame)
         .on_start(pichu_start)
-        .install();
+    .install();
 }

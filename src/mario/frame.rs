@@ -24,13 +24,6 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
             COIN_COUNT[ENTRY_ID] = 0;
         }
 
-        // ON HIT
-        if DamageModule::reaction(boma, 0) > 1.0 { 
-            ModelModule::set_mesh_visibility(boma, Hash40::new("block"), false);
-            ArticleModule::remove_exist(boma, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-            macros::CAM_ZOOM_OUT(fighter);
-        }
-
         // ON CLIFF 
         if situation_kind == *SITUATION_KIND_CLIFF {
             ArticleModule::remove_exist(boma, *FIGHTER_MARIO_GENERATE_ARTICLE_PUMP, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));

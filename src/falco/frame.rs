@@ -12,7 +12,6 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         let motion_kind = MotionModule::motion_kind(boma);
         let frame = MotionModule::frame(boma);
         let lr = PostureModule::lr(boma);
-        let is_touch = GroundModule::is_touch(boma, (*GROUND_TOUCH_FLAG_RIGHT).try_into().unwrap());
         let sum_speed_x = KineticModule::get_sum_speed_x(boma, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
 
         // MOVE ON RAPID JAB
@@ -30,20 +29,13 @@ unsafe extern "C" fn falco_frame(fighter: &mut L2CFighterCommon) {
         // DASH CANCEL DASH ATTACK
         if motion_kind == hash40("attack_dash") {
             if frame > 9.0 && frame < 19.0 {
-                if xpos > 0.5 {
+                if xpos > 0.4 {
                     CancelModule::enable_cancel(boma);
                 }
-                if xpos < -0.5 {
+                if xpos < -0.4 {
                     CancelModule::enable_cancel(boma);
                     
                 }
-            }
-        }
-
-        // INVINCIBILITY ON DOWN SMASH
-        if motion_kind == hash40("attack_lw_4") {
-            if frame > 1.0 {
-                macros::WHOLE_HIT(fighter, *HIT_STATUS_INVINCIBLE);
             }
         }
 

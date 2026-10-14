@@ -59,10 +59,6 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
             macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
             EFFECT_ON[ENTRY_ID] = true;
         }
-        else if motion_kind != hash40("attack_air_hi") && motion_kind != hash40("attack_air_lw") {
-            EFFECT_ON[ENTRY_ID] = false;
-            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
-        }
 
         // MIPHAS GRACE
         if MIPHAS_GRACE[ENTRY_ID] == true {
@@ -113,12 +109,12 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        // ALLOW LINK TO USE AERIAL UP B AFTER TOUCHING THE GROUND OR GRABBING LEDGE
+        // ON GROUND
         if situation_kind == *SITUATION_KIND_GROUND || situation_kind == *SITUATION_KIND_CLIFF { 
             UP_B_USED[ENTRY_ID] = false;
         }
 
-        // GIVE LINK BACK HIS UP B AFTER GETTING HIT
+        // ON HIT
         if DamageModule::reaction(boma, 0) > 1.0 {
             UP_B_USED[ENTRY_ID] = false;
         }
