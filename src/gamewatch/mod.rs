@@ -15,6 +15,7 @@ const WEAPON_GAMEWATCH_PARACHUTE_STATUS_KIND_ATTACKS4: i32 = 0x8;
 
 static mut OCTOPUS: [bool; 8] = [false; 8];
 static mut BOMB_OUT: [bool; 8] = [false; 8];
+static mut DAMAGE_ROT: [f32; 8] = [0.0; 8];
 
 pub fn install() {
     acmd::install();

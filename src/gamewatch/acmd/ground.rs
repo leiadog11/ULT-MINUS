@@ -2,47 +2,6 @@ use super::*;
 
 //------------------GROUND-------------------
 
-//JAB
-// unsafe extern "C" fn gamewatch_attack100(agent: &mut L2CAgentBase) {
-//     if macros::is_excute(agent) {
-//         if macros::is_excute(agent) {
-//             WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
-//         }
-//         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.8, 361, 20, 0, 12, 5.5, 0.0, 5.0, 14.5, None, None, None, 0.7, 0.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
-//         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.8, 361, 20, 0, 12, 4.0, 0.0, 5.0, 8.0, Some(0.0), Some(5.0), Some(5.0), 0.7, 0.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
-//         AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
-//         AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 4.0, false);
-//         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 10);
-//         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 10);
-//         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_BREATH, false, -1);
-//     }
-//     wait(agent.lua_state_agent, 1.0);
-//     if macros::is_excute(agent) {
-//         AttackModule::clear_all(agent.module_accessor);
-//         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CONTINUE_CHECK);
-//     }
-//     macros::wait_loop_clear(agent);
-//     if macros::is_excute(agent) {
-//         ArticleModule::change_motion(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_NORMAL_WEAPON, Hash40::new("attack_100"), false, -1.0);
-//     }
-//     frame(agent.lua_state_agent, 5.0);
-//     if macros::is_excute(agent) {
-//         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 0.8, 361, 20, 0, 12, 5.5, 0.0, 5.0, 14.5, None, None, None, 0.7, 0.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
-//         macros::ATTACK(agent, 1, 0, Hash40::new("top"), 0.8, 361, 20, 0, 12, 4.0, 0.0, 5.0, 8.0, Some(0.0), Some(5.0), Some(5.0), 0.7, 0.8, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_rush"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_OBJECT);
-//         AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 4.0, false);
-//         AttackModule::set_add_reaction_frame(agent.module_accessor, 1, 4.0, false);
-//         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 10);
-//         macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 10);
-//     }
-//     wait(agent.lua_state_agent, 1.0);
-//     if macros::is_excute(agent) {
-//         AttackModule::clear_all(agent.module_accessor);
-//         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_100_CONTINUE_CHECK);
-//     }
-//     frame(agent.lua_state_agent, 13.0);
-// }
-
-
 // DOWN TILT
 unsafe extern "C" fn gamewatch_attacklw3(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -187,8 +146,6 @@ unsafe extern "C" fn gamewatch_attackdash(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("gamewatch")
-        // .game_acmd("game_attack100", gamewatch_attack100, Low)
-
         .game_acmd("game_attacklw3", gamewatch_attacklw3, Low)
 
         .game_acmd("game_attackhi3", gamewatch_attackhi3, Low)

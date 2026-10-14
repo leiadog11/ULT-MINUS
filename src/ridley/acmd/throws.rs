@@ -11,8 +11,8 @@ unsafe extern "C" fn ridley_catch(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 5.0, 0.0, 7.5, 6.0, Some(0.0), Some(7.5), Some(11.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 2.5, 0.0, 7.5, 3.5, Some(0.0), Some(7.5), Some(14.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 0, Hash40::new("top"), 7.0, 0.0, 7.5, 6.0, Some(0.0), Some(7.5), Some(11.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 4.5, 0.0, 7.5, 3.5, Some(0.0), Some(7.5), Some(14.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 3.0);
@@ -35,8 +35,8 @@ unsafe extern "C" fn ridley_catchdash(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 11.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 4.5, 0.0, 7.5, 7.0, Some(0.0), Some(7.5), Some(11.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 2.25, 0.0, 7.5, 4.75, Some(0.0), Some(7.5), Some(13.75), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 0, Hash40::new("top"), 6.5, 0.0, 7.5, 7.0, Some(0.0), Some(7.5), Some(11.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 4.25, 0.0, 7.5, 4.75, Some(0.0), Some(7.5), Some(13.75), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 3.0);
@@ -59,8 +59,8 @@ unsafe extern "C" fn ridley_catchturn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
-        macros::CATCH(agent, 0, Hash40::new("top"), 5.0, 0.0, 7.5, -5.0, Some(0.0), Some(7.5), Some(-18.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
-        macros::CATCH(agent, 1, Hash40::new("top"), 2.5, 0.0, 7.5, -2.5, Some(0.0), Some(7.5), Some(-20.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 0, Hash40::new("top"), 7.0, 0.0, 7.5, -5.0, Some(0.0), Some(7.5), Some(-18.0), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
+        macros::CATCH(agent, 1, Hash40::new("top"), 4.5, 0.0, 7.5, -2.5, Some(0.0), Some(7.5), Some(-20.5), *FIGHTER_STATUS_KIND_CAPTURE_PULLED, *COLLISION_SITUATION_MASK_G);
     }
     macros::game_CaptureCutCommon(agent);
     wait(agent.lua_state_agent, 3.0);

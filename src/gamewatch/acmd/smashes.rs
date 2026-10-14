@@ -74,7 +74,7 @@ unsafe extern "C" fn gamewatch_expression_attacklw4(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP SMASH
+// UP SMASH
 unsafe extern "C" fn gamewatch_attackhi4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {

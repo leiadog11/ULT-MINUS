@@ -53,20 +53,12 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
             }
         }
 
-        // MOVE ON DOWN B IN THE AIR
-        if motion_kind == smash::hash40("special_lw") || motion_kind == smash::hash40("special_lw_start")
-        || motion_kind == smash::hash40("special_lw_end") || motion_kind == smash::hash40("special_lw_catch") {
-            if situation_kind == *SITUATION_KIND_AIR {
-                PostureModule::set_pos_2d(boma, &Vector2f {x: posx + 1.1, y: PostureModule::pos_y(boma)});
-            }
-            else {
-                if xpos > 0.5 {
-                    CancelModule::enable_cancel(boma);
-                }
-                if xpos < -0.5 {
-                    CancelModule::enable_cancel(boma);
-                }
-            }
+        // SPINNING HITSTUN
+        if [*FIGHTER_STATUS_KIND_DAMAGE_AIR, *FIGHTER_STATUS_KIND_DAMAGE_FALL, *FIGHTER_STATUS_KIND_DAMAGE_FLY].contains(&status_kind) { 
+            DAMAGE_ROT[ENTRY_ID] += 14.0;
+            ModelModule::set_joint_rotate(boma, Hash40::new("rot"), &Vector3f{x: DAMAGE_ROT[ENTRY_ID], y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
+        } else {
+            DAMAGE_ROT[ENTRY_ID] = 0.0;
         }
     }
 }
@@ -77,6 +69,7 @@ pub unsafe extern "C" fn gamewatch_start(fighter: &mut L2CFighterCommon) {
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         OCTOPUS[ENTRY_ID] = false;
         BOMB_OUT[ENTRY_ID] = false;
+        DAMAGE_ROT[ENTRY_ID] = 0.0;
     }
 }
 
