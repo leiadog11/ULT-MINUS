@@ -94,9 +94,6 @@ unsafe extern "C" fn jack_attackairlw(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 3, 1, Hash40::new("top"), 8.0, 270, 96, 0, 35, 5.0, 0.0, 2.0, 1.0, Some(0.0), Some(-4.0), Some(1.0), 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 50, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_HEAVY, *ATTACK_REGION_KICK);
             macros::ATTACK(agent, 1, 0, Hash40::new("knife"), 8.0, 38, 50, 0, 50, 2.5, 0.0, -1.0, 0.0, None, None, None, 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
             macros::ATTACK(agent, 2, 0, Hash40::new("knife"), 8.0, 38, 50, 0, 50, 3.0, 0.0, 2.5, 0.0, None, None, None, 1.5, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_curse_poison"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
-            AttackModule::set_poison_param(agent.module_accessor, 3, 321, 40, 1.5, false);
-            AttackModule::set_poison_param(agent.module_accessor, 1, 321, 40, 1.5, false);
-            AttackModule::set_poison_param(agent.module_accessor, 2, 321, 40, 1.5, false); 
         }
     }
     frame(agent.lua_state_agent, 16.0);
@@ -111,10 +108,6 @@ unsafe extern "C" fn jack_attackairlw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::off_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
         AttackModule::clear_all(agent.module_accessor);
-        SlowModule::clear_whole(agent.module_accessor);
-        CameraModule::reset_all(agent.module_accessor);
-        EffectModule::kill_kind(agent.module_accessor, Hash40::new("sys_bg_criticalhit"), false, false);
-        macros::CAM_ZOOM_OUT(agent);
     }
 }
 

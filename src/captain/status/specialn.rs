@@ -1,5 +1,4 @@
 use super::*;
-use smash::app::KineticEnergy;
 
 //--------------------SPECIAL N------------------------
 
@@ -13,7 +12,7 @@ unsafe extern "C" fn captain_specialn_pre(fighter: &mut L2CFighterCommon) -> L2C
         GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE), 
         true, 
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG, 
-        *FIGHTER_STATUS_ATTR_START_TURN, 
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
         *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT, 
         0
     );

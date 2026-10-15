@@ -1,5 +1,4 @@
 use super::*;
-use smash::app::KineticEnergy;
 
 // -------- SIDE B --------
 

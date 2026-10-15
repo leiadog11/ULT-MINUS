@@ -1,5 +1,4 @@
 use super::*;
-use smash::app::KineticEnergy;
 
 static mut PUFF_X: [f32; 8] = [0.0; 8];
 static mut PUFF_Y: [f32; 8] = [0.0; 8];
@@ -32,7 +31,7 @@ unsafe extern "C" fn purin_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CVa
     false,
     false,
     (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_N | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK | *FIGHTER_LOG_MASK_FLAG_ACTION_TRIGGER_ON) as u64,
-    *FIGHTER_STATUS_ATTR_DISABLE_TURN_DAMAGE as u32,
+    0,
     *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_N as u32,
     0
   );
@@ -50,11 +49,6 @@ unsafe extern "C" fn purin_specialn_init(fighter: &mut L2CFighterCommon) -> L2CV
     KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
   }
 
-  return 0.into();
-}
-
-// EXEC
-unsafe extern "C" fn purin_specialn_exec(fighter: &mut L2CFighterCommon) -> L2CValue { 
   return 0.into();
 }
 
@@ -157,7 +151,6 @@ pub fn install() {
   Agent::new("purin")
     .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_pre)
     .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_init)
-    .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_exec)
     .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_main)
     .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_end)
 
