@@ -92,8 +92,11 @@ unsafe extern "C" fn pacman_attackdash(agent: &mut L2CAgentBase) {
     }
     wait(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
         AttackModule::clear_all(agent.module_accessor);
+    }
+    frame(agent.lua_state_agent, 45.0);
+    if macros::is_excute(agent) {
+        ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("cape"), true);
     }
 }
 

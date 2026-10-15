@@ -371,43 +371,62 @@ unsafe extern "C" fn jack_specialn3(agent: &mut L2CAgentBase) {
 
 // SPECIAL S
 unsafe extern "C" fn jack_specials(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.4);
-    frame(agent.lua_state_agent, 7.0);
+    frame(agent.lua_state_agent, 1.0);
+    macros::FT_MOTION_RATE(agent, 0.7);
+    frame(agent.lua_state_agent, 2.0);
+}
+
+// SPECIAL S DASH
+unsafe extern "C" fn jack_specialsdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         macros::WHOLE_HIT(agent, *HIT_STATUS_XLU);
-    }
-    frame(agent.lua_state_agent, 26.0);
-    macros::FT_MOTION_RATE(agent, 1.8);
-    if macros::is_excute(agent) {
         macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.0, 80, 100, 80, 0, 7.0, 0.0, 6.0, -5.0, Some(0.0), Some(6.5), Some(5.0), 0.0, 0.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_SPEED, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_FIGHTER, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_jack_final"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_NONE);
-    }
-    frame(agent.lua_state_agent, 30.0);
-    if macros::is_excute(agent) {
-        macros::WHOLE_HIT(agent, *HIT_STATUS_NORMAL);
-    }
-    frame(agent.lua_state_agent, 35.0);
-    macros::FT_MOTION_RATE(agent, 0.4);
-    frame(agent.lua_state_agent, 44.0);
-    if macros::is_excute(agent) {
-        AttackModule::clear_all(agent.module_accessor);
     }
 }
 
-// SPECIAL S EFFECT
-unsafe extern "C" fn jack_effect_specials(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 26.0);
+// SPECIAL S DASH EFFECT
+unsafe extern "C" fn jack_effect_specialsdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         macros::AFTER_IMAGE4_ON_arg29(agent, Hash40::new("tex_jack_sword1"), Hash40::new("tex_jack_sword2"), 14, Hash40::new("knife"), 0, 0.25, 0.15, Hash40::new("knife"), 0, 5.8, 0, false, Hash40::new("jack_knife"), Hash40::new("knife"), 0, 0, 0, 0, 0, 0, 1, 0, *EFFECT_AXIS_X, 0, *TRAIL_BLEND_ALPHA, 101, *TRAIL_CULL_NONE, 1.4, 0.1);
         macros::EFFECT_FOLLOW(agent, Hash40::new("jack_final_speedline"), Hash40::new("top"), 0, 2, 1, 0, 0, 0, 0.7, true);
         macros::LANDING_EFFECT(agent, Hash40::new("sys_h_smoke_a"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.6, 0, 0, 0, 0, 0, 0, false);
     }
-    frame(agent.lua_state_agent, 35.0);
+    frame(agent.lua_state_agent, 18.0);
+    if macros::is_excute(agent) {
+        macros::AFTER_IMAGE_OFF(agent, 2);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("jack_final_speedline"), false, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("tex_jack_sword1"), false, true);
+    }
+}
+
+// SPECIAL S DASH SOUND
+unsafe extern "C" fn jack_sound_specialsdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_jack_final03"));
+    }
+}
+
+// SPECIAL S DASH EXPRESSION
+unsafe extern "C" fn jack_expression_specialsdash(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+}
+
+// SPECIAL S SLIDE EFFECT
+unsafe extern "C" fn jack_effect_specialsslide(agent: &mut L2CAgentBase) { 
+    frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
         macros::FOOT_EFFECT(agent, Hash40::new("sys_turn_smoke"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 1.2, 3, 0, 2, 0, 0, 0, false);
     }
     if macros::is_excute(agent) {
         macros::AFTER_IMAGE_OFF(agent, 2);
         macros::EFFECT_OFF_KIND(agent, Hash40::new("jack_final_speedline"), false, true);
+        macros::EFFECT_OFF_KIND(agent, Hash40::new("tex_jack_sword1"), false, true);
     }
     for _ in 0..3 {
         if macros::is_excute(agent) {
@@ -419,21 +438,6 @@ unsafe extern "C" fn jack_effect_specials(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::FOOT_EFFECT(agent, Hash40::new("sys_turn_smoke"), Hash40::new("top"), 5, 0, 0, 0, 0, 0, 1.1, 0, 0, 0, 0, 0, 0, false);
         macros::LAST_EFFECT_SET_RATE(agent, 0.7);
-    }
-}
-
-// SPECIAL S SOUND
-unsafe extern "C" fn jack_sound_specials(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 26.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_jack_final03"));
-    }
-}
-
-// SPECIAL S EXPRESSION
-unsafe extern "C" fn jack_expression_specials(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-        
     }
 }
 
@@ -455,10 +459,14 @@ pub fn install() {
 
         .game_acmd("game_specialn3", jack_specialn3, Low)
 
-        .game_acmd("game_specials2", jack_specials, Low)
-        .effect_acmd("effect_specials2", jack_effect_specials, Low)
-        .sound_acmd("sound_specials2", jack_sound_specials, Low)
-        .expression_acmd("expression_specials2", jack_expression_specials, Low)
+        .game_acmd("game_specials", jack_specials, Low)
 
-        .install();
+        .game_acmd("game_specialsdash", jack_specialsdash, Low)
+        .effect_acmd("effect_specialsdash", jack_effect_specialsdash, Low)
+        .sound_acmd("sound_specialsdash", jack_sound_specialsdash, Low)
+        .expression_acmd("expression_specialsdash", jack_expression_specialsdash, Low)
+
+        .effect_acmd("effect_specialsslide", jack_effect_specialsslide, Low)
+
+    .install();
 }

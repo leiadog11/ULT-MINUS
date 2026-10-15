@@ -25,15 +25,6 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         if CURSE_TIMER[ENTRY_ID] > 0 {
             CURSE_TIMER[ENTRY_ID] -= 1; 
         }
-
-        // JUMP CANCEL SIDE B
-        if status_kind == FIGHTER_STATUS_KIND_SPECIAL_S && frame >= 29.0 {
-            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) {
-                macros::EFFECT_OFF_KIND(fighter, Hash40::new("jack_final_speedline"), false, true);
-                macros::EFFECT_OFF_KIND(fighter, Hash40::new("tex_jack_sword1"), false, true);
-                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_JUMP, true);
-            }
-        }
     }
 }
 
