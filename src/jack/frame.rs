@@ -14,16 +14,27 @@ pub unsafe extern "C" fn jack_frame(fighter: &mut L2CFighterCommon) {
         // ON RESPAWN
         if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             CURSE_TIMER[ENTRY_ID] = 0;
+            HAS_FINAL_SMASH[ENTRY_ID] = false;
         }
 
         // ON GAME OVER - RESET VARIABLES
         if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
             CURSE_TIMER[ENTRY_ID] = 0;
+            HAS_FINAL_SMASH[ENTRY_ID] = false;
         }
 
         // DEPLETE CURSE_TIMER
         if CURSE_TIMER[ENTRY_ID] > 0 {
             CURSE_TIMER[ENTRY_ID] -= 1; 
+        }
+
+        if HAS_FINAL_SMASH[ENTRY_ID] {
+            if status_kind == *FIGHTER_STATUS_KIND_FINAL {
+                HAS_FINAL_SMASH[ENTRY_ID] = false;
+            }
+            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) {
+                notify_event_msc_cmd!(fighter, Hash40::new_raw(0x1e0aba2d68), 7);
+            }
         }
     }
 }
@@ -33,6 +44,7 @@ pub unsafe extern "C" fn jack_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
         CURSE_TIMER[ENTRY_ID] = 0;
+        HAS_FINAL_SMASH[ENTRY_ID] = false;
     }
 }
 

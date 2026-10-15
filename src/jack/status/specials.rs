@@ -144,9 +144,6 @@ unsafe extern "C" fn jack_specials_dash_main_loop(fighter: &mut L2CFighterCommon
 
     // JUMP CANCEL ON OR AFTER FRAME 8
     if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) && MotionModule::frame(fighter.module_accessor) >= 8.0 {
-        EffectModule::clear_all_after_image(fighter.module_accessor, 2);
-        EffectModule::kill_kind(fighter.module_accessor, Hash40::new("jack_final_speedline"), false, true);
-        EffectModule::kill_kind(fighter.module_accessor, Hash40::new("tex_jack_sword1"), false, true);
         fighter.change_status(FIGHTER_STATUS_KIND_JUMP.into(), false.into());
         return 1.into();
     }
@@ -166,6 +163,9 @@ unsafe extern "C" fn jack_specials_dash_main_loop(fighter: &mut L2CFighterCommon
 
 // END
 unsafe extern "C" fn jack_specials_dash_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    EffectModule::clear_all_after_image(fighter.module_accessor, 2);
+    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("jack_final_speedline"), false, true);
+    EffectModule::kill_kind(fighter.module_accessor, Hash40::new("tex_jack_sword1"), false, true);
     return 0.into();
 }
 

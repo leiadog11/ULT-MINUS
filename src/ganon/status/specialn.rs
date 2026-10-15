@@ -1,7 +1,6 @@
 use super::*;
-use smash::app::KineticEnergy;
 
-/////NEUTRAL B
+//--------------------NEUTRAL B--------------------
 
 // PRE
 unsafe extern "C" fn ganon_specialn_pre(fighter: &mut L2CFighterCommon) -> L2CValue {

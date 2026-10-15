@@ -54,7 +54,6 @@ unsafe extern "C" fn jack_attacks3(agent: &mut L2CAgentBase) {
             macros::ATTACK(agent, 0, 1, Hash40::new("knife"), 5.0, 170, 106, 0, 10, 6.0, 0.0, 0.5, 0.0, Some(0.0), Some(3.5), Some(0.0), 1.7, 6.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_purple"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_FIRE, *ATTACK_REGION_BOMB);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 0, 2);
             macros::ATK_SET_SHIELD_SETOFF_MUL(agent, 1, 2);
-            
         }
     }
     frame(agent.lua_state_agent, 16.0);

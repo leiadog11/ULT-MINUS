@@ -32,7 +32,8 @@ use {
     smash2::*,
     smash_script::*,
     smashline::*,
-    smashline::Priority::*
+    smashline::Priority::*,
+    smash::app::KineticEnergy
 };
 
 mod pacman;

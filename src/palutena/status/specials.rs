@@ -1,5 +1,4 @@
 use super::*;
-use smash::app::KineticEnergy;
 
 //-------------------SPECIALS------------------------
 
@@ -40,6 +39,15 @@ unsafe extern "C" fn palutena_specials_init(fighter: &mut L2CFighterCommon) -> L
         fighter.change_status(FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT.into(), false.into());
         return 1.into();
     }
+
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_AIR_STOP);
+        let start_spd_x_mul = 0.8;
+        sv_kinetic_energy!(mul_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_STOP, start_spd_x_mul, 1.0);
+    } else {
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_GROUND_STOP);
+    }
+
     return 0.into();
 }
 
@@ -284,5 +292,5 @@ pub fn install() {
         .status(Main, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT, palutena_specials_shoot_main)
         .status(End, FIGHTER_PALUTENA_STATUS_KIND_SPECIAL_S_SHOOT, palutena_specials_shoot_end)
 
-        .install();
+    .install();
 }
