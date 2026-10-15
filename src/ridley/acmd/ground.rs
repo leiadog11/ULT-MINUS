@@ -222,11 +222,11 @@ unsafe extern "C" fn ridley_attackhi3(agent: &mut L2CAgentBase) {
         macros::ATTACK(agent, 2, 0, Hash40::new("wingr6"), 3.0, 88, 80, 0, 35, 9.5, -5.7, 5.0, -3.5, None, None, None, 0.8, 5.5, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 2, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
         macros::ATTACK(agent, 3, 0, Hash40::new("wingr6"), 3.0, 88, 80, 0, 35, 9.5, 0.0, 5.0, -2.5, None, None, None, 0.8, 5.5, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 2, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
         macros::ATTACK(agent, 4, 0, Hash40::new("top"), 3.0, 88, 80, 0, 35, 9.0, 0.0, 13.0, 0.8, None, None, None, 0.8, 5.5, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 2, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_BODY);
-        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 0, 8.0, false);
-        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 1, 8.0, false);
-        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 2, 8.0, false);
-        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 3, 8.0, false);
-        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 4, 8.0, false);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 0, 4.0, false);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 1, 4.0, false);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 2, 4.0, false);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 3, 4.0, false);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 4, 4.0, false);
     }
     wait(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {

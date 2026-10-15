@@ -32,7 +32,8 @@ unsafe extern "C" fn rescue_attackhi3(agent: &mut L2CAgentBase) {
         else {
             PostureModule::set_pos(agent.module_accessor, &Vector3f{x: owner_posx + 0.25, y: owner_posy + 10.5, z: owner_posz - 2.0});
         }
-        macros::ATTACK(agent, 0, 0, Hash40::new("havel"), 7.0, 90, 110, 0, 55, 8.0, 2.0, 3.0, 0.0, Some(2.0), Some(3.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        macros::ATTACK(agent, 0, 0, Hash40::new("havel"), 7.0, 90, 60, 0, 35, 8.0, 2.0, 3.0, 0.0, Some(2.0), Some(3.0), Some(0.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, true, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_OBJECT);
+        AttackModule::set_add_reaction_frame_revised(agent.module_accessor, 0, 6.0, false);
     }
     frame(agent.lua_state_agent, 24.0);
     if macros::is_excute(agent) { 
@@ -66,5 +67,5 @@ pub fn install() {
 
         .game_acmd("game_attackairb", rescue_attackairb, Low)
 
-        .install();
+    .install();
 }
