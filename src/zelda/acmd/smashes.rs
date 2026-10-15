@@ -154,47 +154,6 @@ unsafe extern "C" fn zelda_expression_attackhi4(agent: &mut L2CAgentBase) {
     }
 }
 
-// FORWARD SMASH
-unsafe extern "C" fn zelda_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
-        WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);
-    }
-    frame(agent.lua_state_agent, 16.0);
-    if macros::is_excute(agent) { 
-        ArticleModule::generate_article(agent.module_accessor, *FIGHTER_ZELDA_GENERATE_ARTICLE_PHANTOM, false, 0);
-        ArticleModule::change_motion(agent.module_accessor, *FIGHTER_ZELDA_GENERATE_ARTICLE_PHANTOM, Hash40::new("attack_kick"), false, -1.0);
-    }
-    frame(agent.lua_state_agent, 40.0);
-    if macros::is_excute(agent) { 
-        ArticleModule::remove_exist(agent.module_accessor, *FIGHTER_ZELDA_GENERATE_ARTICLE_PHANTOM, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
-    }
-}
-
-// FORWARD SMASH EFFECT
-unsafe extern "C" fn zelda_effect_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 6.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("haver"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
-    }
-    frame(agent.lua_state_agent, 14.0);
-    if macros::is_excute(agent) {
-        macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), 2, 0, 0, 0, 0, 0, 0.9, 0, 0, 0, 0, 0, 0, false);
-    }
-}
-
-// FORWARD SMASH SOUND
-unsafe extern "C" fn zelda_sound_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 12.0);
-    if macros::is_excute(agent) {
-        macros::STOP_SE(agent, Hash40::new("se_common_smash_start_03"));
-    }
-    wait(agent.lua_state_agent, 3.0);
-    if macros::is_excute(agent) {
-        macros::PLAY_SEQUENCE(agent, Hash40::new("seq_zelda_rnd_smash_s"));
-    }
-}
-
 pub fn install() {
     Agent::new("zelda")
         .game_acmd("game_attacklw4", zelda_attacklw4, Low)
@@ -206,10 +165,6 @@ pub fn install() {
         .effect_acmd("effect_attackhi4", zelda_effect_attackhi4, Low)
         .sound_acmd("sound_attackhi4", zelda_sound_attackhi4, Low)
         .expression_acmd("expression_attackhi4", zelda_expression_attackhi4, Low)
-
-        .game_acmd("game_attacks4", zelda_attacks4, Low)
-        .effect_acmd("effect_attacks4", zelda_effect_attacks4, Low)
-        .sound_acmd("sound_attacks4", zelda_sound_attacks4, Low)
         
-        .install();
+    .install();
 }
