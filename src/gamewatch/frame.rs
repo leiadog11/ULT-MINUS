@@ -48,7 +48,7 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
 
         // SPINNING HITSTUN
         if [*FIGHTER_STATUS_KIND_DAMAGE_AIR, *FIGHTER_STATUS_KIND_DAMAGE_FALL, *FIGHTER_STATUS_KIND_DAMAGE_FLY].contains(&status_kind) { 
-            DAMAGE_ROT[ENTRY_ID] += 14.0;
+            DAMAGE_ROT[ENTRY_ID] += 16.0;
             ModelModule::set_joint_rotate(boma, Hash40::new("rot"), &Vector3f{x: DAMAGE_ROT[ENTRY_ID], y: 0.0, z: 0.0}, MotionNodeRotateCompose{_address: *MOTION_NODE_ROTATE_COMPOSE_AFTER as u8}, MotionNodeRotateOrder{_address: *MOTION_NODE_ROTATE_ORDER_XYZ as u8});
         } else {
             DAMAGE_ROT[ENTRY_ID] = 0.0;

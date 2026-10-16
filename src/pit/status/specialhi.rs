@@ -155,10 +155,11 @@ unsafe extern "C" fn pit_specialhi_flight_main_loop(fighter: &mut L2CFighterComm
         0.0
     );
     
-    // CANCEL WITH ATTACK OR AIR DODGE SPECIAL
+    // CANCEL WITH ATTACK, AIR DODGE, OR JUMP
     if ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) ||
     ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_CATCH) ||
-    ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) {
+    ControlModule::check_button_trigger(fighter.module_accessor, *CONTROL_PAD_BUTTON_GUARD) ||
+    ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) {
         macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_ikaros_wing_flare"), true, true);
         macros::EFFECT_OFF_KIND(fighter, Hash40::new("pit_fly_miracle_b"), true, true);
         macros::STOP_SE(fighter, Hash40::new("se_pit_flight_wings"));
@@ -197,5 +198,5 @@ pub fn install() {
         .status(Main, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_main)
         .status(End, *FIGHTER_PIT_STATUS_KIND_SPECIAL_HI_RUSH, pit_specialhi_flight_end)
     
-        .install();
+    .install();
 }

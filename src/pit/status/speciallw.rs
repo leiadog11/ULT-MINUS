@@ -67,5 +67,5 @@ pub fn install() {
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_LW, pit_speciallw_end)
 
-        .install();
+    .install();
 }
