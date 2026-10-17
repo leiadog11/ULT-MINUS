@@ -150,24 +150,6 @@ unsafe extern "C" fn get_final_smash(boma: *mut BattleObjectModuleAccessor) {
     );
 }
 
-// REMOVE FINAL SMASH
-unsafe extern "C" fn remove_final_smash(boma: *mut BattleObjectModuleAccessor) {
-    let ENTRY_ID = get_entry_id(boma);
-    LookupSymbol(
-        &mut FIGHTER_MANAGER,
-        "_ZN3lib9SingletonIN3app14FighterManagerEE9instance_E\u{0}"
-            .as_bytes()
-            .as_ptr(),
-    );
-    let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
-    smash::app::lua_bind::FighterManager::set_final(
-        fighter_manager, 
-        FighterEntryID(ENTRY_ID.try_into().unwrap()), 
-        smash::app::FighterAvailableFinal { _address: *(smash::lib::lua_const::FighterAvailableFinal::DISCRETION) as u8 },
-        0
-    );
-}
-
 // GET STOCK COUNT
 unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u32 {
     let ENTRY_ID = get_entry_id(boma);
@@ -334,13 +316,10 @@ pub fn main() {
     jack::install();
     roy::install();
     peach::install();
-    smashline::clone_weapon("mario", *WEAPON_KIND_MARIO_FIREBALL, "ganon", "gsword", false);
-    smashline::clone_weapon("koopajr", *WEAPON_KIND_KOOPAJR_CANNONBALL, "roy", "roysword", false);
-    smashline::update_weapon_count(*WEAPON_KIND_LUIGI_FIREBALL, 15);
-    smashline::update_weapon_count(*WEAPON_KIND_RIDLEY_BREATH, 30);
-    smashline::update_weapon_count(*WEAPON_KIND_PACMAN_BIGPACMAN, 4);
-    smashline::update_weapon_count(*WEAPON_KIND_LINK_SWORD_BEAM, 3);
-    smashline::update_weapon_count(*WEAPON_KIND_LINK_BOOMERANG, 2);
-    smashline::update_weapon_count(*WEAPON_KIND_GAMEWATCH_FOOD, 15);
-    smashline::update_weapon_count(*WEAPON_KIND_BAYONETTA_WICKEDWEAVELEG, 2);
+
+    smashline::update_weapon_count(*FIGHTER_KIND_LUIGI, *FIGHTER_LUIGI_GENERATE_ARTICLE_FIREBALL, 15);
+    smashline::update_weapon_count(*FIGHTER_KIND_RIDLEY, *FIGHTER_RIDLEY_GENERATE_ARTICLE_BREATH, 30);
+    smashline::update_weapon_count(*FIGHTER_KIND_PACMAN, *FIGHTER_PACMAN_GENERATE_ARTICLE_BIGPACMAN, 4);
+    smashline::update_weapon_count(*FIGHTER_KIND_LINK, *FIGHTER_LINK_GENERATE_ARTICLE_SWORD_BEAM, 3);
+    smashline::update_weapon_count(*FIGHTER_KIND_GAMEWATCH, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_FOOD, 15);
 }

@@ -5,7 +5,8 @@ pub mod frame;
 pub mod status;
 pub mod gsword;
 
-const FIGHTER_GANON_GENERATE_ARTICLE_GSWORD : i32 = 0x2;
+pub static mut FIGHTER_GANON_GENERATE_ARTICLE_GSWORD: i32 = 0;
+pub static mut WEAPON_KIND_GANON_GSWORD: i32 = 0;
 
 const WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR: i32 = 0;
 
@@ -23,4 +24,10 @@ pub fn install() {
     frame::install();
     status::install();
     gsword::install();
+
+    let gsword = smashline::clone_weapon("ganon", "gsword", *WEAPON_KIND_MARIO_FIREBALL, false);
+    unsafe {
+        FIGHTER_GANON_GENERATE_ARTICLE_GSWORD = gsword.generate_id;
+        WEAPON_KIND_GANON_GSWORD = gsword.weapon_id;
+    }
 }

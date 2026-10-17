@@ -5,7 +5,8 @@ pub mod frame;
 pub mod status;
 pub mod roysword;
 
-const FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD : i32 = 0x1;
+pub static mut FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD: i32 = 0;
+pub static mut WEAPON_KIND_ROY_ROYSWORD: i32 = 0;
 
 const WEAPON_ROY_ROYSWORD_STATUS_KIND_REGULAR: i32 = 0;
 
@@ -15,7 +16,6 @@ const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_LANDING: i32 = 0x1EC;
 
 static mut PYRA_REMOVED: [bool; 8] = [true; 8];
 static mut CAN_GEN: [bool; 8] = [true; 8];
-
 
 // REMOVE PYRA
 unsafe extern "C" fn remove_pyra(boma: *mut BattleObjectModuleAccessor) { 
@@ -44,4 +44,10 @@ pub fn install() {
     frame::install();
     status::install();
     roysword::install();
+
+    let roysword = smashline::clone_weapon("roy", "roysword", *WEAPON_KIND_KOOPAJR_CANNONBALL, false);
+    unsafe {
+        FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD = roysword.generate_id;
+        WEAPON_KIND_ROY_ROYSWORD = roysword.weapon_id;
+    }
 }
