@@ -29,9 +29,7 @@ unsafe extern "C" fn jack_attack_s3_curse_timer_check_attack_status(fighter: &mu
                 else {
                     let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                     if rand == 1 {
-                        StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_SHIELD_BREAK_FALL, false);
-                        EffectModule::req_follow(opponent_boma, Hash40::new("sys_piyopiyo"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.2, false, 0, 0, 0, 0, 0, false, false);
-                        
+                        StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_SHIELD_BREAK_FALL, false);                        
                         SlowModule::set_whole(fighter.module_accessor, 8, 20);
                         macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
                         EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
@@ -63,8 +61,6 @@ unsafe extern "C" fn jack_attack_lw3_curse_timer_check_attack_status(fighter: &m
                 let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                 if rand == 1 {
                     StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_SHIELD_BREAK_FALL, false);
-                    EffectModule::req_follow(opponent_boma, Hash40::new("sys_piyopiyo"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.2, false, 0, 0, 0, 0, 0, false, false);
-
                     SlowModule::set_whole(fighter.module_accessor, 8, 20);
                     macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
                     EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
@@ -97,8 +93,6 @@ unsafe extern "C" fn jack_attack_dash_curse_timer_check_attack_status(fighter: &
                     let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                     if rand == 1 {
                         StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_SHIELD_BREAK_FALL, false);
-                        EffectModule::req_follow(opponent_boma, Hash40::new("sys_piyopiyo"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.2, false, 0, 0, 0, 0, 0, false, false);
-
                         SlowModule::set_whole(fighter.module_accessor, 8, 20);
                         macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
                         EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
@@ -130,8 +124,6 @@ unsafe extern "C" fn jack_attack_lw4_curse_timer_check_attack_status(fighter: &m
                 let rand = smash::app::sv_math::rand(hash40("fighter"), 6) as u64;
                 if rand == 1 {
                     StatusModule::change_status_request_from_script(opponent_boma, *FIGHTER_STATUS_KIND_SHIELD_BREAK_FALL, false);
-                    EffectModule::req_follow(opponent_boma, Hash40::new("sys_piyopiyo"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.2, false, 0, 0, 0, 0, 0, false, false);
-
                     SlowModule::set_whole(fighter.module_accessor, 8, 20);
                     macros::CAM_ZOOM_IN_arg5(fighter, /*frames*/ 2.0,/*no*/ 0.0,/*zoom*/ 1.8,/*yrot*/ 0.0,/*xrot*/ 0.0);
                     EffectModule::req_follow(fighter.module_accessor, Hash40::new("sys_bg_criticalhit"), Hash40::new("top"), &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, &Vector3f{x: 0.0, y: 0.0, z: 0.0} as *const Vector3f, 1.0, false, 0, 0, 0, 0, 0, false, false);
