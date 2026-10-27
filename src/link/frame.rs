@@ -23,6 +23,7 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
             REVALIS_GALE[ENTRY_ID] = true;
             URBOSAS_FURY[ENTRY_ID] = true;
             EFFECT_ON[ENTRY_ID] = false;
+
             // PLAY A RANDOM SPIRIT VOICE
             let rand = smash::app::sv_math::rand(hash40("agent"), 4) as u64;
             if !SoundModule::is_playing(boma, Hash40::new("se_link_spirit_ready01")) &&
@@ -50,14 +51,10 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // ON GAME OVER - RESET VARIABLES
-        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
             DOWN_TILT_COUNT[ENTRY_ID] = 0;
-        }
-
-        // GLOW ON DOWN TILT AMOUNT
-        if DOWN_TILT_COUNT[ENTRY_ID] == 2 && !EFFECT_ON[ENTRY_ID] { 
-            macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
-            EFFECT_ON[ENTRY_ID] = true;
+            EFFECT_ON[ENTRY_ID] = false;
+            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
         }
 
         // MIPHAS GRACE
@@ -152,12 +149,10 @@ pub unsafe extern "C" fn link_frame(fighter: &mut L2CFighterCommon) {
             FLOAT_TIMER[ENTRY_ID] = 60;
         }
 
-        // DEMO
-        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
-            DOWN_TILT_COUNT[ENTRY_ID] = 0;
-            EFFECT_ON[ENTRY_ID] = false;
-            EffectModule::kill_kind(boma, Hash40::new("link_sword_flare"), false, true);
-        }
+        if DOWN_TILT_COUNT[ENTRY_ID] == 2 && !EFFECT_ON[ENTRY_ID] {
+            macros::EFFECT_FOLLOW(fighter, Hash40::new("link_sword_flare"), Hash40::new("sword1"), 0, 0, 0, 0, 0, 0, 1, true);
+            EFFECT_ON[ENTRY_ID] = true;
+        } 
     }
 }
 
@@ -171,9 +166,9 @@ pub unsafe extern "C" fn link_start(fighter: &mut L2CFighterCommon) {
         DARUKS_PROTECTION[ENTRY_ID] = true;
         REVALIS_GALE[ENTRY_ID] = true;
         URBOSAS_FURY[ENTRY_ID] = true;
-        EFFECT_ON[ENTRY_ID] = false;
         DOWN_TILT_COUNT[ENTRY_ID] = 0;
         FLOAT_TIMER[ENTRY_ID] = 60;
+        EFFECT_ON[ENTRY_ID] = false;
     }
 }
 

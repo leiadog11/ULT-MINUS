@@ -106,8 +106,8 @@ unsafe extern "C" fn link_attacklw3(agent: &mut L2CAgentBase) {
         if DOWN_TILT_COUNT[ENTRY_ID] == 3 {
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 9.0, 85, 30, 0, 90, 2.0, 0.0, 1.3, 17.5, Some(0.0), Some(5.0), Some(5.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_bind"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
             DOWN_TILT_COUNT[ENTRY_ID] = 0;
-            EFFECT_ON[ENTRY_ID] = false;
             EffectModule::kill_kind(agent.module_accessor, Hash40::new("link_sword_flare"), false, true);
+            EFFECT_ON[ENTRY_ID] = false;
         }
         else {
             macros::ATTACK(agent, 0, 0, Hash40::new("top"), 4.0, 330, 55, 0, 25, 2.0, 0.0, 1.3, 17.5, Some(0.0), Some(5.0), Some(5.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_F, false, 0, 0.7, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_cutup"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_CUTUP, *ATTACK_REGION_SWORD);
