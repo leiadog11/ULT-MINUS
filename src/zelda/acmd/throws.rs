@@ -121,6 +121,5 @@ pub fn install() {
         .game_acmd("game_throwhi", zelda_throwhi, Low)
 
         .game_acmd("game_throwlw", zelda_throwlw, Low)
-
-        .install();
+    .install();
 }
