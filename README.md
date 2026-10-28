@@ -22,7 +22,7 @@ Current Version: Alpha 0.6.2
 - SaltyBet Stadium (PS2)
 
 ## Character Change Log
-Current Character Amount: 20
+Current Character Amount: 19
 
 Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 
