@@ -52,7 +52,6 @@ mod gamewatch;
 mod mario;
 mod link;
 mod bayonetta;
-mod metaknight;
 mod pit;
 mod jack;
 mod roy;
@@ -309,7 +308,6 @@ pub fn main() {
     mario::install();
     link::install();
     bayonetta::install();
-    metaknight::install();
     pit::install();
     jack::install();
     roy::install();
