@@ -43,10 +43,8 @@ unsafe extern "C" fn ganon_specialhi2_start_main(fighter: &mut L2CFighterCommon)
     WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
     HitModule::set_whole(fighter.module_accessor, HitStatus(*HIT_STATUS_XLU), 0);
 
-    fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialhi2_start_main_loop as *const () as _));
-    return 0.into();
+    fighter.sub_shift_status_main(L2CValue::Ptr(ganon_specialhi2_start_main_loop as *const () as _))
 }
-
 
 // MAIN LOOP
 unsafe extern "C" fn ganon_specialhi2_start_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 

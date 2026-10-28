@@ -2,7 +2,7 @@ use super::*;
 
 //------------------TAUNTS--------------------
 
-// SIDE TAUNT FACING RIGHT
+// SIDE TAUNT
 unsafe extern "C" fn falco_appeals(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 22.0);
     if macros::is_excute(agent) {
@@ -14,7 +14,7 @@ unsafe extern "C" fn falco_appeals(agent: &mut L2CAgentBase) {
     }
 }
 
-// SIDE TAUNT SOUND EFFECT
+// SIDE TAUNT SOUND
 unsafe extern "C" fn falco_sound_appeals(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.2);
     frame(agent.lua_state_agent, 21.0);
@@ -31,14 +31,8 @@ unsafe extern "C" fn falco_sound_appeals(agent: &mut L2CAgentBase) {
 
 // WIN1
 unsafe extern "C" fn falco_win1(agent: &mut L2CAgentBase) {
-    let ENTRY_ID = get_entry_id(agent.module_accessor);
     if macros::is_excute(agent) {
-        if ENTRY_ID == 0 {
-            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:-15.0,y:0.0,z:0.0});
-        }
-        else {
-            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:15.0,y:0.0,z:0.0});
-        }
+        PostureModule::set_pos(agent.module_accessor, &Vector3f{x:-15.0,y:0.0,z:0.0});
     }
 }
 
@@ -51,31 +45,24 @@ unsafe extern "C" fn falco_win(agent: &mut L2CAgentBase) {
 
 // LOSE
 unsafe extern "C" fn falco_lose(agent: &mut L2CAgentBase) { 
-    let ENTRY_ID = get_entry_id(agent.module_accessor);
     if macros::is_excute(agent) { 
-        if ENTRY_ID == 0 {
-            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:-15.0,y:0.0,z:0.0});
-        }
-        else {
-            PostureModule::set_pos(agent.module_accessor, &Vector3f{x:15.0,y:0.0,z:0.0});
-        }
+        PostureModule::set_pos(agent.module_accessor, &Vector3f{x:15.0,y:0.0,z:0.0});
     }
 }
 
 pub fn install() {
     Agent::new("falco")
-    .game_acmd("game_appealsr", falco_appeals, Low)
-    .sound_acmd("sound_appealsr", falco_sound_appeals, Low)
+        .game_acmd("game_appealsr", falco_appeals, Low)
+        .sound_acmd("sound_appealsr", falco_sound_appeals, Low)
+        .game_acmd("game_appealsl", falco_appeals, Low)
+        .sound_acmd("sound_appealsl", falco_sound_appeals, Low)
 
-    .game_acmd("game_appealsl", falco_appeals, Low)
-    .sound_acmd("sound_appealsl", falco_sound_appeals, Low)
+        .game_acmd("game_win1", falco_win1, Low)
 
-    .game_acmd("game_win1", falco_win1, Low)
+        .game_acmd("game_win2", falco_win, Low)
+        .game_acmd("game_win3", falco_win, Low)
 
-    .game_acmd("game_win2", falco_win, Low)
-    .game_acmd("game_win3", falco_win, Low)
+        .game_acmd("game_lose", falco_lose, Low)
 
-    .game_acmd("game_lose", falco_lose, Low)
-    
     .install();
 }

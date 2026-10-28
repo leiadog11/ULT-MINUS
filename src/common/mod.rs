@@ -89,7 +89,7 @@ pub unsafe extern "C" fn global_fighter_frame(fighter: &mut L2CFighterCommon) {
 pub fn install() {
     Agent::new("fighter")
         .on_line(Main, global_fighter_frame)
-        .install();
+    .install();
 
     skyline::install_hooks!(
         is_valid_just_shield_reflector,
