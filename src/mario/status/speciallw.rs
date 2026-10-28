@@ -71,21 +71,8 @@ unsafe extern "C" fn mario_speciallw_main_loop(fighter: &mut L2CFighterCommon) -
     let lr = PostureModule::lr(fighter.module_accessor);
     let forward_speed = 0.2;
 
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_MOTION,
-        forward_speed * lr,
-        0.0
-    );
-
-    sv_kinetic_energy!(
-        set_speed,
-        fighter,
-        FIGHTER_KINETIC_ENERGY_ID_GRAVITY,
-        1.5,
-        0.0
-    );
+    sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_MOTION, forward_speed * lr, 0.0);
+    sv_kinetic_energy!(set_speed, fighter, FIGHTER_KINETIC_ENERGY_ID_GRAVITY, 1.5, 0.0);
 
     // CHANGE FLUDD TO END
     if MotionModule::frame(fighter.module_accessor) == 29.0 { 

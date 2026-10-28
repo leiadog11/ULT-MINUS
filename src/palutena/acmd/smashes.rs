@@ -21,7 +21,7 @@ unsafe extern "C" fn palutena_attackhi4(agent: &mut L2CAgentBase) {
 
     LASER2_Y = BULLET_Y_POS[ENTRY_ID] - pos_y;
 
-    macros::FT_MOTION_RATE(agent, 1.45);
+    macros::FT_MOTION_RATE(agent, 1.2);
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);

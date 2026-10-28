@@ -14,20 +14,11 @@ unsafe extern "C" fn mario_speciallw_check_damage(fighter: &mut L2CFighterCommon
     return 0.into();
 }
 
-// SHRINK
-unsafe extern "C" fn mario_shrink_check_damage(fighter: &mut L2CFighterCommon, param2: &L2CValue) -> L2CValue {
-    macros::CAM_ZOOM_OUT(fighter);
-
-    return 0.into();
-}
-
 pub fn install() {
     Agent::new("mario")
         .status(CheckDamage, *FIGHTER_STATUS_KIND_APPEAL, mario_taunt_check_damage)
 
         .status(CheckDamage, *FIGHTER_STATUS_KIND_SPECIAL_LW, mario_speciallw_check_damage)
-
-        .status(CheckDamage, FIGHTER_MARIO_STATUS_KIND_SHRINK, mario_shrink_check_damage)
         
     .install();
 }

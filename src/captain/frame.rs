@@ -14,6 +14,7 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         // ON GAME OVER - RESET VARIABLES
         if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
             GUN_COOLDOWN[ENTRY_ID] = 0;
+            UP_B_AMOUNT[ENTRY_ID] = 2;
         }
 
         // ON GROUND
