@@ -3,7 +3,7 @@ use super::*;
 /////// REGULAR
 
 // PRE
-unsafe extern "C" fn roy_roysword_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+unsafe extern "C" fn roy_pyrawheel_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
         SituationKind(*SITUATION_KIND_AIR), 
@@ -21,7 +21,7 @@ unsafe extern "C" fn roy_roysword_regular_pre(weapon: &mut L2CWeaponCommon) -> L
 }
 
 // MAIN
-unsafe extern "C" fn roy_roysword_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+unsafe extern "C" fn roy_pyrawheel_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let life = 145;
@@ -41,11 +41,11 @@ unsafe extern "C" fn roy_roysword_regular_main(weapon: &mut L2CWeaponCommon) -> 
     let mut newPos = Vector3f{x: pos_x + 10.0 * lr, y: pos_y + 12.0, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
-    weapon.fastshift(L2CValue::Ptr(roy_roysword_regular_main_loop as *const () as _))
+    weapon.fastshift(L2CValue::Ptr(roy_pyrawheel_regular_main_loop as *const () as _))
 }
 
 // MAIN LOOP
-unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+unsafe extern "C" fn roy_pyrawheel_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let lr = PostureModule::lr(weapon.module_accessor);
 
     let pos_x = PostureModule::pos_x(weapon.module_accessor);
@@ -76,7 +76,7 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     if life <= 0 {
-        roysword_remove(weapon);
+        pyrawheel_remove(weapon);
         return 0.into();
     }
 
@@ -84,7 +84,7 @@ unsafe extern "C" fn roy_roysword_regular_main_loop(weapon: &mut L2CWeaponCommon
 }
 
 // REMOVE
-pub unsafe extern "C" fn roysword_remove(weapon: &mut smashline::L2CWeaponCommon) {
+pub unsafe extern "C" fn pyrawheel_remove(weapon: &mut smashline::L2CWeaponCommon) {
     let pos = PostureModule::pos(weapon.module_accessor);
     let eff = EffectModule::req(
         weapon.module_accessor,
@@ -103,9 +103,8 @@ pub unsafe extern "C" fn roysword_remove(weapon: &mut smashline::L2CWeaponCommon
 }
 
 pub fn install() {
-    Agent::new("roy_roysword")
-        .status(Pre, WEAPON_ROY_ROYSWORD_STATUS_KIND_REGULAR, roy_roysword_regular_pre)
-        .status(Main, WEAPON_ROY_ROYSWORD_STATUS_KIND_REGULAR, roy_roysword_regular_main)
-
-        .install();
+    Agent::new("roy_pyrawheel")
+        .status(Pre, WEAPON_ROY_PYRAWHEEL_STATUS_KIND_REGULAR, roy_pyrawheel_regular_pre)
+        .status(Main, WEAPON_ROY_PYRAWHEEL_STATUS_KIND_REGULAR, roy_pyrawheel_regular_main)
+    .install();
 }

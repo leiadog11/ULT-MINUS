@@ -50,7 +50,7 @@ unsafe extern "C" fn roy_specials_init(fighter: &mut L2CFighterCommon) -> L2CVal
     }
 
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
-    if ArticleModule::is_exist(fighter.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD) {
+    if ArticleModule::is_exist(fighter.module_accessor, FIGHTER_ROY_GENERATE_ARTICLE_PYRAWHEEL) {
         CAN_GEN[ENTRY_ID] = false;
     } else {
         CAN_GEN[ENTRY_ID] = true;
@@ -93,6 +93,5 @@ pub fn install() {
         .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_init)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_S, roy_specials_end)
-
-        .install();
+    .install();
 }

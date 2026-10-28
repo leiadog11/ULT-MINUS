@@ -3,12 +3,12 @@ use super::*;
 pub mod acmd;
 pub mod frame;
 pub mod status;
-pub mod roysword;
+pub mod pyrawheel;
 
-pub static mut FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD: i32 = 0;
-pub static mut WEAPON_KIND_ROY_ROYSWORD: i32 = 0;
+pub static mut FIGHTER_ROY_GENERATE_ARTICLE_PYRAWHEEL: i32 = 0;
+pub static mut WEAPON_KIND_ROY_PYRAWHEEL: i32 = 0;
 
-const WEAPON_ROY_ROYSWORD_STATUS_KIND_REGULAR: i32 = 0;
+const WEAPON_ROY_PYRAWHEEL_STATUS_KIND_REGULAR: i32 = 0;
 
 const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_ROLL: i32 = 0x1EA;
 const FIGHTER_ROY_STATUS_KIND_SPECIAL_LW_DIVE: i32 = 0x1EB;
@@ -43,11 +43,11 @@ pub fn install() {
     acmd::install();
     frame::install();
     status::install();
-    roysword::install();
+    pyrawheel::install();
 
-    let roysword = smashline::clone_weapon("roy", "roysword", *WEAPON_KIND_KOOPAJR_CANNONBALL, false);
+    let clone = smashline::clone_weapon("roy", "pyrawheel", *WEAPON_KIND_KOOPAJR_CANNONBALL, false);
     unsafe {
-        FIGHTER_ROY_GENERATE_ARTICLE_ROYSWORD = roysword.generate_id;
-        WEAPON_KIND_ROY_ROYSWORD = roysword.weapon_id;
+        FIGHTER_ROY_GENERATE_ARTICLE_PYRAWHEEL = clone.generate_id;
+        WEAPON_KIND_ROY_PYRAWHEEL = clone.weapon_id;
     }
 }

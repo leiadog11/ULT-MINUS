@@ -1,7 +1,7 @@
 use super::*;
 
 // REGULAR
-unsafe extern "C" fn roysword_regular(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn pyrawheel_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         AttackModule::disable_tip(agent.module_accessor);
     }
@@ -60,7 +60,7 @@ unsafe extern "C" fn roysword_regular(agent: &mut L2CAgentBase) {
 }
 
 // EFFECT REGULAR
-unsafe extern "C" fn roysword_effect_regular(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn pyrawheel_effect_regular(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("roy_blazeend_illusion"), Hash40::new("top"), 0, 0, 0, 0, 0, 18, 1, true);
@@ -94,7 +94,7 @@ unsafe extern "C" fn roysword_effect_regular(agent: &mut L2CAgentBase) {
 }
 
 // SOUND REGULAR
-unsafe extern "C" fn roysword_sound_regular(agent: &mut L2CAgentBase) {
+unsafe extern "C" fn pyrawheel_sound_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_roy_special_l01"));
     }
@@ -105,10 +105,9 @@ unsafe extern "C" fn roysword_sound_regular(agent: &mut L2CAgentBase) {
 }
 
 pub fn install() {
-    Agent::new("roy_roysword")
-        .game_acmd("game_regular", roysword_regular, Low)
-        .effect_acmd("effect_regular", roysword_effect_regular, High)
-        .sound_acmd("sound_regular", roysword_sound_regular, Low)
-        
-        .install();
+    Agent::new("roy_pyrawheel")
+        .game_acmd("game_regular", pyrawheel_regular, Low)
+        .effect_acmd("effect_regular", pyrawheel_effect_regular, Low)
+        .sound_acmd("sound_regular", pyrawheel_sound_regular, Low)
+    .install();
 }

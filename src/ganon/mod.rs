@@ -25,9 +25,9 @@ pub fn install() {
     status::install();
     gsword::install();
 
-    let gsword = smashline::clone_weapon("ganon", "gsword", *WEAPON_KIND_MARIO_FIREBALL, false);
+    let clone = smashline::clone_weapon("ganon", "gsword", *WEAPON_KIND_MARIO_FIREBALL, false);
     unsafe {
-        FIGHTER_GANON_GENERATE_ARTICLE_GSWORD = gsword.generate_id;
-        WEAPON_KIND_GANON_GSWORD = gsword.weapon_id;
+        FIGHTER_GANON_GENERATE_ARTICLE_GSWORD = clone.generate_id;
+        WEAPON_KIND_GANON_GSWORD = clone.weapon_id;
     }
 }

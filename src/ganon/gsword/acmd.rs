@@ -24,5 +24,5 @@ pub fn install() {
     Agent::new("ganon_gsword")
         .game_acmd("game_regular", ganon_gsword_regular, Low)
         .effect_acmd("effect_regular", ganon_gsword_effect_regular, Low)
-        .install();
+    .install();
 }
