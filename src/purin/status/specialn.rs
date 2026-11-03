@@ -57,7 +57,7 @@ unsafe extern "C" fn purin_specialn_main(fighter: &mut L2CFighterCommon) -> L2CV
   MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
 
   let ENTRY_ID = get_entry_id(fighter.module_accessor);
-  METRONOME[ENTRY_ID] = smash::app::sv_math::rand(hash40("fighter"), 7) as u64;
+  METRONOME[ENTRY_ID] = smash::app::sv_math::rand(hash40("fighter"), 8) as u64;
 
   let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
 
@@ -84,14 +84,17 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
     if METRONOME[ENTRY_ID] == 0 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_DRILL), 0, 0, false, false);
     }
+
     // FREEZER
     if METRONOME[ENTRY_ID] == 1 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_FREEZER), 0, 0, false, false);
     }
+
     // TURN TO METAL
     if METRONOME[ENTRY_ID] == 2 {
       ItemModule::have_item(fighter.module_accessor, smash::app::ItemKind(*ITEM_KIND_METALBLOCK), 0, 0, false, false);
     }
+
     // HEAL
     if METRONOME[ENTRY_ID] == 3 {
       if DamageModule::damage(fighter.module_accessor, 0) > 0.0 { 
@@ -100,10 +103,12 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
       SoundModule::play_se(fighter.module_accessor, Hash40::new("se_common_lifeup"), true, false, false, false, enSEType(0));
       macros::EFFECT(fighter, Hash40::new("sys_recovery"), Hash40::new("top"), 0.0, 0.0, 0.0, 0, 0, 0, 1.0, 0, 0, 0, 0, 0, 0, true);
     }
+    
     // SLEEP
     if METRONOME[ENTRY_ID] == 4 {
       StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_SLEEP_START, false.into());
     }
+
     // SWAP PLACES
     if METRONOME[ENTRY_ID] == 5 {
       let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
@@ -116,10 +121,18 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
       PostureModule::set_pos(fighter.module_accessor, &Vector3f{ x: OPP_X[ENTRY_ID], y: OPP_Y[ENTRY_ID], z: OPP_Z[ENTRY_ID]});
       GroundModule::set_collidable(fighter.module_accessor, false);
     }
-    // ROLLOUT?
+
+    // ROLLOUT
     if METRONOME[ENTRY_ID] == 6 {
-      WorkModule::set_float(fighter.module_accessor, 20.0, *FIGHTER_PURIN_STATUS_SPECIAL_N_WORK_FLOAT_SPEED);
-      StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_PURIN_STATUS_KIND_SPECIAL_N_HOLD_MAX, false.into());
+      WorkModule::set_float(fighter.module_accessor, 10.0, *FIGHTER_PURIN_STATUS_SPECIAL_N_WORK_FLOAT_SPEED);
+      fighter.change_status(FIGHTER_PURIN_STATUS_KIND_SPECIAL_N_ROLL_AIR.into(), false.into());
+      return 1.into();
+    }
+
+    // BIG SING
+    if METRONOME[ENTRY_ID] == 7 {
+      fighter.change_status(FIGHTER_STATUS_KIND_SPECIAL_HI.into(), false.into());
+      return 1.into();
     }
   }
 
@@ -139,10 +152,12 @@ unsafe extern "C" fn purin_specialn_main_loop(fighter: &mut L2CFighterCommon) ->
 
 // END
 unsafe extern "C" fn purin_specialn_end(fighter: &mut L2CFighterCommon) -> L2CValue {
-  let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
-
-  GroundModule::set_collidable(fighter.module_accessor, true);
-  GroundModule::set_collidable(opponent_bomas[0], true);
+  let ENTRY_ID = get_entry_id(fighter.module_accessor);
+  if METRONOME[ENTRY_ID] == 5 {
+    let opponent_bomas = get_opponent_bomas(fighter.module_accessor);
+    GroundModule::set_collidable(fighter.module_accessor, true);
+    GroundModule::set_collidable(opponent_bomas[0], true);
+  }
 
   return 0.into();
 }
@@ -153,6 +168,5 @@ pub fn install() {
     .status(Init, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_init)
     .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_main)
     .status(End, *FIGHTER_STATUS_KIND_SPECIAL_N, purin_specialn_end)
-
-    .install();
+  .install();
 }

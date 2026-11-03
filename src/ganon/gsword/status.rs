@@ -116,5 +116,5 @@ pub fn install() {
     Agent::new("ganon_gsword")
         .status(Pre, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_pre)
         .status(Main, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_main)
-        .install();
+    .install();
 }

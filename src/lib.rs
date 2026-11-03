@@ -22,18 +22,18 @@ use {
     smash::{
         lua2cpp::*,
         phx::*,
-        app::{sv_animcmd::*, lua_bind::*, *},
+        app::{sv_animcmd::*, lua_bind::*, KineticEnergy, *},
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
-    skyline::hooks::InlineCtx,
-    skyline::libc::*,
-    skyline::nn::ro::LookupSymbol,
+    skyline::{
+        hooks::InlineCtx,
+        libc::*,
+        nn::ro::LookupSymbol
+    },
     smash2::*,
     smash_script::*,
-    smashline::*,
-    smashline::Priority::*,
-    smash::app::KineticEnergy
+    smashline::{*, Priority::*}
 };
 
 mod pacman;
@@ -288,6 +288,12 @@ unsafe extern "C" fn cancel_with_speciallw(boma: *mut BattleObjectModuleAccessor
     if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos < -0.5 && frame >= cancel_frame {
         CancelModule::enable_cancel(boma);
     }
+}
+
+pub unsafe fn clear_unable_energy(module_accessor: *mut BattleObjectModuleAccessor, energy_id: i32) {
+    let energy = KineticModule::get_energy(module_accessor, energy_id) as *mut KineticEnergy;
+    smash::app::lua_bind::KineticEnergy::clear_speed(energy);
+    smash::app::lua_bind::KineticEnergy::unable(energy);
 }
 
 #[skyline::main(name = "ult_minus")]

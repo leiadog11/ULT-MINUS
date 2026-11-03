@@ -70,10 +70,17 @@ unsafe extern "C" fn purin_speciallw(agent: &mut L2CAgentBase) {
 
 // UP B
 unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let mut hitbox_1_size = 14.0;
+    let mut hitbox_2_size = 19.0;
+    if METRONOME[ENTRY_ID] == 7 {
+        hitbox_1_size = 24.0;
+        hitbox_2_size = 29.0;
+    }
     frame(agent.lua_state_agent, 27.0);
-    if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, 14.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, 19.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+    if macros::is_excute(agent) {    
+        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, hitbox_1_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, hitbox_2_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
     }
     wait(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
@@ -81,8 +88,8 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 61.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, 14.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, 19.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, hitbox_1_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, hitbox_2_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
     }
     wait(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
@@ -90,8 +97,8 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 100.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, 14.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
-        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, 19.0, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 0, 0, Hash40::new("bust"), 0.0, 361, 40, 0, 0, hitbox_1_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
+        macros::ATTACK(agent, 1, 0, Hash40::new("bust"), 0.0, 361, 30, 0, 0, hitbox_2_size, 0.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_OFF, *ATTACK_LR_CHECK_POS, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_sleep_ex"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_NONE);
     }
     if macros::is_excute(agent) {
         AttackModule::set_size(agent.module_accessor, 0, 16.0);
@@ -100,6 +107,62 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
     wait(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
+        METRONOME[ENTRY_ID] = 0;
+    }
+}
+
+// UP B EFFECT
+unsafe extern "C" fn purin_effect_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let mut effect_size = 1.25;
+    if METRONOME[ENTRY_ID] == 7 {
+        effect_size = 3.25;
+    }
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW(agent, Hash40::new("purin_utau"), Hash40::new("hip"), 2, 0, 0, 0, 0, 0, effect_size, true);
+    }
+}
+
+// UP B SOUND
+unsafe extern "C" fn purin_sound_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let mut sfx_vol = 1.0;
+    if METRONOME[ENTRY_ID] == 7 {
+        sfx_vol = 3.0;
+    }
+    frame(agent.lua_state_agent, 27.0);
+    if macros::is_excute(agent) {
+        let sfx = SoundModule::play_status_se(agent.module_accessor, Hash40::new("vc_purin_003"), true, false, false);
+        SoundModule::set_se_vol(agent.module_accessor, sfx as i32, sfx_vol, 0);
+    }
+    wait(agent.lua_state_agent, 38.0);
+    if macros::is_excute(agent) {
+        let sfx = SoundModule::play_status_se(agent.module_accessor, Hash40::new("vc_purin_004"), true, false, false);
+        SoundModule::set_se_vol(agent.module_accessor, sfx as i32, sfx_vol, 0);
+    }
+}
+
+// UP B EXPRESSION
+unsafe extern "C" fn purin_expression_specialhi(agent: &mut L2CAgentBase) {
+    let ENTRY_ID = get_entry_id(agent.module_accessor);
+    let mut rumble_kind = "rbkind_nohits";
+    if METRONOME[ENTRY_ID] == 7 {
+        rumble_kind = "rbkind_nohitl";
+    }
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new(rumble_kind), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 68.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new(rumble_kind), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
+    }
+    frame(agent.lua_state_agent, 108.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new(rumble_kind), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
 }
 
@@ -159,6 +222,18 @@ pub fn install() {
         .game_acmd("game_specialhil", purin_specialhi, Low)
         .game_acmd("game_specialairhir", purin_specialhi, Low)
         .game_acmd("game_specialairhil", purin_specialhi, Low)
+        .effect_acmd("effect_specialhir", purin_effect_specialhi, Low)
+        .effect_acmd("effect_specialhil", purin_effect_specialhi, Low)
+        .effect_acmd("effect_specialairhir", purin_effect_specialhi, Low)
+        .effect_acmd("effect_specialairhil", purin_effect_specialhi, Low)
+        .sound_acmd("sound_specialhir", purin_sound_specialhi, Low)
+        .sound_acmd("sound_specialhil", purin_sound_specialhi, Low)
+        .sound_acmd("sound_specialairhir", purin_sound_specialhi, Low)
+        .sound_acmd("sound_specialairhil", purin_sound_specialhi, Low)
+        .expression_acmd("expression_specialhir", purin_expression_specialhi, Low)
+        .expression_acmd("expression_specialhil", purin_expression_specialhi, Low)
+        .expression_acmd("expression_specialairhir", purin_expression_specialhi, Low)
+        .expression_acmd("expression_specialairhil", purin_expression_specialhi, Low)
 
         .game_acmd("game_specialn", purin_specialn, Low)
         .effect_acmd("effect_specialn", purin_effect_specialn, Low)

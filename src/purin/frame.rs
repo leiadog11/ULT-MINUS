@@ -39,16 +39,18 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // RISE ON UP B + UP B CANCEL
-        if motion_kind == hash40("special_hi_r") || motion_kind == hash40("special_hi_l") || 
-        motion_kind == hash40("special_air_hi_r") || motion_kind == hash40("special_air_hi_l") {
-            KineticModule::change_kinetic(boma, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-            GroundModule::correct(boma, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
-            PostureModule::set_pos_2d(boma, &Vector2f {x: posx, y: posy + 0.1});
+        if METRONOME[ENTRY_ID] != 7 {
+            if motion_kind == hash40("special_hi_r") || motion_kind == hash40("special_hi_l") || 
+            motion_kind == hash40("special_air_hi_r") || motion_kind == hash40("special_air_hi_l") {
+                KineticModule::change_kinetic(boma, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+                GroundModule::correct(boma, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+                PostureModule::set_pos_2d(boma, &Vector2f {x: posx, y: posy + 0.1});
 
-            if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) ||
-               ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) ||
-               ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
-                CancelModule::enable_cancel(boma);
+                if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) ||
+                ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_ATTACK) ||
+                ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_GUARD) {
+                    CancelModule::enable_cancel(boma);
+                }
             }
         }
 
@@ -58,38 +60,30 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
             if MotionModule::frame(boma) >= 40.0 {
                 if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
                     let rand = smash::app::sv_math::rand(hash40("fighter"), 11) as u64;
-                    if rand == 1 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_s3_s"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 2 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_lw3"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 3 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_dash"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 4 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_hi3"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 5 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 6 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_lw4"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 7 {
-                        MotionModule::change_motion(boma, Hash40::new("attack_hi4"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 8 {
-                        MotionModule::change_motion(boma, Hash40::new("special_n"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 9 {
-                        MotionModule::change_motion(boma, Hash40::new("special_s"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 10 {
-                        MotionModule::change_motion(boma, Hash40::new("special_hi_r"), 0.0, 1.0, false, 0.0, false, false);
-                    }
-                    else if rand == 11 {
-                        MotionModule::change_motion(boma, Hash40::new("special_lw_r"), 0.0, 1.0, false, 0.0, false, false);
+                    if rand == 0 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_S3, true);
+                    } else if rand == 1 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_LW3, true);
+                    } else if rand == 2 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_DASH, true);
+                    } else if rand == 3 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_HI3, true);
+                    } else if rand == 4 {
+                        CHARGE_MUL[ENTRY_ID] = 3.0;
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_S4, true);
+                    } else if rand == 5 {
+                        CHARGE_MUL[ENTRY_ID] = 3.0;
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_LW4, true);
+                    } else if rand == 6 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_HI4, true);
+                    } else if rand == 7 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_N, true);
+                    } else if rand == 8 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_S, true);
+                    } else if rand == 9 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_HI, true);
+                    } else if rand == 10 {
+                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_APPEAL, true);
                     }
                 }   
             }
@@ -110,5 +104,5 @@ pub fn install() {
     Agent::new("purin")
         .on_line(Main, purin_frame)
         .on_start(purin_start)
-        .install();
+    .install();
 }
