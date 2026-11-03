@@ -2,7 +2,7 @@ use super::*;
 
 //----------------THROWS------------------
 
-//FORWARD THROW
+// FORWARD THROW
 unsafe extern "C" fn captain_throwf(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 4.0, 170, 120, 0, 55, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -24,7 +24,7 @@ unsafe extern "C" fn captain_throwf(agent: &mut L2CAgentBase) {
     }
 }
 
-//BACK THROW
+// BACK THROW
 unsafe extern "C" fn captain_throwb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 4.0, 60, 90, 0, 50, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -53,7 +53,7 @@ unsafe extern "C" fn captain_throwb(agent: &mut L2CAgentBase) {
     }
 }
 
-//DOWN THROW
+// DOWN THROW
 unsafe extern "C" fn captain_throwlw(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 6.0, 90, 70, 0, 65, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -72,7 +72,7 @@ unsafe extern "C" fn captain_throwlw(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP THROW
+// UP THROW
 unsafe extern "C" fn captain_throwhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 270, 100, 0, 68, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
@@ -156,19 +156,19 @@ unsafe extern "C" fn captain_catchturn(agent: &mut L2CAgentBase) {
 
 pub fn install() {
     Agent::new("captain")
-    .game_acmd("game_throwhi", captain_throwhi, Low)
+        .game_acmd("game_throwhi", captain_throwhi, Low)
 
-    .game_acmd("game_throwlw", captain_throwlw, Low)
+        .game_acmd("game_throwlw", captain_throwlw, Low)
 
-    .game_acmd("game_throwb", captain_throwb, Low)
+        .game_acmd("game_throwb", captain_throwb, Low)
 
-    .game_acmd("game_throwf", captain_throwf, Low)
+        .game_acmd("game_throwf", captain_throwf, Low)
 
-    .game_acmd("game_catch", captain_catch, Low)
+        .game_acmd("game_catch", captain_catch, Low)
 
-    .game_acmd("game_catchdash", captain_catchdash, Low)
+        .game_acmd("game_catchdash", captain_catchdash, Low)
 
-    .game_acmd("game_catchturn", captain_catchturn, Low)
+        .game_acmd("game_catchturn", captain_catchturn, Low)
     
     .install();
 }

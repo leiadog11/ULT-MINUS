@@ -74,13 +74,6 @@ pub unsafe extern "C" fn captain_frame(fighter: &mut L2CFighterCommon) {
         } else {
             WorkModule::enable_transition_term(boma, *FIGHTER_STATUS_TRANSITION_TERM_ID_CONT_SPECIAL_N);
         }
-
-        // CANCEL FALCON KICK INTO FALCON KICK
-        if status_kind == *FIGHTER_STATUS_KIND_SPECIAL_LW && frame >= 12.0 {
-            if ControlModule::check_button_trigger(boma, *CONTROL_PAD_BUTTON_SPECIAL) && ypos < 0.5 {
-                StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_LW, true);
-            } 
-        }
     }
 }
 

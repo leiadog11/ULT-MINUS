@@ -125,7 +125,7 @@ unsafe extern "C" fn captain_attackhi3(agent: &mut L2CAgentBase) {
     }
 }
 
-//UP TILT EFFECT
+// UP TILT EFFECT
 unsafe extern "C" fn captain_effect_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 8.0);
     for _ in 0..5 {
@@ -177,7 +177,6 @@ unsafe extern "C" fn captain_sound_attackhi3(agent: &mut L2CAgentBase) {
         macros::PLAY_SE(agent, Hash40::new("se_captain_special_n03"));
     }
 }
-
 
 // DASH ATTACK 
 unsafe extern "C" fn captain_attackdash(agent: &mut L2CAgentBase) {

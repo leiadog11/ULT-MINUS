@@ -74,8 +74,8 @@ unsafe extern "C" fn purin_specialhi(agent: &mut L2CAgentBase) {
     let mut hitbox_1_size = 14.0;
     let mut hitbox_2_size = 19.0;
     if METRONOME[ENTRY_ID] == 7 {
-        hitbox_1_size = 24.0;
-        hitbox_2_size = 29.0;
+        hitbox_1_size = 32.0;
+        hitbox_2_size = 37.0;
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {    
@@ -116,7 +116,7 @@ unsafe extern "C" fn purin_effect_specialhi(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
     let mut effect_size = 1.25;
     if METRONOME[ENTRY_ID] == 7 {
-        effect_size = 3.25;
+        effect_size = 3.65;
     }
     if macros::is_excute(agent) {
         macros::EFFECT_FOLLOW(agent, Hash40::new("purin_utau"), Hash40::new("hip"), 2, 0, 0, 0, 0, 0, effect_size, true);
@@ -128,7 +128,7 @@ unsafe extern "C" fn purin_sound_specialhi(agent: &mut L2CAgentBase) {
     let ENTRY_ID = get_entry_id(agent.module_accessor);
     let mut sfx_vol = 1.0;
     if METRONOME[ENTRY_ID] == 7 {
-        sfx_vol = 3.0;
+        sfx_vol = 3.5;
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {

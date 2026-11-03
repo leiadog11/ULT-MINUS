@@ -59,7 +59,7 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
         motion_kind == hash40("special_air_lw_r") || motion_kind == hash40("special_air_lw_l") {
             if MotionModule::frame(boma) >= 40.0 {
                 if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_SPECIAL) {
-                    let rand = smash::app::sv_math::rand(hash40("fighter"), 11) as u64;
+                    let rand = smash::app::sv_math::rand(hash40("fighter"), 10) as u64;
                     if rand == 0 {
                         StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_ATTACK_S3, true);
                     } else if rand == 1 {
@@ -82,8 +82,6 @@ pub unsafe extern "C" fn purin_frame(fighter: &mut L2CFighterCommon) {
                         StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_S, true);
                     } else if rand == 9 {
                         StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_SPECIAL_HI, true);
-                    } else if rand == 10 {
-                        StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_APPEAL, true);
                     }
                 }   
             }

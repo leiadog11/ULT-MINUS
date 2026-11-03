@@ -28,6 +28,40 @@ unsafe extern "C" fn purin_attackairf(agent: &mut L2CAgentBase) {
     }
 }
 
+// FORWARD AIR EFFECT
+unsafe extern "C" fn purin_effect_attackairf(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 5.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FOLLOW_NO_STOP(agent, Hash40::new("sys_attack_speedline"), Hash40::new("top"), 0, 3.5, 2.5, 0, 0, 0, 0.65, true);
+        macros::LAST_PARTICLE_SET_COLOR(agent, 1, 1, 0.5);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_FLIP_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("sys_attack_impact"), Hash40::new("top"), 2, 3.3, 9, 0, 0, 0, 1.1, 0, 0, 0, 0, 0, 0, true, *EF_FLIP_YZ, 0.9);
+    }
+}
+
+// FORWARD AIR SOUND
+unsafe extern "C" fn purin_sound_attackairf(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::PLAY_SEQUENCE(agent, Hash40::new("seq_purin_rnd_attack01"));
+        macros::PLAY_SE(agent, Hash40::new("se_purin_swing_l"));
+    }
+}
+
+// FORWARD AIR EXPRESSION
+unsafe extern "C" fn purin_expression_attackairf(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 4.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, 0x50000000);
+    }
+    frame(agent.lua_state_agent, 6.0);
+    if macros::is_excute(agent) {
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+}
+
 // NEUTRAL AIR - NAIR
 unsafe extern "C" fn purin_attackairn(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 1.3);
@@ -52,14 +86,9 @@ unsafe extern "C" fn purin_attackairn(agent: &mut L2CAgentBase) {
 
 // NEUTRAL AIR - NAIR EFFECT
 unsafe extern "C" fn purin_effect_attackairn(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 5.0);
-    if macros::is_excute(agent) {
-        macros::EFFECT_FOLLOW_NO_STOP(agent, Hash40::new("sys_attack_speedline"), Hash40::new("top"), 0, 3.5, 2.5, 0, 0, 0, 0.65, true);
-        macros::LAST_PARTICLE_SET_COLOR(agent, 1, 1, 0.5);
-    }
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, 12, 0, 0, 0, 0, 2.5, 0, 0, 0, 0, 0, 0, true, 0.8);
+        macros::EFFECT_ALPHA(agent, Hash40::new("sys_attack_impact"), Hash40::new("top"), 0, 10, 0, 0, 0, 0, 2.25, 0, 0, 0, 0, 0, 0, true, 0.8);
     }
 }
 
@@ -210,6 +239,9 @@ unsafe extern "C" fn purin_attackairlw(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("purin")
         .game_acmd("game_attackairf", purin_attackairf, Low)
+        .effect_acmd("effect_attackairf", purin_effect_attackairf, Low)
+        .sound_acmd("sound_attackairf", purin_sound_attackairf, Low)
+        .expression_acmd("expression_attackairf", purin_expression_attackairf, Low)
 
         .game_acmd("game_attackairn", purin_attackairn, Low)
         .effect_acmd("effect_attackairn", purin_effect_attackairn, Low)
