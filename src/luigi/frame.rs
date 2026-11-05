@@ -13,14 +13,15 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
         let posx = PostureModule::pos_x(boma);
 
         // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
+        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH {
             DOWN_TILT_COUNTER[ENTRY_ID] = 0;
-            NEG_ZONE[ENTRY_ID] = 0.0;
+            NEG_ZONE[ENTRY_ID] = 0.1;
         }
 
         // ON GAME OVER - RESET VARIABLES
-        if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
+        if status_kind == *FIGHTER_STATUS_KIND_DEMO {
             DOWN_TILT_COUNTER[ENTRY_ID] = 0;
+            NEG_ZONE[ENTRY_ID] = 0.1;
         }
 
         // NEGATIVE ZONE
@@ -43,18 +44,18 @@ pub unsafe extern "C" fn luigi_frame(fighter: &mut L2CFighterCommon) {
                 }
             } 
 
-            if NEG_ZONE[ENTRY_ID] < 1.7 {
-                NEG_ZONE[ENTRY_ID] += 0.05;
+            if NEG_ZONE[ENTRY_ID] < 2.1 {
+                NEG_ZONE[ENTRY_ID] += 0.1;
                 if (NEG_ZONE[ENTRY_ID] % 0.2 < 0.0001) || (0.2 - (NEG_ZONE[ENTRY_ID] % 0.2) < 0.0001) {
                     EffectModule::kill_kind(boma, Hash40::new("luigi_negative_zone"), false, true);
                 }
-                macros::EFFECT(fighter, Hash40::new("luigi_negative_zone"), Hash40::new("top"), 0.5, 7.5, 0.0, 0, 0, 0, NEG_ZONE[ENTRY_ID], 0, 0, 0, 0, 0, 0, true);
+                macros::EFFECT(fighter, Hash40::new("luigi_negative_zone"), Hash40::new("top"), 1.0, 7.5, 0.5, 0, 0, 0, NEG_ZONE[ENTRY_ID], 0, 0, 0, 0, 0, 0, true);
             }
         }
         else {
             EffectModule::kill_kind(boma, Hash40::new("luigi_negative_zone"), false, true);
             SoundModule::stop_se(boma, Hash40::new("se_luigi_negative_zone"), 0);
-            NEG_ZONE[ENTRY_ID] = 0.1
+            NEG_ZONE[ENTRY_ID] = 0.1;
         }
 
         // COLLISION FIX
@@ -109,7 +110,7 @@ pub unsafe extern "C" fn luigi_start(fighter: &mut L2CFighterCommon) {
         MISFIRE_SPECIAL_N[ENTRY_ID] = false;
         MISFIRE_UP_SMASH[ENTRY_ID] = false;
         DOWN_TILT_COUNTER[ENTRY_ID] = 0;
-        NEG_ZONE[ENTRY_ID] = 0.0;
+        NEG_ZONE[ENTRY_ID] = 0.1;
     }
 }
 

@@ -184,7 +184,8 @@ unsafe extern "C" fn purin_effect_specialn(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn purin_sound_specialn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
-        macros::PLAY_SE(agent, Hash40::new("se_purin_special_n01"));
+        let sfx = SoundModule::play_se(agent.module_accessor, Hash40::new("se_purin_metronome"), true, false, false, false, enSEType(0));
+        SoundModule::set_se_vol(agent.module_accessor, sfx as i32, 0.25, 0);
     }
 }
 
@@ -240,6 +241,5 @@ pub fn install() {
         .sound_acmd("sound_specialn", purin_sound_specialn, Low)
         .expression_acmd("expression_specialn", purin_expression_specialn, Low)
 
-
-        .install();
+    .install();
 }

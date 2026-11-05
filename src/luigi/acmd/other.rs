@@ -82,7 +82,7 @@ unsafe extern "C" fn luigi_sound_guardoff(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn luigi_squat(agent: &mut L2CAgentBase) {
     let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(agent.module_accessor);
-    frame(agent.lua_state_agent, 5.0);
+    frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         agent.clear_lua_stack();
         sv_kinetic_energy::friction_off(agent.lua_state_agent);
@@ -118,5 +118,5 @@ pub fn install() {
 
         .game_acmd("game_squat", luigi_squat, Low)
         
-        .install();
+    .install();
 }

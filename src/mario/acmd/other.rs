@@ -6,8 +6,8 @@ use super::*;
 unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("legl"), 5.0, 270, 80, 0, 35, 5.0, -1.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.4, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 5.0, 270, 80, 0, 35, 5.0, -1.0, -3.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.4, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("legl"), 5.0, 270, 80, 0, 35, 7.0, -1.0, 0.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.4, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 1, 0, Hash40::new("legr"), 5.0, 270, 80, 0, 35, 7.0, -1.0, -3.0, 0.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.4, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_coin"), *ATTACK_SOUND_LEVEL_M, *COLLISION_SOUND_ATTR_COIN, *ATTACK_REGION_KICK);
         AttackModule::set_attack_height_all(agent.module_accessor, AttackHeight(*ATTACK_HEIGHT_LOW), false);
     }
     wait(agent.lua_state_agent, 3.0);
@@ -19,18 +19,16 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 // SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     let mut curr_scale = PostureModule::scale(agent.module_accessor);
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) { 
+        CameraModule::reset_all(agent.module_accessor);
+        macros::SLOW_OPPONENT(agent, 15.0, 30.0);
+        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 30.0,/*no*/ 0.0,/*zoom*/ 3.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
+    }
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
-        CameraModule::reset_all(agent.module_accessor);
-        macros::SLOW_OPPONENT(agent, 10.0, 7.0);
-        macros::CAM_ZOOM_IN_arg5(agent, /*frames*/ 5.0,/*no*/ 0.0,/*zoom*/ 3.0,/*yrot*/ 0.0,/*xrot*/ 0.0);
         macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
         PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
-    }
-    frame(agent.lua_state_agent, 45.0);
-    if macros::is_excute(agent) {
-        CameraModule::reset_all(agent.module_accessor);
-        macros::CAM_ZOOM_OUT(agent);
     }
 }
 
@@ -38,7 +36,7 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn mario_squat(agent: &mut L2CAgentBase) {
     let x_vel = KineticModule::get_sum_speed_x(agent.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
     let lr = PostureModule::lr(agent.module_accessor);
-    frame(agent.lua_state_agent, 5.0);
+    frame(agent.lua_state_agent, 2.0);
     if macros::is_excute(agent) {
         agent.clear_lua_stack();
         sv_kinetic_energy::friction_off(agent.lua_state_agent);
@@ -61,36 +59,44 @@ unsafe extern "C" fn mario_appeals(agent: &mut L2CAgentBase) {
         ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("block"), true);
         ItemModule::remove_item(agent.module_accessor, 0);
     }
-    let rand = smash::app::sv_math::rand(hash40("agent"), 20) as u64;
+    let rand = smash::app::sv_math::rand(hash40("agent"), 99) as u64;
     frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) { 
-        if rand == 1 {
+        if rand == 0 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_SUPERSTAR), 0, 0, false, false);
             ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
-        else if rand == 2 {
+        else if rand >= 1 && rand <= 4 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHROOM), 0, 0, false, false);
             ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
-        else if rand == 3 {
+        else if rand >= 5 && rand <= 8 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_MUSHD), 0, 0, false, false);
             ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
-        else if rand == 4 {
+        else if rand >= 9 && rand <= 14 {
             ItemModule::have_item(agent.module_accessor, smash::app::ItemKind(*ITEM_KIND_GREENSHELL), 0, 0, false, false);
             ItemModule::drop_item(agent.module_accessor, 90.0, 0.0, 0);
             macros::EFFECT(agent, Hash40::new("sys_item_arrival"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
         }
+        else if rand >= 15 && rand <= 30 {
+            for _ in 0..5 { 
+                macros::PLAY_SE(agent, Hash40::new("se_common_coin"));
+                COIN_COUNT[get_entry_id(agent.module_accessor)] += 1;
+                macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 6.5, 0.0, 0.0, 0, 0, 90, 1, 0, 0, 0, 0, 0, 0, true);
+                wait(agent.lua_state_agent, 3.0);
+            }
+        }
         else {
             macros::PLAY_SE(agent, Hash40::new("se_common_coin"));
             COIN_COUNT[get_entry_id(agent.module_accessor)] += 1;
-            macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 1.0, 0, 0, 0, 0, 90, 1, 0, 0, 0, 0, 0, 0, true);
+            macros::EFFECT(agent, Hash40::new("sys_s_jump"), Hash40::new("block"), 6.5, 0.0, 0.0, 0, 0, 90, 1, 0, 0, 0, 0, 0, 0, true);
         }
     }
-    frame(agent.lua_state_agent, 20.0);
+    frame(agent.lua_state_agent, 30.0);
     if macros::is_excute(agent) {
         ModelModule::set_mesh_visibility(agent.module_accessor, Hash40::new("block"), false);
     }
@@ -118,7 +124,7 @@ unsafe extern "C" fn mario_expression_appeals(agent: &mut L2CAgentBase) {
         ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
     }
-    frame(agent.lua_state_agent, 12.0);
+    frame(agent.lua_state_agent, 13.0);
     if macros::is_excute(agent) {
         slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_L);
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 5, false, *BATTLE_OBJECT_ID_INVALID as u32);
@@ -142,5 +148,5 @@ pub fn install() {
         .expression_acmd("expression_appealsl", mario_expression_appeals, Low)
         .expression_acmd("expression_appealsr", mario_expression_appeals, Low)
 
-        .install();
+    .install();
 }

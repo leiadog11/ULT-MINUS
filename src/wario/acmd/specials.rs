@@ -51,6 +51,5 @@ unsafe extern "C" fn wario_specialhijump(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("wario")
         .game_acmd("game_specialhijump", wario_specialhijump, Low)
-        
-        .install();
+    .install();
 }

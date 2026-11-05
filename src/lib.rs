@@ -1,22 +1,12 @@
 #![deny(deprecated)]
-#![allow(unused)]
-#![allow(non_snake_case)]
-#![allow(static_mut_refs)]
-#![allow(improper_ctypes_definitions)]
-
-#![feature(
-    proc_macro_hygiene
-)]
 #![allow(
-    unused_imports,
-	unused_macros,
-	unused_variables,
-	unused_assignments,
-	unused_unsafe,
+    unused,
+    static_mut_refs,
+    improper_ctypes_definitions,
 	non_upper_case_globals,
-	non_snake_case,
-    clippy::borrow_interior_mutable_const
+    non_snake_case
 )]
+#![feature(proc_macro_hygiene)]
 
 use {
     smash::{
@@ -26,11 +16,7 @@ use {
         lib::{lua_const::*, L2CValue, L2CAgent},
         hash40
     },
-    skyline::{
-        hooks::InlineCtx,
-        libc::*,
-        nn::ro::LookupSymbol
-    },
+    skyline::{hooks::InlineCtx, libc::*, nn::ro::LookupSymbol},
     smash2::*,
     smash_script::*,
     smashline::{*, Priority::*}
