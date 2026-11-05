@@ -155,5 +155,5 @@ pub fn install() {
 
         .game_acmd("game_attacklw4", wickedweaveleg_attacklw4, Low)
 
-        .install()
+    .install()
 }

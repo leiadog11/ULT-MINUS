@@ -32,6 +32,19 @@ unsafe extern "C" fn bayonetta_attackhi4(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP SMASH EFFECT
+unsafe extern "C" fn bayonetta_effect_attackhi4(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("bayonetta_change_circle"), Hash40::new("waist"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("top"), 0, 20, 5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+    }
+    frame(agent.lua_state_agent, 19.0);
+    if macros::is_excute(agent) {
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_v_smoke_a"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
 // FORWARD SMASH
 unsafe extern "C" fn bayonetta_attacks4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 1.0);
@@ -65,13 +78,42 @@ unsafe extern "C" fn bayonetta_attacks4(agent: &mut L2CAgentBase) {
     }
 }
 
+// FORWARD SMASH EFFECT
+unsafe extern "C" fn bayonetta_effect_attacks4(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("bayonetta_change_circle"), Hash40::new("waist"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("handr"), 3, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+    }
+    frame(agent.lua_state_agent, 18.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("bayonetta_butterfly_walk"), Hash40::new("top"), 3, 0, 3, 0, 0, 0, 1.2, 0, 0, 0, 0, 0, 0, true);
+        macros::LANDING_EFFECT(agent, Hash40::new("sys_atk_smoke"), Hash40::new("top"), -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
+    }
+}
+
+// DOWN SMASH EFFECT
+unsafe extern "C" fn bayonetta_effect_attacklw4(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("bayonetta_change_circle"), Hash40::new("waist"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+        macros::EFFECT(agent, Hash40::new("sys_smash_flash"), Hash40::new("footl"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
 pub fn install() {
     Agent::new("bayonetta")
         .game_acmd("game_attackhi4", bayonetta_attackhi4, Low)
+        .effect_acmd("effect_attackhi4", bayonetta_effect_attackhi4, Low)
 
         .game_acmd("game_attacks4", bayonetta_attacks4, Low)
         .game_acmd("game_attacks4lw", bayonetta_attacks4, Low)
         .game_acmd("game_attacks4hi", bayonetta_attacks4, Low)
+        .effect_acmd("effect_attacks4", bayonetta_effect_attacks4, Low)
+        .effect_acmd("effect_attacks4lw", bayonetta_effect_attacks4, Low)
+        .effect_acmd("effect_attacks4hi", bayonetta_effect_attacks4, Low)
 
-        .install();
+        .effect_acmd("game_attacklw4", bayonetta_effect_attacklw4, Low)
+
+    .install();
 }
