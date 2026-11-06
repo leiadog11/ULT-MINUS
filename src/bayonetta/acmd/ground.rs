@@ -259,18 +259,9 @@ unsafe extern "C" fn bayonetta_effect_attackhi3(agent: &mut L2CAgentBase) {
 
 // DASH ATTACK
 unsafe extern "C" fn bayonetta_attackdash(agent: &mut L2CAgentBase) {
-    macros::FT_MOTION_RATE(agent, 0.8);
     frame(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 3.3, 361, 50, 50, 50, 5.0, 0.0, 5.0, -10.5, Some(0.0), Some(5.0), Some(10.5), 1.0, 2.2, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 3.3, 361, 50, 50, 50, 1.0, 0.0, 4.0, -11.0, Some(0.0), Some(4.0), Some(11.0), 1.0, 2.2, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-    }
-    frame(agent.lua_state_agent, 28.0);
-    if macros::is_excute(agent) {
-        if ControlModule::check_button_on(agent.module_accessor, *CONTROL_PAD_BUTTON_ATTACK) { 
-            AttackModule::clear_all(agent.module_accessor);
-            MotionModule::set_frame(agent.module_accessor, 16.0, true);
-        }
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 1.6, 361, 25, 25, 25, 5.0, 0.0, 5.0, -10.5, Some(0.0), Some(5.0), Some(10.5), 1.0, 2.2, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 5, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
     }
     frame(agent.lua_state_agent, 38.0);
     if macros::is_excute(agent) {
@@ -278,16 +269,12 @@ unsafe extern "C" fn bayonetta_attackdash(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 40.0);
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.2, 90, 71, 0, 78, 6.0, 0.0, 5.0, -10.5, Some(0.0), Some(5.0), Some(10.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
-        macros::ATTACK(agent, 1, 0, Hash40::new("top"), 5.2, 90, 71, 0, 78, 2.0, 0.0, 4.0, -11.0, Some(0.0), Some(4.0), Some(11.0), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 5.2, 90, 71, 0, 58, 7.0, 0.0, 5.0, -10.5, Some(0.0), Some(5.0), Some(10.5), 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_F, false, 0, 0.0, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_GA, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_KICK, *ATTACK_REGION_KICK);
+        AttackModule::set_add_reaction_frame(agent.module_accessor, 0, 6.0, false);
     }
     frame(agent.lua_state_agent, 45.0);
     if macros::is_excute(agent) {
         AttackModule::clear_all(agent.module_accessor);
-    }
-    frame(agent.lua_state_agent, 53.0);
-    if macros::is_excute(agent) {
-        StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_SQUAT_WAIT, true);
     }
 }
 
@@ -295,9 +282,20 @@ unsafe extern "C" fn bayonetta_attackdash(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn bayonetta_effect_attackdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 16.0);
     if macros::is_excute(agent) {
-        let effect_kind_bayonetta_attack_arc1 = WorkModule::get_int64(agent.module_accessor, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_ARC1);
-        macros::EFFECT_FOLLOW_WORK(agent, effect_kind_bayonetta_attack_arc1.try_into().unwrap(), Hash40::new("top"), 0, 10, 0, 0, 30, 175, 1.2, true);
-        macros::LAST_EFFECT_SET_RATE(agent, 1.5);
+        macros::EFFECT_FOLLOW_WORK(agent, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_ARC1, Hash40::new("top"), 0, 3.4, -0.25, 0, 100, 174, 1.2, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.85);
+        macros::LAST_EFFECT_SET_SCALE_W(agent, 1.15, 1.27, 1.15);
+    }
+    frame(agent.lua_state_agent, 28.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND_WORK(agent, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_ARC1, false, true);
+        macros::EFFECT_FOLLOW_WORK(agent, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_ARC1, Hash40::new("top"), 0, 3.4, 0.25, 0, -88, 174, 1.2, true);
+        macros::LAST_EFFECT_SET_RATE(agent, 0.9);
+        macros::LAST_EFFECT_SET_SCALE_W(agent, 1.15, 1.27, 1.15);
+    }
+    frame(agent.lua_state_agent, 40.0);
+    if macros::is_excute(agent) {
+        macros::EFFECT_OFF_KIND_WORK(agent, *FIGHTER_BAYONETTA_INSTANCE_WORK_ID_INT_EFFECT_KIND_BAYONETTA_ATTACK_ARC1, false, true);
     }
 }
 
@@ -311,9 +309,20 @@ unsafe extern "C" fn bayonetta_sound_attackdash(agent: &mut L2CAgentBase) {
 
 // DASH ATTACK EXPRESSION
 unsafe extern "C" fn bayonetta_expression_attackdash(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 9, false, 0x50000000);
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE, *SLOPE_STATUS_LR);
+    }
+    frame(agent.lua_state_agent, 3.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_NONE, 3);
+    }
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_TOP, 5);
+    }
+    frame(agent.lua_state_agent, 13.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_rush"), 0, false, 0x50000000);
     }
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
@@ -322,6 +331,10 @@ unsafe extern "C" fn bayonetta_expression_attackdash(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 39.0);
     if macros::is_excute(agent) {
         macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
+    }
+    frame(agent.lua_state_agent, 40.0);
+    if macros::is_excute(agent) {
+        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 6);
     }
 }
 
@@ -349,6 +362,5 @@ pub fn install() {
         .effect_acmd("effect_attackdash", bayonetta_effect_attackdash, Low)
         .sound_acmd("sound_attackdash", bayonetta_sound_attackdash, Low)
         .expression_acmd("expression_attackdash", bayonetta_expression_attackdash, Low)
-
     .install();
 }

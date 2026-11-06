@@ -1,0 +1,67 @@
+use super::*;
+
+//-------------------DASH ATTACK--------------------
+
+// PRE
+unsafe extern "C" fn bayonetta_attackdash_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        SituationKind(*SITUATION_KIND_NONE),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_GROUND as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_NONE),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_NONE_FLOAT,
+        0
+    );
+
+    return 0.into();
+}
+
+// MAIN
+unsafe extern "C" fn bayonetta_attackdash_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("attack_dash"), 0.0, 1.0, false, 0.0, false, false);
+
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND { 
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+    }
+
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_GRAVITY);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_MOTION);
+      
+    fighter.sub_shift_status_main(L2CValue::Ptr(bayonetta_attackdash_main_loop as *const () as _))
+}
+
+// MAIN LOOP
+unsafe extern "C" fn bayonetta_attackdash_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if CancelModule::is_enable_cancel(fighter.module_accessor) {
+        if fighter.sub_wait_ground_check_common(false.into()).get_bool()
+        || fighter.sub_air_check_fall_common().get_bool() {
+            return 1.into();
+        }
+    }
+
+    if MotionModule::is_end(fighter.module_accessor) {
+        fighter.change_status(FIGHTER_STATUS_KIND_SQUAT_WAIT.into(), false.into());
+        return 1.into();
+    }
+
+    return 0.into();
+}
+
+// END
+unsafe extern "C" fn bayonetta_attackdash_end(fighter: &mut L2CFighterCommon) -> L2CValue {
+    return 0.into();
+}
+
+pub fn install() {
+    Agent::new("bayonetta")
+        .status(Pre, *FIGHTER_STATUS_KIND_ATTACK_DASH, bayonetta_attackdash_pre)
+        .status(Main, *FIGHTER_STATUS_KIND_ATTACK_DASH, bayonetta_attackdash_main)
+        .status(End, *FIGHTER_STATUS_KIND_ATTACK_DASH, bayonetta_attackdash_end)
+    .install();
+}

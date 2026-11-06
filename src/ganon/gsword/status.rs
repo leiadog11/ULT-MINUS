@@ -54,7 +54,6 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
     speed_y += accel_y;
     PostureModule::set_rot(weapon.module_accessor, &Vector3f{x: PostureModule::rot_x(weapon.module_accessor, 0) + 10.0, y: 0.0, z: 0.0}, 0);
 
-
     // Set speed
     weapon.agent.clear_lua_stack();
     weapon.agent.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
@@ -93,8 +92,6 @@ unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon
 
 // REMOVE
 pub unsafe extern "C" fn gsword_remove(weapon: &mut L2CWeaponCommon) {
-    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-
     let pos = PostureModule::pos(weapon.module_accessor);
     let eff = EffectModule::req(
         weapon.module_accessor,

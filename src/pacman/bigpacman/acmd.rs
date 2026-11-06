@@ -24,5 +24,5 @@ pub fn install() {
     Agent::new("pacman_bigpacman")
         .game_acmd("game_start", bigpacman_start, Low)
         .sound_acmd("sound_start", bigpacman_sound_start, Low)
-        .install();
+    .install();
 }

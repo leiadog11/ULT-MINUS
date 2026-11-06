@@ -3,7 +3,145 @@
         "stage/poke_stadium2/normal/model/stc_saltshaker_set",
         "stage/poke_stadium2/normal/motion/stc_saltshaker_set"
     ],
+    "share-to-added": { 
+        "fighter/bayonetta/motion/body/c00/c00attack11.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c00attack11.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c00attack11.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/c00attackdash.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c00attackdash.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c00attackdash.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/c00attackdashloop.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c00attackdashloop.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c00attackdashloop.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/c01attacks3.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c01attacks3.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c01attacks3.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/c02attackhi3.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c02attackhi3.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c02attackhi3.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/c05attackairf.nuanmb": [
+            "fighter/bayonetta/motion/body/c01/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c02/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c03/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c04/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c05/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c06/c05attackairf.nuanmb",
+            "fighter/bayonetta/motion/body/c07/c05attackairf.nuanmb"
+        ],
+        "fighter/bayonetta/motion/body/c00/motion_list.bin": [
+            "fighter/bayonetta/motion/body/c01/motion_list.bin",
+            "fighter/bayonetta/motion/body/c02/motion_list.bin",
+            "fighter/bayonetta/motion/body/c03/motion_list.bin",
+            "fighter/bayonetta/motion/body/c04/motion_list.bin",
+            "fighter/bayonetta/motion/body/c05/motion_list.bin",
+            "fighter/bayonetta/motion/body/c06/motion_list.bin",
+            "fighter/bayonetta/motion/body/c07/motion_list.bin"
+        ],
+        "fighter/bayonetta/motion/body/c00/update.prc": [
+            "fighter/bayonetta/motion/body/c01/update.prc",
+            "fighter/bayonetta/motion/body/c02/update.prc",
+            "fighter/bayonetta/motion/body/c03/update.prc",
+            "fighter/bayonetta/motion/body/c04/update.prc",
+            "fighter/bayonetta/motion/body/c05/update.prc",
+            "fighter/bayonetta/motion/body/c06/update.prc",
+            "fighter/bayonetta/motion/body/c07/update.prc"
+        ]
+    },
     "new-dir-files": {
+        "fighter/bayonetta/c00": [
+            "fighter/bayonetta/model/body/c00/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c00/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c00/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c00/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c00/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c00/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c01": [
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c01/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c01/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c01/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c02": [
+            "fighter/bayonetta/model/body/c02/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c02/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c02/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c02/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c02/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c02/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c03": [
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c03/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c03/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c03/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c04": [
+            "fighter/bayonetta/model/body/c04/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c04/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c04/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c04/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c04/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c04/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c05": [
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c05/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c05/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c05/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c06": [
+            "fighter/bayonetta/model/body/c06/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c06/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c06/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c06/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c06/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c06/c04attackhi4.nuanmb"
+        ],
+        "fighter/bayonetta/c07": [
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_col.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_emi.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_nor.nutexb",
+            "fighter/bayonetta/model/body/c07/def_bayonetta_001_prm.nutexb",
+            "fighter/bayonetta/motion/wickedweaveleg/c07/c03attacks4s.nuanmb",
+            "fighter/bayonetta/motion/wickedweaveleg/c07/c04attackhi4.nuanmb"
+        ],
         "fighter/pacman/c00": [
             "fighter/pacman/model/body/c00/apple.nutexb",
             "fighter/pacman/model/body/c00/bell2.nutexb",
@@ -761,70 +899,6 @@
             "fighter/mario/motion/body/c07/d03specialairlw.nuanmb",
             "fighter/mario/model/body/c07/question_block.nutexb",
             "fighter/mario/motion/pump/c07/d03specialairlw.nuanmb"
-        ],
-        "fighter/bayonetta/c00": [
-            "fighter/bayonetta/model/body/c00/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c00/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c00/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c00/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c00/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c00/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c01": [
-            "fighter/bayonetta/model/body/c01/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c01/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c01/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c01/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c01/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c01/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c02": [
-            "fighter/bayonetta/model/body/c02/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c02/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c02/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c02/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c02/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c02/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c03": [
-            "fighter/bayonetta/model/body/c03/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c03/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c03/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c03/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c03/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c03/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c04": [
-            "fighter/bayonetta/model/body/c04/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c04/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c04/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c04/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c04/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c04/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c05": [
-            "fighter/bayonetta/model/body/c05/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c05/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c05/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c05/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c05/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c05/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c06": [
-            "fighter/bayonetta/model/body/c06/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c06/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c06/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c06/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c06/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c06/c04attackhi4.nuanmb"
-        ],
-        "fighter/bayonetta/c07": [
-            "fighter/bayonetta/model/body/c07/def_bayonetta_001_col.nutexb",
-            "fighter/bayonetta/model/body/c07/def_bayonetta_001_emi.nutexb",
-            "fighter/bayonetta/model/body/c07/def_bayonetta_001_nor.nutexb",
-            "fighter/bayonetta/model/body/c07/def_bayonetta_001_prm.nutexb",
-            "fighter/bayonetta/motion/wickedweaveleg/c07/c03attacks4s.nuanmb",
-            "fighter/bayonetta/motion/wickedweaveleg/c07/c04attackhi4.nuanmb"
         ],
         "fighter/pit/c00": [
             "fighter/pit/motion/body/c00/d02specialhiflight.nuanmb",

@@ -16,11 +16,12 @@ unsafe extern "C" fn pacman_bigpacman_start_pre(weapon: &mut L2CWeaponCommon) ->
         0, 
         0
     );
+
     return 0.into();
 }
 
 // INIT
-pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut smashline::L2CWeaponCommon) -> smashline::L2CValue {
+pub unsafe extern "C" fn pacman_bigpacman_start_init(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let ENTRY_ID = get_entry_id(owner_boma);
     //Snap to throw position
