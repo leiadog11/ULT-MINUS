@@ -37,7 +37,7 @@ unsafe extern "C" fn pichu_specials_pre(fighter: &mut L2CFighterCommon) -> L2CVa
 unsafe extern "C" fn pichu_specials_init(fighter: &mut L2CFighterCommon) -> L2CValue { 
     if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
         KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
-        GroundModule::correct(fighter.module_accessor, smash::app::GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
     }
 
     return 0.into();

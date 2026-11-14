@@ -57,9 +57,16 @@ unsafe extern "C" fn get_opponent_bomas(boma: *mut BattleObjectModuleAccessor) -
         let curr_boma = sv_battle_object::module_accessor(object_id);
         if curr_boma.is_null() { continue; }
 
-        if curr_boma != boma {
-            opponent_bomas.push(curr_boma);
-        }
+        // DON'T ADD SELF
+        if curr_boma == boma { continue; }
+
+        // DON'T ADD IF DEAD
+        let stock_count = get_stock_count(curr_boma);
+        if !app::smashball::is_training_mode() && stock_count <= 0 { continue; }
+
+        // TODO: DON'T ADD IF ON SAME TEAM
+
+        opponent_bomas.push(curr_boma);
     }
 
     return opponent_bomas;
@@ -146,6 +153,7 @@ unsafe extern "C" fn get_stock_count(boma: *mut BattleObjectModuleAccessor) -> u
     let fighter_manager = *(FIGHTER_MANAGER as *mut *mut smash::app::FighterManager);
     let fighter_info = smash::app::lua_bind::FighterManager::get_fighter_information(fighter_manager, FighterEntryID(ENTRY_ID.try_into().unwrap())) as u64;
     let stock_ref = ((*((fighter_info + 8) as *const u64) + 0xd8) as *mut u32);
+    
     return *stock_ref;
 }
 

@@ -2,8 +2,10 @@ use super::*;
 
 mod attackhi3;
 mod checkattack;
+mod specialhi;
 
 pub fn install() {
-    checkattack::install();
     attackhi3::install();
+    checkattack::install();
+    specialhi::install();
 }
