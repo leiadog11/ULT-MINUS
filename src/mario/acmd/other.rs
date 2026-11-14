@@ -18,7 +18,6 @@ unsafe extern "C" fn mario_stepjump(agent: &mut L2CAgentBase) {
 
 // SHRINK
 unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
-    let mut curr_scale = PostureModule::scale(agent.module_accessor);
     frame(agent.lua_state_agent, 1.0);
     if macros::is_excute(agent) { 
         CameraModule::reset_all(agent.module_accessor);
@@ -28,7 +27,6 @@ unsafe extern "C" fn mario_shrink(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 15.0);
     if macros::is_excute(agent) {
         macros::PLAY_SE(agent, Hash40::new("se_item_mushd"));
-        PostureModule::set_scale(agent.module_accessor, curr_scale - 0.3, false);
     }
 }
 

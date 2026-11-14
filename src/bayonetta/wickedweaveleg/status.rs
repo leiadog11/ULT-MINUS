@@ -25,7 +25,7 @@ unsafe extern "C" fn wickedweaveleg_attacks4_main(weapon: &mut L2CWeaponCommon) 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("attack_s4_s"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let life = 145;
+    let life = 105;
     let lr = PostureModule::lr(weapon.module_accessor);
 
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
@@ -35,11 +35,13 @@ unsafe extern "C" fn wickedweaveleg_attacks4_main(weapon: &mut L2CWeaponCommon) 
         LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
     }
 
+    PostureModule::set_scale(weapon.module_accessor, 0.7, false);
+
     let pos_x = PostureModule::pos_x(owner_boma);
     let pos_y = PostureModule::pos_y(owner_boma);
     let pos_z = PostureModule::pos_z(owner_boma);
 
-    let mut newPos = Vector3f{x: pos_x + 5.0 * lr, y: pos_y + 7.0, z: pos_z};
+    let mut newPos = Vector3f{x: pos_x + 2.0 * lr, y: pos_y + 5.0, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     weapon.fastshift(L2CValue::Ptr(wickedweaveleg_attacks4_main_loop as *const () as _))
@@ -49,7 +51,7 @@ unsafe extern "C" fn wickedweaveleg_attacks4_main(weapon: &mut L2CWeaponCommon) 
 unsafe extern "C" fn wickedweaveleg_attacks4_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let lr = PostureModule::lr(weapon.module_accessor);
 
-    let speed_x = 1.0 * lr;
+    let speed_x = 0.75 * lr;
     let speed_y = 0.0;
     weapon.clear_lua_stack();
     weapon.push_lua_stack(&mut L2CValue::new_int(*WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL as u64));
@@ -66,7 +68,7 @@ unsafe extern "C" fn wickedweaveleg_attacks4_main_loop(weapon: &mut L2CWeaponCom
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    if life > 35 && life < 125 {
+    if life > 30 && life < 85 {
         MotionModule::set_rate(weapon.module_accessor, 0.0);
     } else {
         MotionModule::set_rate(weapon.module_accessor, 1.0);
@@ -105,7 +107,7 @@ unsafe extern "C" fn wickedweaveleg_attacklw4_main(weapon: &mut L2CWeaponCommon)
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("attack_lw4"), 0.0, 1.0, false, 0.0, false, false);
 
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let life = 145;
+    let life = 100;
     let lr = PostureModule::lr(weapon.module_accessor);
 
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
@@ -113,6 +115,8 @@ unsafe extern "C" fn wickedweaveleg_attacklw4_main(weapon: &mut L2CWeaponCommon)
     if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
         LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
     }
+
+    PostureModule::set_scale(weapon.module_accessor, 0.8, false);
 
     let pos_x = PostureModule::pos_x(owner_boma);
     let pos_y = PostureModule::pos_y(owner_boma);
@@ -129,7 +133,7 @@ unsafe extern "C" fn wickedweaveleg_attacklw4_main_loop(weapon: &mut L2CWeaponCo
     let life = WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
     WorkModule::dec_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    if life < 130 {
+    if life < 85 {
         let speed_x = 0.0; 
         let speed_y = -1.0;
         weapon.clear_lua_stack();
@@ -145,7 +149,7 @@ unsafe extern "C" fn wickedweaveleg_attacklw4_main_loop(weapon: &mut L2CWeaponCo
         return 0.into();
     }
 
-    if life > 40 && life < 125 {
+    if life > 40 && life < 80 {
         MotionModule::set_rate(weapon.module_accessor, 0.0);
     } else {
         MotionModule::set_rate(weapon.module_accessor, 1.0);
@@ -192,6 +196,8 @@ unsafe extern "C" fn wickedweaveleg_attackhi4_main(weapon: &mut L2CWeaponCommon)
     if LinkModule::is_link(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT) {
         LinkModule::unlink(weapon.module_accessor, *WEAPON_LINK_NO_CONSTRAINT);
     }
+
+     PostureModule::set_scale(weapon.module_accessor, 1.0, false);
 
     let pos_x = PostureModule::pos_x(owner_boma);
     let pos_y = PostureModule::pos_y(owner_boma);

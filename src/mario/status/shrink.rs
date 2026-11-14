@@ -27,6 +27,16 @@ unsafe extern "C" fn mario_shrink_main(fighter: &mut L2CFighterCommon) -> L2CVal
     let ENTRY_ID = get_entry_id(fighter.module_accessor);
     SHRINK_TIME[ENTRY_ID] = 30;
 
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    } else {
+        GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+    }
+
+    let curr_scale = PostureModule::scale(fighter.module_accessor);
+    PostureModule::set_scale(fighter.module_accessor, curr_scale - 0.3, false);
+
     HitModule::set_whole(fighter.module_accessor, HitStatus(*HIT_STATUS_XLU), 0);
     sv_kinetic_energy::reset_energy(fighter.lua_state_agent);
     KineticModule::clear_speed_all(fighter.module_accessor);
@@ -49,9 +59,14 @@ unsafe extern "C" fn mario_shrink_main_loop(fighter: &mut L2CFighterCommon) -> L
     SHRINK_TIME[ENTRY_ID] -= 1;
 
     if SHRINK_TIME[ENTRY_ID] <= 0 {
-        KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_FALL);
-        fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
-        return 1.into();
+        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR {
+            fighter.change_status(FIGHTER_STATUS_KIND_FALL.into(), false.into());
+            return 1.into();
+        }
+        else {
+            fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+            return 1.into();
+        }
     }
 
     return 0.into();

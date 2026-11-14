@@ -149,5 +149,5 @@ pub fn install() {
     Agent::new("mario")
         .on_line(Main, mario_frame)
         .on_start(mario_start)
-        .install();
+    .install();
 }

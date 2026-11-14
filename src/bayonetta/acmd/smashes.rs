@@ -31,8 +31,6 @@ unsafe extern "C" fn bayonetta_effect_attackhi4(agent: &mut L2CAgentBase) {
 
 // FORWARD SMASH
 unsafe extern "C" fn bayonetta_attacks4(agent: &mut L2CAgentBase) {
-    frame(agent.lua_state_agent, 1.0);
-    macros::FT_MOTION_RATE(agent, 0.75);
     frame(agent.lua_state_agent, 3.0);
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_FLAG_START_SMASH_HOLD);

@@ -288,5 +288,5 @@ pub fn install() {
 
         .game_acmd("game_attackdash", ridley_attackdash, Low)
         
-        .install();
+    .install();
 }

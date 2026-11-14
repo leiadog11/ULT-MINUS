@@ -24,7 +24,7 @@ unsafe extern "C" fn roy_pyrawheel_regular_pre(weapon: &mut L2CWeaponCommon) -> 
 unsafe extern "C" fn roy_pyrawheel_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-    let life = 145;
+    let life = 140;
     let lr = PostureModule::lr(weapon.module_accessor);
 
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
@@ -38,7 +38,7 @@ unsafe extern "C" fn roy_pyrawheel_regular_main(weapon: &mut L2CWeaponCommon) ->
     let pos_y = PostureModule::pos_y(owner_boma);
     let pos_z = PostureModule::pos_z(owner_boma);
 
-    let mut newPos = Vector3f{x: pos_x + 10.0 * lr, y: pos_y + 12.0, z: pos_z};
+    let mut newPos = Vector3f{x: pos_x + 5.0 * lr, y: pos_y + 12.0, z: pos_z};
     PostureModule::set_pos(weapon.module_accessor, &newPos);
 
     weapon.fastshift(L2CValue::Ptr(roy_pyrawheel_regular_main_loop as *const () as _))
