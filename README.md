@@ -10,7 +10,7 @@ This is a full modpack with changes to the SSS, game music, skins, stage changes
 
 Here is a link to the music mod that goes with it: [LEIADOG'S MUSIC MOD](https://github.com/leiadog11/LEIADOGS-MUSIC-MOD/releases)
 
-Current Version: Alpha 0.6.2
+Current Version: Alpha 0.7.0
 
 ## Skins
 - Super Pac-Man (Pac-Man c01)
@@ -22,7 +22,7 @@ Current Version: Alpha 0.6.2
 - SaltyBet Stadium (PS2)
 
 ## Character Change Log
-Current Character Amount: 20
+Current Character Amount: 19
 
 Change Log Linked [Here](https://github.com/leiadog11/ULT-MINUS/wiki/Change-Log)
 

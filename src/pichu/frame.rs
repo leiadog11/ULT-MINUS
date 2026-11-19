@@ -18,7 +18,7 @@ pub unsafe extern "C" fn pichu_frame(fighter: &mut L2CFighterCommon) {
         }
         
         // BLOW UP
-        if DamageModule::damage(boma, 0) >= 150.0 && !BLOWN_UP[ENTRY_ID] {
+        if DamageModule::damage(boma, 0) >= 150.0 && !BLOWN_UP[ENTRY_ID] && !StatusModule::is_changing(boma) {
             StatusModule::change_status_request_from_script(boma, *FIGHTER_STATUS_KIND_DEAD, true);
             BLOWN_UP[ENTRY_ID] = true;
         }

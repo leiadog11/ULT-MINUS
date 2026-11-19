@@ -102,6 +102,15 @@ unsafe extern "C" fn mario_attackairhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// UP AIR EXPRESSION
+unsafe extern "C" fn mario_expression_attackairhi(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 2.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, false, 0x50000000);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+}
+
 // BACK AIR
 unsafe extern "C" fn mario_attackairb(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
@@ -195,6 +204,7 @@ pub fn install() {
         .game_acmd("game_attackairn", mario_attackairn, Low)
 
         .game_acmd("game_attackairhi", mario_attackairhi, Low)
+        .expression_acmd("expression_attackairhi", mario_expression_attackairhi, Low)
 
         .game_acmd("game_attackairb", mario_attackairb, Low)
 
@@ -202,5 +212,5 @@ pub fn install() {
         .effect_acmd("effect_attackairlw", mario_effect_attackairlw, Low)
         .sound_acmd("sound_attackairlw", mario_sound_attackairlw, Low)
 
-        .install();
+    .install();
 }

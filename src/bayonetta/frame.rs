@@ -55,17 +55,8 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
     }
 }
 
-// ON START
-pub unsafe extern "C" fn bayonetta_start(fighter: &mut L2CFighterCommon) {
-    unsafe { 
-        let ENTRY_ID = get_entry_id(fighter.module_accessor);
-        RECEIVED_FINAL_SMASH[ENTRY_ID] = false;
-    }
-}
-
 pub fn install() {
     Agent::new("bayonetta")
         .on_line(Main, bayonetta_frame)
-        .on_start(bayonetta_start)
     .install();
 }

@@ -24,14 +24,20 @@ unsafe extern "C" fn bat_specialhi_pre(weapon: &mut L2CWeaponCommon) -> L2CValue
 unsafe extern "C" fn bat_specialhi_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
 
-    LinkModule::set_model_constraint_pos_ort(weapon.module_accessor,*LINK_NO_CONSTRAINT,Hash40::new("top"),Hash40::new("top"),(*CONSTRAINT_FLAG_ORIENTATION | *CONSTRAINT_FLAG_OFFSET_TRANSLATE) as u32,true);
-    LinkModule::set_constraint_translate_offset(weapon.module_accessor, &Vector3f{x: 0.0, y: 0.0, z: 0.0});
-
     weapon.fastshift(L2CValue::Ptr(bat_specialhi_main_loop as *const () as _))
 }
 
 // MAIN LOOP
 unsafe extern "C" fn bat_specialhi_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+    let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
+
+    let owner_x = PostureModule::pos_x(owner_boma);
+    let owner_y = PostureModule::pos_y(owner_boma);
+    let owner_z = PostureModule::pos_z(owner_boma);
+
+    let new_pos = Vector3f{x: owner_x, y: owner_y, z: owner_z};
+    PostureModule::set_pos(weapon.module_accessor, &new_pos);
+
     return 0.into();
 }
 

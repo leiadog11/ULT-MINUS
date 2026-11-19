@@ -38,7 +38,7 @@ pub unsafe extern "C" fn mario_frame(fighter: &mut L2CFighterCommon) {
         
         // SHRINK
         if DamageModule::damage(boma, 0) > 100.0 && status_kind == *FIGHTER_STATUS_KIND_DAMAGE_FLY {
-            if !SHRUNK[ENTRY_ID] {
+            if !SHRUNK[ENTRY_ID] && !StatusModule::is_changing(boma) {
                 StatusModule::change_status_request_from_script(boma, FIGHTER_MARIO_STATUS_KIND_SHRINK, true);
                 SHRUNK[ENTRY_ID] = true;
             }
