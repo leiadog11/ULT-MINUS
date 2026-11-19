@@ -164,6 +164,22 @@ unsafe extern "C" fn wario_attackairlw(agent: &mut L2CAgentBase) {
     }
 }
 
+// DOWN AIR EXPRESSION
+unsafe extern "C" fn wario_expression_attackairlw(agent: &mut L2CAgentBase) {
+    frame(agent.lua_state_agent, 9.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 8, true, 0x50000000);
+    }
+    frame(agent.lua_state_agent, 11.0);
+    if macros::is_excute(agent) { 
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 0);
+    }
+    frame(agent.lua_state_agent, 18.0);
+    if macros::is_excute(agent) {
+        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohitm"), 0, true, 0x50000000);
+    }
+}
+
 pub fn install() {
     Agent::new("wario")
         .game_acmd("game_attackairf", wario_attackairf, Low)
@@ -175,6 +191,7 @@ pub fn install() {
         .game_acmd("game_attackairhi", wario_attackairhi, Low)
 
         .game_acmd("game_attackairlw", wario_attackairlw, Low)
+        .expression_acmd("expression_attackairlw", wario_expression_attackairlw, Low)
         
-        .install();
+    .install();
 }

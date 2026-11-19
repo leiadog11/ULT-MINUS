@@ -1,38 +1,30 @@
 use super::*;
 
-//BIKE FRAME!!!!
-unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
+unsafe extern "C" fn bike_frame(weapon: &mut L2CWeaponCommon) {
     unsafe {
-        let lr = PostureModule::lr(fighter.module_accessor);
-        let xpos = ControlModule::get_stick_x(fighter.module_accessor);
+        let boma = smash::app::sv_system::battle_object_module_accessor(weapon.lua_state_agent);
+        let lr = PostureModule::lr(boma);
+        let xpos = ControlModule::get_stick_x(boma);
+        let situation_kind = StatusModule::situation_kind(boma);
 
         // TURN BIKE IN AIR
-        if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_AIR { 
+        if situation_kind == *SITUATION_KIND_AIR { 
             if lr == 1.0 && xpos < -0.5 { 
-                macros::REVERSE_LR(fighter);
+                macros::REVERSE_LR(weapon);
             }
             else if lr == -1.0 {
                 if xpos > 0.5 {
-                    macros::REVERSE_LR(fighter);
+                    macros::REVERSE_LR(weapon);
                 }
             }
         }   
 
         // BIKE JUMP
-        if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_JUMP) && 
-        WorkModule::get_int(fighter.module_accessor, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP) != 0 {
-            PostureModule::pos_y(fighter.module_accessor);
+        if ControlModule::check_button_on(boma, *CONTROL_PAD_BUTTON_JUMP) && WorkModule::get_int(boma, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP) != 0 {
             for _ in 0..10 {
-                PostureModule::set_pos_2d(fighter.module_accessor, &Vector2f {x: PostureModule::pos_x(fighter.module_accessor), y: PostureModule::pos_y(fighter.module_accessor) + 0.5});
+                PostureModule::set_pos_2d(boma, &Vector2f {x: PostureModule::pos_x(boma), y: PostureModule::pos_y(boma) + 0.5});
             }
-            WorkModule::dec_int(fighter.module_accessor, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP);
-        }
-
-        // BLOW UP ITEM
-        if StatusModule::status_kind(fighter.module_accessor) == *WEAPON_WARIO_WARIOBIKE_STATUS_KIND_SPECIAL_S_ITEM {
-            if ControlModule::check_button_on(fighter.module_accessor, *CONTROL_PAD_BUTTON_SPECIAL) {
-                // TODO: BLOW UP BIKE
-            }
+            WorkModule::dec_int(boma, WEAPON_WARIO_WARIOBIKE_STATUS_WORK_INT_BIKE_JUMP);
         }
     }
 }
@@ -40,5 +32,5 @@ unsafe extern "C" fn bike_frame(fighter: &mut L2CFighterCommon) {
 pub fn install() {
     Agent::new("wario_wariobike")
         .on_line(Main, bike_frame)
-        .install();
+    .install();
 }

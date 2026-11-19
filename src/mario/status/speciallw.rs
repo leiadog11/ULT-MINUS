@@ -1,6 +1,6 @@
 use super::*;
 
-//--------------------------DOWN SPECIAL---------------------------
+//-------------------------- DOWN SPECIAL --------------------------
 
 // PRE
 unsafe extern "C" fn mario_speciallw_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
@@ -97,6 +97,5 @@ pub fn install() {
         .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_LW, mario_speciallw_pre)
         .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_LW, mario_speciallw_main)
         .status(End, *FIGHTER_STATUS_KIND_SPECIAL_LW, mario_speciallw_end)
-        
-        .install();
+    .install();
 }

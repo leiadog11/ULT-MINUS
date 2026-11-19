@@ -145,14 +145,7 @@ unsafe extern "C" fn bayonetta_specialairlw(agent: &mut L2CAgentBase) {
 
 // UP B
 unsafe extern "C" fn bayonetta_specialhi(agent: &mut L2CAgentBase) { 
-    if macros::is_excute(agent) {
-        notify_event_msc_cmd!(agent, Hash40::new("fighter_msc_cmd_self_set_cursor"), false);
-        notify_event_msc_cmd!(agent, Hash40::new("fighter_msc_cmd_self_set_name_cursor"), false);
-        if !ArticleModule::is_exist(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT) {
-            ArticleModule::generate_article(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT, false, -1);
-            ArticleModule::change_status_exist(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT, WEAPON_BAYONETTA_BAT_STATUS_KIND_SPECIAL_HI);
-        }
-    }
+   
 }
 
 // UP B EFFECT
@@ -170,6 +163,32 @@ unsafe extern "C" fn bayonetta_expression_specialhi(agent: &mut L2CAgentBase) {
 
 }
 
+// UP B BAT
+unsafe extern "C" fn bayonetta_specialhibat(agent: &mut L2CAgentBase) { 
+    if macros::is_excute(agent) {
+        notify_event_msc_cmd!(agent, Hash40::new("fighter_msc_cmd_self_set_cursor"), false);
+        notify_event_msc_cmd!(agent, Hash40::new("fighter_msc_cmd_self_set_name_cursor"), false);
+        if !ArticleModule::is_exist(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT) {
+            ArticleModule::generate_article(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT, false, -1);
+            ArticleModule::change_status_exist(agent.module_accessor, *FIGHTER_BAYONETTA_GENERATE_ARTICLE_BAT, WEAPON_BAYONETTA_BAT_STATUS_KIND_SPECIAL_HI);
+        }
+    }
+}
+
+// UP B END EFFECT
+unsafe extern "C" fn bayonetta_effect_specialhiend(agent: &mut L2CAgentBase) { 
+    if macros::is_excute(agent) {
+        macros::EFFECT(agent, Hash40::new("bayonetta_batwithin_change"), Hash40::new("rot"), 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, true);
+    }
+}
+
+// UP B END SOUND
+unsafe extern "C" fn bayonetta_sound_specialhiend(agent: &mut L2CAgentBase) { 
+    if macros::is_excute(agent) {
+        macros::PLAY_SE(agent, Hash40::new("se_bayonetta_batwithin02"));
+    }
+}
+
 pub fn install() {
     Agent::new("bayonetta")
         .game_acmd("game_specialairsu", bayonetta_specialairsu, Low)
@@ -183,10 +202,11 @@ pub fn install() {
         .effect_acmd("effect_specialhi", bayonetta_effect_specialhi, Low)
         .sound_acmd("sound_specialhi", bayonetta_sound_specialhi, Low)
         .expression_acmd("expression_specialhi", bayonetta_expression_specialhi, Low)
-        .game_acmd("game_specialairhi", bayonetta_specialhi, Low)
-        .effect_acmd("effect_specialairhi", bayonetta_effect_specialhi, Low)
-        .sound_acmd("sound_specialairhi", bayonetta_sound_specialhi, Low)
-        .expression_acmd("expression_specialairhi", bayonetta_expression_specialhi, Low)
+
+        .game_acmd("game_specialhibat", bayonetta_specialhibat, Low)
+
+        .effect_acmd("effect_specialhiend", bayonetta_effect_specialhiend, Low)
+        .sound_acmd("sound_specialhiend", bayonetta_sound_specialhiend, Low)
 
     .install();
 }

@@ -37,7 +37,6 @@ unsafe extern "C" fn fireball_effect_regular(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         if IS_ICEBALL { 
             macros::EFFECT_FOLLOW(agent, Hash40::new("mario_iceball"), Hash40::new("rot"), 0, 1.8, 0, 0, 0, 0, 1, true);
-            //macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.1, 0.850);
         } else {
             macros::EFFECT_FOLLOW(agent, Hash40::new("mario_fb_bullet_l"), Hash40::new("rot"), 0, 1.8, 0, 0, 0, 0, 1, true);
         }
@@ -60,7 +59,6 @@ unsafe extern "C" fn fireball_effect_bound(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         if IS_ICEBALL { 
             macros::EFFECT(agent, Hash40::new("mario_iceball_bound"), Hash40::new("top"), 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
-            //macros::LAST_EFFECT_SET_COLOR(agent, 0, 0.1, 0.850);
         } else {
             macros::EFFECT(agent, Hash40::new("mario_fb_bound"), Hash40::new("top"), 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, false);
         }

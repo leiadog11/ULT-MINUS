@@ -17,7 +17,26 @@ unsafe extern "C" fn wario_appeallw(agent: &mut L2CAgentBase) {
 // CROUCH BACK
 unsafe extern "C" fn wario_squatb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 13.0, 30, 114, 0, 90, 4.0, 0.0, 4.0, -4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.3, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+        macros::ATTACK(agent, 0, 0, Hash40::new("top"), 9.0, 30, 104, 0, 70, 4.0, 0.0, 4.0, -4.0, None, None, None, 1.0, 1.0, *ATTACK_SETOFF_KIND_ON, *ATTACK_LR_CHECK_POS, false, 0, 0.3, 0, false, false, false, false, true, *COLLISION_SITUATION_MASK_G, *COLLISION_CATEGORY_MASK_ALL, *COLLISION_PART_MASK_ALL, false, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_PUNCH, *ATTACK_REGION_BODY);
+    }
+}
+
+// CROUCH BACK EXPRESSION
+unsafe extern "C" fn wario_expression_squatb(agent: &mut L2CAgentBase) {
+    loop {
+        if macros::is_excute(agent) {
+            slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_TOP, 4, true);
+            macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackl"), 0);
+        }
+        frame(agent.lua_state_agent, 1.0);
+        if macros::is_excute(agent) {
+            ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_walk"), 0, false, 0x50000000);
+        }
+        frame(agent.lua_state_agent, 21.0);
+        if macros::is_excute(agent) {
+            ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_walk"), 0, false, 0x50000000);
+        }
+        wait_loop_sync_mot(agent.lua_state_agent);
     }
 }
 
@@ -27,6 +46,7 @@ pub fn install() {
         .game_acmd("game_appeallwl", wario_appeallw, Low)
 
         .game_acmd("game_squatb", wario_squatb, Low)
+        .expression_acmd("expression_squatb", wario_expression_squatb, Low)
         
-        .install();
+    .install();
 }
