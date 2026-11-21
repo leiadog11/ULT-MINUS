@@ -107,6 +107,17 @@ unsafe extern "C" fn gamewatch_expression_specialhi(agent: &mut L2CAgentBase) {
     }
 }
 
+// DOWN B
+unsafe extern "C" fn gamewatch_speciallw(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        WorkModule::on_flag(agent.module_accessor, *FIGHTER_GAMEWATCH_STATUS_SPECIAL_LW_FLAG_ABSORB_ENABLE);
+    }
+    frame(agent.lua_state_agent, 1.0);
+    if macros::is_excute(agent) {
+        CancelModule::enable_cancel(agent.module_accessor);
+    }
+}
+
 pub fn install() {
     Agent::new("gamewatch")
         .game_acmd("game_specialhistart", gamewatch_specialhistart, Low)
@@ -119,5 +130,7 @@ pub fn install() {
         .sound_acmd("sound_specialhi", gamewatch_sound_specialhi, Low)
         .expression_acmd("expression_specialhi", gamewatch_expression_specialhi, Low)
 
-        .install();
+        .game_acmd("game_speciallw", gamewatch_speciallw, Low)
+        .game_acmd("game_specialairlw", gamewatch_speciallw, Low)
+    .install();
 }

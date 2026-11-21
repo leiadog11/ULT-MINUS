@@ -118,8 +118,6 @@ unsafe extern "C" fn pacman_bigpacman_start_main_loop(weapon: &mut L2CWeaponComm
 
 // REMOVE
 pub unsafe extern "C" fn bigpacman_remove(weapon: &mut smashline::L2CWeaponCommon) {
-    let owner = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
-
     let pos = PostureModule::pos(weapon.module_accessor);
     let eff = EffectModule::req(
         weapon.module_accessor,
@@ -142,6 +140,5 @@ pub fn install() {
         .status(Init, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_init)
         .status(Pre, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_pre)
         .status(Main, *WEAPON_PACMAN_BIGPACMAN_STATUS_KIND_START, pacman_bigpacman_start_main)
-        
-        .install();
+    .install();
 }

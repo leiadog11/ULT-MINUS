@@ -1,9 +1,9 @@
 use super::*;
 
 mod acmd;
-mod specials;
+mod special_s;
 
 pub fn install() {
     acmd::install();
-    specials::install();
+    special_s::install();
 }

@@ -1,5 +1,5 @@
 use super::*;
-use super::status::specials::*;
+use super::status::special_s::*;
 
 pub const WAZA_CUSTOMIZE_CONTROL: i32 = 0x3D;
 
@@ -32,13 +32,13 @@ unsafe extern "C" fn jack_move_customizer(fighter: &mut L2CFighterCommon) -> L2C
         fighter.sv_set_status_func(
             FIGHTER_STATUS_KIND_SPECIAL_S.into(),
             LUA_SCRIPT_STATUS_FUNC_STATUS_MAIN.into(),
-            &mut *(jack_specials_main as *const () as *mut std::ffi::c_void)
+            &mut *(jack_special_s_main as *const () as *mut std::ffi::c_void)
         );
     } else if customize_to == *FIGHTER_WAZA_CUSTOMIZE_TO_SPECIAL_S_2 {
         fighter.sv_set_status_func(
             FIGHTER_STATUS_KIND_SPECIAL_S.into(),
             LUA_SCRIPT_STATUS_FUNC_STATUS_MAIN.into(),
-            &mut *(jack_specials_main as *const () as *mut std::ffi::c_void)
+            &mut *(jack_special_s_main as *const () as *mut std::ffi::c_void)
         );
     } 
     0.into()
@@ -51,5 +51,5 @@ unsafe extern "C" fn on_start(fighter: &mut L2CFighterCommon) {
 pub fn install() {
     Agent::new("jack")
         .on_start(on_start)
-        .install();
+    .install();
 }

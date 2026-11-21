@@ -29,4 +29,17 @@ pub fn install() {
     frame::install();
     status::install();
     parasail::install();
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_LINK, slots.clone(), (hash40("run_speed_max"), 0, 1.934));
+    param_config::update_float_2(*FIGHTER_KIND_LINK, slots.clone(), (hash40("run_accel_add"), 0, 0.046));
+    param_config::update_float_2(*FIGHTER_KIND_LINK, slots.clone(), (hash40("dash_speed"), 0, 2.38));
+    param_config::update_float_2(*FIGHTER_KIND_LINK, slots.clone(), (hash40("air_speed_x_stable"), 0, 1.224));
+    param_config::update_int_2(*FIGHTER_KIND_LINK, slots.clone(), (hash40("s4_combo_max"), 0, 1));
+
+    // VL PARAMS
+    param_config::update_int_2(-*WEAPON_KIND_LINK_SWORD_BEAM, slots.clone(), (hash40("param_swordbeam"), hash40("min_life"), 52));
+    param_config::update_int_2(-*WEAPON_KIND_LINK_SWORD_BEAM, slots.clone(), (hash40("param_swordbeam"), hash40("max_life"), 60));
 }

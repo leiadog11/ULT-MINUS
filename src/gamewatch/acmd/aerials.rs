@@ -13,8 +13,8 @@ unsafe extern "C" fn gamewatch_attackairn(agent: &mut L2CAgentBase) {
     }
     frame(agent.lua_state_agent, 38.0);
     if macros::is_excute(agent) {
-        OCTOPUS[get_entry_id(agent.module_accessor)] = true;
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OCTOPUS, false, -1);
+        ArticleModule::change_status_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_OCTOPUS, WEAPON_GAMEWATCH_OCTOPUS_STATUS_KIND_ATTACK_AIR_N);
         VisibilityModule::set_whole(agent.module_accessor, false);
     }
     frame(agent.lua_state_agent, 53.0);
@@ -144,7 +144,7 @@ unsafe extern "C" fn gamewatch_expression_attackairlw(agent: &mut L2CAgentBase) 
     }
     frame(agent.lua_state_agent, 9.0);
     if macros::is_excute(agent) {
-        //AREA_WIND_2ND_arg10(0, 1, 90, 300, 1, 0, 30, 32, 60, 50);
+        macros::AREA_WIND_2ND_arg10(agent, 0, 1, 90, 300, 1, 0, 30, 32, 60, 50);
     }
     frame(agent.lua_state_agent, 18.0);
     if macros::is_excute(agent) {
@@ -156,7 +156,7 @@ unsafe extern "C" fn gamewatch_expression_attackairlw(agent: &mut L2CAgentBase) 
     }
     frame(agent.lua_state_agent, 23.0);
     if macros::is_excute(agent) {
-        //AREA_WIND_2ND_arg10(0, 2, 90, 300, 1, 0, 30, 32, 60, 50);
+        macros::AREA_WIND_2ND_arg10(agent, 0, 2, 90, 300, 1, 0, 30, 32, 60, 50);
     }
     frame(agent.lua_state_agent, 27.0);
     if macros::is_excute(agent) {
@@ -169,7 +169,7 @@ unsafe extern "C" fn gamewatch_attackairb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         WorkModule::on_flag(agent.module_accessor, *FIGHTER_STATUS_ATTACK_AIR_FLAG_ENABLE_LANDING);
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, false, -1);
-        ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, WEAPON_GAMEWATCH_RESCUE_STATUS_KIND_ATTACKAIRB, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
+        ArticleModule::change_status(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, WEAPON_GAMEWATCH_RESCUE_STATUS_KIND_ATTACK_AIR_B, ArticleOperationTarget(*ARTICLE_OPE_TARGET_ALL));
     }
     frame(agent.lua_state_agent, 41.0);
     if macros::is_excute(agent) {
@@ -305,13 +305,13 @@ unsafe extern "C" fn gamewatch_expression_attackairf2(agent: &mut L2CAgentBase) 
     if macros::is_excute(agent) {
         ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, *BATTLE_OBJECT_ID_INVALID as u32);
     }
-    frame(agent.lua_state_agent, 10.0);
+    frame(agent.lua_state_agent, 8.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackm"), 1);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 0);
     }
-    frame(agent.lua_state_agent, 20.0);
+    frame(agent.lua_state_agent, 19.0);
     if macros::is_excute(agent) {
-        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attackss"), 1);
+        macros::RUMBLE_HIT(agent, Hash40::new("rbkind_attacks"), 0);
     }
     frame(agent.lua_state_agent, 32.0);
     if macros::is_excute(agent) { 
@@ -347,5 +347,5 @@ pub fn install() {
         .sound_acmd("sound_attackairf2", gamewatch_sound_attackairf2, Low)
         .expression_acmd("expression_attackairf2", gamewatch_expression_attackairf2, Low)
 
-        .install();
+    .install();
 }

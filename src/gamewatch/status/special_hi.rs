@@ -1,0 +1,160 @@
+use super::*;
+
+// -------- SPECIAL HI START --------
+
+// PRE
+unsafe extern "C" fn gamewatch_special_hi_start_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        SituationKind(*SITUATION_KIND_AIR),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_AIR as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLOAT,
+        0
+    );
+      
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI  | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK) as u64,
+        *FIGHTER_STATUS_ATTR_START_TURN as u32,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
+      
+    return 0.into();
+}
+
+// MAIN
+unsafe extern "C" fn gamewatch_special_hi_start_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi_start"), 0.0, 1.0, false, 0.0, false, false);
+
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION_AIR);
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_AIR));
+    WorkModule::enable_transition_term_group(fighter.module_accessor, *FIGHTER_STATUS_TRANSITION_GROUP_CHK_AIR_CLIFF);
+
+    fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_special_hi_start_main_loop as *const () as _));
+    return 0.into();
+}
+
+// MAIN LOOP
+unsafe extern "C" fn gamewatch_special_hi_start_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    let stick_x = ControlModule::get_stick_x(fighter.module_accessor);
+	let stick_y = ControlModule::get_stick_y(fighter.module_accessor);
+    let lr = PostureModule::lr(fighter.module_accessor);
+    let mut x_control = 0.0;
+
+    if MotionModule::is_end(fighter.module_accessor) { 
+        fighter.change_status(FIGHTER_GAMEWATCH_STATUS_KIND_SPECIAL_HI_FALL.into(), false.into());
+        return 1.into();
+    }
+    else {
+        fighter.sub_transition_group_check_air_cliff();
+        macros::SET_SPEED_EX(fighter, 0.75, 2.5, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    }
+
+    return 0.into();
+}
+
+// END
+unsafe extern "C" fn gamewatch_special_hi_start_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    return 0.into();
+}
+
+// -------- SPECIAL HI FALL --------
+
+// PRE
+unsafe extern "C" fn gamewatch_special_hi_fall_pre(fighter: &mut L2CFighterCommon) -> L2CValue {
+    StatusModule::init_settings(
+        fighter.module_accessor,
+        SituationKind(*SITUATION_KIND_AIR),
+        *FIGHTER_KINETIC_TYPE_UNIQ,
+        *GROUND_CORRECT_KIND_AIR as u32,
+        GroundCliffCheckKind(*GROUND_CLIFF_CHECK_KIND_ALWAYS_BOTH_SIDES),
+        true,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLAG,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_INT,
+        *FIGHTER_STATUS_WORK_KEEP_FLAG_ALL_FLOAT,
+        *FS_SUCCEEDS_KEEP_ATTACK
+    );
+      
+    FighterStatusModuleImpl::set_fighter_status_data(
+        fighter.module_accessor,
+        false,
+        *FIGHTER_TREADED_KIND_NO_REAC,
+        false,
+        false,
+        false,
+        (*FIGHTER_LOG_MASK_FLAG_ATTACK_KIND_SPECIAL_HI | *FIGHTER_LOG_MASK_FLAG_ACTION_CATEGORY_ATTACK) as u64,
+        0,
+        *FIGHTER_POWER_UP_ATTACK_BIT_SPECIAL_HI as u32,
+        0
+    );
+      
+    return 0.into();
+}
+
+// MAIN
+unsafe extern "C" fn gamewatch_special_hi_fall_main(fighter: &mut L2CFighterCommon) -> L2CValue {
+    MotionModule::change_motion(fighter.module_accessor, Hash40::new("special_hi"), 0.0, 1.0, false, 0.0, false, false);
+
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::unable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    
+    fighter.sub_shift_status_main(L2CValue::Ptr(gamewatch_special_hi_fall_main_loop as *const () as _))
+}
+
+// MAIN LOOP
+unsafe extern "C" fn gamewatch_special_hi_fall_main_loop(fighter: &mut L2CFighterCommon) -> L2CValue {
+    let y_vel = KineticModule::get_sum_speed_y(fighter.module_accessor, *KINETIC_ENERGY_RESERVE_ATTRIBUTE_MAIN);
+    let posx = PostureModule::pos_x(fighter.module_accessor);
+    let posy = PostureModule::pos_y(fighter.module_accessor);
+
+    // FALL UNTIL TOUCHING GROUND
+    if StatusModule::situation_kind(fighter.module_accessor) == *SITUATION_KIND_GROUND { 
+        MotionModule::set_rate(fighter.module_accessor, 1.5);
+    } 
+    else {
+        let mut new_pos = Vector3f{x: posx, y: (posy - 5.0), z: 0.0};
+        PostureModule::set_pos(fighter.module_accessor, &new_pos);
+    }
+
+    if MotionModule::is_end(fighter.module_accessor) { 
+        fighter.change_status(FIGHTER_STATUS_KIND_WAIT.into(), false.into());
+        return 1.into();
+    }
+
+    fighter.sub_transition_group_check_air_cliff();
+    
+    return 0.into();
+}
+
+// END
+unsafe extern "C" fn gamewatch_special_hi_fall_end(fighter: &mut L2CFighterCommon) -> L2CValue { 
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_CONTROL);
+    KineticModule::enable_energy(fighter.module_accessor, *FIGHTER_KINETIC_ENERGY_ID_STOP);
+    KineticModule::change_kinetic(fighter.module_accessor, *FIGHTER_KINETIC_TYPE_MOTION);
+    GroundModule::correct(fighter.module_accessor, GroundCorrectKind(*GROUND_CORRECT_KIND_GROUND));
+
+    return 0.into();
+}
+
+pub fn install() {
+    Agent::new("gamewatch")
+        .status(Pre, *FIGHTER_STATUS_KIND_SPECIAL_HI, gamewatch_special_hi_start_pre)
+        .status(Main, *FIGHTER_STATUS_KIND_SPECIAL_HI, gamewatch_special_hi_start_main)
+        .status(End, *FIGHTER_STATUS_KIND_SPECIAL_HI, gamewatch_special_hi_start_end)
+        
+        .status(Pre, *FIGHTER_GAMEWATCH_STATUS_KIND_SPECIAL_HI_FALL, gamewatch_special_hi_fall_pre)
+        .status(Main, *FIGHTER_GAMEWATCH_STATUS_KIND_SPECIAL_HI_FALL, gamewatch_special_hi_fall_main)
+        .status(End, *FIGHTER_GAMEWATCH_STATUS_KIND_SPECIAL_HI_FALL, gamewatch_special_hi_fall_end)
+    .install();
+}

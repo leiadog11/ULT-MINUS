@@ -1,11 +1,11 @@
 use super::*;
 
-mod attackdash;
-mod checkdamage;
-mod specialn;
+mod attack_dash;
+mod check_damage;
+mod special_n;
 
 pub fn install() {
-    attackdash::install();
-    checkdamage::install();
-    specialn::install();
+    attack_dash::install();
+    check_damage::install();
+    special_n::install();
 }

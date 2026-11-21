@@ -22,13 +22,6 @@ static mut CHARGE_MUL: [f32; 8] = [1.0; 8];
 static mut BULLET_X_POS: [f32; 8] = [0.0; 8];
 static mut BULLET_Y_POS: [f32; 8] = [0.0; 8];
 
-//Gets Article Boma
-pub unsafe fn get_article_boma(boma: *mut BattleObjectModuleAccessor, article_type: skyline::libc::c_int) -> *mut BattleObjectModuleAccessor {
-    let article = ArticleModule::get_article(boma, article_type);
-    let object_id = smash::app::lua_bind::Article::get_battle_object_id(article) as u32;
-    return sv_battle_object::module_accessor(object_id);
-}
-
 pub fn install() {
     acmd::install();
     frame::install();

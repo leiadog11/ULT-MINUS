@@ -1,11 +1,9 @@
 use super::*;
 
-mod attackairn;
+mod attack_air_n;
 mod acmd;
-mod frame;
 
 pub fn install() {
-    attackairn::install();
+    attack_air_n::install();
     acmd::install();
-    frame::install();
 }

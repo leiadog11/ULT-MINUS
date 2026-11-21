@@ -30,4 +30,13 @@ pub fn install() {
         FIGHTER_GANON_GENERATE_ARTICLE_GSWORD = clone.generate_id;
         WEAPON_KIND_GANON_GSWORD = clone.weapon_id;
     }
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_GANON, slots.clone(), (hash40("dash_speed"), 0, 1.97));
+    param_config::update_float_2(*FIGHTER_KIND_GANON, slots.clone(), (hash40("run_speed_max"), 0, 1.74));
+    param_config::update_float_2(*FIGHTER_KIND_GANON, slots.clone(), (hash40("jump_speed_x"), 0, 1.2));
+    param_config::update_float_2(*FIGHTER_KIND_GANON, slots.clone(), (hash40("jump_y"), 0, 26.49));
+    param_config::update_float_2(*FIGHTER_KIND_GANON, slots.clone(), (hash40("weight"), 0, 124.0));
 }

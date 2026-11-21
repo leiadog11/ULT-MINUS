@@ -1,13 +1,13 @@
 use super::*;
 
-mod attackhi3;
-mod checkattack;
-mod specialhi;
-mod specialn;
+mod attack_hi3;
+mod check_attack;
+mod special_hi;
+mod special_n;
 
 pub fn install() {
-    attackhi3::install();
-    checkattack::install();
-    specialhi::install();
-    specialn::install();
+    attack_hi3::install();
+    check_attack::install();
+    special_hi::install();
+    special_n::install();
 }

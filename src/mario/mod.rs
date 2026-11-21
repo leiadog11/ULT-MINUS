@@ -5,7 +5,6 @@ pub mod frame;
 pub mod status;
 pub mod fireball;
 pub mod pump;
-pub mod pumpwater;
 
 const FIGHTER_MARIO_STATUS_KIND_SHRINK: i32 = 0x1EC;
 
@@ -25,5 +24,9 @@ pub fn install() {
     status::install();
     fireball::install();
     pump::install();
-    pumpwater::install();
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_MARIO, slots.clone(), (hash40("run_speed_max"), 0, 1.86));
 }

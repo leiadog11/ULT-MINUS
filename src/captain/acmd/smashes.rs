@@ -190,18 +190,15 @@ unsafe extern "C" fn captain_attackhi4(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("captain")
         .game_acmd("game_attacks4", captain_attacks4, Low)
-
         .effect_acmd("effect_attacks4", captain_effect_attacks4, Low)
-
         .sound_acmd("sound_attacks4", captain_sound_attacks4, Low)
 
         .effect_acmd("effect_attacks4charge", captain_effect_attacks4charge, Low)
-
         .sound_acmd("sound_attacks4charge", captain_sound_attacks4charge, Low)
 
         .game_acmd("game_attacklw4", captain_attacklw4, Low)
 
         .game_acmd("game_attackhi4", captain_attackhi4, Low)
 
-        .install();
+    .install();
 }

@@ -1,9 +1,9 @@
 use super::*;
 
-/////// REGULAR
+//--------------- REGULAR ---------------
 
 // PRE
-unsafe extern "C" fn ganon_gsword_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
+unsafe extern "C" fn gsword_regular_pre(weapon: &mut L2CWeaponCommon) -> L2CValue {
     StatusModule::init_settings(
         weapon.module_accessor, 
         SituationKind(*SITUATION_KIND_AIR), 
@@ -20,18 +20,18 @@ unsafe extern "C" fn ganon_gsword_regular_pre(weapon: &mut L2CWeaponCommon) -> L
 }
 
 // MAIN
-unsafe extern "C" fn ganon_gsword_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
+unsafe extern "C" fn gsword_regular_main(weapon: &mut L2CWeaponCommon) -> L2CValue { 
     MotionModule::change_motion(weapon.module_accessor, Hash40::new("regular"), 0.0, 1.0, false, 0.0, false, false);
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let life = 300;
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_INIT_LIFE);
     WorkModule::set_int(weapon.module_accessor, life, *WEAPON_INSTANCE_WORK_ID_INT_LIFE);
 
-    weapon.fastshift(L2CValue::Ptr(ganon_gsword_regular_main_loop as *const () as _))
+    weapon.fastshift(L2CValue::Ptr(gsword_regular_main_loop as *const () as _))
 }
 
 // MAIN LOOP
-unsafe extern "C" fn ganon_gsword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
+unsafe extern "C" fn gsword_regular_main_loop(weapon: &mut L2CWeaponCommon) -> L2CValue {
     let owner_boma = &mut *sv_battle_object::module_accessor((WorkModule::get_int(weapon.module_accessor, *WEAPON_INSTANCE_WORK_ID_INT_LINK_OWNER)) as u32);
     let facing = PostureModule::lr(weapon.module_accessor);
     let energy_type = KineticModule::get_energy(weapon.module_accessor, *WEAPON_KINETIC_ENERGY_RESERVE_ID_NORMAL) as *mut smash::app::KineticEnergy;
@@ -111,7 +111,7 @@ pub unsafe extern "C" fn gsword_remove(weapon: &mut L2CWeaponCommon) {
 
 pub fn install() {
     Agent::new("ganon_gsword")
-        .status(Pre, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_pre)
-        .status(Main, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, ganon_gsword_regular_main)
+        .status(Pre, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, gsword_regular_pre)
+        .status(Main, WEAPON_GANON_GSWORD_STATUS_KIND_REGULAR, gsword_regular_main)
     .install();
 }

@@ -54,4 +54,16 @@ pub fn install() {
     status::install();
     bigpacman::install();
     firehydrant::install();
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_PACMAN, slots.clone(), (hash40("run_speed_max"), 0, 1.772));
+    param_config::update_float_2(*FIGHTER_KIND_PACMAN, slots.clone(), (hash40("air_speed_x_stable"), 0, 1.152));
+
+    // VL PARAMS
+    param_config::update_int_2(-*WEAPON_KIND_PACMAN_FIREHYDRANT, slots.clone(), (hash40("param_firehydrant"), hash40("life"), 4000));
+    param_config::update_int_2(-*WEAPON_KIND_PACMAN_FIREHYDRANT, slots.clone(), (hash40("param_firehydrant"), hash40("max_shoot_num"), 40));
+    param_config::update_int_2(-*WEAPON_KIND_PACMAN_FIREHYDRANT_WATER, slots.clone(), (hash40("param_firehydrantwater"), hash40("life"), 50));
+    param_config::update_float_2(-*WEAPON_KIND_PACMAN_FIREHYDRANT_WATER, slots.clone(), (hash40("param_firehydrantwater"), hash40("speed"), 2.5));
 }

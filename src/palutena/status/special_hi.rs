@@ -1,0 +1,18 @@
+use super::*;
+
+//-------------------------- SPECIALHI ---------------------------
+
+// EXEC
+unsafe extern "C" fn palutena_special_hi_exec(fighter: &mut L2CFighterCommon) -> L2CValue {
+    if UP_B_USED[get_entry_id(fighter.module_accessor)] {
+        StatusModule::change_status_request_from_script(fighter.module_accessor, *FIGHTER_STATUS_KIND_FALL, true);
+    }
+
+    return 0.into();
+}
+
+pub fn install() {
+    Agent::new("palutena")
+        .status(Exec, *FIGHTER_STATUS_KIND_SPECIAL_HI, palutena_special_hi_exec)
+    .install();
+}

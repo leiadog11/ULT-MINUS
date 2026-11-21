@@ -180,5 +180,5 @@ pub fn install() {
     Agent::new("link")
         .on_line(Main, link_frame)
         .on_start(link_start)
-        .install();
+    .install();
 }

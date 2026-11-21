@@ -25,6 +25,5 @@ unsafe extern "C" fn breath_attackairhi(agent: &mut L2CAgentBase) {
 pub fn install() {
     Agent::new("gamewatch_breath")
         .game_acmd("game_attackairhi", breath_attackairhi, Low)
-        
-        .install();
+    .install();
 }

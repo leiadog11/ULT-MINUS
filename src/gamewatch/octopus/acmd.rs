@@ -28,5 +28,5 @@ pub fn install() {
     Agent::new("gamewatch_octopus")
         .game_acmd("game_attackairn", gamewatch_octopus_attackairn, Low)
         .expression_acmd("expression_attackairn", gamewatch_octopus_expression_attackairn, Low)
-        .install();
+    .install();
 }

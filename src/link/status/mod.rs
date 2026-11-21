@@ -1,7 +1,7 @@
 use super::*;
 
-mod specialairhi;
+mod special_air_hi;
 
 pub fn install() {
-    specialairhi::install();
+    special_air_hi::install();
 }

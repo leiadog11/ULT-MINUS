@@ -1,11 +1,11 @@
 use super::*;
 
-mod checkdamage;
+mod check_damage;
 mod shrink;
-mod speciallw;
+mod special_lw;
 
 pub fn install() {
-    checkdamage::install();
+    check_damage::install();
     shrink::install();
-    speciallw::install();
+    special_lw::install();
 }

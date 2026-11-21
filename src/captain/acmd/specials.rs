@@ -115,7 +115,6 @@ unsafe extern "C" fn captain_specialhi(agent: &mut L2CAgentBase) {
 unsafe extern "C" fn captain_effect_specialhi(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 6.0);
     if macros::is_excute(agent) {
-        macros::EFFECT(agent, Hash40::new("sys_crown"), Hash40::new("top"), 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
         macros::EFFECT(agent, Hash40::new("sys_bomb_a"), Hash40::new("top"), 7.5, 12, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 0, 0, false);
     }
     frame(agent.lua_state_agent, 12.0);

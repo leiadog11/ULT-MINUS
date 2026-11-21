@@ -34,7 +34,7 @@ unsafe extern "C" fn gamewatch_attackhi3(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 10.0);
     if macros::is_excute(agent) {
         ArticleModule::generate_article(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, false, -1);
-        ArticleModule::change_motion(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, Hash40::new("attack_hi3"), false, -1.0);
+        ArticleModule::change_status_exist(agent.module_accessor, *FIGHTER_GAMEWATCH_GENERATE_ARTICLE_RESCUE, WEAPON_GAMEWATCH_RESCUE_STATUS_KIND_ATTACK_HI3);
         macros::HIT_NODE(agent, Hash40::new("arml"), *HIT_STATUS_XLU);
     }
     frame(agent.lua_state_agent, 23.0);

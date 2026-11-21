@@ -50,4 +50,12 @@ pub fn install() {
         FIGHTER_ROY_GENERATE_ARTICLE_PYRAWHEEL = clone.generate_id;
         WEAPON_KIND_ROY_PYRAWHEEL = clone.weapon_id;
     }
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_ROY, slots.clone(), (hash40("dash_speed"), 0, 2.35));
+    param_config::update_float_2(*FIGHTER_KIND_ROY, slots.clone(), (hash40("run_speed_max"), 0, 2.245));
+    param_config::update_float_2(*FIGHTER_KIND_ROY, slots.clone(), (hash40("jump_speed_x"), 0, 1.2));
+    param_config::update_float_2(*FIGHTER_KIND_ROY, slots.clone(), (hash40("air_speed_x_stable"), 0, 1.402));
 }

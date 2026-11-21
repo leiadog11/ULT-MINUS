@@ -1,9 +1,9 @@
 use super::*;
 
-mod checkattack;
-pub mod specials;
+mod check_attack;
+pub mod special_s;
 
 pub fn install() {
-    checkattack::install();
-    specials::install();
+    check_attack::install();
+    special_s::install();
 }

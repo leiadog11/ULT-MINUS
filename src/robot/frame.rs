@@ -61,5 +61,5 @@ pub fn install() {
     Agent::new("robot")
         .on_line(Main, robot_frame)
         .on_start(robot_start)
-        .install();
+    .install();
 }

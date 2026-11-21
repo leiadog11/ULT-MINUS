@@ -60,7 +60,6 @@ pub unsafe extern "C" fn gamewatch_frame(fighter: &mut L2CFighterCommon) {
 pub unsafe extern "C" fn gamewatch_start(fighter: &mut L2CFighterCommon) {
     unsafe { 
         let ENTRY_ID = get_entry_id(fighter.module_accessor);
-        OCTOPUS[ENTRY_ID] = false;
         BOMB_OUT[ENTRY_ID] = false;
         DAMAGE_ROT[ENTRY_ID] = 0.0;
     }
@@ -70,5 +69,5 @@ pub fn install() {
     Agent::new("gamewatch")
         .on_line(Main, gamewatch_frame)
         .on_start(gamewatch_start)
-        .install();
+    .install();
 }

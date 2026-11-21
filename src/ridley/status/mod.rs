@@ -1,7 +1,7 @@
 use super::*;
 
-mod specialhi;
+mod special_hi;
 
 pub fn install() {
-    specialhi::install();
+    special_hi::install();
 }

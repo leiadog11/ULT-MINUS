@@ -92,6 +92,5 @@ pub fn install() {
         .status(Pre, *WEAPON_PALUTENA_AUTOAIMBULLET_STATUS_KIND_SHOT, autoaimbullet_shot_pre)
         .status(Main, *WEAPON_PALUTENA_AUTOAIMBULLET_STATUS_KIND_SHOT, autoaimbullet_shot_main)
         .status(End, *WEAPON_PALUTENA_AUTOAIMBULLET_STATUS_KIND_SHOT, autoaimbullet_shot_end)
-
-        .install();
+    .install();
 }

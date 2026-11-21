@@ -1,15 +1,15 @@
 use super::*;
 
-mod checkdamage;
-mod specialn;
-mod specials;
-mod speciallw;
-mod specialhi;
+mod check_damage;
+mod special_n;
+mod special_s;
+mod special_lw;
+mod special_hi;
 
 pub fn install() {
-    checkdamage::install();
-    specialn::install();
-    speciallw::install();
-    specials::install();
-    specialhi::install();
+    check_damage::install();
+    special_n::install();
+    special_lw::install();
+    special_s::install();
+    special_hi::install();
 }

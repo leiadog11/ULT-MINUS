@@ -1,9 +1,11 @@
 use super::*;
 
 mod acmd;
-mod attackairb;
+mod attack_air_b;
+mod attack_hi3;
 
 pub fn install() {
     acmd::install();
-    attackairb::install();
+    attack_air_b::install();
+    attack_hi3::install();
 }

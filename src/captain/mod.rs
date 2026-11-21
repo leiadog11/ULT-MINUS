@@ -15,4 +15,13 @@ pub fn install() {
     acmd::install();
     frame::install();
     status::install();
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_float_2(*FIGHTER_KIND_CAPTAIN, slots.clone(), (hash40("dash_speed"), 0, 2.28));
+    param_config::update_float_2(*FIGHTER_KIND_CAPTAIN, slots.clone(), (hash40("run_speed_max"), 0, 2.852));
+    param_config::update_float_2(*FIGHTER_KIND_CAPTAIN, slots.clone(), (hash40("jump_speed_x"), 0, 1.1));
+    param_config::update_float_2(*FIGHTER_KIND_CAPTAIN, slots.clone(), (hash40("mini_jump_y"), 0, 13.98));
+    param_config::update_int_2(*FIGHTER_KIND_CAPTAIN, slots.clone(), (hash40("jump_count_max"), 0, 3));
 }

@@ -18,4 +18,9 @@ pub fn install() {
     frame::install();
     status::install();
     agent_init::install();
+
+    let mut slots: Vec<i32> = vec![0, 1, 2, 3, 4, 5, 6, 7];
+
+    // FIGHTER PARAMS
+    param_config::update_int_2(*FIGHTER_KIND_JACK, slots.clone(), (hash40("attack_combo_max"), 0, 1));
 }

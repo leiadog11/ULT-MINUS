@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<struct>
+  <struct hash="param_breath">
+    <float hash="pos_offset_y">-21.5</float>
+  </struct>
+</struct>
