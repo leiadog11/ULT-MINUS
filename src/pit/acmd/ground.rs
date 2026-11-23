@@ -1,7 +1,5 @@
 use super::*;
 
-//------------------GROUND-------------------
-
 // JAB 3
 unsafe extern "C" fn pit_attack13(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {

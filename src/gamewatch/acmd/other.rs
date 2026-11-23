@@ -52,6 +52,13 @@ unsafe extern "C" fn gamewatch_cliffattack(agent: &mut L2CAgentBase) {
     }
 }
 
+// REBOUND
+unsafe extern "C" fn gamewatch_rebound(agent: &mut L2CAgentBase) {
+    if macros::is_excute(agent) {
+        PostureModule::set_scale(agent.module_accessor, 1.0, false);
+    }
+}
+
 pub fn install() {
     Agent::new("gamewatch")
         .game_acmd("game_appealhir", gamewatch_appeal_hi, Low)
@@ -61,5 +68,6 @@ pub fn install() {
 
         .game_acmd("game_cliffattack", gamewatch_cliffattack, Low)
 
-        .install();
+        .game_acmd("game_rebound", gamewatch_rebound, Low)
+    .install();
 }

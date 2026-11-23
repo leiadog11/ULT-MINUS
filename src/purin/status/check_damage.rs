@@ -26,8 +26,10 @@ unsafe extern "C" fn purin_special_hi_check_damage(fighter: &mut L2CFighterCommo
 
 pub fn install() {
     Agent::new("purin")
+        .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_LW4_START, purin_smash_attacks_check_damage)
         .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_LW4, purin_smash_attacks_check_damage)
         .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_LW4_HOLD, purin_smash_attacks_check_damage)
+        .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_S4_START, purin_smash_attacks_check_damage)
         .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_S4, purin_smash_attacks_check_damage)
         .status(CheckDamage, *FIGHTER_STATUS_KIND_ATTACK_S4_HOLD, purin_smash_attacks_check_damage)
 

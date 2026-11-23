@@ -9,13 +9,7 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
         let situation_kind = StatusModule::situation_kind(boma);
         let motion_kind = MotionModule::motion_kind(boma);
         let frame = MotionModule::frame(boma);
-        let mut stock_count = get_stock_count(boma);
         let current_size = PostureModule::scale(boma);
-
-        // ON RESPAWN
-        if status_kind == *FIGHTER_STATUS_KIND_REBIRTH { 
-            stock_count = get_stock_count(boma);
-        }
 
         // ON GAME OVER - RESET VARIABLES
         if status_kind == *FIGHTER_STATUS_KIND_DEMO { 
@@ -38,9 +32,12 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
         }
 
         // COMEBACK
-        if DamageModule::damage(boma, 0) >= 25.0 && stock_count == 1 && !RECEIVED_FINAL_SMASH[ENTRY_ID] {
-            get_final_smash(boma);
-            RECEIVED_FINAL_SMASH[ENTRY_ID] = true;
+        if DamageModule::damage(boma, 0) >= 25.0 && !RECEIVED_FINAL_SMASH[ENTRY_ID] {
+            let stock_count = get_stock_count(boma);
+            if stock_count == 1 {
+                get_final_smash(boma);
+                RECEIVED_FINAL_SMASH[ENTRY_ID] = true;
+            }
         }
         
         // BAYO GROWS LARGER IF NAIR IS HELD
@@ -55,8 +52,17 @@ pub unsafe extern "C" fn bayonetta_frame(fighter: &mut L2CFighterCommon) {
     }
 }
 
+// ON START
+pub unsafe extern "C" fn bayonetta_start(fighter: &mut L2CFighterCommon) {
+    unsafe { 
+        let ENTRY_ID = get_entry_id(fighter.module_accessor);
+        RECEIVED_FINAL_SMASH[ENTRY_ID] = false;
+    }
+}
+
 pub fn install() {
     Agent::new("bayonetta")
         .on_line(Main, bayonetta_frame)
+        .on_start(bayonetta_start)
     .install();
 }

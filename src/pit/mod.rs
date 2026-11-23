@@ -28,5 +28,4 @@ pub fn install() {
     param_config::update_float_2(-*WEAPON_KIND_PIT_BOWARROW, slots.clone(), (hash40("param_bowarrow"), hash40("speed_up"), 4.5));
     param_config::update_float_2(-*WEAPON_KIND_PIT_BOWARROW, slots.clone(), (hash40("param_bowarrow"), hash40("control_angle"), 16.0));
     param_config::update_int_2(-*WEAPON_KIND_PIT_BOWARROW, slots.clone(), (hash40("param_bowarrow"), hash40("life"), 150));
-    param_config::update_int_2(-*WEAPON_KIND_PIT_BOWARROW, slots.clone(), (hash40("param_bowarrow"), hash40("is_penetration"), 1));
 }

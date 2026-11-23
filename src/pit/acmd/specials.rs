@@ -4,8 +4,6 @@ static mut OPP_X: [f32; 8] = [0.0; 8];
 static mut OPP_Y: [f32; 8] = [0.0; 8];
 static mut OPP_Z: [f32; 8] = [0.0; 8];
 
-//-------------------SPECIALS------------------
-
 // NEUTRAL B START
 unsafe extern "C" fn pit_specialnstart(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.4);
@@ -335,6 +333,5 @@ pub fn install() {
         .effect_acmd("effect_specialsstart", pit_effect_specialsstart, Low)
         .sound_acmd("sound_specialsstart", pit_sound_specialsstart, Low)
         .expression_acmd("expression_specialsstart", pit_expression_specialsstart, Low)
-
     .install();
 }

@@ -34,6 +34,5 @@ pub fn install() {
     Agent::new("pit")
         .game_acmd("game_appealhir", pit_appealhi, Low)
         .game_acmd("game_appealhil", pit_appealhi, Low)
-
-        .install();
+    .install();
 }

@@ -31,6 +31,11 @@ unsafe extern "C" fn normal_weapon_hit_handler(vtable: u64, weapon: *mut smash::
         *(weapon as *mut bool).add(0x90) = true;
     }
 
+    // PIT ARROW (BOWARROW)
+    if (*weapon).battle_object.kind == *WEAPON_KIND_PIT_BOWARROW as u32 && owner_kind == *FIGHTER_KIND_PIT {
+        *(weapon as *mut bool).add(0x90) = true;
+    }
+
     // PEACH TOAD (KINOPIO)
     if (*weapon).battle_object.kind == *WEAPON_KIND_PEACH_KINOPIO as u32 && owner_kind == *FIGHTER_KIND_PEACH {
         *(weapon as *mut bool).add(0x90) = true;
