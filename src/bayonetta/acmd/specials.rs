@@ -1,7 +1,5 @@
 use super::*;
 
-//-------------------SPECIALS------------------
-
 // AERIAL SIDE SPECIAL
 unsafe extern "C" fn bayonetta_specialairsu(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {

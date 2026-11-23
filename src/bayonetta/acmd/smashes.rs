@@ -1,7 +1,5 @@
 use super::*;
 
-//-----------------SMASH ATTACKS----------------
-
 // UP SMASH
 unsafe extern "C" fn bayonetta_attackhi4(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 7.0);

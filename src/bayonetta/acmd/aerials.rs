@@ -1,7 +1,5 @@
 use super::*;
 
-//------------------AERIALS-------------------
-
 // NAIR HOLD
 unsafe extern "C" fn bayonetta_attackairnhold(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
