@@ -155,5 +155,5 @@ pub fn install() {
         .game_acmd("game_throwf", rob_throwf, Low)
 
         .game_acmd("game_throwb", rob_throwb, Low)
-        .install();
+    .install();
 }

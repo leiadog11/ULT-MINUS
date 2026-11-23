@@ -1,7 +1,5 @@
 use super::*;
 
-//----------------THROWS------------------
-
 // FORWARD THROW
 unsafe extern "C" fn captain_throwf(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -169,6 +167,5 @@ pub fn install() {
         .game_acmd("game_catchdash", captain_catchdash, Low)
 
         .game_acmd("game_catchturn", captain_catchturn, Low)
-    
     .install();
 }

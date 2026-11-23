@@ -114,6 +114,5 @@ pub fn install() {
         .game_acmd("game_catchturn", ridley_catchturn, Low)
 
         .game_acmd("game_throwhi", ridley_throwhi, Low)
-
-        .install();
+    .install();
 }

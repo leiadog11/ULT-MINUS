@@ -159,6 +159,5 @@ pub fn install() {
         .game_acmd("game_throwhi", wario_throwhi, Low)
 
         .game_acmd("game_throwf", wario_throwf, Low)
-        
-        .install();
+    .install();
 }

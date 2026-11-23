@@ -1,7 +1,5 @@
 use super::*;
 
-//------------------GRABS--------------------
-
 // GRAB
 unsafe extern "C" fn falco_catch(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 5.0);
@@ -61,7 +59,6 @@ unsafe extern "C" fn falco_catchturn(agent: &mut L2CAgentBase) {
         GrabModule::set_rebound(agent.module_accessor, false);
     }
 }
-
 
 //-------------------THROWS------------------
 
@@ -240,6 +237,5 @@ pub fn install() {
         .game_acmd("game_throwhi", falco_throwhi, Low)
 
         .game_acmd("game_throwlw", falco_throwlw, Low)
-
-        .install();
+    .install();
 }

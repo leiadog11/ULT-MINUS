@@ -95,7 +95,6 @@ unsafe extern "C" fn mario_throwlw(agent: &mut L2CAgentBase) {
         let target_no = WorkModule::get_int64(agent.module_accessor, *FIGHTER_STATUS_THROW_WORK_INT_TARGET_HIT_NO);
         macros::ATK_HIT_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, Hash40::new("throw"), target, target_group, target_no);
     }
-
 }
 
 // UP THROW
@@ -215,6 +214,5 @@ pub fn install() {
         .game_acmd("game_catchdash", mario_catchdash, Low)
 
         .game_acmd("game_catchturn", mario_catchturn, Low)
-
-        .install();
+    .install();
 }

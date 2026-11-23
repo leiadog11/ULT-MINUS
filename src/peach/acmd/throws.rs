@@ -182,5 +182,5 @@ pub fn install() {
 
         .game_acmd("game_throwb", peach_throwb, Low)
         
-        .install();
+    .install();
 }

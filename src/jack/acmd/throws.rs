@@ -40,7 +40,6 @@ unsafe extern "C" fn jack_catchdash(agent: &mut L2CAgentBase) {
     }
 }
 
-
 // PIVOT GRAB
 unsafe extern "C" fn jack_catchturn(agent: &mut L2CAgentBase) {
     frame(agent.lua_state_agent, 8.0);
@@ -66,6 +65,5 @@ pub fn install() {
         .game_acmd("game_catch", jack_catch, Low)
         .game_acmd("game_catchdash", jack_catchdash, Low)
         .game_acmd("game_catchturn", jack_catchturn, Low)
-
-        .install();
+    .install();
 }

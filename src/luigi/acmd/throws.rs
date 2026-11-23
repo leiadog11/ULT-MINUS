@@ -178,7 +178,6 @@ unsafe extern "C" fn luigi_throwhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         StatusModule::change_status_request_from_script(agent.module_accessor, *FIGHTER_STATUS_KIND_JUMP, true);
     }
-
 }
 
 pub fn install() {
@@ -190,6 +189,5 @@ pub fn install() {
         .game_acmd("game_catchturn", luigi_catchturn, Low)
         
         .game_acmd("game_throwhi", luigi_throwhi, Low)
-
-        .install();
+    .install();
 }

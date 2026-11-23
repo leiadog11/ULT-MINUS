@@ -1,6 +1,5 @@
 use super::*;
 
-
 //---------------GRABS--------------------
 
 // GRAB
@@ -63,13 +62,12 @@ unsafe extern "C" fn ganon_catchturn(agent: &mut L2CAgentBase) {
     }
 }
 
-
 //-----------------THROWS-----------------------
 
 // UP THROW
 unsafe extern "C" fn ganon_throwhi(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
-        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 4.0, 90, 125, 0, 80, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
+        macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 4.0, 90, 105, 0, 70, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 361, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_F, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_L, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
     }
     frame(agent.lua_state_agent, 11.0);
@@ -97,9 +95,6 @@ unsafe extern "C" fn ganon_throwb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, 0, 5.0, 70, 35, 0, 50, 0.0, 1.0, *ATTACK_LR_CHECK_B, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
         macros::ATTACK_ABS(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_CATCH, 0, 3.0, 361, 100, 0, 60, 0.0, 1.0, *ATTACK_LR_CHECK_B, 0.0, true, Hash40::new("collision_attr_normal"), *ATTACK_SOUND_LEVEL_S, *COLLISION_SOUND_ATTR_NONE, *ATTACK_REGION_THROW);
-    }
-    frame(agent.lua_state_agent, 11.0);
-    if macros::is_excute(agent) {
     }
     frame(agent.lua_state_agent, 12.0);
     if macros::is_excute(agent) {
@@ -164,7 +159,6 @@ unsafe extern "C" fn ganon_throwlw(agent: &mut L2CAgentBase) {
     }
 }
 
-
 pub fn install() {
     Agent::new("ganon")
         .game_acmd("game_catch", ganon_catch, Low)
@@ -180,6 +174,5 @@ pub fn install() {
         .game_acmd("game_throwb", ganon_throwb, Low)
 
         .game_acmd("game_throwhi", ganon_throwhi, Low)
-        
-        .install();
+    .install();
 }
