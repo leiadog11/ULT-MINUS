@@ -192,76 +192,6 @@ unsafe extern "C" fn pacman_throwlw(agent: &mut L2CAgentBase) {
     macros::FT_MOTION_RATE(agent, 0.5);
 }
 
-// DOWN THROW EXPRESSION
-unsafe extern "C" fn pacman_expression_throwlw(agent: &mut L2CAgentBase) {
-    if macros::is_excute(agent) {
-        macros::FT_ATTACK_ABS_CAMERA_QUAKE(agent, *FIGHTER_ATTACK_ABSOLUTE_KIND_THROW, *CAMERA_QUAKE_KIND_NONE);
-        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_TOP, 5);
-    }
-    frame(agent.lua_state_agent, 12.0);
-    if macros::is_excute(agent) {
-        ItemModule::set_have_item_visibility(agent.module_accessor, false, 0);
-        ItemModule::set_attach_item_visibility(agent.module_accessor, false, *ATTACH_ITEM_GROUP_ALL as u32);
-        VisibilityModule::set_int64(agent.module_accessor, hash40("body"), hash40("body_none"));
-        VisibilityModule::set_int64(agent.module_accessor, hash40("pizza"), hash40("pizza_normal"));
-        macros::HIT_NODE(agent, Hash40::new("waist"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("shoulderr"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("shoulderl"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("handr"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("handl"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("legr"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("legl"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("kneel"), *HIT_STATUS_OFF);
-        macros::HIT_NODE(agent, Hash40::new("pizzapacman"), *HIT_STATUS_NORMAL);
-    }
-    frame(agent.lua_state_agent, 16.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, 0x50000000);
-    }
-    frame(agent.lua_state_agent, 17.0);
-    if macros::is_excute(agent) {
-        macros::QUAKE(agent, *CAMERA_QUAKE_KIND_M);
-    }
-    frame(agent.lua_state_agent, 24.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 6, false, 0x50000000);
-    }
-    frame(agent.lua_state_agent, 25.0);
-    if macros::is_excute(agent) {
-        macros::QUAKE(agent, *CAMERA_QUAKE_KIND_M);
-    }
-    frame(agent.lua_state_agent, 32.0);
-    if macros::is_excute(agent) {
-        ControlModule::set_rumble(agent.module_accessor, Hash40::new("rbkind_nohits"), 0, false, 0x50000000);
-    }
-    frame(agent.lua_state_agent, 38.0);
-    if macros::is_excute(agent) {
-        macros::QUAKE(agent, *CAMERA_QUAKE_KIND_M);
-        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 3);
-    }
-    frame(agent.lua_state_agent, 42.0);
-    if macros::is_excute(agent) {
-        ItemModule::set_have_item_visibility(agent.module_accessor, true, 0);
-        ItemModule::set_attach_item_visibility(agent.module_accessor, true, *ATTACH_ITEM_GROUP_ALL as u32);
-        VisibilityModule::set_int64(agent.module_accessor, hash40("body"), hash40("body_normal"));
-        VisibilityModule::set_int64(agent.module_accessor, hash40("pizza"), hash40("pizza_none"));
-        macros::HIT_NODE(agent, Hash40::new("waist"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("shoulderr"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("shoulderl"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("handr"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("handl"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("legr"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("legl"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("kneer"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("kneel"), *HIT_STATUS_NORMAL);
-        macros::HIT_NODE(agent, Hash40::new("pizzapacman"), *HIT_STATUS_OFF);
-    }
-    if macros::is_excute(agent) {
-        slope!(agent, *MA_MSC_CMD_SLOPE_SLOPE_INTP, *SLOPE_STATUS_LR, 4);
-    }
-}
-
 // BACK THROW
 unsafe extern "C" fn pacman_throwb(agent: &mut L2CAgentBase) {
     if macros::is_excute(agent) {
@@ -321,8 +251,7 @@ pub fn install() {
         .game_acmd("game_throwhi", pacman_throwhi, Low)
 
         .game_acmd("game_throwlw", pacman_throwlw, Low)
-        .expression_acmd("expression_throwlw", pacman_expression_throwlw, Low)
-
+        
         .game_acmd("game_throwb", pacman_throwb, Low)
 
         .game_acmd("game_throwf", pacman_throwf, Low)
